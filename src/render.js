@@ -4,26 +4,32 @@ import { reelFont, reelTitleSize, drawSignature } from './reel-style.js';
 import { preloadReelAssets } from './reel-assets.js';
 import { drawVisualBackground, drawVisualOverlays } from './visual-render.js';
 import {drawSeriesContent} from './series-render.js';
+import {themeOf,textSize,textColor,setReelText,beginReelSection} from './reel-design.js';
 function wrap(ctx,text,x,y,width,lineHeight,maxLines=3){const words=text.split(/\s+/);let line='',lines=[];for(const w of words){if(ctx.measureText(line+' '+w).width>width&&line){lines.push(line);line=w;}else line=line?line+' '+w:w;}if(line)lines.push(line);lines.slice(0,maxLines).forEach((l,i)=>ctx.fillText(i===maxLines-1&&lines.length>maxLines?l+'…':l,x,y+i*lineHeight));return Math.min(lines.length,maxLines)*lineHeight;}
 export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
  if(config.ai){drawAiReel(canvas,config,progress,timeSeconds);return;}
  const ctx=canvas.getContext('2d'); const {series=[],title,subtitle,source,theme='dark',format='9:16',chart='line',unit='',isCoffee=false,xType='year'}=config;
  const font=reelFont(config.fontId);
  const width=1080,height=format==='1:1'?1080:format==='4:5'?1350:1920;if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
- const dark=theme==='dark';const bg=dark?'#111514':'#f7f9f3',fg=dark?'#f8faf6':'#111514',muted=dark?'#adb5af':'#616a62';
- ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);const colors=dark?['#bcf34a','#b18aff','#8fabb6']:['#568800','#7951c7','#486c80'];
+ const {dark,bg,fg,muted,colors,panel,grid}=themeOf(config);
+ ctx.textAlign='left';ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);
  drawVisualBackground(ctx,width,height,config,timeSeconds);
+ const endHeader=beginReelSection(ctx,config,'header',width,height);
  ctx.fillStyle=colors[0];[20,36,56].forEach((h,i)=>ctx.fillRect(78+i*18,118-h,10,h));
- const preferred=height<1400?75:config.compactTitle?110:145,maxLines=height<1400?2:3,titleSize=reelTitleSize(ctx,title||'Twoja historia.',config.fontId,preferred,920,maxLines);
- ctx.fillStyle=fg;ctx.font=`bold ${titleSize}px ${font}`;const headingY=height<1400?230:320;const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,(height<1400?83:config.compactTitle?120:151)*titleSize/preferred,maxLines);
- ctx.fillStyle=muted;ctx.font=`29px ${font}`;wrap(ctx,subtitle,78,headingY+headingHeight+20,910,40,2);
+ const preferred=textSize(config,'title',height<1400?75:config.compactTitle?110:145),maxLines=height<1400?2:3;
+ const headerBottom=height<1400?height*.46-28:670,headingY=height<1400?200:240;
+ const titleSize=reelTitleSize(ctx,title||'Twoja historia.',config.fontId,preferred,920,maxLines,headerBottom-headingY-100);
+ ctx.fillStyle=textColor(config,'title',fg);ctx.font=`bold ${titleSize}px ${font}`;const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines);
+ setReelText(ctx,config,'subtitle',29,font,muted);wrap(ctx,subtitle||'',78,headingY+headingHeight+16,910,textSize(config,'subtitle',35),2);
+ endHeader();const endContent=beginReelSection(ctx,config,'content',width,height);
  const legendStep=config.compactTitle?52:43;
  const top=height<1400?height*.48:config.compactTitle?height*.43:height*.47,bottom=Math.min(height===1080?700:height===1350?920:height*.75,height-(height<1400?235:285)-100-(Math.max(1,series.length)-1)*legendStep),left=135,right=900;
- const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,contentTop:Math.max(height<1400?450:730,headingY+headingHeight+130),formatValue:n=>formatValue(n,config.language),timeSeconds});
+ const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop:height<1400?height*.48:730,formatValue:n=>formatValue(n,config.language),timeSeconds});
+ endContent();
  drawVisualOverlays(ctx,width,height,config,timeSeconds);
- ctx.fillStyle=dark?'#e5e9e2':'#343d32';ctx.font=`bold ${height<1400?52:xType==='date'?76:110}px ${font}`;ctx.textAlign='right';ctx.fillText(xType==='date'?displayDate(Math.floor(current),config.language):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)),1000,height<1400?150:height-175);ctx.textAlign='left';
- ctx.fillStyle=muted;ctx.font=`24px ${font}`;wrap(ctx,source,80,height-145,920,30,2);
- drawSignature(ctx,width,height,config.fontId,dark);
+ setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';ctx.fillText(xType==='date'?displayDate(Math.floor(current),config.language):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)),1000,height-175,924);ctx.textAlign='left';
+ setReelText(ctx,config,'source',24,font,muted);wrap(ctx,source||'',80,height-132,920,textSize(config,'source',27),2);
+ drawSignature(ctx,width,height,config.fontId,dark,config);
 }
 export function formatValue(n,language='pl'){const locale=language==='en'?'en-GB':'pl-PL';if(Math.abs(n)>=1e6)return (n/1e6).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' m':' mln');if(Math.abs(n)>=10000)return (n/1000).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' k':' tys.');return n.toLocaleString(locale,{maximumFractionDigits:1});}
 export async function recordReel(config,duration,onProgress,signal){

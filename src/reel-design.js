@@ -1,0 +1,52 @@
+// Shared design contract for every preview, PNG and recorded video frame.
+export const reelThemes = [
+ {id:'dark',name:'Studio · ciemny',bg:'#111514',fg:'#f8faf6',muted:'#adb5af',panel:'#1d2822',grid:'#344239',colors:['#bcf34a','#b18aff','#8fabb6'],dark:true},
+ {id:'light',name:'Klasyczny · jasny',bg:'#ffffff',fg:'#17191d',muted:'#535963',panel:'#f0f2f5',grid:'#dce0e6',colors:['#2457a7','#963c58','#43766e'],dark:false},
+ {id:'mono',name:'Klasyczny · ciemny',bg:'#141414',fg:'#fafafa',muted:'#bdbdbd',panel:'#252525',grid:'#414141',colors:['#ffffff','#aab9d0','#b69c84'],dark:true},
+ {id:'paper',name:'Papier i atrament',bg:'#f4efdf',fg:'#292720',muted:'#656052',panel:'#e9e1ce',grid:'#d1c7b1',colors:['#8c352b','#285f66','#756029'],dark:false},
+ {id:'navy',name:'Granat i biel',bg:'#101d35',fg:'#f8fafc',muted:'#b7c4d9',panel:'#1b2d49',grid:'#354861',colors:['#eac578','#90baf0','#d4a4cb'],dark:true},
+ {id:'editorial',name:'Redakcyjny · jasny',bg:'#f3f5f7',fg:'#14263b',muted:'#576678',panel:'#e5eaf0',grid:'#cbd4de',colors:['#173b65','#aa3a32','#527969'],dark:false}
+];
+export const textRoles=[
+ {id:'title',name:'Tytuł',min:60,max:140}, {id:'subtitle',name:'Opis pod tytułem',min:75,max:140},
+ {id:'labels',name:'Etykiety i osie',min:80,max:140}, {id:'values',name:'Wartości liczbowe',min:75,max:150},
+ {id:'date',name:'Data / rok',min:75,max:140}, {id:'source',name:'Źródła i metodologia',min:85,max:110},
+ {id:'signature',name:'Podpis autora',min:75,max:120}
+];
+export const reelLayouts=[{id:'classic',name:'Klasyczny',description:'Nagłówek, wykres, podpis'},{id:'compact',name:'Wykres w centrum',description:'Mniejszy nagłówek, wykres wyżej'},{id:'chart-first',name:'Wykres na górze',description:'Dane przed nagłówkiem'}];
+const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+const number=(v,fallback,min,max)=>Number.isFinite(Number(v))?clamp(Number(v),min,max):fallback;
+export function normalizeDesign(raw={}){
+ const text={};for(const role of textRoles){const t=raw.text?.[role.id]||{};text[role.id]={size:number(t.size,100,role.min,role.max),color:/^#[0-9a-f]{6}$/i.test(t.color||'')?t.color:null};}
+ const positions={};for(const id of ['header','content']){const p=raw.positions?.[id]||{};positions[id]={x:number(p.x,50,0,100),y:number(p.y,0,-20,20),scale:number(p.scale,100,65,100)};}
+ return {theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
+}
+export const designOf=config=>config.visuals?.design||normalizeDesign({theme:config.theme});
+export const themeOf=config=>reelThemes.find(t=>t.id===designOf(config).theme)||reelThemes[0];
+export const textSize=(config,role,size)=>size*(designOf(config).text?.[role]?.size??100)/100;
+export const textColor=(config,role,fallback)=>designOf(config).text?.[role]?.color||fallback;
+export function setReelText(ctx,config,role,size,family,color,weight=''){
+ ctx.font=`${weight?weight+' ':''}${textSize(config,role,size)}px ${family}`;
+ if(color)ctx.fillStyle=textColor(config,role,color);
+}
+// Fit whole sections uniformly: charts, logos and type keep their proportions.
+// Positions are clamped to the content area; the attribution footer stays separate.
+export function sectionTransform(config,section,width,height){
+ const ai=!!config.ai,short=height<1400,start=ai?690:short?height*.46:700,end=ai?1690:height-(short?205:220);
+ const base=section==='header'?{x:50,y:50,w:980,h:start-75}:{x:50,y:start,w:980,h:end-start};
+ const d=designOf(config),p=d.positions?.[section]||{x:50,y:0,scale:100};
+ let scale=1,targetY=base.y;
+ if(d.layout==='compact'){if(section==='header')scale=.72;else targetY=start-(start-50)*.23;}
+ if(d.layout==='chart-first'){
+  if(section==='content')targetY=65;
+  else{scale=Math.min(.65,(end-65-(end-start)-25)/base.h);targetY=65+(end-start)+25;}
+ }
+ scale*=p.scale/100;
+ const x=32+(width-64-base.w*scale)*p.x/100;
+ const y=clamp(targetY+p.y*height/100,32,end-base.h*scale);
+ return {x,y,scale,base,footerTop:end};
+}
+export function beginReelSection(ctx,config,section,width,height){
+ const t=sectionTransform(config,section,width,height);ctx.save();ctx.translate(t.x,t.y);ctx.scale(t.scale,t.scale);ctx.translate(-t.base.x,-t.base.y);
+ return ()=>ctx.restore();
+}

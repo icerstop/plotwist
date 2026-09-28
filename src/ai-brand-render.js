@@ -4,6 +4,7 @@ import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTi
 import {reelFont} from './reel-style.js';
 import {clamp,lerp} from './presentation.js';
 import {aiValue} from './ai.js';
+import {themeOf,textSize,textColor} from './reel-design.js';
 
 function ellipsis(ctx,text,width){let value=String(text||'');if(ctx.measureText(value).width<=width)return value;while(value.length&&ctx.measureText(value+'…').width>width)value=value.slice(0,-1);return value+'…';}
 export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,grid,panel,wrap}){
@@ -13,8 +14,15 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  const motion=aiBrandMotion(history,progress,duration,transition,timeSeconds),{frame,before,mix,current}=motion;
  const date=new Date(current).toISOString().slice(0,10),score=l=>l?`${aiValue(l.score,config.language)} ${b.unit}`:'—';
  const byId=(f,id)=>f.leaders.find(l=>l.brand.id===id);
- const color=brand=>config.theme==='light'?darken(brand.color):brand.color;
- function text(value,x,y,width,size,fill=fg,bold=false){ctx.fillStyle=fill;ctx.font=`${bold?'bold ':''}${size}px ${font}`;ctx.fillText(ellipsis(ctx,value,width),x,y);}
+ const color=brand=>themeOf(config).dark?brand.color:darken(brand.color);
+ function text(value,x,y,width,size,fill=fg,bold=false,role='labels'){
+  ctx.fillStyle=textColor(config,role,fill);let px=textSize(config,role,size);
+  // Dense brand rows have a fixed vertical rhythm; fit names and keep scores whole.
+  if(role==='labels')px=Math.min(px,size+4);
+  ctx.font=`${bold?'bold ':''}${px}px ${font}`;
+  if(role==='values'){while(px>16&&ctx.measureText(String(value)).width>width){px--;ctx.font=`${bold?'bold ':''}${px}px ${font}`;}ctx.fillText(String(value),x,y,width);}
+  else ctx.fillText(ellipsis(ctx,value,width),x,y);
+ }
  function badge(brand,x,y,size=40){if(!showBrandLogos)return 0;const logo=getReelLogo(brand.logo);if(!logo)return 0;ctx.fillStyle='#fff';ctx.fillRect(x,y,size,size);const pad=5,fit=Math.min((size-2*pad)/logo.width,(size-2*pad)/logo.height);ctx.drawImage(logo,x+(size-logo.width*fit)/2,y+(size-logo.height*fit)/2,logo.width*fit,logo.height*fit);return size+12;}
  function identity(brand,winner,previous,x,y,width,compact=false){
   const indent=badge(brand,x,y-29,compact?34:40);
@@ -29,10 +37,10 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  }
  function exactScore(now,old,x,y,width,size){
   const changed=now?.winner.id!==old?.winner.id;
-  if(changed&&mix<1){ctx.save();ctx.globalAlpha*=1-mix;text(score(old),x,y,width,size,muted,true);ctx.restore();}
-  ctx.save();ctx.globalAlpha*=changed?mix:1;text(score(now),x,y,width,size,now?color(now.brand):muted,true);ctx.restore();
+  if(changed&&mix<1){ctx.save();ctx.globalAlpha*=1-mix;text(score(old),x,y,width,size,muted,true,'values');ctx.restore();}
+  ctx.save();ctx.globalAlpha*=changed?mix:1;text(score(now),x,y,width,size,now?color(now.brand):muted,true,'values');ctx.restore();
  }
- wrap(ctx,date,76,725,928,44,1,fg);
+ wrap(ctx,date,76,733,928,44,1,fg,false,'date');
  wrap(ctx,history.method==='record'?'Rekord marki do tej daty':'Najlepszy z ostatnich wyników marki',76,767,928,24,1,muted);
  const scale=resolveScale(config),caption=scaleCaption(config,scale),raw=history.plotRows;
  const range=scale.dynamic?visibleAiBounds(raw,current,history.times[0],history.times.at(-1),duration,transition):bounds(raw.map(r=>r.score));

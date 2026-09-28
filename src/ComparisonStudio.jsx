@@ -5,7 +5,8 @@ import {frequencyPhrase,periodAmount,scheduleRule} from './recurrence.js';
 import {useLanguages,localeFor} from './language-context.js';
 import {translate} from './translations.js';
 import {PresentationPicker} from './Presentation.jsx';
-import {VisualEditor} from './VisualSettings.jsx';
+import {VisualEditor,useVisualStatus} from './VisualSettings.jsx';
+import {themeOf} from './reel-design.js';
 import React,{useEffect,useMemo,useState} from 'react';
 import {Download,Plus,Trash2,RotateCcw} from 'lucide-react';
 import {ExportModal,Field,FontPicker,ReelPreview} from './components.jsx';
@@ -31,7 +32,8 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange,active
  const [start,setStart]=useState('2020-01-01'),[end,setEnd]=useState(''),[investment,setInvestment]=useState('5');
  const [investmentFrequency,setInvestmentFrequency]=useState('daily');
  const [chart,setChart]=useState('line');
- const [showLogos,setShowLogos]=useState(true),[theme,setTheme]=useState('dark'),[duration,setDuration]=useState(12);
+ const {visuals}=useVisualStatus(),theme=themeOf({visuals}).dark?'dark':'light';
+ const [showLogos,setShowLogos]=useState(true),[duration,setDuration]=useState(12);
  const [title,setTitle]=useState(''),[addType,setAddType]=useState('asset'),[query,setQuery]=useState('');
  const [assetType,setAssetType]=useState('all'),[region,setRegion]=useState('all');
  const [error,setError]=useState(''),[logoError,setLogoError]=useState(''),[loading,setLoading]=useState(true),[logosReady,setLogosReady]=useState(false),[exporting,setExporting]=useState(false);
@@ -104,7 +106,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange,active
     <button className="text-btn range-button" disabled={!range} onClick={()=>{setStart(range.start);setEnd(range.end);}}>Cały wspólny zakres</button>
     {range&&<p className="helper">Wspólna historia: {range.start} – {range.end}</p>}
     <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł porównania"><textarea rows="2" maxLength={80} value={title} translate="no" placeholder={translate(generatedTitle,reelLanguage)} onChange={e=>setTitle(e.target.value)}/>{title&&<button type="button" className="text-btn" onClick={()=>setTitle('')}>Przywróć tytuł automatyczny</button>}</Field>
-    <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(n=><option key={n} value={n}>{n} s</option>)}</select></Field><Field label="Motyw rolki"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
+    <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(n=><option key={n} value={n}>{n} s</option>)}</select></Field></div>
     {loading&&<p role="status" className="helper">Wczytywanie historii…</p>}{visibleError&&<p role="alert" className="error">{visibleError}</p>}
    </section>
    {active&&<ReelPreview config={config} duration={duration} valid={valid}/>}

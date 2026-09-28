@@ -1,4 +1,5 @@
 import {bundledFonts} from './font-catalog.js';
+import {themeOf,textSize,textColor,designOf} from './reel-design.js';
 export const reelFontGroups=[{id:'sans',name:'Proste · bezszeryfowe'},{id:'serif',name:'Szeryfowe · redakcyjne'},{id:'display',name:'Wąskie · do tytułów'},{id:'mono',name:'Maszynowe · techniczne'}];
 export const reelFonts = [
  {id:'arial',name:'Arial · prosta',family:'Arial, Helvetica, sans-serif',group:'sans'},
@@ -14,16 +15,15 @@ export const reelFont = id => (reelFonts.find(f=>f.id===id)||reelFonts[0]).famil
 
 // Keep titles in frame when a bundled font has different text metrics.
 const titleFits=new WeakMap();
-export function reelTitleSize(ctx,text,fontId,preferred,width,maxLines){
- const font=reelFonts.find(f=>f.id===fontId);if(!font?.file&&!font?.files?.length)return preferred;
- const key=JSON.stringify([text,fontId,preferred,width,maxLines]),cached=titleFits.get(ctx);
+export function reelTitleSize(ctx,text,fontId,preferred,width,maxLines,maxHeight=Infinity){
+ const key=JSON.stringify([text,fontId,preferred,width,maxLines,maxHeight]),cached=titleFits.get(ctx);
  if(cached?.key===key)return cached.size;
  const words=String(text||'').split(/\s+/);let size=preferred;
- for(;size>50;size--){
+ for(;size>24;size--){
   ctx.font=`bold ${size}px ${reelFont(fontId)}`;
   let line='',lines=1;
   for(const word of words){const next=line?`${line} ${word}`:word;if(ctx.measureText(next).width>width&&line){lines++;line=word;}else line=next;}
-  if(lines<=maxLines&&words.every(word=>ctx.measureText(word).width<=width))break;
+  if(lines<=maxLines&&lines*size*1.22<=maxHeight&&words.every(word=>ctx.measureText(word).width<=width))break;
  }
  titleFits.set(ctx,{key,size});return size;
 }
@@ -50,12 +50,13 @@ export function preloadReelFont(id){
 }
 
 // Shared by the preview, PNG cover and video frames in all three studios.
-export function drawSignature(ctx,width,height,fontId,dark){
+export function drawSignature(ctx,width,height,fontId,dark,config={}){
  const family=reelFont(fontId);
- ctx.save();ctx.globalAlpha=1;ctx.textAlign='center';ctx.textBaseline='alphabetic';
- ctx.fillStyle=dark?'#e5e9e2':'#343d32';ctx.font=`bold 28px ${family}`;
- ctx.fillText('Jakub Bilski',width/2,height-60);
- ctx.fillStyle=dark?'#adb5af':'#616a62';ctx.font=`24px ${family}`;
- ctx.fillText('X: @jakub_bilski  ·  IG: jakub__bilski',width/2,height-27);
+ const align=designOf(config).signatureAlign,x=align==='left'?76:align==='right'?width-76:width/2,theme=themeOf(config);
+ ctx.save();ctx.globalAlpha=1;ctx.textAlign=align;ctx.textBaseline='alphabetic';
+ ctx.fillStyle=textColor(config,'signature',theme.fg);ctx.font=`bold ${textSize(config,'signature',28)}px ${family}`;
+ ctx.fillText('Jakub Bilski',x,height-64,width-152);
+ ctx.fillStyle=textColor(config,'signature',theme.muted);ctx.font=`${textSize(config,'signature',24)}px ${family}`;
+ ctx.fillText('X: @jakub_bilski  ·  IG: jakub__bilski',x,height-25,width-152);
  ctx.restore();
 }

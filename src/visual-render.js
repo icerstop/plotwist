@@ -1,9 +1,10 @@
 import {mediaFrame} from './reel-media.js';
 import {coverRect,stickerMotion} from './media-timeline.js';
+import {themeOf} from './reel-design.js';
 
 export function drawVisualBackground(ctx,w,h,config,time=0){
  const v=config.visuals,b=v?.background;if(!b)return;
- const dark=config.theme!=='light';ctx.save();
+ const {dark,bg}=themeOf(config);ctx.save();
  if(b.type==='color'){ctx.fillStyle=b.color;ctx.fillRect(0,0,w,h);}
  if(b.type==='gradient'){
   const angle=(b.angle+(b.animate?Math.sin(time/3)*20:0))*Math.PI/180;
@@ -22,7 +23,7 @@ export function drawVisualBackground(ctx,w,h,config,time=0){
  ctx.restore();
  drawVisualOverlays(ctx,w,h,config,time,'behind');
  // Apply the user's readability veil over decorative content, before any data/text.
- if(b.veil>0){ctx.save();ctx.globalAlpha=b.veil;ctx.fillStyle=dark?'#101514':'#f7f9f3';ctx.fillRect(0,0,w,h);ctx.restore();}
+ if(b.veil>0){ctx.save();ctx.globalAlpha=b.veil;ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.restore();}
 }
 
 export function drawVisualOverlays(ctx,w,h,config,time=0,layer='front'){

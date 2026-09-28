@@ -2,9 +2,10 @@ import React,{createContext,useContext,useEffect,useMemo,useRef,useState} from '
 import {ImagePlus,Trash2,ChevronUp,ChevronDown,RotateCcw} from 'lucide-react';
 import {decodeMedia,loadVisualDraft,saveVisualDraft,mediaAsset,releaseMedia,releaseAllMedia} from './reel-media.js';
 import './visual-settings.css';
+import {normalizeDesign,reelThemes,reelLayouts,textRoles} from './reel-design.js';
 
 const defaultBackground={type:'theme',color:'#142a35',color2:'#453375',angle:115,pattern:'none',animate:false,veil:0,assetId:null,fit:'cover',opacity:1,speed:1};
-const emptyVisuals=()=>({background:{...defaultBackground},stickers:[]});
+const emptyVisuals=()=>({background:{...defaultBackground},stickers:[],design:normalizeDesign()});
 const VisualContext=createContext(null);
 export function VisualProvider({children}){
  const [visuals,setVisuals]=useState(emptyVisuals),[files,setFiles]=useState({}),[ready,setReady]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(''),[storage,setStorage]=useState('Wczytywanie dodatków…');
@@ -14,7 +15,7 @@ export function VisualProvider({children}){
   if(draft?.version===1){
    const restored={};let failed=false;
    for(const [id,file] of Object.entries(draft.files||{})){try{await decodeMedia(file,id);restored[id]=file;}catch{failed=true;}}
-   if(active){const v=draft.visuals;setFiles(restored);setVisuals({background:{...defaultBackground,...v.background,...(v.background?.assetId&&!restored[v.background.assetId]?{type:'theme',assetId:null}:{})},stickers:(v.stickers||[]).filter(s=>restored[s.assetId]).slice(0,3)});if(failed)setError('Nie udało się przywrócić jednego z plików. Wgraj go ponownie.');}
+   if(active){const v=draft.visuals;setFiles(restored);setVisuals({design:normalizeDesign(v.design),background:{...defaultBackground,...v.background,...(v.background?.assetId&&!restored[v.background.assetId]?{type:'theme',assetId:null}:{})},stickers:(v.stickers||[]).filter(s=>restored[s.assetId]).slice(0,3)});if(failed)setError('Nie udało się przywrócić jednego z plików. Wgraj go ponownie.');}
   }
  }catch{if(active)setStorage('Zapis lokalny niedostępny. Dodatki działają w tej sesji.');}finally{if(active)setReady(true);}})();return()=>{active=false;};},[]);
  useEffect(()=>{if(!ready)return;let active=true;setStorage('Zapisywanie w przeglądarce…');const timer=setTimeout(()=>{saveVisualDraft({version:1,visuals,files}).then(()=>{if(active)setStorage('Zapisano w tej przeglądarce');}).catch(()=>{if(active)setStorage('Brak miejsca na zapis. Dodatki działają w tej sesji.');});},450);return()=>{active=false;clearTimeout(timer);};},[visuals,files,ready]);
@@ -33,8 +34,10 @@ export function VisualProvider({children}){
   }catch(e){setError(e.message);}finally{operation.current=false;setBusy(false);}
  }
  function reorder(id,direction){setVisuals(v=>{const list=[...v.stickers],i=list.findIndex(s=>s.id===id),j=i+direction;if(j<0||j>=list.length)return v;[list[i],list[j]]=[list[j],list[i]];return {...v,stickers:list};});}
- function reset(){releaseAllMedia();setFiles({});setVisuals(emptyVisuals());setError('');}
- const context={visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
+ function reset(){releaseAllMedia();setFiles({});setVisuals(v=>({...emptyVisuals(),design:v.design}));setError('');}
+ function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch})}));}
+ function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
+ const context={visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,visuals,duration}),[config,visuals,duration]);}
@@ -42,9 +45,38 @@ export const useVisualStatus=()=>useContext(VisualContext);
 function Range({label,value,min=0,max=100,step=1,onChange,suffix='%'}){return <label className="visual-range"><span>{label}<output>{value}{suffix}</output></span><input type="range" aria-label={label} min={min} max={max} step={step} value={value} onInput={e=>onChange(Number(e.target.value))} onChange={e=>onChange(Number(e.target.value))}/></label>;}
 function Color({label,value,onChange}){const [draft,setDraft]=useState(value);useEffect(()=>setDraft(value),[value]);return <label className="visual-color"><span>{label}</span><span><input aria-label={label} type="color" value={value} onInput={e=>onChange(e.target.value)} onChange={e=>onChange(e.target.value)}/><input aria-label={`${label} HEX`} maxLength={7} value={draft} onChange={e=>{setDraft(e.target.value);if(/^#[0-9a-f]{6}$/i.test(e.target.value))onChange(e.target.value);}} onBlur={()=>setDraft(value)}/></span></label>;}
 const presets=[['noc','Atrament','#11232f','#373255'],['aurora','Zorza','#10352e','#343576'],['wine','Bordo','#471e35','#1a263d'],['paper','Papier','#e8eee4','#d6e5e9']];
+function DesignEditor(){
+ const v=useVisualStatus(),d=v.visuals.design,[role,setRole]=useState('title'),[section,setSection]=useState('header');
+ const t=reelThemes.find(t=>t.id===d.theme),r=textRoles.find(t=>t.id===role),value=d.text[role],p=d.positions[section];
+ const updateText=patch=>v.design({text:{...d.text,[role]:{...value,...patch}}});
+ const updatePosition=patch=>v.design({positions:{...d.positions,[section]:{...p,...patch}}});
+ const defaultColor=['subtitle','labels','source'].includes(role)?t.muted:t.fg;
+ return <details className="visual-editor design-editor" open><summary>Styl i układ rolki <span>Motywy · typografia · kompozycja</span></summary><div className="visual-editor-body"><fieldset disabled={!v.ready}>
+  <p className="visual-intro">Ustawienia wspólne dla wszystkich rolek, podglądu i eksportu.</p>
+  <div className="reel-theme-grid" role="group" aria-label="Motyw rolki">{reelThemes.map(t=><button type="button" key={t.id} className={d.theme===t.id?'selected':''} aria-pressed={d.theme===t.id} onClick={()=>v.theme(t.id)}><span className="reel-theme-swatch" style={{background:t.bg,color:t.fg}} aria-hidden="true"><b>Aa</b><i style={{background:t.colors[0]}}/><i style={{background:t.colors[1]}}/></span><span>{t.name}</span></button>)}</div>
+  <p className="visual-hint">Motyw ustawia tło i kolory tekstu. Rozmiary, układ oraz kolory wybranych serii pozostają bez zmian.</p>
+  <div className="visual-section-title"><h3>Typografia</h3></div>
+  <label className="visual-field">Element tekstowy<select aria-label="Element tekstowy" value={role} onChange={e=>setRole(e.target.value)}>{textRoles.map(r=><option key={r.id} value={r.id}>{r.name}</option>)}</select></label>
+  <Range label="Rozmiar tekstu" value={value.size} min={r.min} max={r.max} onChange={size=>updateText({size})}/>
+  <Color label="Kolor tekstu" value={value.color||defaultColor} onChange={color=>updateText({color})}/>
+  <button type="button" className="text-btn" onClick={()=>updateText({size:100,color:null})}>Przywróć styl tego tekstu</button>
+  <p className="visual-hint">100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p>
+  <div className="visual-section-title"><h3>Kompozycja</h3></div>
+  <div className="reel-layout-grid" role="group" aria-label="Układ rolki">{reelLayouts.map(l=><button type="button" key={l.id} aria-pressed={d.layout===l.id} className={d.layout===l.id?'selected':''} onClick={()=>v.design({layout:l.id,positions:normalizeDesign().positions})}><span className={`layout-mini ${l.id}`} aria-hidden="true"><i/><b/></span><strong>{l.name}</strong><small>{l.description}</small></button>)}</div>
+  <details className="reel-position-editor"><summary>Dopasuj położenie elementów</summary>
+   <label className="visual-field">Przesuwany element<select aria-label="Przesuwany element" value={section} onChange={e=>setSection(e.target.value)}><option value="header">Nagłówek i opis</option><option value="content">Wykres i legenda</option></select></label>
+   <Range label="Skala elementu" value={p.scale} min={65} max={100} onChange={scale=>updatePosition({scale})}/>
+   <Range label="Położenie poziome" value={p.x} onChange={x=>updatePosition({x})}/>
+   <Range label="Przesunięcie pionowe" value={p.y} min={-20} max={20} onChange={y=>updatePosition({y})}/>
+   <button type="button" className="text-btn" onClick={()=>updatePosition({x:50,y:0,scale:100})}>Przywróć pozycję elementu</button>
+  </details>
+  <label className="visual-field">Wyrównanie podpisu<select aria-label="Wyrównanie podpisu" value={d.signatureAlign} onChange={e=>v.design({signatureAlign:e.target.value})}><option value="left">Do lewej</option><option value="center">Na środku</option><option value="right">Do prawej</option></select></label>
+  <button type="button" className="text-btn visual-reset" onClick={()=>{v.theme('dark');v.design(normalizeDesign());}}><RotateCcw size={14}/>Przywróć domyślny styl i układ</button>
+ </fieldset></div></details>;
+}
 export function VisualEditor(){
  const v=useVisualStatus(),b=v.visuals.background,bgInput=useRef(),stickerInput=useRef();
- return <details className="visual-editor"><summary>Tło i dodatki <span>Obrazy · GIF-y</span></summary><div className="visual-editor-body">
+ return <><DesignEditor/><details className="visual-editor"><summary>Tło i dodatki <span>Obrazy · GIF-y</span></summary><div className="visual-editor-body">
   <p className="visual-intro">Wspólny wygląd rolek. Wgrane pliki pozostają w tej przeglądarce.</p>
   <fieldset disabled={!v.ready||v.busy}>
    <label className="visual-field">Rodzaj tła<select aria-label="Rodzaj tła" value={b.type} onChange={e=>v.background({type:e.target.value,veil:e.target.value==='theme'?0:e.target.value==='image'?.55:.18})}><option value="theme">Z motywu rolki</option><option value="color">Własny kolor</option><option value="gradient">Gradient</option><option value="image">Obraz lub GIF</option></select></label>
@@ -69,5 +101,5 @@ export function VisualEditor(){
    <button type="button" className="text-btn visual-reset" onClick={v.reset}><RotateCcw size={14}/>Przywróć proste tło i usuń dodatki</button>
   </fieldset>
   {v.busy&&<p role="status" className="helper">Przygotowywanie klatek obrazu…</p>}{v.error&&<p role="alert" className="error">{v.error}</p>}<p className="visual-storage" role="status">{v.storage}</p>
- </div></details>;
+ </div></details></>;
 }

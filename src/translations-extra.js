@@ -1,5 +1,49 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Styl i układ rolki|Reel style and layout
+Motywy · typografia · kompozycja|Themes · typography · composition
+Ustawienia wspólne dla wszystkich rolek, podglądu i eksportu.|Shared settings for all reels, previews and exports.
+Studio · ciemny|Studio · dark
+Klasyczny · jasny|Classic · light
+Klasyczny · ciemny|Classic · dark
+Papier i atrament|Paper and ink
+Granat i biel|Navy and white
+Redakcyjny · jasny|Editorial · light
+Motyw ustawia tło i kolory tekstu. Rozmiary, układ oraz kolory wybranych serii pozostają bez zmian.|A theme sets the background and text colors. Sizes, layout and selected series colors stay as configured.
+Typografia|Typography
+Element tekstowy|Text element
+Opis pod tytułem|Subtitle
+Etykiety i osie|Labels and axes
+Wartości liczbowe|Numeric values
+Data / rok|Date / year
+Źródła i metodologia|Sources and methodology
+Podpis autora|Author signature
+Rozmiar tekstu|Text size
+Kolor tekstu|Text color
+Kolor tekstu HEX|Text color HEX
+Przywróć styl tego tekstu|Reset this text style
+100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.|100% is the original size. Long text adjusts to the available space.
+Kompozycja|Composition
+Układ rolki|Reel layout
+Klasyczny|Classic
+Nagłówek, wykres, podpis|Heading, chart, signature
+Wykres w centrum|Chart in focus
+Mniejszy nagłówek, wykres wyżej|Smaller heading, chart moved up
+Wykres na górze|Chart first
+Dane przed nagłówkiem|Data before the heading
+Dopasuj położenie elementów|Adjust element positions
+Przesuwany element|Element to move
+Nagłówek i opis|Heading and subtitle
+Wykres i legenda|Chart and legend
+Skala elementu|Element scale
+Położenie poziome|Horizontal position
+Przesunięcie pionowe|Vertical offset
+Przywróć pozycję elementu|Reset element position
+Wyrównanie podpisu|Signature alignment
+Do lewej|Left
+Na środku|Center
+Do prawej|Right
+Przywróć domyślny styl i układ|Reset default style and layout
 Grupowanie wyników|Group results
 Pojedyncze modele|Individual models
 Najlepsze modele według marki|Best models by brand
