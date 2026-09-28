@@ -48,6 +48,6 @@ const concepts = [
 export const ideas=[...ready,...concepts];
 export function matchIdeas(text,category='Wszystkie'){
  const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l');
- const words=norm(text).split(/\W+/).filter(w=>w.length>2);
+ const words=norm(text).split(/\W+/).filter(w=>w.length>=2&&!['jak','czy','sie','co','na','do','od','ze','vs','ile','o','w'].includes(w));
  return ideas.filter(i=>category==='Wszystkie'||i.category===category).map(i=>({i,score:words.reduce((a,w)=>a+(norm([i.title,i.hook,i.description,i.category,i.source].join(' ')).includes(w)?1:0),0)})).filter(r=>!words.length||r.score>0).sort((a,b)=>b.score-a.score).map(r=>r.i);
 }
