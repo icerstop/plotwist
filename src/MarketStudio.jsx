@@ -92,7 +92,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
     <div className="market-heading"><div><h1>Mały nawyk. Prawdziwa historia.</h1><p>Regularne wpłaty spotykają historyczne ceny akcji.</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
     <div className="market-meta"><Database size={15}/>{manifest ? <span>{manifest.stocks.length} spółek · {manifest.totalObservations.toLocaleString(localeFor(uiLanguage))} cen zamknięcia · USA i Europa</span> : <span>Wczytywanie katalogu…</span>}<span>Snapshot: {manifest?.retrievedAt.slice(0,10) || '…'}</span></div>
     <div className="market-workspace">
-      <section className="market-controls" aria-label="Ustawienia inwestowania"><PresentationPicker value={chart} onChange={setChart}/>
+      <section className="market-controls" aria-label="Ustawienia inwestowania"><PresentationPicker config={config} value={chart} onChange={setChart}/>
         <div className="market-switch" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label]) => <button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={() => {setMode(id);setCustomTitle(false);}}>{label}</button>)}</div>
         <div className="market-regions">{['Wszystkie','USA','Europa'].map(r => <button key={r} className={region===r?'selected':''} onClick={() => setRegion(r)}>{r}</button>)}</div>
         <div className="search-field market-search"><Search size={17}/><input aria-label="Szukaj spółki" placeholder="NVIDIA, Apple, ASML, Polska…" value={search} onChange={e=>setSearch(e.target.value)}/></div>

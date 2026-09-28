@@ -4,6 +4,7 @@ import {reelFont,drawSignature} from './reel-style.js';
 import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
 import {crossText} from './series-render.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
+import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
 function typography(font,language){
 function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false){
  if(!custom)text=translate(text,language);
@@ -31,6 +32,14 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  const first=rows[0],last=rows.at(-1),transition=config.transition??.65,duration=config.duration||20;
  const frame=mode==='scatter'?frameAt(rows,progress):null;
  if(!first)return;
+ const scale=resolveScale(config),caption=scaleCaption(config,scale);
+ const aiAxis=()=>{
+  const start=Date.parse(first.date),end=Date.parse(last.date),current=lerp(start,end,clamp(progress));
+  const range=scale.dynamic?visibleAiBounds(rows,current,start,end,duration,transition):bounds(rows.flatMap(r=>[r.score,r.low??r.score-(r.stderr||0),r.high??r.score+(r.stderr||0)]));
+  if(mode==='scatter'&&b.baseline){range.min=Math.min(range.min,b.baseline.score);range.max=Math.max(range.max,b.baseline.score);}
+  const domain=mode==='scatter'?[b.max?0:Math.floor(range.min/10)*10-10,b.max||Math.ceil(range.max/10)*10+10]:[Math.min(0,range.min),b.max||Math.max(1,range.max)];
+  return createAxis(range,{log:scale.log,dynamic:scale.dynamic,fixedDomain:domain,includeZero:mode!=='scatter'||!!b.max});
+ };
  const score=r=>`${aiValue(r.score)} ${b.unit}`;
  if(mode==='timeline'){
    const scene=sceneAt(rows.length,progress,duration,transition);
@@ -51,7 +60,8 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    const motion=aiMotionFrame(rows,progress,duration,transition,timeSeconds),now=motion.frame,old=motion.before,{mix}=motion;
    wrap(ctx,now.date,76,715,920,56,1,fg);
    const current=now.rank.slice(0,6),before=old.rank.slice(0,6),ids=[...new Set([...before,...current].map(r=>r.modelId))];
-   const low=Math.min(0,...rows.map(r=>r.score)),high=b.max||Math.max(1,...rows.map(r=>r.score)),barX=v=>76+(v-low)/(high-low||1)*925;
+   const axis=aiAxis(),barX=v=>76+axis.position(v)*925;
+   if(caption)wrap(ctx,caption,76,752,920,23,1,muted);
    ctx.save();ctx.beginPath();ctx.rect(65,754,950,852);ctx.clip();
    for(const id of ids){
     const ni=current.findIndex(r=>r.modelId===id),oi=before.findIndex(r=>r.modelId===id),r=current[ni]||before[oi],prev=before[oi]||r;
@@ -67,11 +77,12 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    ctx.restore();wrap(ctx,`${b.unit} · ostatni dostępny pomiar każdego wariantu`,76,1625,920,28,2,muted);
  } else if(mode==='records'){
    const motion=aiMotionFrame(rows,progress,duration,transition,timeSeconds),{frames,frame:now,before:old,mix,current}=motion;
-   const top=815,bottom=1410,left=130,right=960,low=Math.min(0,...rows.map(r=>r.score)),high=b.max||Math.max(1,...rows.map(r=>r.score));
-   const start=frames[0].time,end=frames.at(-1).time,x=t=>left+(t-start)/(end-start||1)*(right-left),y=v=>bottom-(v-low)/(high-low||1)*(bottom-top);
+   const top=815,bottom=1410,left=130,right=960,axis=aiAxis();
+   const start=frames[0].time,end=frames.at(-1).time,x=t=>left+(t-start)/(end-start||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
+   if(caption)wrap(ctx,caption,left,top-22,850,23,1,muted);
    wrap(ctx,`${b.unit} · najwyższy dotąd wynik w filtrze`,76,727,920,30,2,muted);
-   for(let i=0;i<=4;i++){const value=lerp(low,high,i/4);ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(value));ctx.lineTo(right,y(value));ctx.stroke();ctx.textAlign='right';wrap(ctx,aiValue(value),left-20,y(value)+9,120,27,1,muted);ctx.textAlign='left';}
-   ctx.save();ctx.beginPath();ctx.rect(left-5,top-5,(right-left)*progress+10,bottom-top+10);ctx.clip();ctx.strokeStyle=accent;ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();let previous=frames[0].record.score;ctx.moveTo(left,y(previous));
+   for(const value of axis.ticks){ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(value));ctx.lineTo(right,y(value));ctx.stroke();ctx.textAlign='right';wrap(ctx,formatAxisTick(value,config.language),left-20,y(value)+9,120,25,1,muted);ctx.textAlign='left';}
+   ctx.save();ctx.beginPath();ctx.rect(left-5,top-5,(right-left)*progress+5,bottom-top+10);ctx.clip();ctx.strokeStyle=accent;ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();let previous=frames[0].record.score;ctx.moveTo(left,y(previous));
    for(const f of frames.slice(1)){ctx.lineTo(x(f.time),y(previous));ctx.lineTo(x(f.time),y(f.record.score));previous=f.record.score;}ctx.lineTo(right,y(previous));ctx.stroke();ctx.restore();
    wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';
    function recordLabel(r,alpha){
@@ -85,9 +96,10 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    wrap(ctx,new Date(current).toISOString().slice(0,10),76,1669,920,27,1,muted);
  } else if(mode==='scatter'){
    const top=775,bottom=1450,left=130,right=960;
-   const min=b.max?0:Math.floor(Math.min(...rows.map(r=>r.low??r.score))/10)*10-10,max=b.max||Math.ceil(Math.max(...rows.map(r=>r.high??r.score))/10)*10+10;
-   const t0=Date.parse(first.date),t1=Date.parse(last.date);const x=d=>left+(Date.parse(d)-t0)/(t1-t0||1)*(right-left),y=v=>bottom-(v-min)/(max-min)*(bottom-top);
-   for(let i=0;i<=4;i++){const v=min+(max-min)*i/4;ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(v));ctx.lineTo(right,y(v));ctx.stroke();ctx.textAlign='right';wrap(ctx,aiValue(v),left-20,y(v)+9,120,27,1,muted);ctx.textAlign='left';}
+   const axis=aiAxis(),min=axis.min,max=axis.max;
+   const t0=Date.parse(first.date),t1=Date.parse(last.date);const x=d=>left+(Date.parse(d)-t0)/(t1-t0||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
+   if(caption)wrap(ctx,caption,left,top-22,850,23,1,muted);
+   for(const v of axis.ticks){ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(v));ctx.lineTo(right,y(v));ctx.stroke();ctx.textAlign='right';wrap(ctx,formatAxisTick(v,config.language),left-20,y(v)+9,120,25,1,muted);ctx.textAlign='left';}
    wrap(ctx,b.unit,76,720,920,30,1,muted);
    if(b.baseline){const yy=y(b.baseline.score);ctx.strokeStyle=purple;ctx.setLineDash([10,10]);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(right,yy);ctx.stroke();ctx.setLineDash([]);wrap(ctx,`Punkt odniesienia: ${aiValue(b.baseline.score)}`,left,yy-15,800,26,1,purple);}
    frame.visible.forEach(r=>{const age=(lerp(t0,t1,progress)-Date.parse(r.date))/(t1-t0||1)*duration*.9+Math.max(0,timeSeconds-duration*.9);const alpha=transition&&r.date!==first.date?ease(age/Math.min(transition,duration*.08)):1;ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=accent;ctx.globalAlpha*=.48;ctx.beginPath();ctx.arc(x(r.date),y(r.score),7,0,Math.PI*2);ctx.fill();ctx.globalAlpha=alpha;const lo=r.low??(r.stderr!=null?r.score-r.stderr:null),hi=r.high??(r.stderr!=null?r.score+r.stderr:null);if(lo!=null&&hi!=null){ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(x(r.date),y(Math.max(min,lo)));ctx.lineTo(x(r.date),y(Math.min(max,hi)));ctx.stroke();}ctx.restore();});

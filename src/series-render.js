@@ -1,6 +1,7 @@
 import {displayDate} from './market.js';
 import {getReelLogo} from './reel-assets.js';
 import {seriesFrame,lerp} from './presentation.js';
+import {resolveScale,bounds,visibleSeriesBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
 export function crossText(ctx,previous,current,x,y,mix=1){
  if(previous===current||mix>=1){ctx.fillText(current,x,y);return;}
  ctx.save();ctx.globalAlpha*=Math.max(0,1-mix*2);ctx.fillText(previous,x,y-8*mix);ctx.restore();
@@ -13,16 +14,28 @@ function logoLabel(ctx,series,x,y,font,fg,maxWidth){
  ctx.fillStyle=fg;ctx.font=`27px ${font}`;const suffix=series.scheduleText?` · ${series.scheduleText}`:'',suffixWidth=ctx.measureText(suffix).width;
  fittedText(ctx,series.name,x+offset,y,Math.max(40,maxWidth-offset-suffixWidth));if(suffix)ctx.fillText(suffix,x+maxWidth-suffixWidth,y);
 }
+const extentCache=new WeakMap();
 export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,contentTop,formatValue,timeSeconds}){
  const {series=[],chart='line',unit='',xType='year'}=config;
  const state=seriesFrame(series,progress,config.duration||12,config.transition??.65,timeSeconds),{values,before,mix,current}=state;
- let minX=Infinity,maxX=-Infinity,minY=0,rawMax=0;
- for(const s of series)for(const p of s.points){minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);if(Number.isFinite(p.y)){minY=Math.min(minY,p.y);rawMax=Math.max(rawMax,p.y);}}
+ let all=extentCache.get(series);
+ if(!all){all={minX:Infinity,maxX:-Infinity,minY:0,rawMax:0,range:bounds([])};
+  for(const s of series)for(const p of s.points){all.minX=Math.min(all.minX,p.x);all.maxX=Math.max(all.maxX,p.x);if(Number.isFinite(p.y)){all.minY=Math.min(all.minY,p.y);all.rawMax=Math.max(all.rawMax,p.y);all.range.min=Math.min(all.range.min,p.y);all.range.max=Math.max(all.range.max,p.y);}}
+  extentCache.set(series,all);
+ }
+ const {minX,maxX,minY,rawMax}=all;
  const step=10**Math.floor(Math.log10(rawMax-minY||1)),maxY=Math.ceil((rawMax||1)/step)*step;
+ const scale=resolveScale(config);
+ const extent=scale.dynamic?visibleSeriesBounds(series,current,scale.log):all.range;
+ // Bars may still be tweening the last observation: keep the axis large enough.
+ if(scale.dynamic&&['bar','ranking'].includes(chart))for(const row of before)if(Number.isFinite(row.value)){extent.min=Math.min(extent.min,row.value);extent.max=Math.max(extent.max,row.value);}
+ const axis=createAxis(extent,{log:scale.log,dynamic:scale.dynamic,fixedDomain:[minY,maxY]});
+ const caption=scaleCaption(config,scale);
+ if(caption){ctx.fillStyle=muted;ctx.font=`23px ${font}`;ctx.fillText(caption,chart==='ranking'?78:135,chart==='ranking'?contentTop-22:top-22);}
  const color=i=>series[i].customColor?series[i].color:colors[i%colors.length];
  const text=v=>v===null?(config.language==='en'?'no data':'brak danych'):`${formatValue(v)} ${unit}`;
  const moving=i=>values[i].value===null?null:lerp(before[i].value??values[i].value,values[i].value,mix);
- const left=135,right=900,px=x=>left+(x-minX)/(maxX-minX||1)*(right-left),py=y=>bottom-(y-minY)/(maxY-minY||1)*(bottom-top);
+ const left=135,right=900,px=x=>left+(x-minX)/(maxX-minX||1)*(right-left),py=y=>bottom-axis.position(y)*(bottom-top);
  if(chart==='cards'||chart==='ranking'){
   const yStart=contentTop,yEnd=height-(height<1400?205:290),count=series.length;
   if(chart==='cards'){
@@ -33,7 +46,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
   }else{
    const sorted=items=>items.toSorted((a,b)=>(b.value??-Infinity)-(a.value??-Infinity)||a.index-b.index);
    const oldRank=sorted(before),rank=sorted(values),slot=(yEnd-yStart)/count;
-   const x=v=>78+(v-minY)/(maxY-minY||1)*924;
+   const x=v=>78+axis.position(v)*924;
    values.forEach((entry,i)=>{const pos=rank.findIndex(r=>r.index===i),oldPos=oldRank.findIndex(r=>r.index===i),y=yStart+lerp(oldPos,pos,mix)*slot;
     logoLabel(ctx,entry.series,80,y+30,font,fg,600);ctx.fillStyle=fg;ctx.font=`bold 29px ${font}`;ctx.textAlign='right';crossText(ctx,text(before[i].value),text(entry.value),1000,y+30,mix);ctx.textAlign='left';
     ctx.fillStyle=dark?'#2a302c':'#dce3d8';ctx.fillRect(78,y+48,924,Math.min(30,slot*.28));const value=moving(i);if(value!==null){ctx.fillStyle=color(i);ctx.fillRect(Math.min(x(0),x(value)),y+48,Math.max(2,Math.abs(x(value)-x(0))),Math.min(30,slot*.28));}
@@ -42,7 +55,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
   return current;
  }
  ctx.lineWidth=2;ctx.font=`25px ${font}`;
- for(let i=0;i<=4;i++){const val=minY+(maxY-minY)*i/4,y=py(val);ctx.strokeStyle=dark?'#2a302c':'#dce3d8';ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.fillStyle=muted;ctx.textAlign='right';ctx.fillText(formatValue(val),left-22,y+8);}
+ for(const val of axis.ticks){const y=py(val);ctx.strokeStyle=dark?'#2a302c':'#dce3d8';ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.fillStyle=muted;ctx.textAlign='right';fittedText(ctx,formatAxisTick(val,config.language),left-22,y+8,left-30);}
  ctx.textAlign='center';
  if(chart==='bar'){
   ctx.fillStyle=muted;ctx.fillText(xType==='date'?displayDate(Math.floor(current),config.language):String(Math.floor(current)),(left+right)/2,bottom+47);
@@ -53,7 +66,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
   if(chart==='bar'){
    const v=moving(i);if(v!==null){const barWidth=(right-left)/(series.length*1.6),x=left+i*(right-left)/series.length;ctx.fillRect(x,Math.min(py(0),py(v)),barWidth,Math.max(2,Math.abs(py(0)-py(v))));}
   }else{
-   ctx.save();ctx.beginPath();ctx.rect(left-8,top-10,(right-left)*progress+16,bottom-top+20);ctx.clip();
+   ctx.save();ctx.beginPath();ctx.rect(left-8,top-10,(right-left)*progress+8,bottom-top+20);ctx.clip();
    if(chart==='area'){
     ctx.save();ctx.globalAlpha=.13;let segment=[];const fill=()=>{if(!segment.length)return;ctx.beginPath();ctx.moveTo(px(segment[0].x),py(0));for(const p of segment)ctx.lineTo(px(p.x),py(p.y));ctx.lineTo(px(segment.at(-1).x),py(0));ctx.closePath();ctx.fill();segment=[];};for(const p of s.points){if(Number.isFinite(p.y))segment.push(p);else fill();}fill();ctx.restore();
    }

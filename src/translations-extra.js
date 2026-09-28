@@ -1,5 +1,20 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Przed nowym pomiarem oś łagodnie robi na niego miejsce. Wynik pojawia się dopiero w swojej dacie.|Before a new measurement, the axis smoothly makes room for it. The score appears only on its own date.
+Zakres osi wartości|Value axis range
+Stały · cała historia|Fixed · entire history
+Rosnący · wraz z animacją|Expanding · with animation
+Początek ma własną skalę. Zakres rozszerza się w miarę odsłaniania danych; wcześniejsze rekordy pozostają w kadrze.|The beginning has its own scale. The range expands as data is revealed; earlier records stay in view.
+Ta sama skala od początku do końca rolki, wyznaczona przez całą wybraną historię.|The same scale throughout the reel, based on the entire selected history.
+Skala osi wartości|Value axis scale
+Liniowa|Linear
+Logarytmiczna|Logarithmic
+Na skali logarytmicznej taki sam odstęp oznacza taki sam mnożnik, np. 1 → 10 i 10 → 100. Wartości danych się nie zmieniają.|On a logarithmic scale, equal distances mean equal ratios, e.g. 1 → 10 and 10 → 100. Data values stay unchanged.
+Skala logarytmiczna wymaga samych dodatnich wartości, także granic niepewności i punktu odniesienia.|A logarithmic scale requires positive values, including uncertainty bounds and the reference point.
+Słupki i wypełnienia zaczynają się od zera, dlatego używają skali liniowej.|Bars and filled charts start at zero, so they use a linear scale.
+Dla tych danych lub tej prezentacji aktywna jest skala liniowa.|A linear scale is active for this dataset or presentation.
+Ustawienia skali są wspólne dla modułów i eksportu. Rodzaj skali jest oznaczony na rolce.|Scale settings are shared across modules and exports. The scale type is labelled on the reel.
+Ta prezentacja nie ma osi wartości. Skalowanie jest dostępne dla wykresów.|This presentation has no value axis. Scaling is available for charts.
 Język rolki:|Reel language:
 Kod|Coding
 Przekrojowe|General capability
