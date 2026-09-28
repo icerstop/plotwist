@@ -13,7 +13,7 @@ Produkcja: `npm run build` (katalog `dist`). Weryfikacja obliczeń i CSV: `npm t
 
 ## Co działa
 
-- 8 udokumentowanych wskaźników World Bank: 11 państw + agregat Świat, lata 2000–2023, 2291 niepustych obserwacji. Snapshoty są dołączone do strony i działają bez połączenia z API.
+- 8 udokumentowanych wskaźników World Bank: 11 państw + agregat Świat, pełna dostępna historia (łącznie 1960–2025), 4731 niepustych obserwacji. Snapshoty są dołączone do strony i działają bez połączenia z API.
 - Pobieranie dodatkowego wskaźnika World Bank po kodzie, dla tych samych państw i zakresu lat. Zależne od dostępności API/CORS.
 - Do 3 serii, zakres lat, skala oryginalna lub indeks 100, wykres liniowy lub słupkowy, motywy jasny i ciemny.
 - Symulacja codziennych wpłat oraz wydatków na kawę, z jawnymi założeniami.
@@ -54,7 +54,7 @@ Hosting Sites jest prywatny. Manifest `.openai/hosting.json` wskazuje istniejąc
 
 ## Giełda — dzienne ceny i inwestycja vs nawyk
 
-Zakładka **Giełda** zawiera 39 wybranych spółek z USA, Niemiec, Holandii, Francji, Wielkiej Brytanii, Szwajcarii, Danii, Włoch, Hiszpanii, Polski, Szwecji i Norwegii. Snapshot pobrany 28.09.2026 zawiera 204 131 cen sesyjnych; ostatnia sesja 25.09.2026. Historia zaczyna się w 2005 r. albo przy debiucie/dostępności danego symbolu. Brak pokrycia całego rynku; brak indeksu spółek wycofanych. Jednego planowanego symbolu (ROG.SW) dostawca nie udostępnił — nie jest pokazywany jako dostępny.
+Zakładka **Giełda** zawiera 39 wybranych spółek z USA, Niemiec, Holandii, Francji, Wielkiej Brytanii, Szwajcarii, Danii, Włoch, Hiszpanii, Polski, Szwecji i Norwegii. Snapshot pobrany 28.09.2026 zawiera 295 870 cen sesyjnych; ostatnia sesja 25.09.2026. Historia obejmuje wszystkie dzienne obserwacje dostępne u dostawcy: m.in. Coca-Cola od 1962-01-02, Apple od 1980-12-12 i NVIDIA od 1999-01-22. Kursy NBP od 2002-01-02; symulacje walutowe w PLN od następnego dnia, bo wymagają wcześniejszej tabeli. Sam wykres ceny nie ma ograniczenia do 30 lat. Brak pokrycia całego rynku; brak indeksu spółek wycofanych. Jednego planowanego symbolu (ROG.SW) dostawca nie udostępnił — nie jest pokazywany jako dostępny.
 
 Źródło notowań: publicznie dostępne dane wykresów Yahoo Finance. Nie jest to stabilne, gwarantowane API z umową SLA. Każdy plik zachowuje ticker, giełdę, strefę czasową, walutę, datę pobrania, link do historii i zgłoszone splity. Nie wykonujemy wywołań Yahoo w przeglądarce: użytkownik odczytuje snapshoty z hostingu. Świeżo pobrane pliki nie trafiają automatycznie na stronę online — wymagają ponownego zbudowania i publikacji.
 
@@ -86,3 +86,9 @@ Cztery formy: karty na osi czasu (do 8 wybranych rekordów), zmieniający się r
 Rozdzielamy datę premiery od daty pomiaru / publikacji. Oś premier to retrospektywa, a nie dowód dostępności wyniku w tamtym czasie. ECI nie jest IQ. TrackingAI to eksperymentalny quiz, nie psychometryczna miara człowieka. Wartości, daty, źródła i ograniczenia pozostają w filmach i eksportach. Niedatowane raporty zewnętrzne pozostają odrębnymi obserwacjami. Szczegóły i źródła: `research/ai/README.md`.
 
 `npm run data:ai` odtwarza pliki aplikacji z pobranych CSV. `pwsh -File scripts/refresh-ai-sources.ps1` odświeża publiczne źródła bez płatnego API; przed publikacją należy sprawdzić zmiany metodologii. Surowe archiwum Epoch zachowano do dalszej rozbudowy, aplikacja pobiera tylko wybrany zestaw.
+
+## Pełna historia danych
+
+`node scripts/fetch-data.mjs` pobiera wszystkie strony World Bank bez filtra dat. Import własnego wskaźnika działa tak samo. Selektory lat wynikają z niepustych obserwacji wybranych krajów; puste wartości pozostają lukami. Przycisk „Cała dostępna historia” przywraca pełny zakres, a zmiana wskaźnika automatycznie wybiera jego historię. Najnowszy rok może być inny dla każdego wskaźnika i kraju. Dane przyszłe nie są dopisywane.
+
+Pobieranie akcji używa pierwszej daty handlu podanej przez Yahoo oraz jawnego `interval=1d`. Nie używa `range=max`, ponieważ Yahoo potrafi wtedy zwrócić interwał kwartalny. Skrypt sprawdza otrzymaną częstotliwość. Ceny i kursy walut mają niezależne zakresy. Moduł AI już wcześniej korzystał z pełnej historii źródeł i nie miał limitu roku 2000.

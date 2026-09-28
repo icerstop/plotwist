@@ -17,7 +17,6 @@ function amountInCents(value, label) {
 export function validateMarketRange(stock, start, end) {
   const first = toDay(start), last = toDay(end);
   if (last <= first) throw new Error('Data końcowa musi być późniejsza od początkowej.');
-  if (last - first > 30 * 366) throw new Error('Wybierz zakres nie dłuższy niż 30 lat.');
   if (!stock?.rows?.length) throw new Error('Brak notowań spółki.');
   if (start < stock.rows[0][0]) throw new Error(`Historia tej spółki zaczyna się ${stock.rows[0][0]}.`);
   const snapshotEnd = fromDay(toDay(stock.retrievedAt.slice(0, 10)) - 1);
@@ -30,6 +29,8 @@ export function simulateDailyInvestment({ stock, fx, start, end, dailyInvestment
   const deposit = amountInCents(dailyInvestment, 'Wpłata'), expense = amountInCents(dailyExpense, 'Wydatek');
   if (deposit === 0 && expense === 0) throw new Error('Przynajmniej jedna kwota musi być większa od zera.');
   if (stock.currency !== 'PLN' && !fx?.rows?.length) throw new Error('Brak historycznych kursów NBP.');
+  const earliest = marketStartDate(stock, fx, 'dca');
+  if (earliest && start < earliest) throw new Error(`Symulacja w PLN dostępna od ${earliest}: potrzebny jest wcześniejszy kurs NBP. Starsze notowania znajdziesz w trybie „Kurs akcji”.`);
   const prices = stock.rows, rates = fx?.rows || [];
   let priceIndex = -1, fxIndex = -1, cashCents = 0, totalCents = 0, expenseCents = 0, units = 0, trades = 0;
   const ledger = [];
@@ -69,6 +70,13 @@ export function simulateDailyInvestment({ stock, fx, start, end, dailyInvestment
 
 export function priceSeries(stock, start, end, basis = 'split') {
   return [{ name: `${stock.symbol} · ${basis === 'raw' ? 'cena odtworzona' : 'Close (splity)'}`, color: '#bcf34a', points: stock.rows.filter(r => r[0] >= start && r[0] <= end).map(r => ({ x: toDay(r[0]), y: r[basis === 'raw' ? 2 : 1] })) }];
+}
+
+export function marketStartDate(stock, fx, mode='prices') {
+ const first=stock?.rows?.[0]?.[0];
+ if(!first||mode==='prices'||stock.currency==='PLN')return first||'';
+ const firstRate=fx?.rows?.find(r=>Number.isFinite(r[stock.currency])&&r[stock.currency]>0);
+ return firstRate ? [first,fromDay(toDay(firstRate.date)+1)].sort().at(-1) : first;
 }
 
 export function marketCsv(rows, headers) {

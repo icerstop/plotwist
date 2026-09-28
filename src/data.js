@@ -23,8 +23,27 @@ export function parseCsv(text){
 export function downloadBlob(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}
 export async function loadWorldBank(code,signal){
  if(!/^[A-Z0-9_.]{3,80}$/.test(code))throw new Error('Wpisz prawidłowy kod wskaźnika, np. IT.NET.USER.ZS.');
- const url=`https://api.worldbank.org/v2/country/${Object.keys(countries).join(';')}/indicator/${code}?format=json&date=2000:2023&per_page=1000`;
- const res=await fetch(url,{signal});if(!res.ok)throw new Error(`World Bank: HTTP ${res.status}`);const data=await res.json();
- if(!Array.isArray(data[1])||!data[1].some(r=>r.value!==null))throw new Error('Brak danych dla tego kodu w latach 2000–2023.');
- return {indicator:code,name:data[1][0].indicator.value,url,source:'World Bank, World Development Indicators',retrievedAt:new Date().toISOString(),lastUpdated:data[0].lastupdated,rows:data[1].map(r=>({country:r.countryiso3code,year:Number(r.date),value:r.value}))};
+ const url=`https://api.worldbank.org/v2/country/${Object.keys(countries).join(';')}/indicator/${code}?format=json&per_page=1000`;
+ const rows=[];let pages=1,metadata,name;const requests=[];
+ for(let page=1;page<=pages;page++){
+  const request=`${url}&page=${page}`;const res=await fetch(request,{signal});if(!res.ok)throw new Error(`World Bank: HTTP ${res.status}`);const data=await res.json();
+  if(!Array.isArray(data[1])||!Number.isInteger(Number(data[0]?.pages)))throw new Error('Brak danych dla tego kodu.');
+  if(page===1){metadata=data[0];pages=Number(metadata.pages);name=data[1][0]?.indicator.value;}
+  requests.push(request);rows.push(...data[1].map(r=>({country:r.countryiso3code,year:Number(r.date),value:r.value})));
+ }
+ if(!rows.some(r=>Number.isFinite(r.value)))throw new Error('Brak opublikowanych wartości dla wybranych krajów.');
+ if(rows.length!==Number(metadata.total)||new Set(rows.map(r=>`${r.country}:${r.year}`)).size!==rows.length)throw new Error('Niepełna lub powielona odpowiedź World Bank. Spróbuj ponownie.');
+ return {indicator:code,name,url,requests,source:'World Bank, World Development Indicators',retrievedAt:new Date().toISOString(),lastUpdated:metadata.lastupdated,rows};
+}
+
+// Union of observed coverage: a missing country-year stays a gap, never a zero.
+export function worldBankRange(snapshot,selected,start,end){
+ const coverage=selected.map(country=>{const years=(snapshot?.rows||[]).filter(r=>r.country===country&&Number.isFinite(r.value)&&Number.isInteger(r.year)).map(r=>r.year);return {country,first:years.length?Math.min(...years):null,last:years.length?Math.max(...years):null};});
+ const available=coverage.filter(c=>c.first!==null);
+ if(!available.length)return {years:[],start:null,end:null,coverage};
+ const first=Math.min(...available.map(c=>c.first)),last=Math.max(...available.map(c=>c.last));
+ let from=Number.isInteger(start)?Math.max(first,Math.min(start,last)):first;
+ let to=Number.isInteger(end)?Math.min(last,Math.max(end,first)):last;
+ if(from>=to&&first<last){from=first;to=last;}
+ return {years:Array.from({length:last-first+1},(_,i)=>first+i),start:from,end:to,coverage};
 }
