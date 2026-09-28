@@ -1,0 +1,16 @@
+{
+  "family": "Manrope",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/manrope",
+  "metadata": "name: \"Manrope\"\ndesigner: \"Mikhail Sharanda\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2019-10-03\"\nfonts {\n  name: \"Manrope\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Manrope[wght].ttf\"\n  post_script_name: \"Manrope-ExtraLight\"\n  full_name: \"Manrope ExtraLight\"\n  copyright: \"Copyright 2019 The Manrope Project Authors (https://github.com/googlefonts/manrope)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"greek\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 800.0\n}\nsource {\n  repository_url: \"https://github.com/googlefonts/manrope\"\n  commit: \"6f81ebecdf65e4463b798cc07b16a4f8d5216917\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/manrope/Manrope-wght-.ttf",
+      "weight": "200 800",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope%5Bwght%5D.ttf",
+      "bytes": 164700,
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    }
+  ]
+}

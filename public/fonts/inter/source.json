@@ -1,0 +1,16 @@
+{
+  "family": "Inter",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/inter",
+  "metadata": "name: \"Inter\"\ndesigner: \"Rasmus Andersson\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2020-01-24\"\nfonts {\n  name: \"Inter\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Inter[opsz,wght].ttf\"\n  post_script_name: \"Inter-Regular\"\n  full_name: \"Inter Regular\"\n  copyright: \"Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)\"\n}\nfonts {\n  name: \"Inter\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Inter-Italic[opsz,wght].ttf\"\n  post_script_name: \"Inter-Italic\"\n  full_name: \"Inter Italic\"\n  copyright: \"Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"greek\"\nsubsets: \"greek-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"opsz\"\n  min_value: 14.0\n  max_value: 32.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://www.github.com/rsms/inter\"\n  commit: \"66647c0bbbe41a850d79d9c76fb13add3378940f\"\n  archive_url: \"https://github.com/rsms/inter/files/15438431/Inter-4.1-GoogleFonts.zip\"\n  files {\n    source_file: \"Inter[opsz,wght].ttf\"\n    dest_file: \"Inter[opsz,wght].ttf\"\n  }\n  files {\n    source_file: \"Inter-Italic[opsz,wght].ttf\"\n    dest_file: \"Inter-Italic[opsz,wght].ttf\"\n  }\n  branch: \"master\"\n}\nminisite_url: \"https://rsms.me/inter\"\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/inter/Inter-opsz-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+      "bytes": 876576,
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+    }
+  ]
+}

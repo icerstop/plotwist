@@ -1,0 +1,16 @@
+{
+  "family": "Playfair Display",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay",
+  "metadata": "name: \"Playfair Display\"\ndesigner: \"Claus Eggers Sørensen\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2011-11-16\"\nfonts {\n  name: \"Playfair Display\"\n  style: \"normal\"\n  weight: 400\n  filename: \"PlayfairDisplay[wght].ttf\"\n  post_script_name: \"PlayfairDisplay-Regular\"\n  full_name: \"Playfair Display Regular\"\n  copyright: \"Copyright 2017 The Playfair Display Project Authors (https://github.com/clauseggers/Playfair-Display), with Reserved Font Name \\\"Playfair Display\\\".\"\n}\nfonts {\n  name: \"Playfair Display\"\n  style: \"italic\"\n  weight: 400\n  filename: \"PlayfairDisplay-Italic[wght].ttf\"\n  post_script_name: \"PlayfairDisplay-Italic\"\n  full_name: \"Playfair Display Italic\"\n  copyright: \"Copyright 2017 The Playfair Display Project Authors (https://github.com/clauseggers/Playfair-Display), with Reserved Font Name \\\"Playfair Display\\\".\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 400.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/clauseggers/Playfair\"\n  commit: \"80a334101928546b04fa9e709ad4b2f11f8a9e10\"\n  config_yaml: \"sources/config.yaml\"\n}\nstroke: \"SERIF\"\nclassifications: \"DISPLAY\"\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/playfairdisplay/PlayfairDisplay-wght-.ttf",
+      "weight": "400 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf",
+      "bytes": 300724,
+      "sha256": "c40f2293766a503bc70cce9e512ef844a4ccb7cbcde792fe2ea31d191917d8d6"
+    }
+  ]
+}

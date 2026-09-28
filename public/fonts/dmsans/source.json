@@ -1,0 +1,16 @@
+{
+  "family": "DM Sans",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/dmsans",
+  "metadata": "name: \"DM Sans\"\ndesigner: \"Colophon Foundry\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2019-06-12\"\nfonts {\n  name: \"DM Sans\"\n  style: \"normal\"\n  weight: 400\n  filename: \"DMSans[opsz,wght].ttf\"\n  post_script_name: \"DMSans-9ptRegular\"\n  full_name: \"DM Sans 9pt Regular\"\n  copyright: \"Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)\"\n}\nfonts {\n  name: \"DM Sans\"\n  style: \"italic\"\n  weight: 400\n  filename: \"DMSans-Italic[opsz,wght].ttf\"\n  post_script_name: \"DMSans-9ptItalic\"\n  full_name: \"DM Sans 9pt Italic\"\n  copyright: \"Copyright 2014 The DM Sans Project Authors (https://github.com/googlefonts/dm-fonts)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\naxes {\n  tag: \"opsz\"\n  min_value: 9.0\n  max_value: 40.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 1000.0\n}\nsource {\n  repository_url: \"https://github.com/googlefonts/dm-fonts\"\n  commit: \"d0520ba03bd780f5dccb3024854463d44f699b78\"\n  files {\n    source_file: \"Sans/OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"Sans/fonts/variable/DMSans[opsz,wght].ttf\"\n    dest_file: \"DMSans[opsz,wght].ttf\"\n  }\n  files {\n    source_file: \"Sans/fonts/variable/DMSans-Italic[opsz,wght].ttf\"\n    dest_file: \"DMSans-Italic[opsz,wght].ttf\"\n  }\n  branch: \"main\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/dmsans/DMSans-opsz-wght-.ttf",
+      "weight": "100 1000",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmsans/DMSans%5Bopsz%2Cwght%5D.ttf",
+      "bytes": 240164,
+      "sha256": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "family": "Lora",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/lora",
+  "metadata": "name: \"Lora\"\ndesigner: \"Cyreal\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2011-07-06\"\nfonts {\n  name: \"Lora\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Lora[wght].ttf\"\n  post_script_name: \"Lora-Regular\"\n  full_name: \"Lora Regular\"\n  copyright: \"Copyright 2011 The Lora Project Authors (https://github.com/cyrealtype/Lora-Cyrillic), with Reserved Font Name \\\"Lora\\\".\"\n}\nfonts {\n  name: \"Lora\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Lora-Italic[wght].ttf\"\n  post_script_name: \"Lora-Italic\"\n  full_name: \"Lora Italic\"\n  copyright: \"Copyright 2011 The Lora Project Authors (https://github.com/cyrealtype/Lora-Cyrillic), with Reserved Font Name \\\"Lora\\\".\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"math\"\nsubsets: \"menu\"\nsubsets: \"symbols\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 400.0\n  max_value: 700.0\n}\nsource {\n  repository_url: \"https://github.com/cyrealtype/Lora-Cyrillic\"\n  commit: \"403b1a66ca2e79f81d749c5299559e168591a4df\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/Lora[wght].ttf\"\n    dest_file: \"Lora[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/Lora-Italic[wght].ttf\"\n    dest_file: \"Lora-Italic[wght].ttf\"\n  }\n  branch: \"main\"\n  config_yaml: \"sources/config.yaml\"\n}\nstroke: \"SERIF\"\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/lora/Lora-wght-.ttf",
+      "weight": "400 700",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/lora/Lora%5Bwght%5D.ttf",
+      "bytes": 212196,
+      "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "family": "Cormorant Garamond",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/cormorantgaramond",
+  "metadata": "name: \"Cormorant Garamond\"\ndesigner: \"Christian Thalmann\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2017-01-18\"\nfonts {\n  name: \"Cormorant Garamond\"\n  style: \"normal\"\n  weight: 400\n  filename: \"CormorantGaramond[wght].ttf\"\n  post_script_name: \"CormorantGaramond-Light\"\n  full_name: \"Cormorant Garamond Light\"\n  copyright: \"Copyright 2015 The Cormorant Project Authors (github.com/CatharsisFonts/Cormorant)\"\n}\nfonts {\n  name: \"Cormorant Garamond\"\n  style: \"italic\"\n  weight: 400\n  filename: \"CormorantGaramond-Italic[wght].ttf\"\n  post_script_name: \"CormorantGaramond-LightItalic\"\n  full_name: \"Cormorant Garamond Light Italic\"\n  copyright: \"Copyright 2015 The Cormorant Project Authors (github.com/CatharsisFonts/Cormorant)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 300.0\n  max_value: 700.0\n}\nsource {\n  repository_url: \"https://github.com/CatharsisFonts/Cormorant\"\n  commit: \"6d210fd3550b7358ca62d6ba3e354ec1ec940813\"\n  config_yaml: \"sources/config-garamond.yaml\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/CormorantGaramond[wght].ttf\"\n    dest_file: \"CormorantGaramond[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/CormorantGaramond-Italic[wght].ttf\"\n    dest_file: \"CormorantGaramond-Italic[wght].ttf\"\n  }\n  branch: \"master\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/cormorantgaramond/CormorantGaramond-wght-.ttf",
+      "weight": "300 700",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf",
+      "bytes": 1195560,
+      "sha256": "b20b7d9626dd956b2c5e558692ad328b1f19e3275e2782db4fa07670d83f35e0"
+    }
+  ]
+}

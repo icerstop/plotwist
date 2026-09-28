@@ -1,0 +1,16 @@
+{
+  "family": "Outfit",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/outfit",
+  "metadata": "name: \"Outfit\"\ndesigner: \"Smartsheet Inc, Rodrigo Fuenzalida\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2021-09-28\"\nfonts {\n  name: \"Outfit\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Outfit[wght].ttf\"\n  post_script_name: \"Outfit-Thin\"\n  full_name: \"Outfit Thin\"\n  copyright: \"Copyright 2021 The Outfit Project Authors (https://github.com/Outfitio/Outfit-Fonts)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/Outfitio/Outfit-Fonts\"\n  commit: \"902773808eb372f70fb34e8946dd1ffe604efc79\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/Outfit[wght].ttf\"\n    dest_file: \"Outfit[wght].ttf\"\n  }\n  branch: \"main\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/outfit/Outfit-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/outfit/Outfit%5Bwght%5D.ttf",
+      "bytes": 110884,
+      "sha256": "fc7287273e66929776e2ba54f144fe699080bec29f61bf649d70d871468aeade"
+    }
+  ]
+}

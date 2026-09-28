@@ -1,0 +1,16 @@
+{
+  "family": "Bitter",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/bitter",
+  "metadata": "name: \"Bitter\"\ndesigner: \"Sol Matas\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2011-12-19\"\nfonts {\n  name: \"Bitter\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Bitter[wght].ttf\"\n  post_script_name: \"Bitter-Thin\"\n  full_name: \"Bitter Thin\"\n  copyright: \"Copyright 2011 The Bitter Project Authors (https://github.com/solmatas/BitterPro)\"\n}\nfonts {\n  name: \"Bitter\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Bitter-Italic[wght].ttf\"\n  post_script_name: \"Bitter-ThinItalic\"\n  full_name: \"Bitter Thin Italic\"\n  copyright: \"Copyright 2011 The Bitter Project Authors (https://github.com/solmatas/BitterPro)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/solmatas/BitterPro\"\n  commit: \"3238d7ae2cb0b564b81225d68b3c893a40b1d3ce\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/Bitter[wght].ttf\"\n    dest_file: \"Bitter[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/Bitter-Italic[wght].ttf\"\n    dest_file: \"Bitter-Italic[wght].ttf\"\n  }\n  branch: \"master\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/bitter/Bitter-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/Bitter%5Bwght%5D.ttf",
+      "bytes": 328636,
+      "sha256": "ef2b9a711fb02f1e5823b34da1b7450e0fc76793b7d733a8b41006e24916d4a7"
+    }
+  ]
+}

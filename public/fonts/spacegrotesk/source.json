@@ -1,0 +1,16 @@
+{
+  "family": "Space Grotesk",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/spacegrotesk",
+  "metadata": "name: \"Space Grotesk\"\ndesigner: \"Florian Karsten\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2020-10-07\"\nfonts {\n  name: \"Space Grotesk\"\n  style: \"normal\"\n  weight: 400\n  filename: \"SpaceGrotesk[wght].ttf\"\n  post_script_name: \"SpaceGrotesk-Light\"\n  full_name: \"Space Grotesk Light\"\n  copyright: \"Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 300.0\n  max_value: 700.0\n}\nsource {\n  repository_url: \"https://github.com/floriankarsten/space-grotesk\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"DESCRIPTION.en_us.html\"\n    dest_file: \"DESCRIPTION.en_us.html\"\n  }\n  files {\n    source_file: \"fonts/ttf/SpaceGrotesk[wght].ttf\"\n    dest_file: \"SpaceGrotesk[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/ttf/static/SpaceGrotesk-Bold.ttf\"\n    dest_file: \"static/SpaceGrotesk-Bold.ttf\"\n  }\n  files {\n    source_file: \"fonts/ttf/static/SpaceGrotesk-Light.ttf\"\n    dest_file: \"static/SpaceGrotesk-Light.ttf\"\n  }\n  files {\n    source_file: \"fonts/ttf/static/SpaceGrotesk-Medium.ttf\"\n    dest_file: \"static/SpaceGrotesk-Medium.ttf\"\n  }\n  files {\n    source_file: \"fonts/ttf/static/SpaceGrotesk-Regular.ttf\"\n    dest_file: \"static/SpaceGrotesk-Regular.ttf\"\n  }\n  branch: \"master\"\n  commit: \"03507d024a01282884232081fc6011c09ff4e849\"\n}\nminisite_url: \"https://floriankarsten.github.io/space-grotesk\"\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/spacegrotesk/SpaceGrotesk-wght-.ttf",
+      "weight": "300 700",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/SpaceGrotesk%5Bwght%5D.ttf",
+      "bytes": 136676,
+      "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72"
+    }
+  ]
+}

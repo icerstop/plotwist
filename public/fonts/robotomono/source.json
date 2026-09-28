@@ -1,0 +1,16 @@
+{
+  "family": "Roboto Mono",
+  "retrievedAt": "2026-09-28",
+  "source": "https://github.com/google/fonts/tree/main/ofl/robotomono",
+  "metadata": "name: \"Roboto Mono\"\ndesigner: \"Christian Robertson\"\nlicense: \"OFL\"\ncategory: \"MONOSPACE\"\ndate_added: \"2015-05-13\"\nfonts {\n  name: \"Roboto Mono\"\n  style: \"normal\"\n  weight: 400\n  filename: \"RobotoMono[wght].ttf\"\n  post_script_name: \"RobotoMono-Regular\"\n  full_name: \"Roboto Mono Regular\"\n  copyright: \"Copyright 2015 The Roboto Mono Project Authors (https://github.com/googlefonts/robotomono)\"\n}\nfonts {\n  name: \"Roboto Mono\"\n  style: \"italic\"\n  weight: 400\n  filename: \"RobotoMono-Italic[wght].ttf\"\n  post_script_name: \"RobotoMono-Italic\"\n  full_name: \"Roboto Mono Italic\"\n  copyright: \"Copyright 2015 The Roboto Mono Project Authors (https://github.com/googlefonts/robotomono)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"greek\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 700.0\n}\nsource {\n  repository_url: \"https://github.com/googlefonts/RobotoMono\"\n  commit: \"111eb14e367888c9374da4da0b018e72cf8ac46d\"\n  config_yaml: \"sources/config.yaml\"\n  files {\n    source_file: \"fonts/variable/RobotoMono[wght].ttf\"\n    dest_file: \"RobotoMono[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/RobotoMono-Italic[wght].ttf\"\n    dest_file: \"RobotoMono-Italic[wght].ttf\"\n  }\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  branch: \"main\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "path": "/fonts/robotomono/RobotoMono-wght-.ttf",
+      "weight": "100 700",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/robotomono/RobotoMono%5Bwght%5D.ttf",
+      "bytes": 183700,
+      "sha256": "66a80e79d17e4c7cabd162e2916578a4cc08fd19eef6e2a643305eae9c567b2b"
+    }
+  ]
+}
