@@ -20,7 +20,7 @@ Produkcja: `npm run build` (katalog `dist`). Weryfikacja obliczeń i CSV: `npm t
 - Import CSV, walidacja wartości i lat, obsługa polskich przecinków dziesiętnych przy separatorze średnikowym, zachowanie brakujących obserwacji.
 - Animacja, przewijanie, eksport 1080p WebM (MP4 tylko jeśli brak WebM i przeglądarka obsługuje MP4), eksport PNG i JSON z danymi/metodologią.
 - 27 pomysłów redakcyjnych, w tym 9 działających zestawów/modeli. Pozostałe są jasno oznaczone jako pomysły wymagające zebrania danych.
-- Katalog 12 źródeł; źródła poza World Bank nie mają jeszcze konektorów.
+- Katalog 13 źródeł; podłączone World Bank, Yahoo Finance i NBP, pozostałe opisane jako propozycje.
 - Dopasowanie własnego opisu do biblioteki słowami kluczowymi, losowanie tematu, prompt do skopiowania do ChatGPT.
 - Zapis ustawień gotowego zbioru lokalnie w przeglądarce; własne zbiory eksportowane jako JSON. JSON jest kopią danych, obecnie bez funkcji ponownego otwarcia projektu.
 
@@ -37,7 +37,7 @@ Eksport nagrywa canvas w czasie rzeczywistym. Kartę należy utrzymać aktywną.
 ## Rozwój projektu
 
 1. Źródła: konektory SEC, NBP, Eurostat i OWID z cache, walidacją oraz metadanymi. SEC wymaga pośrednika serwerowego (brak CORS).
-2. Notowania: dostawca z licencją na zamierzony sposób wykorzystania; splity, dywidendy, waluta, kalendarz sesyjny. Dopiero wtedy historyczne DCA i porównania spółek z produktami.
+2. Notowania: moduł Giełda opisany poniżej obsługuje już historyczne DCA z cen i FX. Dalszy etap to licencjonowany dostawca na potrzeby komercyjnej redystrybucji, dywidendy oraz pełne pokrycie giełd.
 3. Adopcja: katalog kamieni milowych z definicją MAU/WAU/DAU, datą startu i źródłem każdego punktu. Nie interpolować z dwóch komunikatów prasowych pełnej historii.
 4. MP4/H.264: kolejka renderowania po stronie serwera lub lokalny FFmpeg. Deterministyczny renderer, muzyka/lektoring i bezpieczne marginesy platform.
 5. AI opcjonalnie: najpierw retrieval po katalogu metryk, potem propozycja relacji i scenariusza. Model nie generuje liczb. Przechowywać źródła i wymagać weryfikacji metryk. Alternatywa bez API: research w ChatGPT, import CSV, render w studiu.
@@ -51,3 +51,28 @@ Eksport nagrywa canvas w czasie rzeczywistym. Kartę należy utrzymać aktywną.
 - `src/App.jsx` — stan i edytor.
 
 Hosting Sites jest prywatny. Manifest `.openai/hosting.json` wskazuje istniejący projekt; nie należy rejestrować go ponownie.
+
+## Giełda — dzienne ceny i inwestycja vs nawyk
+
+Zakładka **Giełda** zawiera 39 wybranych spółek z USA, Niemiec, Holandii, Francji, Wielkiej Brytanii, Szwajcarii, Danii, Włoch, Hiszpanii, Polski, Szwecji i Norwegii. Snapshot pobrany 28.09.2026 zawiera 204 131 cen sesyjnych; ostatnia sesja 25.09.2026. Historia zaczyna się w 2005 r. albo przy debiucie/dostępności danego symbolu. Brak pokrycia całego rynku; brak indeksu spółek wycofanych. Jednego planowanego symbolu (ROG.SW) dostawca nie udostępnił — nie jest pokazywany jako dostępny.
+
+Źródło notowań: publicznie dostępne dane wykresów Yahoo Finance. Nie jest to stabilne, gwarantowane API z umową SLA. Każdy plik zachowuje ticker, giełdę, strefę czasową, walutę, datę pobrania, link do historii i zgłoszone splity. Nie wykonujemy wywołań Yahoo w przeglądarce: użytkownik odczytuje snapshoty z hostingu. Świeżo pobrane pliki nie trafiają automatycznie na stronę online — wymagają ponownego zbudowania i publikacji.
+
+`npm run data:markets` odświeża notowania i tabele NBP. Wymaga sieci, nie klucza. Kod spółek znajduje się w `src/market-universe.js`. Dostawca może ograniczyć dostęp lub zmienić format. Skrypt raportuje symbole niedostępne i wpisuje do manifestu wyłącznie te pobrane poprawnie. Pliki JSON mają około 11 MB łącznie, ale przeglądarka pobiera tylko wybraną spółkę (~250 KB) i wspólny plik FX (~700 KB).
+
+Ceny w wierszu: `[data, Close skorygowane o splity, cena nominalna odtworzona, Adj Close]`. Yahoo Close uwzględnia splity; cena nominalna jest odtwarzana przez iloczyn późniejszych współczynników splitów i nie jest niezależnie zweryfikowanym oficjalnym kursem aukcji. Adj Close (także z korektami dywidendowymi) nie jest używany w DCA. Źródło definicji: https://help.yahoo.com/kb/SLN28256.html i opisy kolumn historii Yahoo Finance. Wartości są zachowane z precyzją danych dostawcy, nie są gwarancją rzeczywistej ceny wykonania.
+
+Symulacja:
+
+- Uwzględnia każdy dzień kalendarzowy, obie daty wliczone; dzienna wpłata i dzienny koszt napoju to dwa niezależne budżety.
+- Zakup ułamkowych akcji po Close wyłącznie w dniu dostępnym w notowaniach. Weekendowe i świąteczne wpłaty oczekują w PLN do najbliższej sesji. Jeśli zakres kończy się w weekend, gotówka pozostaje składnikiem portfela.
+- Baza cen skorygowana wyłącznie o splity; jednostki w tej samej bazie. Nie naliczamy dywidend.
+- NBP tabela A: poprzednia dostępna data publikacji, ściśle wcześniejsza od dnia wyceny; nie korzystamy z przyszłych kursów. W dni bez sesji ostatnia cena jest wyceniana po dostępnym FX, a gotówka zwiększa się o wpłatę.
+- PLN ma przelicznik 1. GBp/GBX dzielimy przez 100 do GBP. NBP zapewnia siedem walut: USD, EUR, GBP, CHF, DKK, SEK, NOK.
+- Brak opłat, spreadów, podatków i inflacji. Kwota na napój jest stała przez cały okres.
+- Ponad 10 dni bez notowania albo kursu FX przerywa obliczenia, zamiast wyceniać portfel po nieaktualnej wartości.
+- Wynik ponad wpłaty = wartość portfela wraz z gotówką minus suma wpłat, a nie minus wydatki na konsumpcję.
+
+Dostępne eksporty: pełny spis sesji CSV dla zakresu, dziennik symulacji CSV z datą użytego kursu i ceny, założenia JSON, pionowa rolka WebM i PNG. Tryb Kurs akcji działa na dziennej osi czasu. Bieżąca, potencjalnie niezakończona sesja jest zawsze pomijana.
+
+Publiczny dostęp nie nadaje automatycznie prawa do komercyjnej redystrybucji danych. Przed takim zastosowaniem należy zapewnić odpowiednie warunki dostawcy.
