@@ -17,7 +17,7 @@ export function parseCsv(text){
  const headers=rows.shift();if(new Set(headers).size!==headers.length||headers.some(h=>!h))throw new Error('Nagłówki muszą być niepuste i unikalne.');
  const seen=new Set();const parsed=rows.map((r,i)=>{if(r.length!==headers.length)throw new Error(`Wiersz ${i+2}: niewłaściwa liczba kolumn.`);const x=Number(r[0]);if(!r[0]||!Number.isInteger(x)||x<0||x>9999||seen.has(x))throw new Error(`Wiersz ${i+2}: rok musi być unikalną liczbą 0–9999.`);seen.add(x);return {x,values:r.slice(1).map(v=>{if(v==='')return null;const n=Number(v.replace(',','.'));if(!Number.isFinite(n))throw new Error(`Wiersz ${i+2}: nieprawidłowa liczba.`);return n;})};}).sort((a,b)=>a.x-b.x);
  if(parsed.length>300)throw new Error('Maksymalnie 300 wierszy na rolkę.');
- const series=headers.slice(1).map((name,i)=>({name,color:['#bcf34a','#b18aff','#8fabb6'][i],points:parsed.map(r=>({x:r.x,y:r.values[i]}))}));
+ const series=headers.slice(1).map((name,i)=>({name,nameIsCustom:true,color:['#bcf34a','#b18aff','#8fabb6'][i],points:parsed.map(r=>({x:r.x,y:r.values[i]}))}));
  if(series.some(s=>s.points.filter(p=>p.y!==null).length<2))throw new Error('Każda seria potrzebuje co najmniej 2 wartości.');return series;
 }
 export function downloadBlob(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}

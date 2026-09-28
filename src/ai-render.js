@@ -1,10 +1,12 @@
-import {aiValue,frameAt} from './ai.js';
+import {translate} from './translations.js';
+import {aiValue as formatAiValue,frameAt} from './ai.js';
 import {reelFont,drawSignature} from './reel-style.js';
 import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
 import {crossText} from './series-render.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
-function typography(font){
-function wrap(ctx,text,x,y,width,size=34,max=3,color){
+function typography(font,language){
+function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false){
+ if(!custom)text=translate(text,language);
  ctx.font=`${size>=60?'bold ':''}${size}px ${font}`;if(color)ctx.fillStyle=color;
  const words=String(text||'').split(/\s+/);let lines=[],line='';
  for(const word of words){if(ctx.measureText(`${line} ${word}`).width>width&&line){lines.push(line);line=word;}else line=line?`${line} ${word}`:word;}if(line)lines.push(line);
@@ -15,14 +17,15 @@ function fit(ctx,text,width,size,min=26){ctx.font=`bold ${size}px ${font}`;while
 return {wrap,fit};
 }
 export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
- const {wrap,fit}=typography(reelFont(config.fontId));
+ const {wrap,fit}=typography(reelFont(config.fontId),config.language);
+ const aiValue=value=>formatAiValue(value,config.language);
  const {ai:{rows,benchmark:b,basis,mode,comparison,scope},title,theme='dark'}=config;
  const ctx=canvas.getContext('2d');if(canvas.width!==1080||canvas.height!==1920){canvas.width=1080;canvas.height=1920;}
  const dark=theme==='dark',bg=dark?'#101612':'#f6f8ef',fg=dark?'#f3f8eb':'#152017',muted=dark?'#aab6ab':'#576657',accent=dark?'#c0ef66':'#557b20',purple=dark?'#bca1ff':'#7452b4',panel=dark?'#1a251e':'#e9efde',grid=dark?'#344239':'#cbd7c4';
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
  drawVisualBackground(ctx,1080,1920,config,timeSeconds);
  ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));
- wrap(ctx,title||b.name,76,240,928,83,3,fg);
+ wrap(ctx,title||b.name,76,240,928,83,3,fg,true);
  wrap(ctx,b.name,76,565,928,33,2,accent);
  if(scope)wrap(ctx,scope,76,648,928,23,2,muted);
  const first=rows[0],last=rows.at(-1),transition=config.transition??.65,duration=config.duration||20;

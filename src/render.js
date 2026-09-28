@@ -18,13 +18,13 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  ctx.fillStyle=muted;ctx.font=`29px ${font}`;wrap(ctx,subtitle,78,headingY+headingHeight+20,910,40,2);
  const legendStep=config.compactTitle?52:43;
  const top=height<1400?height*.48:config.compactTitle?height*.43:height*.47,bottom=Math.min(height===1080?700:height===1350?920:height*.75,height-(height<1400?235:285)-100-(Math.max(1,series.length)-1)*legendStep),left=135,right=900;
- const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,contentTop:Math.max(height<1400?450:730,headingY+headingHeight+130),formatValue,timeSeconds});
+ const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,contentTop:Math.max(height<1400?450:730,headingY+headingHeight+130),formatValue:n=>formatValue(n,config.language),timeSeconds});
  drawVisualOverlays(ctx,width,height,config,timeSeconds);
- ctx.fillStyle=dark?'#e5e9e2':'#343d32';ctx.font=`bold ${height<1400?52:xType==='date'?76:110}px ${font}`;ctx.textAlign='right';ctx.fillText(xType==='date'?displayDate(Math.floor(current)):isCoffee?`ROK ${Math.floor(current)}`:String(Math.floor(current)),1000,height<1400?150:height-175);ctx.textAlign='left';
+ ctx.fillStyle=dark?'#e5e9e2':'#343d32';ctx.font=`bold ${height<1400?52:xType==='date'?76:110}px ${font}`;ctx.textAlign='right';ctx.fillText(xType==='date'?displayDate(Math.floor(current),config.language):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)),1000,height<1400?150:height-175);ctx.textAlign='left';
  ctx.fillStyle=muted;ctx.font=`24px ${font}`;wrap(ctx,source,80,height-145,920,30,2);
  drawSignature(ctx,width,height,config.fontId,dark);
 }
-export function formatValue(n){if(Math.abs(n)>=1e6)return (n/1e6).toLocaleString('pl-PL',{maximumFractionDigits:1})+' mln';if(Math.abs(n)>=10000)return (n/1000).toLocaleString('pl-PL',{maximumFractionDigits:1})+' tys.';return n.toLocaleString('pl-PL',{maximumFractionDigits:1});}
+export function formatValue(n,language='pl'){const locale=language==='en'?'en-GB':'pl-PL';if(Math.abs(n)>=1e6)return (n/1e6).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' m':' mln');if(Math.abs(n)>=10000)return (n/1000).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' k':' tys.');return n.toLocaleString(locale,{maximumFractionDigits:1});}
 export async function recordReel(config,duration,onProgress,signal){
  await preloadReelAssets(config);if(signal?.aborted)throw new Error('Eksport anulowany.');
  if(typeof MediaRecorder==='undefined')throw new Error('Ta przeglądarka nie obsługuje nagrywania wideo. Pobierz klatkę PNG lub użyj Chrome/Edge.');

@@ -1,3 +1,5 @@
+import {useLanguages,localeFor} from './language-context.js';
+import {translate} from './translations.js';
 import {PresentationPicker} from './Presentation.jsx';
 import {VisualEditor} from './VisualSettings.jsx';
 import React,{useEffect,useMemo,useState} from 'react';
@@ -11,7 +13,6 @@ import {preloadReelAssets} from './reel-assets.js';
 const fallbackColors=['#76b900','#a6b7cd','#ff8567','#b18aff','#50c9d8','#ebbf4d'];
 const initialEntries=[{id:'nvidia',kind:'asset',symbol:'NVDA'},{id:'apple',kind:'asset',symbol:'AAPL'},{id:'drink',kind:'expense',name:'Coca-Cola · wydatki',amount:'3',color:'#f45b69'}];
 async function read(path,signal){const response=await fetch(path,{signal});if(!response.ok||!response.headers.get('content-type')?.includes('json'))throw new Error('Nie udało się wczytać danych porównania. Odśwież stronę.');return response.json();}
-const value=(n,unit)=>`${n.toLocaleString('pl-PL',{maximumFractionDigits:2})} ${unit}`;
 function SeriesColor({color,index,onChange,onReset}){
  const [hex,setHex]=useState(color);
  useEffect(()=>setHex(color),[color]);
@@ -19,6 +20,8 @@ function SeriesColor({color,index,onChange,onReset}){
 }
 
 export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
+ const {uiLanguage,reelLanguage}=useLanguages();
+ const value=(n,unit)=>`${n.toLocaleString(localeFor(uiLanguage),{maximumFractionDigits:2})} ${translate(unit,uiLanguage)}`;
  const [extras,setExtras]=useState(null),[brands,setBrands]=useState(null),[assets,setAssets]=useState({});
  const [entries,setEntries]=useState(initialEntries),[mode,setMode]=useState('dca'),[scale,setScale]=useState('index');
  const [start,setStart]=useState('2020-01-01'),[end,setEnd]=useState(''),[investment,setInvestment]=useState('5');
@@ -46,11 +49,11 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
  const resolved=useMemo(()=>entries.map((e,i)=>{const brand=brands?.companies?.[e.symbol];return {...e,color:e.color||(theme==='light'?brand?.chartColorLight:brand?.chartColor)||brand?.brandColor||catalog.find(a=>a.symbol===e.symbol)?.color||fallbackColors[i%fallbackColors.length],logo:showLogos?brand?.path:undefined};}),[entries,brands,catalog,showLogos,theme]);
  const result=useMemo(()=>{try{return {...buildComparison({entries:resolved,assets,fx,start,end,mode,scale,dailyInvestment:investment.trim()?Number(investment):NaN}),error:''};}catch(e){return {series:[],summaries:{},error:e.message};}},[resolved,assets,fx,start,end,mode,scale,investment]);
  const generatedTitle=mode==='dca'?`${investment||'0'} zł dziennie. Kilka możliwości.`:scale==='percent'?'Jak zmieniały się ceny?':scale==='index'?'Ten sam start. Różne historie.':'Ceny na wspólnym wykresie.';
- const config=useMemo(()=>({series:result.series,title:title||generatedTitle,subtitle:mode==='dca'?`Osobne portfele · ${investment||0} zł dziennie na każdy`:`${scale==='index'?'Indeks 100':scale==='percent'?'Zmiana procentowa':'Ceny zamknięcia'} · wspólna baza ${result.baseDate||'…'}`,source:mode==='dca'?'Yahoo Finance + NBP · bez dywidend, opłat i podatków':'Yahoo Finance · waluty instrumentów · bez dywidend',format:'9:16',theme,fontId,chart,unit:result.unit||'',xType:'date',compactTitle:true}),[result,title,generatedTitle,investment,mode,scale,theme,fontId,chart]);
+ const config=useMemo(()=>({series:result.series,title:title||generatedTitle,titleIsCustom:!!title,subtitle:mode==='dca'?`Osobne portfele · ${investment||0} zł dziennie na każdy`:`${scale==='index'?'Indeks 100':scale==='percent'?'Zmiana procentowa':'Ceny zamknięcia'} · wspólna baza ${result.baseDate||'…'}`,source:mode==='dca'?'Yahoo Finance + NBP · bez dywidend, opłat i podatków':'Yahoo Finance · waluty instrumentów · bez dywidend',format:'9:16',theme,fontId,chart,unit:result.unit||'',xType:'date',compactTitle:true}),[result,title,generatedTitle,investment,mode,scale,theme,fontId,chart]);
  useEffect(()=>{let active=true;setLogosReady(false);setLogoError('');preloadReelAssets(config).then(()=>{if(active)setLogosReady(true);}).catch(e=>{if(active)setLogoError(e.message);});return()=>{active=false;};},[config]);
  const visibleError=error||logoError||(!loading?result.error:'');
  const valid=!loading&&!visibleError&&logosReady&&result.series.length>0;
- function update(id,patch){setEntries(old=>old.map(e=>e.id===id?{...e,...patch}:e));}
+ function update(id,patch){setEntries(old=>old.map(e=>e.id===id?{...e,...patch,...(Object.hasOwn(patch,'name')?{nameIsCustom:true}:{})}:e));}
  function add(){
   if(entries.length>=6)return;
   const id=crypto.randomUUID();
@@ -60,7 +63,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
   }else setEntries(old=>[...old,{id,kind:addType,name:addType==='goal'?'Mój cel':'Codzienny zakup',amount:addType==='goal'?'10000':'10',color:fallbackColors[old.length%fallbackColors.length]}]);
  }
  function exportCsv(){const rows=result.series.flatMap(s=>s.points.map(p=>[fromDay(p.x),s.name,p.y,result.unit,p.raw??'',entries.find(e=>e.id===s.id)?.symbol||'']));downloadBlob(new Blob([marketCsv(rows,['data','seria','wartosc_wykresu','jednostka','cena_zrodlowa','symbol'])],{type:'text/csv;charset=utf-8'}),'plotwist-porownanie.csv');}
- const available=catalog.filter(a=>(mode!=='dca'||a.kind!=='futures')&&`${a.name} ${a.symbol} ${a.region}`.toLowerCase().includes(query.toLowerCase()));
+ const available=catalog.filter(a=>(mode!=='dca'||a.kind!=='futures')&&`${a.name} ${translate(a.name,'en')} ${a.symbol} ${a.region}`.toLowerCase().includes(query.toLowerCase()));
  return <>
   <div className="comparison-intro"><div><h2>Jedna historia. Wiele serii.</h2><p>Do 6 serii, różne formy prezentacji, własne kolory i logotypy.</p></div><button className="primary" disabled={!valid} onClick={()=>setExporting(true)}><Download size={17}/>Eksportuj porównanie</button></div>
   <div className="market-workspace comparison-workspace">
@@ -75,7 +78,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
       {entry.kind==='asset'?<><select aria-label={`Instrument serii ${i+1}`} value={entry.symbol} onChange={e=>update(entry.id,{symbol:e.target.value,color:undefined})}>
        {!available.some(a=>a.symbol===entry.symbol)&&<option value={entry.symbol}>{selected?.name||entry.symbol} (wybrany)</option>}
        {[['stock','Spółki'],['fund','Fundusze surowcowe'],['futures','Surowce · kontrakty futures']].map(([kind,label])=><optgroup label={label} key={kind}>{available.filter(a=>a.kind===kind&&!entries.some(e=>e.id!==entry.id&&e.symbol===a.symbol)).map(a=><option key={a.symbol} value={a.symbol}>{a.name} · {a.symbol}</option>)}</optgroup>)}
-      </select><small>{selected?.currency} · {selected?.firstDate} – {selected?.lastDate}</small></>:<><input aria-label={`Nazwa serii ${i+1}`} maxLength={40} value={entry.name} onChange={e=>update(entry.id,{name:e.target.value})}/><label className="series-amount">{entry.kind==='goal'?'Cel w zł':'Wydatek w zł / dzień'}<input aria-label={`Kwota serii ${i+1}`} type="number" min="0.01" step="0.01" value={entry.amount} onChange={e=>update(entry.id,{amount:e.target.value})}/></label></>}
+      </select><small>{selected?.currency} · {selected?.firstDate} – {selected?.lastDate}</small></>:<><input aria-label={`Nazwa serii ${i+1}`} maxLength={40} value={entry.nameIsCustom?entry.name:translate(entry.name,reelLanguage)} onChange={e=>update(entry.id,{name:e.target.value})}/><label className="series-amount">{entry.kind==='goal'?'Cel w zł':'Wydatek w zł / dzień'}<input aria-label={`Kwota serii ${i+1}`} type="number" min="0.01" step="0.01" value={entry.amount} onChange={e=>update(entry.id,{amount:e.target.value})}/></label></>}
       <SeriesColor color={entry.color} index={i+1} onChange={color=>update(entry.id,{color})} onReset={()=>update(entry.id,{color:undefined})}/>
       {entry.kind==='asset'&&!brand&&brands&&<small>{selected?.kind==='stock'?'Logo niedostępne':'Surowiec'} · oznaczenie kolorem</small>}
      </article>;
@@ -86,13 +89,13 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
     <div className="field-pair"><Field label="Od dnia"><input aria-label="Początek porównania" type="date" min={range?.start} max={range?.end} value={start} onChange={e=>setStart(e.target.value)}/></Field><Field label="Do dnia"><input aria-label="Koniec porównania" type="date" min={start} max={range?.end} value={end} onChange={e=>setEnd(e.target.value)}/></Field></div>
     <button className="text-btn range-button" disabled={!range} onClick={()=>{setStart(range.start);setEnd(range.end);}}>Cały wspólny zakres</button>
     {range&&<p className="helper">Wspólna historia: {range.start} – {range.end}</p>}
-    <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł porównania"><textarea rows="2" maxLength={80} value={title} placeholder={generatedTitle} onChange={e=>setTitle(e.target.value)}/></Field>
+    <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł porównania"><textarea rows="2" maxLength={80} value={title} translate="no" placeholder={translate(generatedTitle,reelLanguage)} onChange={e=>setTitle(e.target.value)}/>{title&&<button type="button" className="text-btn" onClick={()=>setTitle('')}>Przywróć tytuł automatyczny</button>}</Field>
     <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(n=><option key={n} value={n}>{n} s</option>)}</select></Field><Field label="Motyw rolki"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
     {loading&&<p role="status" className="helper">Wczytywanie historii…</p>}{visibleError&&<p role="alert" className="error">{visibleError}</p>}
    </section>
    <ReelPreview config={config} duration={duration} valid={valid}/>
    <aside className="market-results comparison-results"><h2>Na końcu historii</h2><p className="muted">{result.baseDate||start} → {result.endDate||end}</p>
-    {valid&&<div className="comparison-totals">{result.series.map(s=><div key={s.id} className="comparison-total"><span style={{borderLeftColor:s.color}}>{s.name}</span><strong>{value(s.points.at(-1).y,result.unit)}</strong>{result.summaries[s.id]&&<small>Wpłaty: {value(result.summaries[s.id].contributions,'zł')} · wynik: {value(result.summaries[s.id].profit,'zł')}</small>}</div>)}</div>}
+    {valid&&<div className="comparison-totals">{result.series.map(s=><div key={s.id} className="comparison-total"><span translate={s.nameIsCustom?'no':undefined} style={{borderLeftColor:s.color}}>{s.name}</span><strong>{value(s.points.at(-1).y,result.unit)}</strong>{result.summaries[s.id]&&<small>Wpłaty: {value(result.summaries[s.id].contributions,'zł')} · wynik: {value(result.summaries[s.id].profit,'zł')}</small>}</div>)}</div>}
     <button className="secondary full" disabled={!valid} onClick={exportCsv}><Download size={16}/>Dane porównania CSV</button>
     <div className="market-assumptions"><div><strong>Jak czytać porównanie</strong><p>{result.methodology||'Wybierz serie i wspólny zakres dat.'}</p><p>Fundusze GLD i SLV odwzorowują metale z uwzględnieniem kosztów. USO korzysta z kontraktów na ropę; jego wynik może różnić się od ceny ropy spot.</p></div></div>
    </aside>

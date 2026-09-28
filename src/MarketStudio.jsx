@@ -1,3 +1,5 @@
+import {useLanguages,localeFor} from './language-context.js';
+import {translate} from './translations.js';
 import {PresentationPicker} from './Presentation.jsx';
 import {VisualEditor} from './VisualSettings.jsx';
 import ComparisonStudio from './ComparisonStudio.jsx';
@@ -7,8 +9,6 @@ import { ExportModal, Field, FontPicker, ReelPreview } from './components.jsx';
 import { downloadBlob } from './data.js';
 import { fromDay, marketCsv, marketStartDate, priceSeries, simulateDailyInvestment, toDay, validateMarketRange } from './market.js';
 
-const money = n => n.toLocaleString('pl-PL', { style: 'currency', currency: 'PLN', maximumFractionDigits: 2 });
-const number = n => n.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
 async function readJson(path, signal) {
   const r = await fetch(path, { signal });
   if (!r.ok) throw new Error('Nie udało się wczytać danych. Odśwież stronę i spróbuj ponownie.');
@@ -16,6 +16,9 @@ async function readJson(path, signal) {
 }
 
 export default function MarketStudio({fontId='arial',onFontChange}) {
+  const {uiLanguage,reelLanguage}=useLanguages();
+  const money=n=>n.toLocaleString(localeFor(uiLanguage),{style:'currency',currency:'PLN',maximumFractionDigits:2});
+  const number=n=>n.toLocaleString(localeFor(uiLanguage),{minimumFractionDigits:2,maximumFractionDigits:4});
   const [manifest, setManifest] = useState(null), [fx, setFx] = useState(null), [stock, setStock] = useState(null);
   const [symbol, setSymbol] = useState('NVDA'), [region, setRegion] = useState('Wszystkie'), [search, setSearch] = useState('');
   const [start, setStart] = useState('2020-01-01'), [end, setEnd] = useState('');
@@ -52,12 +55,12 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
       return { ...simulateDailyInvestment({ stock, fx, start, end, dailyInvestment: investment.trim() ? Number(investment) : NaN, dailyExpense: expense.trim() ? Number(expense) : NaN, expenseName }), error: '' };
     } catch (e) { return { series: [], ledger: [], error: e.message }; }
   }, [stock, fx, start, end, investment, expense, expenseName]);
-  const filtered = useMemo(() => (manifest?.stocks || []).filter(s => (region === 'Wszystkie' || s.region === region) && `${s.name} ${s.symbol} ${s.country}`.toLowerCase().includes(search.toLowerCase())), [manifest, region, search]);
+  const filtered = useMemo(() => (manifest?.stocks || []).filter(s => (region === 'Wszystkie' || s.region === region) && `${s.name} ${s.symbol} ${s.country} ${translate(s.country,'en')}`.toLowerCase().includes(search.toLowerCase())), [manifest, region, search]);
   const quotes = useMemo(() => (stock?.rows || []).filter(r => r[0] >= start && r[0] <= end).toReversed(), [stock, start, end]);
   const chartSeries = useMemo(() => mode === 'dca' ? result.series : stock ? priceSeries(stock, start, end, basis) : [], [mode, result.series, stock, start, end, basis]);
   const generatedTitle = mode === 'dca' ? `${investment || '0'} zł dziennie w ${stock?.name || symbol}.` : `${stock?.name || symbol}. Dzień po dniu.`;
   const config = useMemo(() => ({
-    series: chartSeries, title: customTitle ? title : generatedTitle,
+    series: chartSeries, title: customTitle ? title : generatedTitle,titleIsCustom:customTitle,
     subtitle: mode === 'dca' ? `${stock?.name || symbol}: ${investment || 0} zł/dzień vs ${expenseName || 'napój'}: ${expense || 0} zł/dzień` : basis === 'split' ? 'Cena zamknięcia · korekta o splity' : 'Cena nominalna · odtworzona z korekt splitowych',
     source: mode === 'dca' ? 'Yahoo Finance + NBP · bez dywidend, opłat i podatków' : 'Yahoo Finance · historia dzienna · bez bieżącej sesji',
     format: '9:16', theme, fontId, chart, unit: mode === 'dca' ? 'zł' : stock?.currency || '', xType: 'date'
@@ -84,7 +87,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   if(mode==='compare')return <div className="market-page"><div className="market-switch comparison-tabs" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label])=><button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={()=>setMode(id)}>{label}</button>)}</div>{error&&<p role="alert" className="error">{error}</p>}<ComparisonStudio manifest={manifest} fx={fx} fontId={fontId} onFontChange={onFontChange}/></div>;
   return <div className="market-page">
     <div className="market-heading"><div><h1>Mały nawyk. Prawdziwa historia.</h1><p>Codzienne wpłaty spotykają historyczne ceny akcji.</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
-    <div className="market-meta"><Database size={15}/>{manifest ? <span>{manifest.stocks.length} spółek · {manifest.totalObservations.toLocaleString('pl-PL')} cen zamknięcia · USA i Europa</span> : <span>Wczytywanie katalogu…</span>}<span>Snapshot: {manifest?.retrievedAt.slice(0,10) || '…'}</span></div>
+    <div className="market-meta"><Database size={15}/>{manifest ? <span>{manifest.stocks.length} spółek · {manifest.totalObservations.toLocaleString(localeFor(uiLanguage))} cen zamknięcia · USA i Europa</span> : <span>Wczytywanie katalogu…</span>}<span>Snapshot: {manifest?.retrievedAt.slice(0,10) || '…'}</span></div>
     <div className="market-workspace">
       <section className="market-controls" aria-label="Ustawienia inwestowania"><PresentationPicker value={chart} onChange={setChart}/>
         <div className="market-switch" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label]) => <button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={() => {setMode(id);setCustomTitle(false);}}>{label}</button>)}</div>
@@ -99,7 +102,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
           {Number(investment)!==Number(expense)&&<div className="budget-note"><span>Porównujesz różne budżety: {investment || 0} zł i {expense || 0} zł.</span><button onClick={()=>setExpense(investment)}>Wyrównaj kwoty</button></div>}
           <Field label="Twój codzienny zakup"><input maxLength="35" value={expenseName} onChange={e=>setExpenseName(e.target.value)} placeholder="Np. Coca-Cola, kawa, przekąska"/></Field>
         </>:<Field label="Rodzaj ceny"><select value={basis} onChange={e=>setBasis(e.target.value)}><option value="split">Close — po korekcie o splity</option><option value="raw">Cena nominalna — odtworzona</option></select><small>Korekta o splity zapewnia ciągłość wykresu. Cena nominalna może gwałtownie spaść w dniu splitu.</small></Field>}
-        <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:generatedTitle} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/></Field>
+        <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:translate(generatedTitle,reelLanguage)} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/>{customTitle&&<button type="button" className="text-btn" onClick={()=>setCustomTitle(false)}>Przywróć tytuł automatyczny</button>}</Field>
         <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(t=><option key={t} value={t}>{t} s</option>)}</select></Field><Field label="Motyw rolki"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
         {loading&&<p className="helper" role="status">Wczytywanie notowań…</p>}{visibleError&&<p className="error" role="alert">{visibleError}</p>}
       </section>
@@ -114,13 +117,13 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
           <button className="secondary full" disabled={!valid} onClick={exportLedger}><Download size={16}/>Dziennik symulacji CSV</button>
         </>:quotes.length>0?<>
           <div className="market-value"><span>{basis==='raw'?'Cena nominalna (odtworzona)':'Cena po korekcie splitów'}</span><strong>{number(quotes[0][basis==='raw'?2:1])}</strong><small>{stock.currency} · sesja {quotes[0][0]}</small></div>
-          <p className="helper">{quotes.length.toLocaleString('pl-PL')} sesji w wybranym zakresie. Pełny spis cen znajdziesz pod podglądem.</p>
+          <p className="helper">{quotes.length.toLocaleString(localeFor(uiLanguage))} sesji w wybranym zakresie. Pełny spis cen znajdziesz pod podglądem.</p>
         </>:null}
         <div className="market-assumptions"><Info size={19}/><div><strong>Założenia są częścią historii</strong><p>Akcje ułamkowe. Zakup po zamknięciu sesji. Wpłaty z dni bez notowań czekają w gotówce. Kurs NBP z poprzedniej dostępnej tabeli.</p><p>Bez dywidend, prowizji, spreadu, podatku i inflacji. To model historyczny.</p></div></div>
       </aside>
     </div>
     <section className="price-history" aria-label="Dzienne ceny zamknięcia">
-      <div className="price-heading"><div><h2>Ceny zamknięcia, dzień po dniu</h2><p>{stock?.name || symbol} · {stock?.exchange || '…'} · {stock?.currency || '…'} · {quotes.length.toLocaleString('pl-PL')} sesji w zakresie</p></div><button className="secondary" disabled={!quotes.length} onClick={exportPrices}><Download size={16}/>Pobierz wszystkie ceny CSV</button></div>
+      <div className="price-heading"><div><h2>Ceny zamknięcia, dzień po dniu</h2><p>{stock?.name || symbol} · {stock?.exchange || '…'} · {stock?.currency || '…'} · {quotes.length.toLocaleString(localeFor(uiLanguage))} sesji w zakresie</p></div><button className="secondary" disabled={!quotes.length} onClick={exportPrices}><Download size={16}/>Pobierz wszystkie ceny CSV</button></div>
       <div className="price-table-wrap"><table><thead><tr><th scope="col">Data sesji</th><th scope="col">Close po korekcie splitów</th><th scope="col">Cena nominalna (odtworzona)</th><th scope="col">Waluta</th></tr></thead><tbody>{quotes.slice(page*20,page*20+20).map(r=><tr key={r[0]}><th scope="row">{r[0]}</th><td>{number(r[1])}</td><td>{number(r[2])}</td><td>{stock.currency}</td></tr>)}</tbody></table>{!quotes.length&&<p className="helper">Brak sesji w wybranym zakresie.</p>}</div>
       <div className="pagination"><span>Najnowsze sesje najpierw · strona {Math.min(page+1,pages)} z {pages}</span><div><button className="secondary" disabled={page===0} onClick={()=>setPage(p=>p-1)}>Poprzednia</button><button className="secondary" disabled={page+1>=pages} onClick={()=>setPage(p=>p+1)}>Następna</button></div></div>
     </section>

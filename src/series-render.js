@@ -19,7 +19,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
  for(const s of series)for(const p of s.points){minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);if(Number.isFinite(p.y)){minY=Math.min(minY,p.y);rawMax=Math.max(rawMax,p.y);}}
  const step=10**Math.floor(Math.log10(rawMax-minY||1)),maxY=Math.ceil((rawMax||1)/step)*step;
  const color=i=>series[i].customColor?series[i].color:colors[i%colors.length];
- const text=v=>v===null?'brak danych':`${formatValue(v)} ${unit}`;
+ const text=v=>v===null?(config.language==='en'?'no data':'brak danych'):`${formatValue(v)} ${unit}`;
  const moving=i=>values[i].value===null?null:lerp(before[i].value??values[i].value,values[i].value,mix);
  const left=135,right=900,px=x=>left+(x-minX)/(maxX-minX||1)*(right-left),py=y=>bottom-(y-minY)/(maxY-minY||1)*(bottom-top);
  if(chart==='cards'||chart==='ranking'){
@@ -44,8 +44,8 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
  for(let i=0;i<=4;i++){const val=minY+(maxY-minY)*i/4,y=py(val);ctx.strokeStyle=dark?'#2a302c':'#dce3d8';ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.fillStyle=muted;ctx.textAlign='right';ctx.fillText(formatValue(val),left-22,y+8);}
  ctx.textAlign='center';
  if(chart==='bar'){
-  ctx.fillStyle=muted;ctx.fillText(xType==='date'?displayDate(Math.floor(current)):String(Math.floor(current)),(left+right)/2,bottom+47);
- }else for(let i=0;i<=4;i++){const x=minX+(maxX-minX)*i/4;ctx.fillStyle=muted;ctx.fillText(xType==='date'?displayDate(Math.round(x)):String(Math.round(x)),px(x),bottom+47);}
+  ctx.fillStyle=muted;ctx.fillText(xType==='date'?displayDate(Math.floor(current),config.language):String(Math.floor(current)),(left+right)/2,bottom+47);
+ }else for(let i=0;i<=4;i++){const x=minX+(maxX-minX)*i/4;ctx.fillStyle=muted;ctx.fillText(xType==='date'?displayDate(Math.round(x),config.language):String(Math.round(x)),px(x),bottom+47);}
  ctx.textAlign='left';
  series.forEach((s,i)=>{
   ctx.strokeStyle=ctx.fillStyle=color(i);ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.setLineDash(s.dashed?[18,14]:[]);

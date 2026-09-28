@@ -6,7 +6,7 @@ export function toDay(date) {
   return value / DAY;
 }
 export const fromDay = day => new Date(day * DAY).toISOString().slice(0, 10);
-export const displayDate = day => new Date(day * DAY).toLocaleDateString('pl-PL', { timeZone: 'UTC' });
+export const displayDate = (day,language='pl') => new Date(day * DAY).toLocaleDateString(language==='en'?'en-GB':'pl-PL', { timeZone: 'UTC' });
 
 function amountInCents(value, label) {
   if (!Number.isFinite(value) || value < 0 || value > 100_000 || Math.abs(value * 100 - Math.round(value * 100)) > 1e-7)

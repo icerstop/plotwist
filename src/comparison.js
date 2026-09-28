@@ -15,7 +15,7 @@ export function buildComparison({entries,assets,fx,start,end,mode='prices',scale
  loaded.forEach(a=>validateMarketRange(a,start,end));
  const range=comparisonRange(loaded,fx,mode);
  if(start<range.start||end>range.end)throw new Error(`Wspólna historia: ${range.start} – ${range.end}. Dostosuj daty lub wybierz cały wspólny zakres.`);
- const decorate=(entry,data)=>({...data,id:entry.id,color:entry.color,customColor:true,logo:entry.logo});
+ const decorate=(entry,data)=>({...data,id:entry.id,nameIsCustom:!!entry.nameIsCustom,color:entry.color,customColor:true,logo:entry.logo});
  if(mode==='dca'){
   if(!Number.isFinite(dailyInvestment)||dailyInvestment<=0)throw new Error('Podaj dodatnią dzienną wpłatę w złotych.');
   const summaries={};
