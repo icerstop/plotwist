@@ -9,7 +9,7 @@ export function comparisonRange(assets,fx,mode){
 export function buildComparison({entries,assets,fx,start,end,mode='prices',scale='index',dailyInvestment=5,investmentAmount=dailyInvestment,investmentFrequency='daily'}){
  if(!entries.length||entries.length>6)throw new Error('Dodaj od 1 do 6 serii.');
  const selected=entries.filter(e=>e.kind==='asset');
- if(!selected.length)throw new Error('Dodaj przynajmniej jedną spółkę lub surowiec.');
+ if(!selected.length)throw new Error('Dodaj przynajmniej jedną spółkę, ETF lub surowiec.');
  const loaded=selected.map(e=>assets[e.symbol]);
  if(loaded.some(a=>!a))throw new Error('Wczytywanie historii wybranych serii…');
  const first=toDay(start),last=toDay(end);
@@ -23,7 +23,7 @@ export function buildComparison({entries,assets,fx,start,end,mode='prices',scale
   const series=entries.map(entry=>{
    if(entry.kind==='asset'){
     const stock=assets[entry.symbol];
-    if(stock.kind==='futures')throw new Error(`${stock.name}: do inwestowania wybierz fundusz GLD, SLV lub USO. Kontrakty są dostępne w porównaniu cen.`);
+    if(stock.kind==='futures')throw new Error(`${stock.name}: do inwestowania wybierz ETF lub fundusz surowcowy. Kontrakty są dostępne w porównaniu cen.`);
     const r=simulateInvestment({stock,fx,start,end,investmentAmount,investmentFrequency,expenseAmount:0});
     summaries[entry.id]=r.summary;
     return decorate(entry,{...r.series[0],name:stock.name});

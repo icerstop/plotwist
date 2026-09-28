@@ -34,11 +34,12 @@ for(const item of marketUniverse.filter(s=>!only||s.symbol===only)){
 }
 if(only){console.log('Single-symbol refresh done; full refresh regenerates manifest.');process.exit(failed.length?1:0);}
 // One table request supplies all seven currencies; no need for seven separate calls.
-const chunks=[];for(let t=Date.parse('2002-01-02');t<Date.parse(today);t+=90*day){chunks.push([iso(t),iso(Math.min(t+89*day,Date.parse(today)-day))]);}
-const fxRows=[],requests=[];let index=0;
+const reuseFx=process.argv.includes('--reuse-fx')?JSON.parse(await readFile(`${dir}/fx-pln.json`,'utf8')):null;
+const chunks=[];if(!reuseFx)for(let t=Date.parse('2002-01-02');t<Date.parse(today);t+=90*day){chunks.push([iso(t),iso(Math.min(t+89*day,Date.parse(today)-day))]);}
+const fxRows=reuseFx?.rows||[],requests=[];let index=0;
 await Promise.all(Array.from({length:3},async()=>{while(index<chunks.length){const [from,to]=chunks[index++],url=`https://api.nbp.pl/api/exchangerates/tables/a/${from}/${to}/?format=json`;const tables=await json(url);for(const table of tables){const rates=Object.fromEntries(currencies.map(code=>[code,table.rates.find(r=>r.code===code)?.mid]));if(Object.values(rates).some(v=>!Number.isFinite(v)||v<=0))throw new Error(`Missing FX in NBP table ${table.no}`);fxRows.push({date:table.effectiveDate,...rates});}requests.push(url);console.log(`NBP: ${from} – ${to}`);}}));
 fxRows.sort((a,b)=>a.date.localeCompare(b.date));if(new Set(fxRows.map(r=>r.date)).size!==fxRows.length)throw new Error('Duplicate NBP date');
-await atomic('fx-pln.json',{source:'Narodowy Bank Polski, tabela A',sourceUrl:'https://api.nbp.pl/',retrievedAt,currencies,unit:'PLN per 1 unit of currency',rows:fxRows,requests});
-await atomic('manifest.json',{version:1,retrievedAt,coverage:'Curated selection; not all American or European securities.',refresh:'Snapshot. Run npm run data:markets to update. No automatic background refresh.',stocks:items,failed,fxFirstDate:fxRows[0].date,fxLastDate:fxRows.at(-1).date,totalObservations:items.reduce((a,s)=>a+s.observations,0)});
+if(!reuseFx)await atomic('fx-pln.json',{source:'Narodowy Bank Polski, tabela A',sourceUrl:'https://api.nbp.pl/',retrievedAt,currencies,unit:'PLN per 1 unit of currency',rows:fxRows,requests});
+await atomic('manifest.json',{version:1,retrievedAt,coverage:'Curated Polish and international securities; not complete market coverage.',refresh:'Snapshot. Run npm run data:markets to update. No automatic background refresh.',stocks:items,failed,fxFirstDate:fxRows[0].date,fxLastDate:fxRows.at(-1).date,totalObservations:items.reduce((a,s)=>a+s.observations,0)});
 console.log(JSON.stringify({stocks:items.length,observations:items.reduce((a,s)=>a+s.observations,0),fxRows:fxRows.length,failed}));
 if(failed.length)process.exitCode=1;

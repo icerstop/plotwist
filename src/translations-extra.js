@@ -1,5 +1,55 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Historie gotowe do rolki|Stories ready for a reel
+9 zestawów|9 presets
+Wybierz historię|Choose a story
+Kontekst historyczny:|Historical context:
+Wczytaj zestaw|Load preset
+Wczytanie zastępuje serie, daty i tytuł. Możesz je potem zmieniać. Zestawy pokazują wyceny w kontekście wydarzeń, nie dowodzą związku przyczynowego.|Loading replaces series, dates and title. You can edit them afterwards. Presets show prices in the context of events; they do not establish causation.
+akcji|stocks
+funduszy surowcowych|commodity funds
+kontraktów surowcowych|commodity futures
+Typ instrumentu|Instrument type
+Rynek|Market
+Rynek instrumentu|Instrument market
+Świat|World
+Tajwan|Taiwan
+Chiny|China
+Japonia|Japan
+Brazylia|Brazil
+Finlandia|Finland
+Spółka, ETF, symbol, kraj, surowiec…|Stock, ETF, symbol, country, commodity…
+pasujących instrumentów. Filtry zmieniają listy wyboru poniżej.|matching instruments. Filters change the selectors below.
+ETF · indeksy, sektory i obligacje|ETFs · indices, sectors and bonds
+Spółka / ETF / surowiec|Stock / ETF / commodity
+Oznaczenie kolorem|Identified by colour
+ETF-y pokazują ceny udziałów, nie poziomy indeksów. Dywidendy wypłacane inwestorowi nie są reinwestowane; akumulacja wewnątrz funduszu jest już zawarta w cenie. Fundusze surowcowe mogą korzystać z kontraktów, więc ich wynik różni się od ceny spot.|ETFs show share prices, not index levels. Distributions to the investor are not reinvested; internal fund accumulation is already reflected in the price. Commodity funds may hold futures, so their returns differ from spot prices.
+Filtr rynku oznacza kraj spółki, a dla funduszy miejsce notowania. Ekspozycję opisuje nazwa. ADR to amerykański kwit depozytowy, nie lokalna akcja. Historia symbolu może obejmować poprzedników prawnych i zmiany działalności.|The market filter refers to company country and, for funds, listing location. The name describes exposure. An ADR is a US depositary receipt, not a local share. Symbol history may include legal predecessors and changes in business.
+; ETF-y i surowce:|; ETFs and commodities:
+cen zamknięcia · Polska i świat|closing prices · Poland and worldwide
+Ropa Brent|Brent crude
+Gaz ziemny Henry Hub|Henry Hub natural gas
+Miedź|Copper
+Platyna|Platinum
+Pallad|Palladium
+Kukurydza|Corn
+Pszenica|Wheat
+Soja|Soybeans
+Kakao|Cocoa
+Cukier|Sugar
+Bawełna|Cotton
+Gaz ziemny|Natural gas
+Rolnictwo|Agriculture
+Koszyk surowców|Commodity basket
+fundusz UNG|UNG fund
+fundusz CPER|CPER fund
+fundusz DBA|DBA fund
+fundusz DBC|DBC fund
+USD / funt|USD / pound
+USD / buszel|USD / bushel
+USD / tona metryczna|USD / metric ton
+Volkswagen · akcje uprzywilejowane|Volkswagen · preferred shares
+Dodaj przynajmniej jedną spółkę, ETF lub surowiec.|Add at least one stock, ETF or commodity.
 Proste · bezszeryfowe|Clean · sans serif
 Szeryfowe · redakcyjne|Editorial · serif
 Wąskie · do tytułów|Condensed · headlines
