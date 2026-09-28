@@ -205,7 +205,7 @@ USD / uncja trojańska|USD / troy ounce
 USD / baryłka|USD / barrel
 USD / udział|USD / share
 udział|share
-Osobny portfel dla każdego instrumentu. Ta sama wpłata w PLN każdego dnia kalendarzowego; budżet nie jest dzielony między serie. Ułamkowe udziały kupowane po zamknięciu, środki z dni wolnych czekają na sesję. Kurs NBP z ostatniej tabeli opublikowanej przed wycenianym dniem. Bez dywidend, prowizji i podatków; koszty funduszy są już uwzględnione w ich cenach. Wydatki to narastająca suma konsumpcji, cel to stała kwota.|Separate portfolio for each instrument. Same PLN contribution every calendar day; the budget is not divided between series. Fractional shares bought at close; non-trading-day cash waits for a session. FX from the latest NBP table published before valuation day. Excludes dividends, commissions and taxes; fund expenses are reflected in prices. Spending is cumulative consumption; a goal is a fixed amount.
+Osobny portfel dla każdego instrumentu. Ta sama kwota i częstotliwość wpłat w PLN na każdy portfel; budżet nie jest dzielony między serie. Ułamkowe udziały kupowane po zamknięciu, środki z dni wolnych czekają na sesję. Kurs NBP z ostatniej tabeli opublikowanej przed wycenianym dniem. Bez dywidend, prowizji i podatków; koszty funduszy są już uwzględnione w ich cenach. Wydatki to narastająca suma zakupów według częstotliwości danej serii, cel to stała kwota.|Separate portfolio for each instrument. Same PLN amount and contribution frequency for each portfolio; the budget is not divided between series. Fractional shares bought at close; non-trading-day cash waits for a session. FX from the latest NBP table published before valuation day. Excludes dividends, commissions and taxes; fund expenses are reflected in prices. Spending accumulates on each expense series' schedule; a goal is a fixed amount.
 Cel i codzienny wydatek wymagają trybu „Inwestycje w PLN”. Usuń je lub zmień tryb.|Goals and daily expenses require “Investments in PLN” mode. Remove them or change mode.
 Ceny mają różne waluty lub jednostki. Wybierz indeks 100 albo zmianę %, aby porównać je na jednej skali.|Prices use different currencies or units. Choose index 100 or percentage change to compare on one scale.
 Potrzebne są co najmniej dwie wspólne daty notowań. Poszerz zakres.|At least two shared trading dates are required. Widen the range.
@@ -220,7 +220,7 @@ Brak notowań spółki.|No stock price history.
 Wpłata|Contribution
 Przynajmniej jedna kwota musi być większa od zera.|At least one amount must be greater than zero.
 Brak historycznych kursów NBP.|No historical NBP exchange rates.
-Wpłata w każdy dzień kalendarzowy, obie granice dat wliczone. Zakup ułamkowych akcji po cenie zamknięcia tylko w dniach z notowaniem; gotówka oczekuje na sesję. Wycena w PLN po ostatniej tabeli A NBP opublikowanej przed danym dniem. Brak prowizji, spreadu, podatków, inflacji i dywidend. Cena skorygowana wyłącznie o splity; ilość jednostek wyrażona we wspólnej bazie splitowej. Ostatnia znana cena na dni bez sesji, bez interpolacji cen. Wynik to historyczny model, nie gwarancja ceny wykonania zlecenia.|Contributions every calendar day, both dates inclusive. Fractional shares bought at closing prices on trading days; cash waits for a session. PLN valuation uses the latest NBP Table A published before each day. Excludes commissions, spreads, taxes, inflation and dividends. Prices adjusted only for splits; units on a shared split basis. Non-trading days use the last known price, without interpolation. A historical model, not guaranteed execution prices.
+Wpłaty i wydatki według niezależnych harmonogramów, obie granice dat wliczone. Zakup ułamkowych akcji po cenie zamknięcia tylko w dniach z notowaniem; gotówka oczekuje na sesję. Wycena w PLN po ostatniej tabeli A NBP opublikowanej przed danym dniem. Brak prowizji, spreadu, podatków, inflacji i dywidend. Cena skorygowana wyłącznie o splity; ilość jednostek wyrażona we wspólnej bazie splitowej. Ostatnia znana cena na dni bez sesji, bez interpolacji cen. Wynik to historyczny model, nie gwarancja ceny wykonania zlecenia.|Contributions and spending follow independent schedules, both dates inclusive. Fractional shares bought at closing prices on trading days; cash waits for a session. PLN valuation uses the latest NBP Table A published before each day. Excludes commissions, spreads, taxes, inflation and dividends. Prices adjusted only for splits; units on a shared split basis. Non-trading days use the last known price, without interpolation. A historical model, not guaranteed execution prices.
 napój|drink
 spółek ·|stocks ·
 , zgodnie z dostępnością wcześniejszego kursu NBP. Starsze ceny są dostępne w trybie „Kurs akcji”.|, depending on earlier NBP exchange rate availability. Older prices are available in “Stock price” mode.
@@ -285,4 +285,31 @@ fundusz SLV|SLV fund
 fundusz USO|USO fund
 Surowce|Commodities
 /6 serii.|/6 series.
+Codziennie|Daily
+Raz w tygodniu|Weekly
+Raz w miesiącu|Monthly
+Raz na kwartał|Quarterly
+Częstotliwość inwestowania|Investment frequency
+Częstotliwość zakupów|Purchase frequency
+Kwota jednej wpłaty|Amount per contribution
+Kwota jednego zakupu|Amount per purchase
+Kwota jednej wpłaty w zł|Contribution amount in PLN
+Kwota jednego zakupu w zł|Purchase amount in PLN
+Kwota wpłaty na każdy portfel|Contribution amount per portfolio
+To osobne scenariusze — każdy portfel otrzymuje pełną kwotę.|Separate scenarios — each portfolio receives the full amount.
+Pierwszy termin to data początkowa. Tydzień = 7 dni, miesiąc = 1 miesiąc kalendarzowy, kwartał = 3 miesiące. Jeśli brakuje dnia miesiąca, wybieramy jego ostatni dzień, bez przesuwania kolejnych terminów.|The first payment is on the start date. A week is 7 days, a month is 1 calendar month, a quarter is 3 months. Missing days use the month's last day without shifting later payments.
+Wpłata w dzień bez sesji czeka w gotówce na najbliższą sesję.|Contributions on non-trading days stay in cash until the next session.
+Dopasuj kwotę i częstotliwość|Match amount and frequency
+Różne budżety w tym okresie:|Different budgets over this period:
+Twój regularny zakup|Your recurring purchase
+Liczba wpłat / transakcji|Contributions / trades
+Liczba zwykłych zakupów|Consumer purchases
+Regularny zakup|Recurring purchase
+Regularny wydatek|Recurring expense
+Regularne wpłaty spotykają historyczne ceny akcji.|Regular contributions meet historical stock prices.
+Ceny i regularne wpłaty|Prices and regular contributions
+Podaj dodatnią kwotę wpłaty w złotych.|Enter a positive contribution amount in PLN.
+Nieprawidłowa częstotliwość.|Invalid frequency.
+Nieprawidłowy zakres harmonogramu.|Invalid schedule range.
+Cel i regularny wydatek wymagają trybu „Inwestycje w PLN”. Usuń je lub zmień tryb.|Goals and recurring expenses require “Investments in PLN” mode. Remove them or change mode.
 `;

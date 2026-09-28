@@ -516,7 +516,16 @@ Tytuły automatyczne i etykiety zmieniają język. Własne teksty edytujesz ręc
 Przywróć tytuł automatyczny|Restore automatic title
 `;
 export const english=Object.fromEntries(pairs.trim().split('\n').map(line=>{const at=line.indexOf('|');return [line.slice(0,at),line.slice(at+1)];}));
+const intervalEn={'dziennie':'a day','co tydzień':'a week','co miesiąc':'a month','co kwartał':'a quarter'};
+const unitEn={'dzień':'day','tydz.':'week','mies.':'month','kw.':'quarter'};
+const amountEn=n=>Number(n.replace(/\s/g,'').replace(',','.')).toLocaleString('en-GB',{maximumFractionDigits:2});
 const templates=[
+ [/^Częstotliwość zakupów serii (\d+)$/,n=>`Series ${n} purchase frequency`],
+ [/^(.+) zł (dziennie|co tydzień|co miesiąc|co kwartał) w (.+)\.$/,(n,f,name)=>`PLN ${amountEn(n)} ${intervalEn[f]} in ${name}.`],
+ [/^(.+) zł (dziennie|co tydzień|co miesiąc|co kwartał)\. Kilka możliwości\.$/,(n,f)=>`PLN ${amountEn(n)} ${intervalEn[f]}. Several possibilities.`],
+ [/^Osobne portfele · (.+) zł (dziennie|co tydzień|co miesiąc|co kwartał) na każdy$/,(n,f)=>`Separate portfolios · PLN ${amountEn(n)} ${intervalEn[f]} each`],
+ [/^(.+): (.+) zł\/(dzień|tydz\.|mies\.|kw\.) vs (.+): (.+) zł\/(dzień|tydz\.|mies\.|kw\.)$/,(a,b,c,d,e,f)=>`${a}: PLN ${amountEn(b)}/${unitEn[c]} vs ${d}: PLN ${amountEn(e)}/${unitEn[f]}`],
+
  [/^(Polska|Świat|Chiny|Niemcy|Indie|Korea Płd\.|Japonia|Wielka Brytania|Francja|Brazylia|Estonia): (.+)$/,(name,value)=>`${translate(name,'en')}: ${value}`],
  [/^Prompt przed (.+)$/,s=>`Prompt before ${s}`],
  [/^(\d+) rekordów bez wybranego rodzaju daty pominięto\.$/,n=>`${n} records without the selected date type were omitted.`],

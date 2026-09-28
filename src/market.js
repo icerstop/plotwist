@@ -1,3 +1,4 @@
+import {recurringDays,scheduleRule} from './recurrence.js';
 export const DAY = 86_400_000;
 export function toDay(date) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error('Wybierz daty w formacie RRRR-MM-DD.');
@@ -24,15 +25,16 @@ export function validateMarketRange(stock, start, end) {
   return { first, last };
 }
 
-export function simulateDailyInvestment({ stock, fx, start, end, dailyInvestment, dailyExpense, expenseName = 'Coca-Cola' }) {
+export function simulateInvestment({ stock, fx, start, end, dailyInvestment, dailyExpense, investmentAmount=dailyInvestment, expenseAmount=dailyExpense, investmentFrequency='daily', expenseFrequency='daily', expenseName = 'Coca-Cola' }) {
   const { first, last } = validateMarketRange(stock, start, end);
-  const deposit = amountInCents(dailyInvestment, 'Wpłata'), expense = amountInCents(dailyExpense, 'Wydatek');
+  const deposit = amountInCents(investmentAmount, 'Wpłata'), expense = amountInCents(expenseAmount, 'Wydatek');
   if (deposit === 0 && expense === 0) throw new Error('Przynajmniej jedna kwota musi być większa od zera.');
   if (stock.currency !== 'PLN' && !fx?.rows?.length) throw new Error('Brak historycznych kursów NBP.');
   const earliest = marketStartDate(stock, fx, 'dca');
   if (earliest && start < earliest) throw new Error(`Symulacja w PLN dostępna od ${earliest}: potrzebny jest wcześniejszy kurs NBP. Starsze notowania znajdziesz w trybie „Kurs akcji”.`);
+  const deposits=recurringDays(first,last,investmentFrequency),expenses=recurringDays(first,last,expenseFrequency);
   const prices = stock.rows, rates = fx?.rows || [];
-  let priceIndex = -1, fxIndex = -1, cashCents = 0, totalCents = 0, expenseCents = 0, units = 0, trades = 0;
+  let priceIndex = -1, fxIndex = -1, cashCents = 0, totalCents = 0, expenseCents = 0, units = 0, trades = 0, depositCount=0, expenseCount=0;
   const ledger = [];
   for (let day = first; day <= last; day++) {
     const date = fromDay(day);
@@ -44,7 +46,9 @@ export function simulateDailyInvestment({ stock, fx, start, end, dailyInvestment
     if (!Number.isFinite(fxRate) || fxRate <= 0) throw new Error(`Brak kursu ${stock.currency}/PLN dostępnego przed ${date}.`);
     if (stock.currency !== 'PLN' && day - toDay(rateRow.date) > 10) throw new Error(`Kurs NBP jest zbyt stary dla ${date}. Odśwież dane.`);
     if (price && day - toDay(price[0]) > 10) throw new Error(`Ponad 10 dni bez notowania ${stock.symbol} przed ${date}. Nie wyceniamy portfela po nieaktualnej cenie.`);
-    cashCents += deposit; totalCents += deposit; expenseCents += expense;
+    const depositToday=deposits.has(day)?deposit:0,expenseToday=expenses.has(day)?expense:0;
+    cashCents+=depositToday;totalCents+=depositToday;expenseCents+=expenseToday;
+    if(depositToday>0)depositCount++;if(expenseToday>0)expenseCount++;
     let purchase = 0;
     if (price?.[0] === date && cashCents > 0) {
       if (!Number.isFinite(price[1]) || price[1] <= 0) throw new Error(`Nieprawidłowa cena ${date}.`);
@@ -53,20 +57,24 @@ export function simulateDailyInvestment({ stock, fx, start, end, dailyInvestment
       cashCents = 0; trades++;
     }
     const portfolio = units * (price?.[1] || 0) * fxRate + cashCents / 100;
-    ledger.push({ date, portfolio, contributions: totalCents / 100, expenses: expenseCents / 100, cash: cashCents / 100, purchase, quoteDate: price?.[0] || null, closeSplitAdjusted: price?.[1] ?? null, closeReconstructed: price?.[2] ?? null, fxRate, fxDate: stock.currency === 'PLN' ? null : rateRow.date });
+    ledger.push({ date, deposit:depositToday/100,expense:expenseToday/100,investmentFrequency,expenseFrequency,portfolio, contributions: totalCents / 100, expenses: expenseCents / 100, cash: cashCents / 100, purchase, quoteDate: price?.[0] || null, closeSplitAdjusted: price?.[1] ?? null, closeReconstructed: price?.[2] ?? null, fxRate, fxDate: stock.currency === 'PLN' ? null : rateRow.date });
   }
   const final = ledger.at(-1);
   return {
     series: [
-      { name: `${stock.name} · portfel`, color: '#bcf34a', points: ledger.map(r => ({ x: toDay(r.date), y: r.portfolio })) },
-      { name: `${expenseName || 'Napój'} · wydatki`, color: '#b18aff', points: ledger.map(r => ({ x: toDay(r.date), y: r.expenses })) },
+      { name: `${stock.name} · portfel`, color: '#bcf34a', schedule:{amount:investmentAmount,frequency:investmentFrequency}, points: ledger.map(r => ({ x: toDay(r.date), y: r.portfolio,deposit:r.deposit })) },
+      { name: `${expenseName || 'Napój'} · wydatki`, color: '#b18aff', schedule:{amount:expenseAmount,frequency:expenseFrequency}, points: ledger.map(r => ({ x: toDay(r.date), y: r.expenses })) },
       { name: 'Suma wpłat', color: '#8fabb6', points: ledger.map(r => ({ x: toDay(r.date), y: r.contributions })) }
     ],
     ledger,
-    summary: { ...final, profit: final.portfolio - final.contributions, days: ledger.length, trades, simpleReturn: final.contributions ? (final.portfolio / final.contributions - 1) * 100 : null },
-    methodology: 'Wpłata w każdy dzień kalendarzowy, obie granice dat wliczone. Zakup ułamkowych akcji po cenie zamknięcia tylko w dniach z notowaniem; gotówka oczekuje na sesję. Wycena w PLN po ostatniej tabeli A NBP opublikowanej przed danym dniem. Brak prowizji, spreadu, podatków, inflacji i dywidend. Cena skorygowana wyłącznie o splity; ilość jednostek wyrażona we wspólnej bazie splitowej. Ostatnia znana cena na dni bez sesji, bez interpolacji cen. Wynik to historyczny model, nie gwarancja ceny wykonania zlecenia.'
+    summary: { ...final, profit: final.portfolio - final.contributions, days: ledger.length, trades, depositCount, expenseCount, simpleReturn: final.contributions ? (final.portfolio / final.contributions - 1) * 100 : null },
+    schedule:{investmentAmount,expenseAmount,investmentFrequency,expenseFrequency,start,end,rule:scheduleRule},
+    methodology: 'Wpłaty i wydatki według niezależnych harmonogramów, obie granice dat wliczone. Zakup ułamkowych akcji po cenie zamknięcia tylko w dniach z notowaniem; gotówka oczekuje na sesję. Wycena w PLN po ostatniej tabeli A NBP opublikowanej przed danym dniem. Brak prowizji, spreadu, podatków, inflacji i dywidend. Cena skorygowana wyłącznie o splity; ilość jednostek wyrażona we wspólnej bazie splitowej. Ostatnia znana cena na dni bez sesji, bez interpolacji cen. Wynik to historyczny model, nie gwarancja ceny wykonania zlecenia.'
   };
 }
+
+// Compatibility for older saved callers: omitted frequencies still mean daily.
+export const simulateDailyInvestment=simulateInvestment;
 
 export function priceSeries(stock, start, end, basis = 'split') {
   return [{ name: `${stock.symbol} · ${basis === 'raw' ? 'cena odtworzona' : 'Close (splity)'}`, color: '#bcf34a', points: stock.rows.filter(r => r[0] >= start && r[0] <= end).map(r => ({ x: toDay(r[0]), y: r[basis === 'raw' ? 2 : 1] })) }];

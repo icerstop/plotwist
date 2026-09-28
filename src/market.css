@@ -6,3 +6,5 @@
 @media(max-width:760px){.comparison-workspace{grid-template-columns:minmax(0,1fr)}.comparison-workspace>.preview{position:static}.comparison-intro h2{font-size:24px}.comparison-intro{align-items:flex-start}.comparison-intro>.primary{font-size:0;padding:12px;gap:0}.comparison-intro>.primary svg{width:20px;height:20px;flex-shrink:0}.comparison-totals{grid-template-columns:1fr}.comparison-tabs{gap:8px 16px}.comparison-tabs button{font-size:13px}.series-card select,.series-card>input,.series-amount input{font-size:16px}.comparison-workspace .market-controls{padding:18px 14px}}
 
 .comparison-workspace{overflow:clip}.series-color .color-hex{width:76px;height:28px;padding:4px 5px;font-family:monospace;font-size:12px;cursor:text}.series-color{flex-wrap:wrap}
+
+.frequency-field{display:flex;flex-direction:column;gap:8px;margin:0 0 18px;font-size:14px;font-weight:600;min-width:0}.frequency-field select{width:100%;min-width:0;background:#fff;border:1px solid #dfe4dc;border-radius:7px;padding:11px 7px;font-size:14px;font-weight:400}.series-card .frequency-field{margin:14px 0 0}.schedule-rule{line-height:1.6;margin-bottom:20px}.market-amounts+.field-pair{align-items:start}

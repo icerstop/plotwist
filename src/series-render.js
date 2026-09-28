@@ -10,7 +10,8 @@ export function fittedText(ctx,text,x,y,width){let label=String(text);while(ctx.
 function logoLabel(ctx,series,x,y,font,fg,maxWidth){
  const logo=getReelLogo(series.logo);let offset=0;
  if(logo){ctx.fillStyle='#fff';ctx.fillRect(x,y-29,38,38);const ratio=Math.min(30/logo.naturalWidth,30/logo.naturalHeight);ctx.drawImage(logo,x+19-logo.naturalWidth*ratio/2,y-10-logo.naturalHeight*ratio/2,logo.naturalWidth*ratio,logo.naturalHeight*ratio);offset=51;}
- ctx.fillStyle=fg;ctx.font=`27px ${font}`;fittedText(ctx,series.name,x+offset,y,maxWidth-offset);
+ ctx.fillStyle=fg;ctx.font=`27px ${font}`;const suffix=series.scheduleText?` · ${series.scheduleText}`:'',suffixWidth=ctx.measureText(suffix).width;
+ fittedText(ctx,series.name,x+offset,y,Math.max(40,maxWidth-offset-suffixWidth));if(suffix)ctx.fillText(suffix,x+maxWidth-suffixWidth,y);
 }
 export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,contentTop,formatValue,timeSeconds}){
  const {series=[],chart='line',unit='',xType='year'}=config;

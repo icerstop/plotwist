@@ -1,3 +1,5 @@
+import {FrequencyPicker} from './FrequencyPicker.jsx';
+import {frequencyPhrase,periodAmount,scheduleRule} from './recurrence.js';
 import {useLanguages,localeFor} from './language-context.js';
 import {translate} from './translations.js';
 import {PresentationPicker} from './Presentation.jsx';
@@ -7,7 +9,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowUpRight, Database, Download, Info, Search } from 'lucide-react';
 import { ExportModal, Field, FontPicker, ReelPreview } from './components.jsx';
 import { downloadBlob } from './data.js';
-import { fromDay, marketCsv, marketStartDate, priceSeries, simulateDailyInvestment, toDay, validateMarketRange } from './market.js';
+import { fromDay, marketCsv, marketStartDate, priceSeries, simulateInvestment, toDay, validateMarketRange } from './market.js';
 
 async function readJson(path, signal) {
   const r = await fetch(path, { signal });
@@ -23,6 +25,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   const [symbol, setSymbol] = useState('NVDA'), [region, setRegion] = useState('Wszystkie'), [search, setSearch] = useState('');
   const [start, setStart] = useState('2020-01-01'), [end, setEnd] = useState('');
   const [investment, setInvestment] = useState('5'), [expense, setExpense] = useState('3'), [expenseName, setExpenseName] = useState('Coca-Cola');
+  const [investmentFrequency,setInvestmentFrequency]=useState('daily'),[expenseFrequency,setExpenseFrequency]=useState('daily');
   const [mode, setMode] = useState('compare'), [basis, setBasis] = useState('split');
   const [title, setTitle] = useState('5 zł dziennie w NVIDIA.'), [customTitle, setCustomTitle] = useState(false);
   const [chart,setChart]=useState('line');
@@ -52,19 +55,19 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   const result = useMemo(() => {
     if (!stock || !fx) return { series: [], ledger: [], error: '' };
     try {
-      return { ...simulateDailyInvestment({ stock, fx, start, end, dailyInvestment: investment.trim() ? Number(investment) : NaN, dailyExpense: expense.trim() ? Number(expense) : NaN, expenseName }), error: '' };
+      return { ...simulateInvestment({ stock, fx, start, end, investmentFrequency, expenseFrequency, investmentAmount: investment.trim() ? Number(investment) : NaN, expenseAmount: expense.trim() ? Number(expense) : NaN, expenseName }), error: '' };
     } catch (e) { return { series: [], ledger: [], error: e.message }; }
-  }, [stock, fx, start, end, investment, expense, expenseName]);
+  }, [stock, fx, start, end, investment, expense, expenseName, investmentFrequency, expenseFrequency]);
   const filtered = useMemo(() => (manifest?.stocks || []).filter(s => (region === 'Wszystkie' || s.region === region) && `${s.name} ${s.symbol} ${s.country} ${translate(s.country,'en')}`.toLowerCase().includes(search.toLowerCase())), [manifest, region, search]);
   const quotes = useMemo(() => (stock?.rows || []).filter(r => r[0] >= start && r[0] <= end).toReversed(), [stock, start, end]);
   const chartSeries = useMemo(() => mode === 'dca' ? result.series : stock ? priceSeries(stock, start, end, basis) : [], [mode, result.series, stock, start, end, basis]);
-  const generatedTitle = mode === 'dca' ? `${investment || '0'} zł dziennie w ${stock?.name || symbol}.` : `${stock?.name || symbol}. Dzień po dniu.`;
+  const generatedTitle = mode === 'dca' ? `${investment || '0'} zł ${frequencyPhrase(investmentFrequency)} w ${stock?.name || symbol}.` : `${stock?.name || symbol}. Dzień po dniu.`;
   const config = useMemo(() => ({
     series: chartSeries, title: customTitle ? title : generatedTitle,titleIsCustom:customTitle,
-    subtitle: mode === 'dca' ? `${stock?.name || symbol}: ${investment || 0} zł/dzień vs ${expenseName || 'napój'}: ${expense || 0} zł/dzień` : basis === 'split' ? 'Cena zamknięcia · korekta o splity' : 'Cena nominalna · odtworzona z korekt splitowych',
+    subtitle: mode === 'dca' ? `${stock?.name || symbol}: ${periodAmount(investment||0,investmentFrequency)} vs ${expenseName || 'napój'}: ${periodAmount(expense||0,expenseFrequency)}` : basis === 'split' ? 'Cena zamknięcia · korekta o splity' : 'Cena nominalna · odtworzona z korekt splitowych',
     source: mode === 'dca' ? 'Yahoo Finance + NBP · bez dywidend, opłat i podatków' : 'Yahoo Finance · historia dzienna · bez bieżącej sesji',
     format: '9:16', theme, fontId, chart, unit: mode === 'dca' ? 'zł' : stock?.currency || '', xType: 'date'
-  }), [chartSeries, customTitle, title, generatedTitle, mode, stock, symbol, expenseName, investment, expense, basis, theme, fontId, chart]);
+  }), [chartSeries, customTitle, title, generatedTitle, mode, stock, symbol, expenseName, investment, expense, basis, theme, fontId, chart, investmentFrequency, expenseFrequency]);
   const priceRangeError = useMemo(() => { if (!stock) return ''; try { validateMarketRange(stock, start, end); return ''; } catch (e) { return e.message; } }, [stock, start, end]);
   const visibleError = error || (mode === 'dca' ? result.error : priceRangeError);
   const valid = !loading && !visibleError && chartSeries.length > 0 && chartSeries.every(s => s.points.length >= 2);
@@ -78,15 +81,15 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
     downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8' }), `plotwist-${symbol}-${start}-${end}.csv`);
   }
   function exportLedger() {
-    const headers = ['date','portfolio','contributions','expenses','cash','purchase','quoteDate','closeSplitAdjusted','closeReconstructed','fxRate','fxDate'];
+    const headers = ['date','deposit','expense','investmentFrequency','expenseFrequency','portfolio','contributions','expenses','cash','purchase','quoteDate','closeSplitAdjusted','closeReconstructed','fxRate','fxDate'];
     downloadBlob(new Blob([marketCsv(result.ledger.map(r => headers.map(h => typeof r[h] === 'number' ? Number(r[h].toFixed(8)) : r[h])), headers)], { type: 'text/csv;charset=utf-8' }), `plotwist-${symbol}-symulacja.csv`);
   }
   function exportMethodology() {
-    downloadBlob(new Blob([JSON.stringify({ stock: { symbol: stock.symbol, currency: stock.currency, sourceUrl: stock.sourceUrl, retrievedAt: stock.retrievedAt, splits: stock.splits, priceMethod: stock.priceMethod }, fx: { sourceUrl: fx.sourceUrl, retrievedAt: fx.retrievedAt }, inputs: { start, end, dailyInvestment: Number(investment), dailyExpense: Number(expense), expenseName }, methodology: result.methodology, summary }, null, 2)], { type: 'application/json' }), `plotwist-${symbol}-metodologia.json`);
+    downloadBlob(new Blob([JSON.stringify({ stock: { symbol: stock.symbol, currency: stock.currency, sourceUrl: stock.sourceUrl, retrievedAt: stock.retrievedAt, splits: stock.splits, priceMethod: stock.priceMethod }, fx: { sourceUrl: fx.sourceUrl, retrievedAt: fx.retrievedAt }, inputs: { start, end, investmentAmount: Number(investment), expenseAmount: Number(expense), investmentFrequency, expenseFrequency, expenseName, scheduleRule }, methodology: result.methodology, summary }, null, 2)], { type: 'application/json' }), `plotwist-${symbol}-metodologia.json`);
   }
   if(mode==='compare')return <div className="market-page"><div className="market-switch comparison-tabs" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label])=><button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={()=>setMode(id)}>{label}</button>)}</div>{error&&<p role="alert" className="error">{error}</p>}<ComparisonStudio manifest={manifest} fx={fx} fontId={fontId} onFontChange={onFontChange}/></div>;
   return <div className="market-page">
-    <div className="market-heading"><div><h1>Mały nawyk. Prawdziwa historia.</h1><p>Codzienne wpłaty spotykają historyczne ceny akcji.</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
+    <div className="market-heading"><div><h1>Mały nawyk. Prawdziwa historia.</h1><p>Regularne wpłaty spotykają historyczne ceny akcji.</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
     <div className="market-meta"><Database size={15}/>{manifest ? <span>{manifest.stocks.length} spółek · {manifest.totalObservations.toLocaleString(localeFor(uiLanguage))} cen zamknięcia · USA i Europa</span> : <span>Wczytywanie katalogu…</span>}<span>Snapshot: {manifest?.retrievedAt.slice(0,10) || '…'}</span></div>
     <div className="market-workspace">
       <section className="market-controls" aria-label="Ustawienia inwestowania"><PresentationPicker value={chart} onChange={setChart}/>
@@ -98,9 +101,11 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
         <button className="text-btn" disabled={!stock||!fx} onClick={()=>{setStart(minDate);setEnd(stock.rows.at(-1)[0]);}}>Cała dostępna historia</button>
         {stock&&<p className="helper">Notowania: {stock.rows[0][0]} – {stock.rows.at(-1)[0]}.{mode==='dca'&&stock.currency!=='PLN'&&<> Symulacja w PLN od {minDate}, zgodnie z dostępnością wcześniejszego kursu NBP. Starsze ceny są dostępne w trybie „Kurs akcji”.</>}</p>}
         {mode==='dca'?<>
-          <div className="field-pair market-amounts"><Field label="Inwestujesz / dzień"><input aria-label="Dzienna inwestycja w zł" type="number" min="0" max="100000" step="0.01" value={investment} onChange={e=>setInvestment(e.target.value)}/><small>zł, każdy dzień kalendarzowy</small></Field><Field label="Wydajesz / dzień"><input aria-label="Dzienny wydatek w zł" type="number" min="0" max="100000" step="0.01" value={expense} onChange={e=>setExpense(e.target.value)}/><small>zł, stała cena przez cały okres</small></Field></div>
-          {Number(investment)!==Number(expense)&&<div className="budget-note"><span>Porównujesz różne budżety: {investment || 0} zł i {expense || 0} zł.</span><button onClick={()=>setExpense(investment)}>Wyrównaj kwoty</button></div>}
-          <Field label="Twój codzienny zakup"><input maxLength="35" value={expenseName} onChange={e=>setExpenseName(e.target.value)} placeholder="Np. Coca-Cola, kawa, przekąska"/></Field>
+          <div className="field-pair market-amounts"><Field label="Kwota jednej wpłaty"><input aria-label="Kwota jednej wpłaty w zł" type="number" min="0" max="100000" step="0.01" value={investment} onChange={e=>setInvestment(e.target.value)}/><small translate="no">{periodAmount(investment||0,investmentFrequency,uiLanguage)}</small></Field><Field label="Kwota jednego zakupu"><input aria-label="Kwota jednego zakupu w zł" type="number" min="0" max="100000" step="0.01" value={expense} onChange={e=>setExpense(e.target.value)}/><small translate="no">{periodAmount(expense||0,expenseFrequency,uiLanguage)}</small></Field></div>
+          <div className="field-pair"><FrequencyPicker label="Częstotliwość inwestowania" value={investmentFrequency} onChange={setInvestmentFrequency}/><FrequencyPicker label="Częstotliwość zakupów" value={expenseFrequency} onChange={setExpenseFrequency}/></div>
+          <p className="helper schedule-rule">{scheduleRule} Wpłata w dzień bez sesji czeka w gotówce na najbliższą sesję.</p>
+          {summary&&Math.abs(summary.contributions-summary.expenses)>.005&&<div className="budget-note"><span>Różne budżety w tym okresie: {money(summary.contributions)} / {money(summary.expenses)}.</span><button onClick={()=>{setExpense(investment);setExpenseFrequency(investmentFrequency);}}>Dopasuj kwotę i częstotliwość</button></div>}
+          <Field label="Twój regularny zakup"><input maxLength="35" value={expenseName} onChange={e=>setExpenseName(e.target.value)} placeholder="Np. Coca-Cola, kawa, przekąska"/></Field>
         </>:<Field label="Rodzaj ceny"><select value={basis} onChange={e=>setBasis(e.target.value)}><option value="split">Close — po korekcie o splity</option><option value="raw">Cena nominalna — odtworzona</option></select><small>Korekta o splity zapewnia ciągłość wykresu. Cena nominalna może gwałtownie spaść w dniu splitu.</small></Field>}
         <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:translate(generatedTitle,reelLanguage)} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/>{customTitle&&<button type="button" className="text-btn" onClick={()=>setCustomTitle(false)}>Przywróć tytuł automatyczny</button>}</Field>
         <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(t=><option key={t} value={t}>{t} s</option>)}</select></Field><Field label="Motyw rolki"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
@@ -112,7 +117,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
         <p className="muted">{start} → {end}</p>
         {summary&&mode==='dca'?<>
           <div className="market-value"><span>Wartość portfela z gotówką</span><strong>{money(summary.portfolio)}</strong><small>Ostatnia cena akcji: {summary.quoteDate}</small></div>
-          <dl className="market-stats"><div><dt>Twoje wpłaty</dt><dd>{money(summary.contributions)}</dd></div><div><dt>Wynik ponad wpłaty</dt><dd className={summary.profit>=0?'positive':'negative'}>{money(summary.profit)}</dd></div><div><dt>Wydatki: {expenseName || 'napój'}</dt><dd>{money(summary.expenses)}</dd></div><div><dt>Gotówka czekająca na sesję</dt><dd>{money(summary.cash)}</dd></div><div><dt>Dni odkładania / zakupy</dt><dd>{summary.days} / {summary.trades}</dd></div></dl>
+          <dl className="market-stats"><div><dt>Twoje wpłaty</dt><dd>{money(summary.contributions)}</dd></div><div><dt>Wynik ponad wpłaty</dt><dd className={summary.profit>=0?'positive':'negative'}>{money(summary.profit)}</dd></div><div><dt>Wydatki: {expenseName || 'napój'}</dt><dd>{money(summary.expenses)}</dd></div><div><dt>Gotówka czekająca na sesję</dt><dd>{money(summary.cash)}</dd></div><div><dt>Liczba wpłat / transakcji</dt><dd>{summary.depositCount} / {summary.trades}</dd></div><div><dt>Liczba zwykłych zakupów</dt><dd>{summary.expenseCount}</dd></div></dl>
           <p className="helper">Wydatki na napój to suma konsumpcji. Wynik inwestycji liczony jest względem wpłat do portfela.</p>
           <button className="secondary full" disabled={!valid} onClick={exportLedger}><Download size={16}/>Dziennik symulacji CSV</button>
         </>:quotes.length>0?<>
@@ -127,7 +132,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
       <div className="price-table-wrap"><table><thead><tr><th scope="col">Data sesji</th><th scope="col">Close po korekcie splitów</th><th scope="col">Cena nominalna (odtworzona)</th><th scope="col">Waluta</th></tr></thead><tbody>{quotes.slice(page*20,page*20+20).map(r=><tr key={r[0]}><th scope="row">{r[0]}</th><td>{number(r[1])}</td><td>{number(r[2])}</td><td>{stock.currency}</td></tr>)}</tbody></table>{!quotes.length&&<p className="helper">Brak sesji w wybranym zakresie.</p>}</div>
       <div className="pagination"><span>Najnowsze sesje najpierw · strona {Math.min(page+1,pages)} z {pages}</span><div><button className="secondary" disabled={page===0} onClick={()=>setPage(p=>p-1)}>Poprzednia</button><button className="secondary" disabled={page+1>=pages} onClick={()=>setPage(p=>p+1)}>Następna</button></div></div>
     </section>
-    <details className="market-methodology"><summary>Źródła, korekty i sposób obliczania</summary><div><p>{result.methodology || 'Wybierz poprawny zakres, aby policzyć porównanie.'}</p><p><strong>Dwie ceny:</strong> Yahoo Finance udostępnia Close skorygowane o splity. Cenę nominalną odtwarzamy, mnożąc przez współczynniki późniejszych splitów zgłoszonych przez dostawcę. To odtworzona historia, a nie niezależnie zweryfikowany oficjalny kurs aukcji zamknięcia. Pole Adj Close, korygowane także o dywidendy, nie służy do tej symulacji.</p><p><strong>Waluty:</strong> cena w GBp/GBX jest dzielona przez 100, aby otrzymać GBP. NBP podaje PLN za jednostkę waluty. W dni bez sesji wyceniamy ostatnią znaną cenę po dostępnym kursie NBP; linia portfela może wtedy zmieniać się przez walutę i wpłaty. Same ceny sesji nie są uzupełniane.</p><p><strong>Zakres:</strong> wybrane spółki z USA i 11 krajów Europy, pełna dzienna historia dostępna u dostawcy dla danego symbolu. Symulacja w PLN dodatkowo wymaga wcześniejszego kursu NBP (API udostępnia tabele od 02.01.2002). Zbiór jest snapshotem, nie aktualizuje się sam i pomija bieżący dzień. Nie obejmuje wszystkich spółek ani spółek wycofanych z giełdy. Nie służy do wyliczania historycznej stopy zwrotu całego rynku.</p><p><strong>Dostęp i wykorzystanie:</strong> publiczny dostęp nie oznacza licencji na dalszą redystrybucję danych. Przed komercyjną publikacją materiałów sprawdź warunki dostawcy.</p><div className="market-source-links"><a href={stock?.sourceUrl || 'https://finance.yahoo.com/'} target="_blank" rel="noreferrer">Yahoo Finance: {symbol}<ArrowUpRight size={15}/></a><a href="https://api.nbp.pl/" target="_blank" rel="noreferrer">NBP — tabela A<ArrowUpRight size={15}/></a><button className="text-btn" disabled={!summary} onClick={exportMethodology}><Download size={15}/>Pobierz założenia JSON</button></div><small>Pobrano ceny: {stock?.retrievedAt} · Pobrano NBP: {fx?.retrievedAt}</small></div></details>
+    <details className="market-methodology"><summary>Źródła, korekty i sposób obliczania</summary><div><p>{result.methodology || 'Wybierz poprawny zakres, aby policzyć porównanie.'}</p><p>{scheduleRule}</p><p><strong>Dwie ceny:</strong> Yahoo Finance udostępnia Close skorygowane o splity. Cenę nominalną odtwarzamy, mnożąc przez współczynniki późniejszych splitów zgłoszonych przez dostawcę. To odtworzona historia, a nie niezależnie zweryfikowany oficjalny kurs aukcji zamknięcia. Pole Adj Close, korygowane także o dywidendy, nie służy do tej symulacji.</p><p><strong>Waluty:</strong> cena w GBp/GBX jest dzielona przez 100, aby otrzymać GBP. NBP podaje PLN za jednostkę waluty. W dni bez sesji wyceniamy ostatnią znaną cenę po dostępnym kursie NBP; linia portfela może wtedy zmieniać się przez walutę i wpłaty. Same ceny sesji nie są uzupełniane.</p><p><strong>Zakres:</strong> wybrane spółki z USA i 11 krajów Europy, pełna dzienna historia dostępna u dostawcy dla danego symbolu. Symulacja w PLN dodatkowo wymaga wcześniejszego kursu NBP (API udostępnia tabele od 02.01.2002). Zbiór jest snapshotem, nie aktualizuje się sam i pomija bieżący dzień. Nie obejmuje wszystkich spółek ani spółek wycofanych z giełdy. Nie służy do wyliczania historycznej stopy zwrotu całego rynku.</p><p><strong>Dostęp i wykorzystanie:</strong> publiczny dostęp nie oznacza licencji na dalszą redystrybucję danych. Przed komercyjną publikacją materiałów sprawdź warunki dostawcy.</p><div className="market-source-links"><a href={stock?.sourceUrl || 'https://finance.yahoo.com/'} target="_blank" rel="noreferrer">Yahoo Finance: {symbol}<ArrowUpRight size={15}/></a><a href="https://api.nbp.pl/" target="_blank" rel="noreferrer">NBP — tabela A<ArrowUpRight size={15}/></a><button className="text-btn" disabled={!summary} onClick={exportMethodology}><Download size={15}/>Pobierz założenia JSON</button></div><small>Pobrano ceny: {stock?.retrievedAt} · Pobrano NBP: {fx?.retrievedAt}</small></div></details>
     {exporting&&<ExportModal config={config} duration={duration} onClose={()=>setExporting(false)}/>}
   </div>;
 }
