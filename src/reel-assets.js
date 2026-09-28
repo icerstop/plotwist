@@ -9,4 +9,7 @@ function loadImage(path){
  images.set(path,record);return record.promise;
 }
 export const getReelLogo=path=>images.get(path)?.image;
-export async function preloadReelAssets(config){await Promise.all([preloadReelFont(config.fontId),...[...new Set((config.series||[]).map(s=>s.logo).filter(Boolean))].map(loadImage)]);}
+export async function preloadReelAssets(config){
+ const logos=[...(config.series||[]).map(s=>s.logo),...(config.ai?.groupBy==='brand'&&config.ai.showBrandLogos!==false?config.ai.brands.map(b=>b.logo):[])].filter(Boolean);
+ await Promise.all([preloadReelFont(config.fontId),...[...new Set(logos)].map(loadImage)]);
+}

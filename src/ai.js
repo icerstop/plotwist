@@ -1,11 +1,11 @@
 export const aiDate = (row,basis) => basis==='release'?row.releaseDate:row.observedAt?.slice(0,10);
 export const aiValue = (value,language='pl') => Number(value).toLocaleString(language==='en'?'en-GB':'pl-PL',{maximumFractionDigits:1});
-export function selectAiRows(rows,{basis='release',start='',end='9999',organization='',query='',protocol=''}={}) {
+export function selectAiRows(rows,{basis='release',start='',end='9999',organization='',query='',protocol='',separateProtocols=false}={}) {
   let selected=rows.filter(r=>(!organization||r.organization===organization)&&(!protocol||r.protocol===protocol)&&`${r.model} ${r.modelId}`.toLowerCase().includes(query.toLowerCase()));
   // A release view is a retrospective: choose the latest measured run, never the best run.
   if(basis==='release'){
     const models=new Map();
-    for(const r of selected){const old=models.get(r.modelId);if(!old||(r.observedAt||r.id).localeCompare(old.observedAt||old.id)>0)models.set(r.modelId,r);}
+    for(const r of selected){const key=separateProtocols?JSON.stringify([r.modelId,r.protocol||'']):r.modelId;const old=models.get(key);if(!old||(r.observedAt||r.id).localeCompare(old.observedAt||old.id)>0)models.set(key,r);}
     selected=[...models.values()];
   }
   return selected.filter(r=>aiDate(r,basis)&&aiDate(r,basis)>=start&&aiDate(r,basis)<=end).map(r=>({...r,date:aiDate(r,basis)})).sort((a,b)=>a.date.localeCompare(b.date)||(a.observedAt||'').localeCompare(b.observedAt||'')||a.id.localeCompare(b.id));

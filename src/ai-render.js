@@ -1,4 +1,5 @@
 import {translate} from './translations.js';
+import {drawAiBrandComparison} from './ai-brand-render.js';
 import {aiValue as formatAiValue,frameAt} from './ai.js';
 import {reelFont,reelTitleSize,drawSignature} from './reel-style.js';
 import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
@@ -41,7 +42,9 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
   return createAxis(range,{log:scale.log,dynamic:scale.dynamic,fixedDomain:domain,includeZero:mode!=='scatter'||!!b.max});
  };
  const score=r=>`${aiValue(r.score)} ${b.unit}`;
- if(mode==='timeline'){
+ if(config.ai.groupBy==='brand'){
+   drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,grid,panel,wrap});
+ } else if(mode==='timeline'){
    const scene=sceneAt(rows.length,progress,duration,transition);
    function card(index,opacity,dy){
     if(opacity<=0)return;const r=rows[index];ctx.save();ctx.globalAlpha=opacity;ctx.translate(0,dy);

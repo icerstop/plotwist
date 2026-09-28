@@ -1,5 +1,44 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Grupowanie wyników|Group results
+Pojedyncze modele|Individual models
+Najlepsze modele według marki|Best models by brand
+Śledzone marki · maks. 6|Tracked brands · up to 6
+Szukaj marki AI|Search AI brands
+Szukaj marki lub producenta…|Search brands or producers…
+wybranych marek|selected brands
+Wyczyść marki|Clear brands
+Wynik reprezentujący markę|Score representing a brand
+Najlepszy z ostatnich wyników|Best of the latest scores
+Rekord historyczny marki|All-time brand record
+Logo marki na rolce|Brand logo on the reel
+Nazwa prowadzącego modelu|Leading model name
+Wybierz przynajmniej jedną markę.|Select at least one brand.
+Porównanie marek|Brand comparison
+Linie marek|Brand lines
+Osobna linia dla każdej marki. Zmiana wyniku tylko w dacie danych.|A separate line for each brand. Scores change only on their data date.
+Wyścig marek|Brand race
+Najlepsze modele reprezentują swoje marki; pozycje zmieniają się płynnie.|The best models represent their brands; positions change smoothly.
+Karty marek|Brand cards
+Wszystkie wybrane marki jednocześnie, z wynikiem i aktualnym liderem.|All selected brands together, with scores and current leaders.
+Najlepsze modele na końcu zakresu|Best models at the end of the range
+Brak wyniku do tej daty|No result yet
+Rekord marki do tej daty|Brand record up to this date
+Najlepszy z ostatnich wyników marki|Best of each brand's latest scores
+Wynik i model zmieniają się tylko według danych źródłowych.|Scores and models change only according to source data.
+Dla każdej marki wybieramy najlepszy spośród ostatnich znanych wyników jej wariantów. Wynik może spaść po ponownym teście. Warianty i protokoły pozostają rozdzielone.|For each brand, we select the best of its variants' latest known scores. A retest can lower the score. Variants and protocols remain separate.
+Dla każdej marki pokazujemy najwyższy wynik odnotowany do danej daty. To rekord historyczny, nie średnia ani gwarancja powtarzalności wyniku.|For each brand, we show the highest score recorded up to this date. It is a historical record, not an average or a guarantee of repeatability.
+Wcześniejszy wynik może pozostać liderem na początku wybranego okresu. Brak pomiaru nie oznacza zera. Remisy rozstrzyga nazwa wariantu.|An earlier result may remain the leader at the start of the selected period. Missing measurements do not mean zero. Ties use the variant name.
+Wybrano różne protokoły. Porównanie jest orientacyjne; zawęź protokół, jeśli chcesz porównać te same warunki.|Different protocols are selected. This is an indicative comparison; narrow the protocol to compare the same conditions.
+Kolor i logo identyfikują markę. Etykieta modelu wskazuje wariant reprezentujący ją w danej chwili. Pełne nazwy konfiguracji i niepewność wyników znajdziesz w tabeli.|Colour and logo identify the brand. The model label identifies its representative at that point in time. Full configuration names and score uncertainty are in the table.
+Producent nieustalony|Unresolved producer
+Przypisanie modeli do marek i źródła logo|Model-to-brand attribution and logo sources
+Najpierw używamy organizacji wskazanej przez źródło. Łączymy aliasy producentów, np. Google i Google DeepMind. Gdy organizacji brakuje, korzystamy z jawnych reguł nazw rodzin modeli. Zachowujemy oryginalną nazwę i organizację w danych.|We first use the organization named by the source. Producer aliases such as Google and Google DeepMind are combined. When the organization is missing, explicit model-family rules are used. Original names and organizations remain in the data.
+DeepSeek Distill pozostaje przy DeepSeek, a dostrojenia innych zespołów przy ich wydawcy. Sama nazwa modelu bazowego nie określa wydawcy. Bing, Perplexity i Manus są oddzielnymi usługami; ich nazwy nie potwierdzają konkretnego modelu bazowego.|DeepSeek Distill stays with DeepSeek, while other teams' fine-tunes stay with their publishers. The base-model name alone does not determine the publisher. Bing, Perplexity and Manus are separate services; their names do not confirm a specific underlying model.
+pomiarów bez pewnego przypisania marki w tym benchmarku. Są dostępne jako pojedyncze modele, ale nie tworzą fikcyjnej wspólnej marki.|measurements without a reliable brand attribution in this benchmark. They remain available as individual models rather than a fictitious shared brand.
+Logo są lokalnymi plikami z kolekcji Lobe Icons (MIT). Prawa do znaków pozostają przy właścicielach. Dla marek bez pliku logo używamy nazwy i koloru.|Logos are local files from Lobe Icons (MIT). Trademark rights remain with their owners. Brands without a logo file use a name and colour.
+Spis przypisań modeli do marek|Model-to-brand attribution list
+Źródła logo AI|AI logo sources
 Historie gotowe do rolki|Stories ready for a reel
 9 zestawów|9 presets
 Wybierz historię|Choose a story

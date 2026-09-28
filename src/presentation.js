@@ -13,6 +13,11 @@ export const aiFormats = [
  {id:'records',name:'Schody rekordów',note:'Najwyższy dotąd wynik w wybranym zbiorze. Zmiana tylko w dniu pomiaru.'},
  {id:'duel',name:'AI vs punkt odniesienia',note:'Wynik modelu i udokumentowany punkt odniesienia.'},
 ];
+export const aiBrandFormats = [
+ {id:'records',name:'Linie marek',note:'Osobna linia dla każdej marki. Zmiana wyniku tylko w dacie danych.'},
+ {id:'ranking',name:'Wyścig marek',note:'Najlepsze modele reprezentują swoje marki; pozycje zmieniają się płynnie.'},
+ {id:'timeline',name:'Karty marek',note:'Wszystkie wybrane marki jednocześnie, z wynikiem i aktualnym liderem.'},
+];
 export const clamp = value => Math.max(0,Math.min(1,value));
 export const ease = value => {const t=clamp(value);return t*t*(3-2*t);};
 export const lerp = (a,b,t) => a+(b-a)*t;
