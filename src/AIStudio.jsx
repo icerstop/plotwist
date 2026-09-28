@@ -1,3 +1,4 @@
+import {VisualEditor} from './VisualSettings.jsx';
 import React,{useEffect,useMemo,useState} from 'react';
 import {ArrowUpRight,BrainCircuit,Download,Info,Search} from 'lucide-react';
 import {ExportModal,Field,FontPicker,ReelPreview} from './components.jsx';
@@ -47,7 +48,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
        {protocols.length>1&&<Field label="Protokół / źródło"><select value={protocol} onChange={e=>setProtocol(e.target.value)}><option value="">Wszystkie · porównanie orientacyjne</option>{protocols.map(p=><option key={p}>{p}</option>)}</select></Field>}
        {orgs.length>1&&<Field label="Organizacja"><select value={organization} onChange={e=>setOrganization(e.target.value)}><option value="">Wszystkie organizacje</option>{orgs.map(o=><option key={o}>{o}</option>)}</select></Field>}
        <div className="search-field ai-search"><Search size={17}/><input aria-label="Filtr modeli AI" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Filtruj, np. GPT, Claude, Gemini…"/></div>
-       <FontPicker value={fontId} onChange={onFontChange}/><Field label="Tytuł rolki"><textarea maxLength="75" rows="2" value={title} onChange={e=>setTitle(e.target.value)}/></Field>
+       <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł rolki"><textarea maxLength="75" rows="2" value={title} onChange={e=>setTitle(e.target.value)}/></Field>
        <div className="field-pair"><Field label="Długość rolki AI"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(d=><option key={d} value={d}>{d} s</option>)}</select></Field><Field label="Motyw AI"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
        {error&&<p role="alert" className="error">{error}</p>}{!data&&!error&&<p role="status">Wczytywanie wyników…</p>}{data&&!rows.length&&<p role="status" className="error">Brak pomiarów dla tego filtra. Zmień daty, nazwę lub protokół.</p>}
      </section>

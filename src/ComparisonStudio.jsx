@@ -1,3 +1,4 @@
+import {VisualEditor} from './VisualSettings.jsx';
 import React,{useEffect,useMemo,useState} from 'react';
 import {Download,Plus,Trash2,RotateCcw} from 'lucide-react';
 import {ExportModal,Field,FontPicker,ReelPreview} from './components.jsx';
@@ -83,7 +84,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
     <div className="field-pair"><Field label="Od dnia"><input aria-label="Początek porównania" type="date" min={range?.start} max={range?.end} value={start} onChange={e=>setStart(e.target.value)}/></Field><Field label="Do dnia"><input aria-label="Koniec porównania" type="date" min={start} max={range?.end} value={end} onChange={e=>setEnd(e.target.value)}/></Field></div>
     <button className="text-btn range-button" disabled={!range} onClick={()=>{setStart(range.start);setEnd(range.end);}}>Cały wspólny zakres</button>
     {range&&<p className="helper">Wspólna historia: {range.start} – {range.end}</p>}
-    <FontPicker value={fontId} onChange={onFontChange}/><Field label="Tytuł porównania"><textarea rows="2" maxLength={80} value={title} placeholder={generatedTitle} onChange={e=>setTitle(e.target.value)}/></Field>
+    <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł porównania"><textarea rows="2" maxLength={80} value={title} placeholder={generatedTitle} onChange={e=>setTitle(e.target.value)}/></Field>
     <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(n=><option key={n} value={n}>{n} s</option>)}</select></Field><Field label="Motyw rolki"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
     {loading&&<p role="status" className="helper">Wczytywanie historii…</p>}{visibleError&&<p role="alert" className="error">{visibleError}</p>}
    </section>

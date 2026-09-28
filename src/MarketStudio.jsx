@@ -1,3 +1,4 @@
+import {VisualEditor} from './VisualSettings.jsx';
 import ComparisonStudio from './ComparisonStudio.jsx';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowUpRight, Database, Download, Info, Search } from 'lucide-react';
@@ -96,7 +97,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
           {Number(investment)!==Number(expense)&&<div className="budget-note"><span>Porównujesz różne budżety: {investment || 0} zł i {expense || 0} zł.</span><button onClick={()=>setExpense(investment)}>Wyrównaj kwoty</button></div>}
           <Field label="Twój codzienny zakup"><input maxLength="35" value={expenseName} onChange={e=>setExpenseName(e.target.value)} placeholder="Np. Coca-Cola, kawa, przekąska"/></Field>
         </>:<Field label="Rodzaj ceny"><select value={basis} onChange={e=>setBasis(e.target.value)}><option value="split">Close — po korekcie o splity</option><option value="raw">Cena nominalna — odtworzona</option></select><small>Korekta o splity zapewnia ciągłość wykresu. Cena nominalna może gwałtownie spaść w dniu splitu.</small></Field>}
-        <FontPicker value={fontId} onChange={onFontChange}/><Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:generatedTitle} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/></Field>
+        <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:generatedTitle} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/></Field>
         <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(t=><option key={t} value={t}>{t} s</option>)}</select></Field><Field label="Motyw rolki"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
         {loading&&<p className="helper" role="status">Wczytywanie notowań…</p>}{visibleError&&<p className="error" role="alert">{visibleError}</p>}
       </section>

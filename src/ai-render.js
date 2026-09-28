@@ -1,5 +1,6 @@
 import {aiValue,frameAt} from './ai.js';
 import {reelFont,drawSignature} from './reel-style.js';
+import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
 function typography(font){
 function wrap(ctx,text,x,y,width,size=34,max=3,color){
  ctx.font=`${size>=60?'bold ':''}${size}px ${font}`;if(color)ctx.fillStyle=color;
@@ -11,12 +12,13 @@ function wrap(ctx,text,x,y,width,size=34,max=3,color){
 function fit(ctx,text,width,size,min=26){ctx.font=`bold ${size}px ${font}`;while(size>min&&ctx.measureText(text).width>width){size--;ctx.font=`bold ${size}px ${font}`;}return size;}
 return {wrap,fit};
 }
-export function drawAiReel(canvas,config,progress=1){
+export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
  const {wrap,fit}=typography(reelFont(config.fontId));
  const {ai:{rows,benchmark:b,basis,mode,comparison,scope},title,theme='dark'}=config;
  const ctx=canvas.getContext('2d');if(canvas.width!==1080||canvas.height!==1920){canvas.width=1080;canvas.height=1920;}
  const dark=theme==='dark',bg=dark?'#101612':'#f6f8ef',fg=dark?'#f3f8eb':'#152017',muted=dark?'#aab6ab':'#576657',accent=dark?'#c0ef66':'#557b20',purple=dark?'#bca1ff':'#7452b4',panel=dark?'#1a251e':'#e9efde',grid=dark?'#344239':'#cbd7c4';
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
+ drawVisualBackground(ctx,1080,1920,config,timeSeconds);
  ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));
  wrap(ctx,title||b.name,76,240,928,83,3,fg);
  wrap(ctx,b.name,76,565,928,33,2,accent);
@@ -61,6 +63,7 @@ export function drawAiReel(canvas,config,progress=1){
    wrap(ctx,base.note,76,1600,920,28,3,muted);
  }
  // Essential methodology is burned into every exported frame.
+ drawVisualOverlays(ctx,1080,1920,config,timeSeconds);
  const dating=basis==='release'?'Wg premier · retrospektywa, pomiary mogły być późniejsze':'Wg dat testu / publikacji · bez interpolacji';
  const warning=b.id.startsWith('iq-')?'Quiz TrackingAI ≠ psychometryczne IQ człowieka':b.id==='eci'?'ECI ≠ IQ · aktualne przeliczenie historii':b.id==='codeforces2024'?'Percentyl wśród uczestników · 10 zgłoszeń':b.id.startsWith('swe-')?'Wynik systemu z narzędziami; wersje środowiska rozdzielone':b.id==='gpqa'&&mode==='duel'?'Eksperci dziedzinowi; różne protokoły ewaluacji':['frontiermath','frontiermath4'].includes(b.id)?'Od 13.11.2025 budżet tokenów 10× większy; porównanie orientacyjne':b.caveat;
  wrap(ctx,dating,76,1705,928,22,2,muted);wrap(ctx,warning,76,1760,928,22,2,muted);wrap(ctx,`${b.source} · dane ${b.retrievedAt}`,76,1821,928,23,1,muted);
