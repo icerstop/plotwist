@@ -1,6 +1,6 @@
 import {translate} from './translations.js';
 import {aiValue as formatAiValue,frameAt} from './ai.js';
-import {reelFont,drawSignature} from './reel-style.js';
+import {reelFont,reelTitleSize,drawSignature} from './reel-style.js';
 import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
 import {crossText} from './series-render.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
@@ -26,7 +26,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
  drawVisualBackground(ctx,1080,1920,config,timeSeconds);
  ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));
- wrap(ctx,title||b.name,76,240,928,83,3,fg,true);
+ wrap(ctx,title||b.name,76,240,928,reelTitleSize(ctx,title||b.name,config.fontId,83,928,3),3,fg,true);
  wrap(ctx,b.name,76,565,928,33,2,accent);
  if(scope)wrap(ctx,scope,76,648,928,23,2,muted);
  const first=rows[0],last=rows.at(-1),transition=config.transition??.65,duration=config.duration||20;

@@ -1,5 +1,7 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Wczytywanie czcionki…|Loading font…
+Nie udało się wczytać czcionki. Wybierz ją ponownie lub odśwież stronę.|The font could not be loaded. Select it again or refresh the page.
 Przed nowym pomiarem oś łagodnie robi na niego miejsce. Wynik pojawia się dopiero w swojej dacie.|Before a new measurement, the axis smoothly makes room for it. The score appears only on its own date.
 Zakres osi wartości|Value axis range
 Stały · cała historia|Fixed · entire history

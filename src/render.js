@@ -1,6 +1,6 @@
 import { displayDate } from './market.js';
 import { drawAiReel } from './ai-render.js';
-import { reelFont, drawSignature } from './reel-style.js';
+import { reelFont, reelTitleSize, drawSignature } from './reel-style.js';
 import { preloadReelAssets } from './reel-assets.js';
 import { drawVisualBackground, drawVisualOverlays } from './visual-render.js';
 import {drawSeriesContent} from './series-render.js';
@@ -14,7 +14,8 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);const colors=dark?['#bcf34a','#b18aff','#8fabb6']:['#568800','#7951c7','#486c80'];
  drawVisualBackground(ctx,width,height,config,timeSeconds);
  ctx.fillStyle=colors[0];[20,36,56].forEach((h,i)=>ctx.fillRect(78+i*18,118-h,10,h));
- ctx.fillStyle=fg;ctx.font=`bold ${height<1400?75:config.compactTitle?110:145}px ${font}`;const headingY=height<1400?230:320;const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,height<1400?83:config.compactTitle?120:151,height<1400?2:3);
+ const preferred=height<1400?75:config.compactTitle?110:145,maxLines=height<1400?2:3,titleSize=reelTitleSize(ctx,title||'Twoja historia.',config.fontId,preferred,920,maxLines);
+ ctx.fillStyle=fg;ctx.font=`bold ${titleSize}px ${font}`;const headingY=height<1400?230:320;const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,(height<1400?83:config.compactTitle?120:151)*titleSize/preferred,maxLines);
  ctx.fillStyle=muted;ctx.font=`29px ${font}`;wrap(ctx,subtitle,78,headingY+headingHeight+20,910,40,2);
  const legendStep=config.compactTitle?52:43;
  const top=height<1400?height*.48:config.compactTitle?height*.43:height*.47,bottom=Math.min(height===1080?700:height===1350?920:height*.75,height-(height<1400?235:285)-100-(Math.max(1,series.length)-1)*legendStep),left=135,right=900;
