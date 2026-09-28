@@ -3,3 +3,7 @@ dist/
 .sites-runtime/
 .env*
 qa/
+research/ai/*.html
+research/ai/*.js
+research/ai/*.zip
+research/ai/epoch/epoch_capabilities_index/eci_bootstraps.json

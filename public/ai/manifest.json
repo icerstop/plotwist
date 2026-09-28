@@ -1,0 +1,615 @@
+{
+  "retrievedAt": "2026-09-28",
+  "sourceArchive": "https://epoch.ai/data/benchmark_data.zip",
+  "totalObservations": 5886,
+  "benchmarks": [
+    {
+      "id": "gpqa",
+      "name": "GPQA Diamond",
+      "category": "Nauka",
+      "description": "198 pytań z biologii, chemii i fizyki. Wynik średni z ewaluacji Epoch, nie najlepszy scorer.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/gpqa-diamond",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
+      "baseline": {
+        "name": "Eksperci dziedzinowi z doktoratem",
+        "score": 69.7,
+        "unit": "%",
+        "note": "Grupa ekspertów w ewaluacji OpenAI; nie przeciętny człowiek. Inny protokół niż pomiary Epoch.",
+        "sourceUrl": "https://epoch.ai/benchmarks/gpqa-diamond"
+      },
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/gpqa_diamond.csv",
+          "sha256": "fbda38ebf8000ccd955005ecfb0b22297e4a9ced1869563777e40849e1534232"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 313,
+      "models": 313,
+      "firstDate": "2023-03-14",
+      "lastDate": "2026-09-02"
+    },
+    {
+      "id": "math5",
+      "name": "MATH Level 5",
+      "category": "Matematyka",
+      "description": "Najtrudniejszy poziom zadań MATH; odsetek poprawnych odpowiedzi.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/math-level-5",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/math_level_5.csv",
+          "sha256": "041b4bcb991a81d66152327113ef6d38e64cd8cce93d1e6ec821d1b9e47c1de3"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 108,
+      "models": 108,
+      "firstDate": "2023-06-13",
+      "lastDate": "2025-10-30"
+    },
+    {
+      "id": "mock-aime",
+      "name": "OTIS Mock AIME 2024–2025",
+      "category": "Matematyka",
+      "description": "Próbne zadania OTIS. To nie oficjalne wyniki zawodników AIME.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/otis-mock-aime-2024-2025",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/otis_mock_aime_2024_2025.csv",
+          "sha256": "74dc055ff76b3d7895b35103d13127b1f2c17c753c579ed239279137982228e7"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 291,
+      "models": 291,
+      "firstDate": "2023-03-14",
+      "lastDate": "2026-09-17"
+    },
+    {
+      "id": "swe-v2",
+      "name": "SWE-bench Verified · Epoch v2",
+      "category": "Kod",
+      "description": "Naprawianie repozytoriów. Odrębny zbiór po zmianie środowiska 12.02.2026; 484 zadania w aktualnej metodologii Epoch.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/swe-bench-verified",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Wyniki zależą od środowiska i narzędzi. v1 i v2 są rozdzielone.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/swe_bench_verified.csv",
+          "sha256": "6480176a5d9b1573676fcacc5df5e8c58f9e5fce34025600a19b3bf60617561c"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 24,
+      "models": 23,
+      "firstDate": "2025-04-16",
+      "lastDate": "2026-06-25"
+    },
+    {
+      "id": "swe-v1",
+      "name": "SWE-bench Verified · Epoch v1",
+      "category": "Kod",
+      "description": "Archiwum przed 12.02.2026. Nie łączymy z v2: zmiana środowiska istotnie poprawiła wyniki.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/swe-bench-verified",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Wyniki zależą od środowiska i narzędzi. v1 i v2 są rozdzielone.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/swe_bench_verified.csv",
+          "sha256": "6480176a5d9b1573676fcacc5df5e8c58f9e5fce34025600a19b3bf60617561c"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 11,
+      "models": 11,
+      "firstDate": "2024-11-20",
+      "lastDate": "2026-02-11"
+    },
+    {
+      "id": "frontiermath",
+      "name": "FrontierMath · 2025",
+      "category": "Matematyka",
+      "description": "Prywatny zestaw 2025-02-28. Od 13.11.2025 budżet tokenów zwiększono 10×; porównania wymagają uwzględnienia tej zmiany.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tiers-1-3-v1",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/frontiermath.csv",
+          "sha256": "f5c92f0f0b9103abb02308fd428c0806e7c21b91e8a14d43edb8af77ce941598"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 101,
+      "models": 101,
+      "firstDate": "2024-06-20",
+      "lastDate": "2026-06-08"
+    },
+    {
+      "id": "frontiermath-v2",
+      "name": "FrontierMath · tiers 1–3 v2",
+      "category": "Matematyka",
+      "description": "Nowa wersja prywatnego zestawu; nie zszywamy jej z poprzednią skalą trudności. Dokumentacja obejmuje tiers 1–3 i tier 4.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tier-4-v2",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/frontiermath_tiers_1_3_v2.csv",
+          "sha256": "2e709279acb474ea57ebd2b255acf56cd87002b78da100cad9dbd1f929b9d789"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 108,
+      "models": 108,
+      "firstDate": "2024-01-25",
+      "lastDate": "2026-09-18"
+    },
+    {
+      "id": "frontiermath4",
+      "name": "FrontierMath · tier 4",
+      "category": "Matematyka",
+      "description": "Najtrudniejszy poziom, wersja 2025-07-01. Od 13.11.2025 budżet tokenów zwiększono 10×. Dokumentacja v1 obejmuje oba poziomy.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tiers-1-3-v1",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/frontiermath_tier_4.csv",
+          "sha256": "c928e5adccd6e0995d50ede183fb99728d6c5be01951434a3077429ffb5802b2"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 72,
+      "models": 72,
+      "firstDate": "2024-06-20",
+      "lastDate": "2026-06-08"
+    },
+    {
+      "id": "frontiermath4-v2",
+      "name": "FrontierMath · tier 4 v2",
+      "category": "Matematyka",
+      "description": "Osobny zestaw najtrudniejszych zadań, wersja v2.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tier-4-v2",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/frontiermath_tier_4_v2.csv",
+          "sha256": "3b2e0155ee7ac16e25185f54295aadc293c1384029cd2f945d0813b5b66af758"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 64,
+      "models": 64,
+      "firstDate": "2025-01-31",
+      "lastDate": "2026-09-18"
+    },
+    {
+      "id": "mmlu",
+      "name": "MMLU · 5-shot",
+      "category": "Wiedza",
+      "description": "Tylko jawnie oznaczone pomiary 5-shot. Różne źródła mogą mieć inne prompty i implementacje.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/mmlu",
+      "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
+      "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/mmlu_external.csv",
+          "sha256": "e4752463b5520b42e95cac34cc94b1b6e69cb41d4833c4c677f0350f963802cb"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 211,
+      "models": 211,
+      "firstDate": "2021-08-05",
+      "lastDate": "2024-12-26"
+    },
+    {
+      "id": "arc1",
+      "name": "ARC-AGI-1",
+      "category": "Rozumowanie",
+      "description": "Zewnętrzne wyniki zebrane przez Epoch. Zestawy, koszty i systemy oceny mogą się różnić — sprawdź notatkę rekordu.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/arc-agi",
+      "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
+      "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/arc_agi_external.csv",
+          "sha256": "a582faf8caec9e1b6b1b81b70718b295afbc786aa4ea50acc12fc053ff7a80b6"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 247,
+      "models": 247,
+      "firstDate": "2024-09-12",
+      "lastDate": "2026-09-03"
+    },
+    {
+      "id": "arc2",
+      "name": "ARC-AGI-2",
+      "category": "Rozumowanie",
+      "description": "Osobno od ARC-AGI-1. Wynik dotyczy konfiguracji systemu; nie samej nazwy rodziny modeli.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2",
+      "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
+      "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/arc_agi_2_external.csv",
+          "sha256": "3c55a7f8a185e0bdfdd690840080d155a6ee1504d8dcbe927651eac9db78aa6f"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 227,
+      "models": 227,
+      "firstDate": "2024-07-18",
+      "lastDate": "2026-09-03"
+    },
+    {
+      "id": "hle",
+      "name": "Humanity’s Last Exam",
+      "category": "Wiedza",
+      "description": "Wyniki zewnętrzne zebrane przez Epoch. Dostęp do narzędzi i konfiguracja zależą od rekordu.",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/benchmarks/hle",
+      "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
+      "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
+      "baseline": null,
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/hle_external.csv",
+          "sha256": "4317f98c04ed06067a47742d7c6738a54a2df70fd1bf4f0cf155b85d092447a4"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+        }
+      ],
+      "count": 54,
+      "models": 54,
+      "firstDate": "2024-09-24",
+      "lastDate": "2026-09-03"
+    },
+    {
+      "id": "eci",
+      "name": "ECI · indeks możliwości",
+      "category": "Przekrojowe",
+      "description": "Indeks Epoch łączący ponad 50 benchmarków. Skala umowna: nie IQ ani procent poprawnych odpowiedzi.",
+      "unit": "ECI",
+      "defaultBasis": "release",
+      "source": "Epoch AI",
+      "sourceUrl": "https://epoch.ai/eci",
+      "license": "Epoch AI · CC BY 4.0",
+      "caveat": "Retrospektywne przeliczenie całej historii w aktualnej wersji indeksu. Przedziały: bootstrap 90%. Brak ludzkiego punktu odniesienia.",
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "epoch/epoch_capabilities_index/eci_scores.csv",
+          "sha256": "7b78c4e1d158328d1c1c9e8e6911caf4698b58f0e4cbf2ae02e04fd38a025b79"
+        }
+      ],
+      "count": 268,
+      "models": 268,
+      "firstDate": "2023-02-24",
+      "lastDate": "2026-09-09"
+    },
+    {
+      "id": "iq-offline",
+      "name": "„IQ” · Offline Test · tekst",
+      "category": "IQ eksperymentalne",
+      "description": "Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.",
+      "unit": "pkt „IQ”",
+      "defaultBasis": "observed",
+      "source": "TrackingAI · Maxim Lott",
+      "sourceUrl": "https://www.trackingai.org/home",
+      "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
+      "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
+      "formula": "round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))",
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "tracking-iq.csv",
+          "sha256": "5a24858e8e49e2b9ca60f6dd9482d6a65cb32b48297fa060eddc7be2771ab2d2"
+        }
+      ],
+      "count": 1355,
+      "models": 55,
+      "firstDate": "2024-05-09",
+      "lastDate": "2026-09-27"
+    },
+    {
+      "id": "iq-offline-vision",
+      "name": "„IQ” · Offline Test · Vision",
+      "category": "IQ eksperymentalne",
+      "description": "Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.",
+      "unit": "pkt „IQ”",
+      "defaultBasis": "observed",
+      "source": "TrackingAI · Maxim Lott",
+      "sourceUrl": "https://www.trackingai.org/home",
+      "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
+      "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
+      "formula": "round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))",
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "tracking-iq.csv",
+          "sha256": "5a24858e8e49e2b9ca60f6dd9482d6a65cb32b48297fa060eddc7be2771ab2d2"
+        }
+      ],
+      "count": 551,
+      "models": 32,
+      "firstDate": "2024-05-14",
+      "lastDate": "2026-09-27"
+    },
+    {
+      "id": "iq-mensa",
+      "name": "„IQ” · Mensa Norway · tekst",
+      "category": "IQ eksperymentalne",
+      "description": "Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.",
+      "unit": "pkt „IQ”",
+      "defaultBasis": "observed",
+      "source": "TrackingAI · Maxim Lott",
+      "sourceUrl": "https://www.trackingai.org/home",
+      "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
+      "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
+      "formula": "round(63.5 + 3 × (test_score − 5.833))",
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "tracking-iq.csv",
+          "sha256": "5a24858e8e49e2b9ca60f6dd9482d6a65cb32b48297fa060eddc7be2771ab2d2"
+        }
+      ],
+      "count": 1350,
+      "models": 53,
+      "firstDate": "2024-05-09",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "iq-mensa-vision",
+      "name": "„IQ” · Mensa Norway · Vision",
+      "category": "IQ eksperymentalne",
+      "description": "Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.",
+      "unit": "pkt „IQ”",
+      "defaultBasis": "observed",
+      "source": "TrackingAI · Maxim Lott",
+      "sourceUrl": "https://www.trackingai.org/home",
+      "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
+      "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
+      "formula": "round(63.5 + 3 × (test_score − 5.833))",
+      "retrievedAt": "2026-09-28",
+      "provenance": [
+        {
+          "file": "tracking-iq.csv",
+          "sha256": "5a24858e8e49e2b9ca60f6dd9482d6a65cb32b48297fa060eddc7be2771ab2d2"
+        }
+      ],
+      "count": 527,
+      "models": 31,
+      "firstDate": "2024-05-14",
+      "lastDate": "2026-09-27"
+    },
+    {
+      "id": "codeforces2024",
+      "name": "Codeforces · raport OpenAI 2024",
+      "category": "AI vs człowiek",
+      "description": "Symulowane konkursy, maksymalnie 10 zgłoszeń. Percentyl odnosi się do uczestników Codeforces, nie wszystkich programistów.",
+      "unit": "percentyl",
+      "max": 100,
+      "defaultBasis": "observed",
+      "source": "OpenAI · 12.09.2024",
+      "sourceUrl": "https://openai.com/index/learning-to-reason-with-llms/",
+      "license": "Wartości z opublikowanego raportu; przypisanie do źródła.",
+      "caveat": "Wspólna data publikacji, nie chronologia premier. o1 z raportu nie jest tym samym co publiczne o1-preview. Specjalistyczny wariant do IOI jest odrębnym systemem.",
+      "baseline": {
+        "name": "Mediana uczestników",
+        "score": 50,
+        "unit": "percentyl",
+        "note": "50. percentyl z definicji skali; to uczestnicy konkursów, nie populacja ludzi.",
+        "sourceUrl": "https://openai.com/index/learning-to-reason-with-llms/"
+      },
+      "retrievedAt": "2026-09-28",
+      "provenance": [],
+      "count": 4,
+      "models": 4,
+      "firstDate": "2024-09-12",
+      "lastDate": "2024-09-12"
+    }
+  ],
+  "audit": [
+    {
+      "id": "gpqa",
+      "input": 313,
+      "accepted": 313,
+      "invalid": 0
+    },
+    {
+      "id": "math5",
+      "input": 108,
+      "accepted": 108,
+      "invalid": 0
+    },
+    {
+      "id": "mock-aime",
+      "input": 291,
+      "accepted": 291,
+      "invalid": 0
+    },
+    {
+      "id": "swe-v2",
+      "input": 35,
+      "accepted": 24,
+      "invalid": 0
+    },
+    {
+      "id": "swe-v1",
+      "input": 35,
+      "accepted": 11,
+      "invalid": 0
+    },
+    {
+      "id": "frontiermath",
+      "input": 101,
+      "accepted": 101,
+      "invalid": 0
+    },
+    {
+      "id": "frontiermath-v2",
+      "input": 108,
+      "accepted": 108,
+      "invalid": 0
+    },
+    {
+      "id": "frontiermath4",
+      "input": 72,
+      "accepted": 72,
+      "invalid": 0
+    },
+    {
+      "id": "frontiermath4-v2",
+      "input": 64,
+      "accepted": 64,
+      "invalid": 0
+    },
+    {
+      "id": "mmlu",
+      "input": 249,
+      "accepted": 211,
+      "invalid": 0
+    },
+    {
+      "id": "arc1",
+      "input": 247,
+      "accepted": 247,
+      "invalid": 0
+    },
+    {
+      "id": "arc2",
+      "input": 227,
+      "accepted": 227,
+      "invalid": 0
+    },
+    {
+      "id": "hle",
+      "input": 54,
+      "accepted": 54,
+      "invalid": 0
+    }
+  ]
+}
