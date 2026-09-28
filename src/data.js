@@ -1,0 +1,30 @@
+import {countries} from './catalog.js';
+export function buildSeries(snapshot,selected,start,end){
+ return selected.map((country,index)=>({name:countries[country]||country,color:index===0?'#bcf34a':'#b18aff',points:Array.from({length:end-start+1},(_,i)=>{const year=start+i;const row=snapshot?.rows.find(r=>r.country===country&&r.year===year);return {x:year,y:row?.value??null};})}));
+}
+export function coffeeSeries(daily=5,coffee=10,rate=7,years=10){
+ const dailyRate=(1+rate/100)**(1/365)-1;
+ const points=Array.from({length:years+1},(_,year)=>{const n=year*365;return {x:year,y:dailyRate===0?daily*n:daily*Math.expm1(n*Math.log1p(dailyRate))/dailyRate};});
+ return [{name:'Portfel (symulacja)',color:'#bcf34a',points},{name:'Wydatki na kawę',color:'#b18aff',points:Array.from({length:years+1},(_,x)=>({x,y:x*365*coffee}))},{name:'Wpłaty',color:'#8fabb6',points:Array.from({length:years+1},(_,x)=>({x,y:x*365*daily}))}];
+}
+export function normalizeSeries(series){return series.map(s=>{const base=s.points.find(p=>p.y!==null)?.y;if(!base||base<=0)throw new Error('Indeks 100 wymaga dodatniej wartości początkowej w każdej serii.');return {...s,points:s.points.map(p=>({...p,y:p.y===null?null:p.y/base*100}))};});}
+export function parseCsv(text){
+ const first=text.split(/\r?\n/)[0]; const sep=first.includes(';')?';':',';
+ const rows=[];let row=[],cell='',quoted=false;
+ for(let i=0;i<text.length;i++){const c=text[i];if(c==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++;}else quoted=!quoted;}else if(c===sep&&!quoted){row.push(cell.trim());cell='';}else if(c==='\n'&&!quoted){row.push(cell.trim());if(row.some(Boolean))rows.push(row);row=[];cell='';}else if(c!=='\r')cell+=c;}
+ if(quoted)throw new Error('Nie zamknięto cudzysłowu w CSV.');row.push(cell.trim());if(row.some(Boolean))rows.push(row);
+ if(rows.length<3||rows[0].length<2||rows[0].length>4)throw new Error('Podaj nagłówek i co najmniej 2 wiersze: rok oraz 1–3 serie.');
+ const headers=rows.shift();if(new Set(headers).size!==headers.length||headers.some(h=>!h))throw new Error('Nagłówki muszą być niepuste i unikalne.');
+ const seen=new Set();const parsed=rows.map((r,i)=>{if(r.length!==headers.length)throw new Error(`Wiersz ${i+2}: niewłaściwa liczba kolumn.`);const x=Number(r[0]);if(!r[0]||!Number.isInteger(x)||x<0||x>9999||seen.has(x))throw new Error(`Wiersz ${i+2}: rok musi być unikalną liczbą 0–9999.`);seen.add(x);return {x,values:r.slice(1).map(v=>{if(v==='')return null;const n=Number(v.replace(',','.'));if(!Number.isFinite(n))throw new Error(`Wiersz ${i+2}: nieprawidłowa liczba.`);return n;})};}).sort((a,b)=>a.x-b.x);
+ if(parsed.length>300)throw new Error('Maksymalnie 300 wierszy na rolkę.');
+ const series=headers.slice(1).map((name,i)=>({name,color:['#bcf34a','#b18aff','#8fabb6'][i],points:parsed.map(r=>({x:r.x,y:r.values[i]}))}));
+ if(series.some(s=>s.points.filter(p=>p.y!==null).length<2))throw new Error('Każda seria potrzebuje co najmniej 2 wartości.');return series;
+}
+export function downloadBlob(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}
+export async function loadWorldBank(code,signal){
+ if(!/^[A-Z0-9_.]{3,80}$/.test(code))throw new Error('Wpisz prawidłowy kod wskaźnika, np. IT.NET.USER.ZS.');
+ const url=`https://api.worldbank.org/v2/country/${Object.keys(countries).join(';')}/indicator/${code}?format=json&date=2000:2023&per_page=1000`;
+ const res=await fetch(url,{signal});if(!res.ok)throw new Error(`World Bank: HTTP ${res.status}`);const data=await res.json();
+ if(!Array.isArray(data[1])||!data[1].some(r=>r.value!==null))throw new Error('Brak danych dla tego kodu w latach 2000–2023.');
+ return {indicator:code,name:data[1][0].indicator.value,url,source:'World Bank, World Development Indicators',retrievedAt:new Date().toISOString(),lastUpdated:data[0].lastupdated,rows:data[1].map(r=>({country:r.countryiso3code,year:Number(r.date),value:r.value}))};
+}

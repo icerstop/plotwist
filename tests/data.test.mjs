@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {buildSeries,coffeeSeries,normalizeSeries,parseCsv} from '../src/data.js';
+test('CSV accepts Polish decimals and missing values without fabricating zero',()=>{const s=parseCsv('rok;Polska;Świat\n2020;10,5;5\n2021;;8\n2022;15;12');assert.equal(s[0].points[0].y,10.5);assert.equal(s[0].points[1].y,null);});
+test('CSV rejects duplicate dates and malformed values',()=>{assert.throws(()=>parseCsv('rok;a\n2020;1\n2020;2'));assert.throws(()=>parseCsv('rok;a\n2020;x\n2021;2'));});
+test('CSV supports quoted comma headers and sorted years',()=>{const s=parseCsv('rok,"A, B"\n2021,20\n2020,10');assert.equal(s[0].name,'A, B');assert.equal(s[0].points[0].x,2020);});
+test('Investment simulation at zero return equals contributions',()=>{const s=coffeeSeries(5,10,0,10);assert.equal(s[0].points[10].y,18250);assert.equal(s[1].points[10].y,36500);assert.equal(s[2].points[10].y,18250);});
+test('Investment formula matches iterative end-of-day deposits',()=>{const s=coffeeSeries(5,10,7,1);const daily=1.07**(1/365)-1;let v=0;for(let i=0;i<365;i++)v=v*(1+daily)+5;assert.ok(Math.abs(v-s[0].points[1].y)<1e-6);});
+test('World Bank missing data remain gaps',()=>{const s=buildSeries({rows:[{country:'POL',year:2000,value:10},{country:'POL',year:2002,value:20}]},['POL'],2000,2002);assert.deepEqual(s[0].points.map(p=>p.y),[10,null,20]);});
+test('Index normalization keeps gaps and rejects invalid starting base',()=>{assert.deepEqual(normalizeSeries([{points:[{y:null},{y:10},{y:20}]}])[0].points.map(p=>p.y),[null,100,200]);assert.throws(()=>normalizeSeries([{points:[{y:0},{y:20}]}]));});

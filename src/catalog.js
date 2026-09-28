@@ -1,0 +1,53 @@
+export const countries = {POL:'Polska',WLD:'Świat',USA:'USA',CHN:'Chiny',DEU:'Niemcy',IND:'Indie',KOR:'Korea Płd.',JPN:'Japonia',GBR:'Wielka Brytania',FRA:'Francja',BRA:'Brazylia',EST:'Estonia'};
+export const datasets = [
+ {id:'IT.NET.USER.ZS',name:'Świat coraz bardziej online',title:'Internet zmienił wszystko.',unit:'% populacji',metric:'Osoby korzystające z internetu',category:'Technologia',note:'Udział osób korzystających z internetu. Źródło pierwotne: ITU, przez World Bank.'},
+ {id:'NY.GDP.PCAP.KD',name:'Jak bogaci się świat?',title:'Dwie gospodarki. Dwa tempa.',unit:'USD z 2015 r.',metric:'PKB na mieszkańca, ceny stałe',category:'Gospodarka',note:'Ceny stałe usuwają wpływ inflacji USD. To nie jest PKB według parytetu siły nabywczej ani miara zarobków.'},
+ {id:'SP.DYN.LE00.IN',name:'Żyjemy coraz dłużej?',title:'Ile lat daje nam postęp?',unit:'lata',metric:'Oczekiwana długość życia przy urodzeniu',category:'Społeczeństwo',note:'Oczekiwana długość życia, nie średni wiek zmarłych. Różnice nie dowodzą wpływu jednej przyczyny.'},
+ {id:'IT.CEL.SETS.P2',name:'Telefon w każdej kieszeni',title:'Więcej kart SIM niż ludzi.',unit:'na 100 osób',metric:'Abonamenty telefonii komórkowej',category:'Technologia',note:'Aktywne abonamenty i karty prepaid, nie unikalni użytkownicy. Wartość może przekroczyć 100.'},
+ {id:'GB.XPD.RSDV.GD.ZS',name:'Kto inwestuje w przyszłość?',title:'Kto stawia na badania?',unit:'% PKB',metric:'Wydatki na badania i rozwój',category:'Technologia',note:'Nakłady B+R w relacji do PKB. Dane nie obejmują wszystkich lat; luki pozostają widoczne.'},
+ {id:'EG.ELC.ACCS.ZS',name:'Światło zmienia życie',title:'Prąd nie był oczywistością.',unit:'% populacji',metric:'Dostęp do energii elektrycznej',category:'Gospodarka',note:'Dostęp do prądu nie oznacza niezawodnej dostawy ani jej przystępnej ceny.'},
+ {id:'SP.URB.TOTL.IN.ZS',name:'Przeprowadzka do miast',title:'Świat przenosi się do miast.',unit:'% populacji',metric:'Ludność miejska',category:'Społeczeństwo',note:'Definicje obszarów miejskich różnią się między krajami.'},
+ {id:'NE.EXP.GNFS.ZS',name:'Gospodarka bez granic',title:'Jak bardzo żyjemy z eksportu?',unit:'% PKB',metric:'Eksport towarów i usług',category:'Gospodarka',note:'Eksport brutto względem PKB; może przekraczać 100%. Nie jest to udział krajowej wartości dodanej.'},
+ {id:'coffee',name:'Kawa czy inwestycja?',title:'Mały nawyk. Duża różnica.',unit:'zł',metric:'Wpłaty i hipotetyczna wartość portfela',category:'Finanse',note:'Symulacja przy stałej rocznej stopie zwrotu. Wpłaty na koniec każdego dnia, 365 dni w roku. Bez podatków, opłat i inflacji. To nie są historyczne wyniki inwestycji.'}
+];
+export const sources = [
+ {name:'World Bank',tag:'Podłączone',topics:'Internet, PKB, B+R, długość życia, handel, energia',url:'https://datahelpdesk.worldbank.org/knowledgebase/articles/889392',detail:'Otwarte API bez klucza. 8 gotowych wskaźników, 12 krajów i agregatów; dowolny kod wskaźnika można pobrać w studiu. Każdy zbiór zachowuje źródło i datę pobrania.'},
+ {name:'SEC EDGAR',tag:'Źródło do importu',topics:'Przychody, zyski, marże, aktywa spółek',url:'https://www.sec.gov/search-filings/edgar-application-programming-interfaces',detail:'Publiczne raporty i API XBRL. Potrzebny serwer pośredniczący (brak CORS), kontrola okresów fiskalnych i duplikatów raportów. Nie zawiera cen akcji.'},
+ {name:'Our World in Data',tag:'Źródło do importu',topics:'Koszt technologii, energia, adopcja, AI',url:'https://ourworldindata.org/',detail:'Zbiory z opisami metodologii i źródeł pierwotnych. Sprawdzaj licencję konkretnego zbioru, jednostki i datę aktualizacji.'},
+ {name:'Eurostat',tag:'Źródło do importu',topics:'Europa: produktywność, płace, ceny, cyfryzacja',url:'https://ec.europa.eu/eurostat/web/main/data/database',detail:'Porównywalne statystyki europejskie. Trzeba uzgodnić jednostkę, sezonowość, częstotliwość i region.'},
+ {name:'GUS · Bank Danych Lokalnych',tag:'Źródło do importu',topics:'Polska, regiony, wynagrodzenia, demografia',url:'https://bdl.stat.gov.pl/bdl/start',detail:'Dobre źródło lokalnych historii. Zwróć uwagę na zmianę granic jednostek i na wynagrodzenia brutto/netto.'},
+ {name:'NBP',tag:'Źródło do importu',topics:'Kursy walut i ceny złota w PLN',url:'https://api.nbp.pl/',detail:'Publiczne API kursów. Kurs średni nie jest kursem transakcji; serie mają dni wolne i luki kalendarzowe.'},
+ {name:'FRED',tag:'Źródło do importu',topics:'Inflacja, stopy procentowe, rynek pracy',url:'https://fred.stlouisfed.org/',detail:'Baza szeregów makroekonomicznych. Licencje zależą od dostawcy serii; API wymaga klucza. Dane często podlegają rewizjom.'},
+ {name:'Raporty spółek',tag:'Źródło do importu',topics:'Apple, NVIDIA, Meta, Spotify, Netflix, Tesla',url:'https://www.annualreports.com/',detail:'Raporty IR i sprawozdania są najlepszą podstawą danych produktowych. Nie każda spółka stale raportuje sprzedaż sztuk i użytkowników.'},
+ {name:'Stanford AI Index',tag:'Źródło do importu',topics:'Koszty trenowania, benchmarki, inwestycje AI',url:'https://hai.stanford.edu/ai-index',detail:'Sprawdź edycję raportu, metodę oszacowania i porównywalność benchmarków. Estymacje kosztów nie są fakturami dostawców.'},
+ {name:'IEA',tag:'Źródło do importu',topics:'Samochody elektryczne, baterie, energia',url:'https://www.iea.org/data-and-statistics',detail:'Raporty i zbiory energetyczne. Warunki użycia i dostępność różnią się między produktami.'},
+ {name:'WIPO',tag:'Źródło do importu',topics:'Patenty i geografia innowacji',url:'https://www.wipo.int/en/web/ip-statistics',detail:'Wnioski patentowe, udzielone patenty i rodziny patentowe to odrębne miary.'},
+ {name:'Wikimedia',tag:'Źródło do importu',topics:'Zainteresowanie produktami i technologiami',url:'https://wikitech.wikimedia.org/wiki/Analytics/AQS/Pageviews',detail:'Odsłony artykułów są miarą zainteresowania, nie liczbą użytkowników technologii.'}
+];
+const ready = datasets.map((d,i)=>({id:d.id,title:d.name,hook:d.title,category:d.category,source:d.id==='coffee'?'Model matematyczny':'World Bank',description:d.note,ready:true,color:i%2?'purple':'lime'}));
+const concepts = [
+ ['apple','Akcje Apple vs iPhone','Czy produkt i giełda idą w parze?','Finanse','Apple IR + dostawca notowań','Porównaj cenę akcji skorygowaną o splity z przychodami iPhone. Sprzedaż sztuk wymaga oddzielnego, udokumentowanego źródła. Ujednolić kwartały; pokazać dwie osie lub indeks 100.'],
+ ['adoption','Wyścig do 100 milionów','Która technologia rosła najszybciej?','Technologia','Komunikaty firm + raporty','ChatGPT, Facebook, Instagram, TikTok. Najpierw ustal jedną definicję użytkownika (np. MAU) i datę startu. Nie łącz kont, pobrań i aktywnych użytkowników.'],
+ ['nvidia','NVIDIA przed i po AI','Co naprawdę napędza przychody?','Technologia','NVIDIA IR / SEC','Przychody Data Center vs Gaming w kolejnych kwartałach. Zachowaj okresy fiskalne i zmiany definicji segmentów.'],
+ ['battery','Baterie coraz tańsze','Ile kosztowała ta sama kilowatogodzina?','Technologia','IEA / Our World in Data','Koszt pakietu baterii w USD/kWh. Ujednolić ceny nominalne i realne, chemię i zakres pomiaru.'],
+ ['solar','Słońce vs paliwa kopalne','Jak zmieniał się koszt energii?','Gospodarka','IRENA / Our World in Data','Porównaj LCOE w tej samej walucie i roku cenowym. LCOE nie jest rachunkiem gospodarstwa domowego.'],
+ ['chips','Moore w liczbach','Ile tranzystorów mieści jeden chip?','Technologia','Dokumentacje producentów','Tranzystory vs rok premiery, z osią logarytmiczną. Osobno CPU, GPU i układy wielomatrycowe.'],
+ ['storage','Terabajt za grosze','Jak taniało przechowywanie danych?','Technologia','Archiwalne cenniki producentów','Cena 1 GB dysku HDD i SSD w cenach stałych. Porównuj podobny segment i interfejs.'],
+ ['spotify','Streaming zmienił muzykę','Subskrybenci rosną. A przychody?','Technologia','Spotify IR','Płatni subskrybenci, MAU i przychód na użytkownika; oddziel kwartalny stan od przepływu.'],
+ ['ev','Elektryczna zmiana warty','Kto naprawdę kupuje elektryki?','Gospodarka','IEA Global EV Outlook','Udział BEV w sprzedaży nowych aut: Chiny, UE, USA. Nie łącz BEV i hybryd PHEV bez opisu.'],
+ ['ai-cost','Ile kosztuje odpowiedź AI?','Coraz więcej inteligencji za dolara?','Technologia','Cenniki dostawców / AI Index','Koszt miliona tokenów przy ustalonym benchmarku. Oddziel tokeny wejścia, wyjścia i cache.'],
+ ['wages','Pensja vs metr mieszkania','Ile pracy kosztują cztery kąty?','Finanse','GUS + NBP','Cena m² / miesięczne wynagrodzenie. Zgodny region, okres oraz wynagrodzenie brutto lub netto.'],
+ ['inflation','Co kupi dzisiejsze 100 zł?','Ta sama kwota. Mniejszy koszyk.','Finanse','GUS / Eurostat','Skumulowany indeks CPI, nie suma rocznych inflacji. Pokazać ustalony rok bazowy.'],
+ ['space','Tańszy dostęp do kosmosu','Cena za kilogram na orbitę','Technologia','Dokumenty operatorów / NASA','Koszt startu na kg przy tej samej orbicie. Cennik nie musi odpowiadać faktycznie zapłaconej kwocie.'],
+ ['patents','Mapa wynalazków','Kto zgłasza najwięcej patentów?','Technologia','WIPO','Patenty na milion mieszkańców vs nakłady B+R. Zgłoszenia nie dowodzą jakości innowacji.'],
+ ['gaming','Konsole na przestrzeni lat','Kto wygrał swoją generację?','Technologia','Sony / Nintendo / Microsoft IR','Skumulowana sprzedaż sprzętu od premiery. Odróżnij dostawy do sklepów od sprzedaży konsumentom.'],
+ ['work','Mniej godzin, więcej wartości?','Produktywność vs czas pracy','Gospodarka','OECD','PKB na godzinę pracy w PPP i liczba godzin. Porównuj zgodne populacje pracowników.'],
+ ['cloud','Wyścig chmurowych gigantów','AWS, Azure i Google Cloud','Technologia','Raporty Amazon / Microsoft / Alphabet','Przychody i marże segmentów. Microsoft nie publikuje wszystkich danych Azure wprost — estymacje oznacz oddzielnie.'],
+ ['internet-speed','Od modemu do światłowodu','Ile trwa pobranie jednego filmu?','Technologia','ITU / pomiary regulatorów','Czas pobrania tego samego pliku przy historycznych przepustowościach. Prędkości reklamowane nie są pomiarami.']
+].map(([id,title,hook,category,source,description])=>({id,title,hook,category,source,description,ready:false}));
+export const ideas=[...ready,...concepts];
+export function matchIdeas(text,category='Wszystkie'){
+ const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l');
+ const words=norm(text).split(/\W+/).filter(w=>w.length>2);
+ return ideas.filter(i=>category==='Wszystkie'||i.category===category).map(i=>({i,score:words.reduce((a,w)=>a+(norm([i.title,i.hook,i.description,i.category,i.source].join(' ')).includes(w)?1:0),0)})).filter(r=>!words.length||r.score>0).sort((a,b)=>b.score-a.score).map(r=>r.i);
+}
