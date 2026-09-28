@@ -20,7 +20,7 @@ export function drawReel(canvas,config,progress=1){
  series.forEach((s,idx)=>{const color=colors[idx%3];const ordered=s.points;ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';let last=null,previous=null;
  if(chart==='bar'){const p=ordered.filter(p=>p.x<=current).at(-1);if(p&&p.y!==null){const barWidth=(right-left)/(series.length*1.6);const x=left+idx*(right-left)/series.length;ctx.fillRect(x,Math.min(py(0),py(p.y)),barWidth,Math.max(2,Math.abs(py(0)-py(p.y))));last={x:x+barWidth/2,y:py(p.y),value:p.y};}}
  else {ctx.save();ctx.beginPath();ctx.rect(left-8,top-10,(right-left)*progress+16,bottom-top+20);ctx.clip();ctx.beginPath();ordered.forEach(p=>{if(p.y===null){previous=null;return;}const x=px(p.x),y=py(p.y);if(previous)ctx.lineTo(x,y);else ctx.moveTo(x,y);previous=p;});ctx.stroke();ctx.restore();const p=ordered.filter(p=>p.x<=current).at(-1);if(p?.y!==null&&p){last={x:px(p.x),y:py(p.y),value:p.y};}}
- if(last){ctx.beginPath();ctx.arc(last.x,last.y,10,0,Math.PI*2);ctx.fill();}
+ if(last&&chart==='bar'){ctx.beginPath();ctx.arc(last.x,last.y,10,0,Math.PI*2);ctx.fill();}
  const legendY=bottom+100+idx*43;ctx.fillRect(80,legendY-19,15,15);ctx.fillStyle=fg;ctx.font=`27px ${font}`;const label=s.name.length>30?s.name.slice(0,28)+'…':s.name;ctx.fillText(label,108,legendY);ctx.textAlign='right';ctx.fillText(last?`${formatValue(last.value)} ${unit}`:'brak danych',1000,legendY);ctx.textAlign='left';
  });
  ctx.fillStyle=dark?'#e5e9e2':'#343d32';ctx.font=`bold ${height<1400?52:xType==='date'?76:110}px ${font}`;ctx.textAlign='right';ctx.fillText(xType==='date'?displayDate(Math.floor(current)):isCoffee?`ROK ${Math.floor(current)}`:String(Math.floor(current)),1000,height<1400?150:height-140);ctx.textAlign='left';
