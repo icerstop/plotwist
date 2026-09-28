@@ -1,3 +1,4 @@
+import {PresentationPicker} from './Presentation.jsx';
 import {VisualEditor} from './VisualSettings.jsx';
 import React,{useEffect,useMemo,useState} from 'react';
 import {Download,Plus,Trash2,RotateCcw} from 'lucide-react';
@@ -21,6 +22,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
  const [extras,setExtras]=useState(null),[brands,setBrands]=useState(null),[assets,setAssets]=useState({});
  const [entries,setEntries]=useState(initialEntries),[mode,setMode]=useState('dca'),[scale,setScale]=useState('index');
  const [start,setStart]=useState('2020-01-01'),[end,setEnd]=useState(''),[investment,setInvestment]=useState('5');
+ const [chart,setChart]=useState('line');
  const [showLogos,setShowLogos]=useState(true),[theme,setTheme]=useState('dark'),[duration,setDuration]=useState(12);
  const [title,setTitle]=useState(''),[addType,setAddType]=useState('asset'),[query,setQuery]=useState('');
  const [error,setError]=useState(''),[logoError,setLogoError]=useState(''),[loading,setLoading]=useState(true),[logosReady,setLogosReady]=useState(false),[exporting,setExporting]=useState(false);
@@ -44,7 +46,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
  const resolved=useMemo(()=>entries.map((e,i)=>{const brand=brands?.companies?.[e.symbol];return {...e,color:e.color||(theme==='light'?brand?.chartColorLight:brand?.chartColor)||brand?.brandColor||catalog.find(a=>a.symbol===e.symbol)?.color||fallbackColors[i%fallbackColors.length],logo:showLogos?brand?.path:undefined};}),[entries,brands,catalog,showLogos,theme]);
  const result=useMemo(()=>{try{return {...buildComparison({entries:resolved,assets,fx,start,end,mode,scale,dailyInvestment:investment.trim()?Number(investment):NaN}),error:''};}catch(e){return {series:[],summaries:{},error:e.message};}},[resolved,assets,fx,start,end,mode,scale,investment]);
  const generatedTitle=mode==='dca'?`${investment||'0'} zł dziennie. Kilka możliwości.`:scale==='percent'?'Jak zmieniały się ceny?':scale==='index'?'Ten sam start. Różne historie.':'Ceny na wspólnym wykresie.';
- const config=useMemo(()=>({series:result.series,title:title||generatedTitle,subtitle:mode==='dca'?`Osobne portfele · ${investment||0} zł dziennie na każdy`:`${scale==='index'?'Indeks 100':scale==='percent'?'Zmiana procentowa':'Ceny zamknięcia'} · wspólna baza ${result.baseDate||'…'}`,source:mode==='dca'?'Yahoo Finance + NBP · bez dywidend, opłat i podatków':'Yahoo Finance · waluty instrumentów · bez dywidend',format:'9:16',theme,fontId,chart:'line',unit:result.unit||'',xType:'date',compactTitle:true}),[result,title,generatedTitle,investment,mode,scale,theme,fontId]);
+ const config=useMemo(()=>({series:result.series,title:title||generatedTitle,subtitle:mode==='dca'?`Osobne portfele · ${investment||0} zł dziennie na każdy`:`${scale==='index'?'Indeks 100':scale==='percent'?'Zmiana procentowa':'Ceny zamknięcia'} · wspólna baza ${result.baseDate||'…'}`,source:mode==='dca'?'Yahoo Finance + NBP · bez dywidend, opłat i podatków':'Yahoo Finance · waluty instrumentów · bez dywidend',format:'9:16',theme,fontId,chart,unit:result.unit||'',xType:'date',compactTitle:true}),[result,title,generatedTitle,investment,mode,scale,theme,fontId,chart]);
  useEffect(()=>{let active=true;setLogosReady(false);setLogoError('');preloadReelAssets(config).then(()=>{if(active)setLogosReady(true);}).catch(e=>{if(active)setLogoError(e.message);});return()=>{active=false;};},[config]);
  const visibleError=error||logoError||(!loading?result.error:'');
  const valid=!loading&&!visibleError&&logosReady&&result.series.length>0;
@@ -60,10 +62,10 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
  function exportCsv(){const rows=result.series.flatMap(s=>s.points.map(p=>[fromDay(p.x),s.name,p.y,result.unit,p.raw??'',entries.find(e=>e.id===s.id)?.symbol||'']));downloadBlob(new Blob([marketCsv(rows,['data','seria','wartosc_wykresu','jednostka','cena_zrodlowa','symbol'])],{type:'text/csv;charset=utf-8'}),'plotwist-porownanie.csv');}
  const available=catalog.filter(a=>(mode!=='dca'||a.kind!=='futures')&&`${a.name} ${a.symbol} ${a.region}`.toLowerCase().includes(query.toLowerCase()));
  return <>
-  <div className="comparison-intro"><div><h2>Jedna historia. Wiele serii.</h2><p>Do 6 linii, własne kolory i logotypy w rolce.</p></div><button className="primary" disabled={!valid} onClick={()=>setExporting(true)}><Download size={17}/>Eksportuj porównanie</button></div>
+  <div className="comparison-intro"><div><h2>Jedna historia. Wiele serii.</h2><p>Do 6 serii, różne formy prezentacji, własne kolory i logotypy.</p></div><button className="primary" disabled={!valid} onClick={()=>setExporting(true)}><Download size={17}/>Eksportuj porównanie</button></div>
   <div className="market-workspace comparison-workspace">
    <section className="market-controls" aria-label="Ustawienia porównania wielu serii">
-    <Field label="Co porównujesz?"><select value={mode} onChange={e=>setMode(e.target.value)}><option value="dca">Inwestycje w PLN</option><option value="prices">Ceny i zmiany cen</option></select></Field>
+    <PresentationPicker value={chart} onChange={setChart}/><Field label="Co porównujesz?"><select value={mode} onChange={e=>setMode(e.target.value)}><option value="dca">Inwestycje w PLN</option><option value="prices">Ceny i zmiany cen</option></select></Field>
     {mode==='dca'?<Field label="Wpłata na każdy portfel / dzień"><input aria-label="Wpłata na każdy portfel" type="number" min="0.01" max="100000" step="0.01" value={investment} onChange={e=>setInvestment(e.target.value)}/><small>zł dziennie na każdą spółkę lub fundusz. To osobne scenariusze.</small></Field>:<Field label="Skala porównania"><select value={scale} onChange={e=>setScale(e.target.value)}><option value="index">Indeks 100 · wspólny start</option><option value="percent">Zmiana procentowa od startu</option><option value="price">Cena · zgodne waluty i jednostki</option></select></Field>}
     <Field label="Szukaj instrumentu"><input type="search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Spółka, symbol, złoto, ropa…"/></Field>
     <div className="series-list" aria-label="Serie porównania">{resolved.map((entry,i)=>{

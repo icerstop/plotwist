@@ -118,3 +118,12 @@ Pliki PNG/JPG/WebP/GIF do 12 MB są dekodowane w przeglądarce i zapisywane raze
 `gifuct-js` jest ładowany dopiero dla GIF-a. Dekoder składa klatki z obsługą przezroczystości, przesunięć oraz disposal 2/3. Jednocześnie rozpakowuje jedną łatkę i skaluje wynik do budżetu pamięci (20 mln pikseli na GIF, 40 mln łącznie); duże GIF-y mogą mieć mniejszą rozdzielczość. Limit wejściowy: 400 klatek i 8 mln pikseli na klatkę. Obrazy statyczne mają maks. 1920 px dłuższego boku. WebP/PNG są traktowane jako obrazy statyczne; animacje obsługiwane są w GIF.
 
 Podgląd, przewijanie i MediaRecorder używają tego samego deterministycznego zegara. Wideo zachowuje ruch GIF-ów; PNG pokazuje końcową klatkę rolki. Eksport blokowany jest podczas wczytywania/dekodowania dodatków. `src/media-timeline.js` odpowiada za czas i geometrię, `src/reel-media.js` za pliki i zapis, `src/visual-render.js` za wspólną kompozycję, a `src/VisualSettings.jsx` za edytor i stan.
+
+
+### Formy prezentacji i płynność
+
+W każdym module panel „Sposób prezentacji” jest dostępny przy ustawieniach danych. Studio, ceny akcji, inwestycja vs nawyk i porównania wielu serii obsługują linie, linie z wypełnieniem (bez sumowania), kolumny, wyścig poziomych słupków oraz karty liczbowe. AI ma karty na osi czasu, wyścig rankingu, mapę pomiarów, schody rekordów oraz porównanie z opisanym punktem odniesienia, jeśli zbiór go zawiera. Wspólny katalog w `src/presentation.js` i komponent `PresentationPicker` pozwalają rozszerzać kolejne moduły bez osobnych selektorów.
+
+Przejścia: płynne 0,65 s, spokojne 1,1 s, dynamiczne 0,3 s lub wyłączone. Ustawienie jest wspólne dla modułów w bieżącej sesji. AI zmienia całą kartę (model, rzeczywisty wynik, datę i niepewność) łagodnym wygaszeniem i pojawieniem. Nie wylicza fikcyjnego wyniku między różnymi modelami. Ranking animuje pozycję i długość słupka; podpisy pokazują wyłącznie rzeczywiste wartości. Gęste daty skracają przejście przed kolejnym pomiarem. Dłuższa rolka lub węższy zakres zwiększa czas na odczyt.
+
+Schody rekordów to historyczne maksimum w wybranym filtrze, nie wynik jednego modelu ani interpolacja między pomiarami. Zwykły ranking nadal używa ostatniego wyniku wariantu, więc późniejszy gorszy wynik obniża pozycję. Puste wartości nie stają się zerami; brak przyszłych danych w klatkach. PNG, podgląd i wideo używają tego samego renderera i czasu. Ostatnie 10% filmu domyka przejście do końcowych wyników. Przewijanie i ponowne odtworzenie dają ten sam stan dla tego samego czasu.

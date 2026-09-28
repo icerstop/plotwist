@@ -22,12 +22,7 @@ export function frameAt(rows,progress){
   const visible=rows.filter(r=>r.date<=date);
   return {date,visible,rank:rankAt(visible,date),current:visible.at(-1)};
 }
-export const aiFormats=[
-  {id:'timeline',name:'Karty na osi czasu',note:'Model, data i wynik — kolejne obserwacje jako osobne sceny.'},
-  {id:'ranking',name:'Zmieniający się ranking',note:'Sześć najwyższych ostatnio odnotowanych wyników w danym momencie.'},
-  {id:'scatter',name:'Mapa postępu',note:'Każdy punkt to pomiar. Pozycja pokazuje datę i wynik; bez interpolacji.'},
-  {id:'duel',name:'AI vs punkt odniesienia',note:'Dwie karty wyników z opisem grupy ludzi i warunków porównania.'},
-];
+export {aiFormats} from './presentation.js';
 export function timelineSelection(rows,limit=8){
  let best=-Infinity;const records=rows.filter(r=>{if(r.score>best){best=r.score;return true;}return false;});
  const candidates=records.length>1?records:rows;

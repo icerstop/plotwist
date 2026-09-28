@@ -2,6 +2,7 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App.jsx';
 import {VisualProvider} from './VisualSettings.jsx';
+import {PresentationProvider} from './Presentation.jsx';
 import './style.css';
 import './market.css';
-createRoot(document.getElementById('root')).render(<VisualProvider><App/></VisualProvider>);
+createRoot(document.getElementById('root')).render(<PresentationProvider><VisualProvider><App/></VisualProvider></PresentationProvider>);

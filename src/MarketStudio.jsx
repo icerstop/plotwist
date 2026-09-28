@@ -1,3 +1,4 @@
+import {PresentationPicker} from './Presentation.jsx';
 import {VisualEditor} from './VisualSettings.jsx';
 import ComparisonStudio from './ComparisonStudio.jsx';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -21,6 +22,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   const [investment, setInvestment] = useState('5'), [expense, setExpense] = useState('3'), [expenseName, setExpenseName] = useState('Coca-Cola');
   const [mode, setMode] = useState('compare'), [basis, setBasis] = useState('split');
   const [title, setTitle] = useState('5 zł dziennie w NVIDIA.'), [customTitle, setCustomTitle] = useState(false);
+  const [chart,setChart]=useState('line');
   const [duration, setDuration] = useState(12), [theme, setTheme] = useState('dark');
   const [loading, setLoading] = useState(true), [error, setError] = useState(''), [exporting, setExporting] = useState(false);
   const [page, setPage] = useState(0);
@@ -58,8 +60,8 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
     series: chartSeries, title: customTitle ? title : generatedTitle,
     subtitle: mode === 'dca' ? `${stock?.name || symbol}: ${investment || 0} zł/dzień vs ${expenseName || 'napój'}: ${expense || 0} zł/dzień` : basis === 'split' ? 'Cena zamknięcia · korekta o splity' : 'Cena nominalna · odtworzona z korekt splitowych',
     source: mode === 'dca' ? 'Yahoo Finance + NBP · bez dywidend, opłat i podatków' : 'Yahoo Finance · historia dzienna · bez bieżącej sesji',
-    format: '9:16', theme, fontId, chart: 'line', unit: mode === 'dca' ? 'zł' : stock?.currency || '', xType: 'date'
-  }), [chartSeries, customTitle, title, generatedTitle, mode, stock, symbol, expenseName, investment, expense, basis, theme, fontId]);
+    format: '9:16', theme, fontId, chart, unit: mode === 'dca' ? 'zł' : stock?.currency || '', xType: 'date'
+  }), [chartSeries, customTitle, title, generatedTitle, mode, stock, symbol, expenseName, investment, expense, basis, theme, fontId, chart]);
   const priceRangeError = useMemo(() => { if (!stock) return ''; try { validateMarketRange(stock, start, end); return ''; } catch (e) { return e.message; } }, [stock, start, end]);
   const visibleError = error || (mode === 'dca' ? result.error : priceRangeError);
   const valid = !loading && !visibleError && chartSeries.length > 0 && chartSeries.every(s => s.points.length >= 2);
@@ -84,7 +86,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
     <div className="market-heading"><div><h1>Mały nawyk. Prawdziwa historia.</h1><p>Codzienne wpłaty spotykają historyczne ceny akcji.</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
     <div className="market-meta"><Database size={15}/>{manifest ? <span>{manifest.stocks.length} spółek · {manifest.totalObservations.toLocaleString('pl-PL')} cen zamknięcia · USA i Europa</span> : <span>Wczytywanie katalogu…</span>}<span>Snapshot: {manifest?.retrievedAt.slice(0,10) || '…'}</span></div>
     <div className="market-workspace">
-      <section className="market-controls" aria-label="Ustawienia inwestowania">
+      <section className="market-controls" aria-label="Ustawienia inwestowania"><PresentationPicker value={chart} onChange={setChart}/>
         <div className="market-switch" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label]) => <button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={() => {setMode(id);setCustomTitle(false);}}>{label}</button>)}</div>
         <div className="market-regions">{['Wszystkie','USA','Europa'].map(r => <button key={r} className={region===r?'selected':''} onClick={() => setRegion(r)}>{r}</button>)}</div>
         <div className="search-field market-search"><Search size={17}/><input aria-label="Szukaj spółki" placeholder="NVIDIA, Apple, ASML, Polska…" value={search} onChange={e=>setSearch(e.target.value)}/></div>

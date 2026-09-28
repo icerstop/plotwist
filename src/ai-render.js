@@ -1,5 +1,7 @@
 import {aiValue,frameAt} from './ai.js';
 import {reelFont,drawSignature} from './reel-style.js';
+import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
+import {crossText} from './series-render.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
 function typography(font){
 function wrap(ctx,text,x,y,width,size=34,max=3,color){
@@ -23,27 +25,61 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  wrap(ctx,title||b.name,76,240,928,83,3,fg);
  wrap(ctx,b.name,76,565,928,33,2,accent);
  if(scope)wrap(ctx,scope,76,648,928,23,2,muted);
- const frame=frameAt(rows,progress),first=rows[0],last=rows.at(-1);
+ const first=rows[0],last=rows.at(-1),transition=config.transition??.65,duration=config.duration||20;
+ const frame=mode==='scatter'?frameAt(rows,progress):null;
  if(!first)return;
  const score=r=>`${aiValue(r.score)} ${b.unit}`;
  if(mode==='timeline'){
-   const index=Math.min(rows.length-1,Math.floor(progress*rows.length));const r=rows[index];
-   wrap(ctx,r.date,76,725,920,39,1,muted);
-   wrap(ctx,r.model,76,825,920,62,3,fg);
-   ctx.fillStyle=accent;fit(ctx,score(r),930,147,70);ctx.fillText(score(r),76,1190);
-   const detail=r.low!==null&&r.low!==undefined?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!==null&&r.stderr!==undefined?`Błąd standardowy: ±${aiValue(r.stderr)} p.p.`:r.rawScore!==undefined?`Surowy wynik: ${r.rawScore}/${r.total}`:r.elo?`Rating Codeforces: ${r.elo}`:'Wynik odnotowany w źródle';
-   wrap(ctx,detail,76,1260,920,31,2,muted);
-   ctx.fillStyle=grid;ctx.fillRect(76,1340,925,5);ctx.fillStyle=accent;ctx.fillRect(76,1340,925*(index+1)/rows.length,5);
-   rows.slice(Math.max(0,index-2),index+1).forEach((p,i)=>{wrap(ctx,`${p.date}  ·  ${p.model}`,76,1420+i*68,730,29,1,muted);ctx.textAlign='right';wrap(ctx,aiValue(p.score),999,1420+i*68,220,31,1,fg);ctx.textAlign='left';});
-   wrap(ctx,`Obserwacja ${index+1} / ${rows.length}`,76,1660,920,28,1,muted);
+   const scene=sceneAt(rows.length,progress,duration,transition);
+   function card(index,opacity,dy){
+    if(opacity<=0)return;const r=rows[index];ctx.save();ctx.globalAlpha=opacity;ctx.translate(0,dy);
+    wrap(ctx,r.date,76,725,920,39,1,muted);
+    wrap(ctx,r.model,76,825,920,62,3,fg);
+    ctx.fillStyle=accent;fit(ctx,score(r),930,147,70);ctx.fillText(score(r),76,1190);
+    const detail=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`Błąd standardowy: ±${aiValue(r.stderr)} p.p.`:r.rawScore!==undefined?`Surowy wynik: ${r.rawScore}/${r.total}`:r.elo?`Rating Codeforces: ${r.elo}`:'Wynik odnotowany w źródle';
+    wrap(ctx,detail,76,1260,920,31,2,muted);
+    rows.slice(Math.max(0,index-2),index+1).forEach((p,i)=>{wrap(ctx,`${p.date}  ·  ${p.model}`,76,1420+i*68,730,29,1,muted);ctx.textAlign='right';wrap(ctx,aiValue(p.score),999,1420+i*68,220,31,1,fg);ctx.textAlign='left';});
+    wrap(ctx,`Obserwacja ${index+1} / ${rows.length}`,76,1660,920,28,1,muted);ctx.restore();
+   }
+   if(scene.mix<1)card(scene.previous,clamp(1-scene.mix*2),-28*scene.mix);
+   card(scene.index,clamp(scene.mix*2-1),28*(1-scene.mix));
+   ctx.fillStyle=grid;ctx.fillRect(76,1340,925,5);ctx.fillStyle=accent;ctx.fillRect(76,1340,925*clamp(progress),5);
  } else if(mode==='ranking'){
-   wrap(ctx,frame.date,76,715,920,56,1,fg);
-   frame.rank.slice(0,6).forEach((r,i)=>{const y=805+i*136;wrap(ctx,`${i+1}. ${r.model}`,76,y,735,37,2,fg);ctx.textAlign='right';wrap(ctx,aiValue(r.score),1000,y,230,48,1,i===0?accent:fg);ctx.textAlign='left';
-     if(b.max){ctx.fillStyle=grid;ctx.fillRect(76,y+60,925,8);ctx.fillStyle=i===0?accent:purple;ctx.fillRect(76,y+60,925*Math.max(0,r.score)/b.max,8);}
-     const uncertainty=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`SE: ±${aiValue(r.stderr)} p.p.`:'';
-     wrap(ctx,`${r.date}${uncertainty?' · '+uncertainty:''}`,76,y+94,920,23,1,muted);
-   });
-   wrap(ctx,`${b.unit} · ostatni dostępny pomiar każdego wariantu`,76,1625,920,28,2,muted);
+   const motion=aiMotionFrame(rows,progress,duration,transition,timeSeconds),now=motion.frame,old=motion.before,{mix}=motion;
+   wrap(ctx,now.date,76,715,920,56,1,fg);
+   const current=now.rank.slice(0,6),before=old.rank.slice(0,6),ids=[...new Set([...before,...current].map(r=>r.modelId))];
+   const low=Math.min(0,...rows.map(r=>r.score)),high=b.max||Math.max(1,...rows.map(r=>r.score)),barX=v=>76+(v-low)/(high-low||1)*925;
+   ctx.save();ctx.beginPath();ctx.rect(65,754,950,852);ctx.clip();
+   for(const id of ids){
+    const ni=current.findIndex(r=>r.modelId===id),oi=before.findIndex(r=>r.modelId===id),r=current[ni]||before[oi],prev=before[oi]||r;
+    const alpha=ni<0?1-mix:oi<0?mix:1;if(alpha<=0)continue;
+    const y=805+lerp(oi<0?6:oi,ni<0?6:ni,mix)*136;
+    ctx.save();ctx.globalAlpha=alpha;
+    // The identity follows the row, while only its position and bar length tween.
+    wrap(ctx,r.model,76,y,680,37,2,fg);ctx.textAlign='right';ctx.font=`bold 48px ${reelFont(config.fontId)}`;ctx.fillStyle=ni===0?accent:fg;crossText(ctx,aiValue(prev.score),aiValue(r.score),1000,y,mix);ctx.textAlign='left';
+    ctx.fillStyle=grid;ctx.fillRect(76,y+60,925,8);ctx.fillStyle=ni===0?accent:purple;const v=lerp(prev.score,r.score,mix);ctx.fillRect(Math.min(barX(0),barX(v)),y+60,Math.abs(barX(v)-barX(0)),8);
+    const uncertainty=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`SE: ±${aiValue(r.stderr)} p.p.`:'';
+    wrap(ctx,`${r.date}${uncertainty?' · '+uncertainty:''}`,76,y+94,920,23,1,muted);ctx.restore();
+   }
+   ctx.restore();wrap(ctx,`${b.unit} · ostatni dostępny pomiar każdego wariantu`,76,1625,920,28,2,muted);
+ } else if(mode==='records'){
+   const motion=aiMotionFrame(rows,progress,duration,transition,timeSeconds),{frames,frame:now,before:old,mix,current}=motion;
+   const top=815,bottom=1410,left=130,right=960,low=Math.min(0,...rows.map(r=>r.score)),high=b.max||Math.max(1,...rows.map(r=>r.score));
+   const start=frames[0].time,end=frames.at(-1).time,x=t=>left+(t-start)/(end-start||1)*(right-left),y=v=>bottom-(v-low)/(high-low||1)*(bottom-top);
+   wrap(ctx,`${b.unit} · najwyższy dotąd wynik w filtrze`,76,727,920,30,2,muted);
+   for(let i=0;i<=4;i++){const value=lerp(low,high,i/4);ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(value));ctx.lineTo(right,y(value));ctx.stroke();ctx.textAlign='right';wrap(ctx,aiValue(value),left-20,y(value)+9,120,27,1,muted);ctx.textAlign='left';}
+   ctx.save();ctx.beginPath();ctx.rect(left-5,top-5,(right-left)*progress+10,bottom-top+10);ctx.clip();ctx.strokeStyle=accent;ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();let previous=frames[0].record.score;ctx.moveTo(left,y(previous));
+   for(const f of frames.slice(1)){ctx.lineTo(x(f.time),y(previous));ctx.lineTo(x(f.time),y(f.record.score));previous=f.record.score;}ctx.lineTo(right,y(previous));ctx.stroke();ctx.restore();
+   wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';
+   function recordLabel(r,alpha){
+    if(alpha<=0)return;ctx.save();ctx.globalAlpha=alpha;
+    ctx.font=`bold 43px ${reelFont(config.fontId)}`;ctx.fillStyle=accent;ctx.fillText(score(r),76,1525);
+    const uncertainty=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`SE: ±${aiValue(r.stderr)} p.p.`:'';
+    if(uncertainty)wrap(ctx,uncertainty,76,1564,920,24,1,muted);
+    wrap(ctx,`${r.model} · rekord z ${r.date}`,76,1605,920,30,2,fg);ctx.restore();
+   }
+   if(now.record.id!==old.record.id&&mix<1){recordLabel(old.record,clamp(1-mix*2));recordLabel(now.record,clamp(mix*2-1));}else recordLabel(now.record,1);
+   wrap(ctx,new Date(current).toISOString().slice(0,10),76,1669,920,27,1,muted);
  } else if(mode==='scatter'){
    const top=775,bottom=1450,left=130,right=960;
    const min=b.max?0:Math.floor(Math.min(...rows.map(r=>r.low??r.score))/10)*10-10,max=b.max||Math.ceil(Math.max(...rows.map(r=>r.high??r.score))/10)*10+10;
@@ -51,14 +87,14 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    for(let i=0;i<=4;i++){const v=min+(max-min)*i/4;ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(v));ctx.lineTo(right,y(v));ctx.stroke();ctx.textAlign='right';wrap(ctx,aiValue(v),left-20,y(v)+9,120,27,1,muted);ctx.textAlign='left';}
    wrap(ctx,b.unit,76,720,920,30,1,muted);
    if(b.baseline){const yy=y(b.baseline.score);ctx.strokeStyle=purple;ctx.setLineDash([10,10]);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(right,yy);ctx.stroke();ctx.setLineDash([]);wrap(ctx,`Punkt odniesienia: ${aiValue(b.baseline.score)}`,left,yy-15,800,26,1,purple);}
-   frame.visible.forEach(r=>{ctx.fillStyle=accent;ctx.globalAlpha=.48;ctx.beginPath();ctx.arc(x(r.date),y(r.score),7,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;const lo=r.low??(r.stderr!=null?r.score-r.stderr:null),hi=r.high??(r.stderr!=null?r.score+r.stderr:null);if(lo!=null&&hi!=null){ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(x(r.date),y(Math.max(min,lo)));ctx.lineTo(x(r.date),y(Math.min(max,hi)));ctx.stroke();}});
+   frame.visible.forEach(r=>{const age=(lerp(t0,t1,progress)-Date.parse(r.date))/(t1-t0||1)*duration*.9+Math.max(0,timeSeconds-duration*.9);const alpha=transition&&r.date!==first.date?ease(age/Math.min(transition,duration*.08)):1;ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=accent;ctx.globalAlpha*=.48;ctx.beginPath();ctx.arc(x(r.date),y(r.score),7,0,Math.PI*2);ctx.fill();ctx.globalAlpha=alpha;const lo=r.low??(r.stderr!=null?r.score-r.stderr:null),hi=r.high??(r.stderr!=null?r.score+r.stderr:null);if(lo!=null&&hi!=null){ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(x(r.date),y(Math.max(min,lo)));ctx.lineTo(x(r.date),y(Math.min(max,hi)));ctx.stroke();}ctx.restore();});
    wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';
    if(frame.current)wrap(ctx,`Ostatnio: ${frame.current.model} · ${aiValue(frame.current.score)}`,76,1555,920,27,1,accent);
    wrap(ctx,frame.date,76,1630,900,59,1,fg);wrap(ctx,`${frame.visible.length} pomiarów · ${b.id==='eci'?'wąsy: 90% CI':rows.some(r=>r.stderr!=null)?'wąsy: ±1 SE':'bez interpolacji'}`,76,1665,920,28,1,muted);
  } else {
    const r=rows.filter(r=>r.modelId===comparison).at(-1)||last,base=b.baseline;
    if(!base)return;
-   [{name:r.model,value:score(r),color:accent},{name:base.name,value:`${aiValue(base.score)} ${b.unit}`,color:purple}].forEach((item,i)=>{const y=735+i*370;ctx.globalAlpha=Math.min(1,Math.max(0,progress*3-i*.5));ctx.fillStyle=panel;ctx.fillRect(76,y,928,320);wrap(ctx,item.name,112,y+62,850,39,2,fg);ctx.fillStyle=item.color;fit(ctx,item.value,850,104,55);ctx.fillText(item.value,112,y+255);if(i===0&&r.stderr!=null)wrap(ctx,`SE: ±${aiValue(r.stderr)} p.p.`,112,y+296,850,23,1,muted);ctx.globalAlpha=1;});
+   [{name:r.model,value:score(r),color:accent},{name:base.name,value:`${aiValue(base.score)} ${b.unit}`,color:purple}].forEach((item,i)=>{const y=735+i*370;ctx.save();const enter=transition?ease((timeSeconds-i*.25)/transition):1;ctx.globalAlpha=enter;ctx.translate(0,24*(1-enter));ctx.fillStyle=panel;ctx.fillRect(76,y,928,320);wrap(ctx,item.name,112,y+62,850,39,2,fg);ctx.fillStyle=item.color;fit(ctx,item.value,850,104,55);ctx.fillText(item.value,112,y+255);if(i===0&&r.stderr!=null)wrap(ctx,`SE: ±${aiValue(r.stderr)} p.p.`,112,y+296,850,23,1,muted);ctx.restore();});
    wrap(ctx,`${r.date} · różnica ${aiValue(r.score-base.score)} ${b.unit==='%'?'p.p.':'punktów percentylowych'}`,76,1520,920,35,2,fg);
    wrap(ctx,base.note,76,1600,920,28,3,muted);
  }

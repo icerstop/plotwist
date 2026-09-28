@@ -1,10 +1,11 @@
+import {PresentationPicker} from './Presentation.jsx';
 import {VisualEditor} from './VisualSettings.jsx';
 import React,{useEffect,useMemo,useState} from 'react';
 import {ArrowUpRight,BrainCircuit,Download,Info,Search} from 'lucide-react';
 import {ExportModal,Field,FontPicker,ReelPreview} from './components.jsx';
 import {downloadBlob} from './data.js';
 import {marketCsv} from './market.js';
-import {aiDate,aiFormats,aiValue,rankAt,selectAiRows,timelineSelection} from './ai.js';
+import {aiDate,aiValue,rankAt,selectAiRows,timelineSelection} from './ai.js';
 import './ai.css';
 const json=async(path,signal)=>{const r=await fetch(path,{signal});if(!r.ok)throw new Error('Nie udało się wczytać danych benchmarku. Odśwież stronę.');return r.json();};
 const safeUrl=url=>/^https:\/\//.test(url||'')?url:undefined;
@@ -40,7 +41,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
    <div className="ai-counts"><span>{manifest?.benchmarks.length||'…'} zestawów i wersji testów</span><span>{manifest?.totalObservations.toLocaleString('pl-PL')||'…'} pomiarów</span><span>Dane pobrane: {manifest?.retrievedAt||'…'}</span></div>
    <div className="ai-workspace">
      <section className="ai-controls" aria-label="Ustawienia benchmarków AI">
-       <Field label="Benchmark"><select value={id} onChange={e=>setId(e.target.value)}>{manifest?.benchmarks.map(b=><option key={b.id} value={b.id}>{b.name}</option>)||<option value="eci">ECI · indeks możliwości</option>}</select></Field>
+       <PresentationPicker family="ai" value={mode} onChange={setMode} hasBaseline={!!data?.baseline}/><Field label="Benchmark"><select value={id} onChange={e=>setId(e.target.value)}>{manifest?.benchmarks.map(b=><option key={b.id} value={b.id}>{b.name}</option>)||<option value="eci">ECI · indeks możliwości</option>}</select></Field>
        {data&&<div className="ai-description"><span className="tag ready">{data.category}</span><p>{data.description}</p><a href={safeUrl(data.sourceUrl)} target="_blank" rel="noreferrer">Metodologia źródła<ArrowUpRight size={13}/></a></div>}
        <Field label="Co oznacza data?"><select value={basis} onChange={e=>{setBasis(e.target.value);setStart('');setEnd('');}}><option value="release" disabled={!hasRelease}>Premiera modelu · retrospektywa</option><option value="observed" disabled={!hasObserved}>Data testu / publikacji wyniku</option></select></Field>
        <div className="field-pair"><Field label="Od dnia"><input type="date" aria-label="Początek historii AI" value={start} onInput={e=>setStart(e.target.value)}/></Field><Field label="Do dnia"><input type="date" aria-label="Koniec historii AI" value={end} onInput={e=>setEnd(e.target.value)}/></Field></div>
@@ -54,10 +55,10 @@ export default function AIStudio({fontId='arial',onFontChange}){
      </section>
      <div className="ai-preview-column"><ReelPreview config={config} duration={duration} valid={valid}/></div>
      <aside className="ai-story-controls">
-       <h2>Forma opowieści</h2><p className="muted">Nie każda historia potrzebuje linii.</p>
-       <div className="ai-formats" role="group" aria-label="Forma rolki AI">{aiFormats.map((f,i)=><button key={f.id} aria-pressed={mode===f.id} disabled={f.id==='duel'&&!data?.baseline} onClick={()=>setMode(f.id)} className={mode===f.id?'selected':''}><span className="ai-format-number">0{i+1}</span><span><strong>{f.name}</strong><small>{f.id==='duel'&&!data?.baseline?'Dostępne dla GPQA i Codeforces — z opisanym odniesieniem do ludzi.':f.note}</small></span></button>)}</div>
+       <h2>O wybranej historii</h2>
+
        {mode==='duel'&&data?.baseline&&<Field label="Model do porównania"><select value={chosen?.modelId||''} onChange={e=>setComparison(e.target.value)}>{ranked.map(r=><option key={r.modelId} value={r.modelId}>{r.model} · {aiValue(r.score)} {data.unit}</option>)}</select></Field>}
-       <div className="ai-selection"><strong>{rows.length.toLocaleString('pl-PL')} pomiarów w filtrze</strong><p>{mode==='timeline'?`${timeline.length} kart wybranych z kolejnych rekordów w filtrze (maks. 8). Każda karta ma rzeczywistą datę i wartość.`:mode==='ranking'?'Ranking bierze ostatni odnotowany wynik wariantu, nie jego najlepszy wynik. Model pozostaje w rankingu do kolejnego pomiaru.':mode==='duel'?'Porównanie ostatniego wyniku wybranego modelu z opisanym punktem odniesienia.':'Punkty pojawiają się zgodnie z wybraną osią dat. Puste okresy nie są uzupełniane.'}</p></div>
+       <div className="ai-selection"><strong>{rows.length.toLocaleString('pl-PL')} pomiarów w filtrze</strong><p>{mode==='timeline'?`${timeline.length} kart wybranych z kolejnych rekordów w filtrze (maks. 8). Każda karta ma rzeczywistą datę i wartość.`:mode==='ranking'?'Ranking bierze ostatni odnotowany wynik wariantu, nie jego najlepszy wynik. Model pozostaje w rankingu do kolejnego pomiaru.':mode==='records'?'Schody pokazują najwyższy dotąd wynik w tym filtrze. Pomiary różnych modeli nie tworzą ciągłej trajektorii jednego modelu.':mode==='duel'?'Porównanie ostatniego wyniku wybranego modelu z opisanym punktem odniesienia.':'Punkty pojawiają się zgodnie z wybraną osią dat. Puste okresy nie są uzupełniane.'}</p></div>
        <div className="ai-context"><Info size={18}/><p>{basis==='release'?'To retrospektywa wg premier. Wynik mógł zostać zmierzony później; nie pokazujemy stanu wiedzy z dnia premiery.':'To daty testów lub publikacji podane przez źródło. Brak daty pomiaru nie jest zastępowany datą premiery.'}</p></div>
      </aside>
    </div>
