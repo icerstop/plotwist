@@ -1,6 +1,6 @@
 # plotwist
 
-Polskojęzyczne studio animowanych wykresów do rolek. React + Vite, Canvas 2D i MediaRecorder. Aplikacja nie potrzebuje płatnego API ani serwera AI.
+Studio animowanych wykresów do rolek z niezależnym wyborem języka menu i rolki (PL/EN). React + Vite, Canvas 2D i MediaRecorder. Aplikacja nie potrzebuje płatnego API ani serwera AI.
 
 ## Uruchomienie
 
@@ -10,6 +10,20 @@ npm run dev
 ```
 
 Produkcja: `npm run build` (katalog `dist`). Weryfikacja obliczeń i CSV: `npm test`.
+
+## Repozytorium i rozwój
+
+Prywatne repozytorium GitHub: https://github.com/icerstop/plotwist. Zawiera kod, lokalne zasoby, snapshoty danych i dotychczasową historię zmian. Katalogi `node_modules`, `dist`, pliki `.env*` oraz dane robocze Sites są ignorowane.
+
+Remote `origin` obsługuje istniejący hosting Sites, a `github` kopię projektu na GitHubie. Po kolejnych commitach `git push github main` aktualizuje tę kopię; sam push do GitHuba nie publikuje strony.
+
+## Waluta prezentacji cen
+
+W zakładce **Giełda → Kurs akcji** oraz **Wiele serii → Ceny i zmiany cen** można wybrać oryginalną walutę, USD lub PLN. Wykres, podsumowanie, tabela i eksport korzystają z tego samego przeliczenia. Indeks 100 i zmianę procentową liczymy po przeliczeniu cen na wybraną walutę.
+
+Spółki notowane w USD zachowują oryginalne ceny i pełną historię bez ograniczeń wynikających z dostępności FX. Pozostałe waluty korzystają z ostatniej tabeli A NBP opublikowanej ściśle przed dniem sesji; konwersja między dwiema walutami używa ich kursów względem PLN z tej samej tabeli. Snapshot NBP zaczyna się w 2002 r., więc wcześniejsze ceny są dostępne w walucie oryginalnej. Brakujący lub starszy niż 10 dni kurs wywołuje błąd zamiast przybliżonej ceny.
+
+CSV zachowuje cenę i walutę źródłową, cenę przeliczoną, przelicznik oraz datę tabeli NBP. Wspólna waluta nie znosi różnic jednostek surowców. Symulacje wpłat i zakupów pozostają w PLN.
 
 ## Co działa
 

@@ -520,6 +520,9 @@ const intervalEn={'dziennie':'a day','co tydzień':'a week','co miesiąc':'a mon
 const unitEn={'dzień':'day','tydz.':'week','mies.':'month','kw.':'quarter'};
 const amountEn=n=>Number(n.replace(/\s/g,'').replace(',','.')).toLocaleString('en-GB',{maximumFractionDigits:2});
 const templates=[
+ [/^Wyłącznie wspólne daty rzeczywistych notowań wszystkich serii\. Wspólna baza: ([\d-]+)\. Bez dopisywania cen na dni wolne\. (?:Ceny przeliczone na ([A-Z]+)\.|Ceny w oryginalnej walucie instrumentu\.).*$/,(date,currency)=>`Only shared dates with actual quotes for every series. Common base: ${date}. No prices are added on non-trading days. ${currency?`Prices converted to ${currency}. Conversion uses the latest NBP table A published before the trading day. This is a converted price, not a quote on another exchange.`:'Prices in each instrument’s original currency.'} Split-adjusted, excluding dividends. Index and percentage change use prices after the selected currency conversion: index = price / base price × 100; change % = (price / base price − 1) × 100. Futures show the provider’s contract history, not spot prices or an investment strategy’s returns; contract changes may affect the series.`],
+ [/^Brak kursu (.+) dostępnego przed (.+)\.$/,(pair,date)=>`No ${pair} exchange rate is available before ${date}.`],
+ [/^Kurs NBP jest zbyt stary dla (.+)\. Odśwież dane\.$/,date=>`The NBP rate is too old for ${date}. Refresh the data.`],
  [/^Częstotliwość zakupów serii (\d+)$/,n=>`Series ${n} purchase frequency`],
  [/^(.+) zł (dziennie|co tydzień|co miesiąc|co kwartał) w (.+)\.$/,(n,f,name)=>`PLN ${amountEn(n)} ${intervalEn[f]} in ${name}.`],
  [/^(.+) zł (dziennie|co tydzień|co miesiąc|co kwartał)\. Kilka możliwości\.$/,(n,f)=>`PLN ${amountEn(n)} ${intervalEn[f]}. Several possibilities.`],

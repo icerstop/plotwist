@@ -1,5 +1,20 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Waluta cen|Price currency
+Oryginalna waluta notowania|Original quote currency
+USD · dolar amerykański|USD · US dollar
+PLN · złoty polski|PLN · Polish zloty
+Spółki notowane w USD zachowują oryginalne ceny i pełną historię. Inne waluty przeliczamy według historycznego kursu NBP.|Stocks quoted in USD retain their original prices and full history. Other currencies use historical NBP exchange rates.
+Przeliczenie według ostatniej tabeli A NBP opublikowanej przed dniem sesji. To cena przeliczona, a nie notowanie na innym rynku.|Conversion uses the latest NBP table A published before the trading day. This is a converted price, not a quote on another exchange.
+Ceny w oryginalnej walucie notowania. Bez przeliczenia walutowego.|Prices in their original quote currency. No currency conversion.
+Historia po przeliczeniu od:|Converted history from:
+Data kursu NBP|NBP rate date
+Cena · zgodne jednostki|Price · compatible units
+Indeks i zmianę procentową liczymy po przeliczeniu na wybraną walutę.|The index and percentage change are calculated after conversion into the selected currency.
+przeliczenie walutowe|currency conversion
+kurs z tabeli sprzed sesji|exchange rate published before the session
+waluty instrumentów|instrument currencies
+Nieobsługiwana waluta prezentacji.|Unsupported display currency.
 Styl i układ rolki|Reel style and layout
 Motywy · typografia · kompozycja|Themes · typography · composition
 Ustawienia wspólne dla wszystkich rolek, podglądu i eksportu.|Shared settings for all reels, previews and exports.
