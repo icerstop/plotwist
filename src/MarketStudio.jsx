@@ -17,6 +17,18 @@ async function readJson(path, signal) {
   return r.json();
 }
 
+const marketModes=[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']];
+function MarketModeTabs({mode,onChange}) {
+  function navigate(event,index) {
+    const next=event.key==='ArrowRight'?(index+1)%marketModes.length:event.key==='ArrowLeft'?(index+marketModes.length-1)%marketModes.length:event.key==='Home'?0:event.key==='End'?marketModes.length-1:null;
+    if(next===null)return;
+    event.preventDefault();
+    onChange(marketModes[next][0]);
+    event.currentTarget.parentElement.children[next].focus({preventScroll:true});
+  }
+  return <div className="market-mode-tabs" role="tablist" aria-label="Tryb giełdowy">{marketModes.map(([id,label],index)=><button type="button" role="tab" id={`market-tab-${id}`} aria-controls={`market-panel-${id}`} aria-selected={mode===id} tabIndex={mode===id?0:-1} key={id} onClick={()=>onChange(id)} onKeyDown={event=>navigate(event,index)}>{label}</button>)}</div>;
+}
+
 export default function MarketStudio({fontId='arial',onFontChange}) {
   const {uiLanguage,reelLanguage}=useLanguages();
   const money=n=>n.toLocaleString(localeFor(uiLanguage),{style:'currency',currency:'PLN',maximumFractionDigits:2});
@@ -87,13 +99,17 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   function exportMethodology() {
     downloadBlob(new Blob([JSON.stringify({ stock: { symbol: stock.symbol, currency: stock.currency, sourceUrl: stock.sourceUrl, retrievedAt: stock.retrievedAt, splits: stock.splits, priceMethod: stock.priceMethod }, fx: { sourceUrl: fx.sourceUrl, retrievedAt: fx.retrievedAt }, inputs: { start, end, investmentAmount: Number(investment), expenseAmount: Number(expense), investmentFrequency, expenseFrequency, expenseName, scheduleRule }, methodology: result.methodology, summary }, null, 2)], { type: 'application/json' }), `plotwist-${symbol}-metodologia.json`);
   }
-  if(mode==='compare')return <div className="market-page"><div className="market-switch comparison-tabs" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label])=><button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={()=>setMode(id)}>{label}</button>)}</div>{error&&<p role="alert" className="error">{error}</p>}<ComparisonStudio manifest={manifest} fx={fx} fontId={fontId} onFontChange={onFontChange}/></div>;
   return <div className="market-page">
-    <div className="market-heading"><div><h1>Mały nawyk. Prawdziwa historia.</h1><p>Regularne wpłaty spotykają historyczne ceny akcji.</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
+    <MarketModeTabs mode={mode} onChange={setMode}/>
+    <section id="market-panel-compare" role="tabpanel" aria-labelledby="market-tab-compare" tabIndex={0} hidden={mode!=='compare'}>
+      {error&&<p role="alert" className="error">{error}</p>}
+      <ComparisonStudio manifest={manifest} fx={fx} fontId={fontId} onFontChange={onFontChange} active={mode==='compare'}/>
+    </section>
+    {mode!=='compare'&&<section id={`market-panel-${mode}`} role="tabpanel" aria-labelledby={`market-tab-${mode}`} tabIndex={0}>
+    <div className="market-heading"><div><h1>{mode==='dca'?'Mały nawyk. Prawdziwa historia.':'Ceny zamknięcia, dzień po dniu'}</h1><p>{mode==='dca'?'Regularne wpłaty spotykają historyczne ceny akcji.':'Historia wybranej spółki, z korektą splitów lub bez niej.'}</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
     <div className="market-meta"><Database size={15}/>{manifest ? <span>{manifest.stocks.length} spółek · {manifest.totalObservations.toLocaleString(localeFor(uiLanguage))} cen zamknięcia · Polska i świat</span> : <span>Wczytywanie katalogu…</span>}<span>Snapshot: {manifest?.retrievedAt.slice(0,10) || '…'}</span></div>
     <div className="market-workspace">
       <section className="market-controls" aria-label="Ustawienia inwestowania"><PresentationPicker config={config} value={chart} onChange={setChart}/>
-        <div className="market-switch" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label]) => <button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={() => {setMode(id);setCustomTitle(false);}}>{label}</button>)}</div>
         <div className="market-regions">{['Wszystkie','Polska','USA','Europa','Świat'].map(r => <button key={r} className={region===r?'selected':''} onClick={() => setRegion(r)}>{r}</button>)}</div>
         <div className="search-field market-search"><Search size={17}/><input aria-label="Szukaj spółki" placeholder="NVIDIA, Apple, ASML, Polska…" value={search} onChange={e=>setSearch(e.target.value)}/></div>
         <Field label="Spółka i rynek"><select value={symbol} onChange={e=>selectStock(e.target.value)}>{!filtered.some(s=>s.symbol===symbol)&&<option value={symbol}>{stock?.name || symbol} (wybrana)</option>}{filtered.map(s=><option key={s.symbol} value={s.symbol}>{s.name} · {s.symbol} · {s.country}</option>)}</select><small>{filtered.length} pasujących spółek · wybrana: {stock?.exchange || '…'} · {stock?.currency || '…'}</small></Field>
@@ -134,5 +150,6 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
     </section>
     <details className="market-methodology"><summary>Źródła, korekty i sposób obliczania</summary><div><p>{result.methodology || 'Wybierz poprawny zakres, aby policzyć porównanie.'}</p><p>{scheduleRule}</p><p><strong>Dwie ceny:</strong> Yahoo Finance udostępnia Close skorygowane o splity. Cenę nominalną odtwarzamy, mnożąc przez współczynniki późniejszych splitów zgłoszonych przez dostawcę. To odtworzona historia, a nie niezależnie zweryfikowany oficjalny kurs aukcji zamknięcia. Pole Adj Close, korygowane także o dywidendy, nie służy do tej symulacji.</p><p><strong>Waluty:</strong> cena w GBp/GBX jest dzielona przez 100, aby otrzymać GBP. NBP podaje PLN za jednostkę waluty. W dni bez sesji wyceniamy ostatnią znaną cenę po dostępnym kursie NBP; linia portfela może wtedy zmieniać się przez walutę i wpłaty. Same ceny sesji nie są uzupełniane.</p><p><strong>Zakres:</strong> wybrane spółki z USA i 11 krajów Europy, pełna dzienna historia dostępna u dostawcy dla danego symbolu. Symulacja w PLN dodatkowo wymaga wcześniejszego kursu NBP (API udostępnia tabele od 02.01.2002). Zbiór jest snapshotem, nie aktualizuje się sam i pomija bieżący dzień. Nie obejmuje wszystkich spółek ani spółek wycofanych z giełdy. Nie służy do wyliczania historycznej stopy zwrotu całego rynku.</p><p><strong>Dostęp i wykorzystanie:</strong> publiczny dostęp nie oznacza licencji na dalszą redystrybucję danych. Przed komercyjną publikacją materiałów sprawdź warunki dostawcy.</p><div className="market-source-links"><a href={stock?.sourceUrl || 'https://finance.yahoo.com/'} target="_blank" rel="noreferrer">Yahoo Finance: {symbol}<ArrowUpRight size={15}/></a><a href="https://api.nbp.pl/" target="_blank" rel="noreferrer">NBP — tabela A<ArrowUpRight size={15}/></a><button className="text-btn" disabled={!summary} onClick={exportMethodology}><Download size={15}/>Pobierz założenia JSON</button></div><small>Pobrano ceny: {stock?.retrievedAt} · Pobrano NBP: {fx?.retrievedAt}</small></div></details>
     {exporting&&<ExportModal config={config} duration={duration} onClose={()=>setExporting(false)}/>}
+    </section>}
   </div>;
 }

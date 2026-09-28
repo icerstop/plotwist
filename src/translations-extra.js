@@ -419,6 +419,7 @@ Liczba zwykłych zakupów|Consumer purchases
 Regularny zakup|Recurring purchase
 Regularny wydatek|Recurring expense
 Regularne wpłaty spotykają historyczne ceny akcji.|Regular contributions meet historical stock prices.
+Historia wybranej spółki, z korektą splitów lub bez niej.|The selected stock’s history, with or without split adjustments.
 Ceny i regularne wpłaty|Prices and regular contributions
 Podaj dodatnią kwotę wpłaty w złotych.|Enter a positive contribution amount in PLN.
 Nieprawidłowa częstotliwość.|Invalid frequency.

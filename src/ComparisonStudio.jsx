@@ -23,7 +23,7 @@ function SeriesColor({color,index,onChange,onReset}){
  return <div className="series-color"><label><input type="color" aria-label={`Kolor serii ${index}`} value={color} onInput={e=>onChange(e.target.value)} onChange={e=>onChange(e.target.value)}/><input className="color-hex" aria-label={`Kolor HEX serii ${index}`} value={hex} maxLength={7} onChange={e=>{setHex(e.target.value);if(/^#[0-9a-f]{6}$/i.test(e.target.value))onChange(e.target.value);}} onBlur={()=>setHex(color)}/></label><button className="text-btn" onClick={onReset} aria-label={`Przywróć kolor serii ${index}`}><RotateCcw size={13}/>Domyślny</button></div>;
 }
 
-export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
+export default function ComparisonStudio({manifest,fx,fontId,onFontChange,active=true}){
  const {uiLanguage,reelLanguage}=useLanguages();
  const value=(n,unit)=>`${n.toLocaleString(localeFor(uiLanguage),{maximumFractionDigits:2})} ${translate(unit,uiLanguage)}`;
  const [extras,setExtras]=useState(null),[brands,setBrands]=useState(null),[assets,setAssets]=useState({});
@@ -74,7 +74,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
  const canAddAsset=available.some(a=>!entries.some(e=>e.symbol===a.symbol));
  function applyStory(story){setEntries(story.symbols.map((symbol,i)=>({id:`${story.id}-${i}`,kind:'asset',symbol})));setStart(story.start);setEnd(story.end);setMode('prices');setScale(story.scale||'index');setChart('line');setTitle('');setQuery('');setAssetType('all');setRegion('all');}
  return <>
-  <div className="comparison-intro"><div><h2>Jedna historia. Wiele serii.</h2><p>Do 6 serii, różne formy prezentacji, własne kolory i logotypy.</p></div><button className="primary" disabled={!valid} onClick={()=>setExporting(true)}><Download size={17}/>Eksportuj porównanie</button></div>
+  <div className="market-heading"><div><h1>Jedna historia. Wiele serii.</h1><p>Do 6 serii, różne formy prezentacji, własne kolory i logotypy.</p></div><button className="primary" disabled={!valid} onClick={()=>setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
   <div className="catalog-counts"><span>{catalog.filter(a=>a.kind==='stock').length} <span>akcji</span></span><span>{catalog.filter(a=>a.kind==='etf').length} ETF</span><span>{catalog.filter(a=>a.kind==='fund').length} <span>funduszy surowcowych</span></span><span>{catalog.filter(a=>a.kind==='futures').length} <span>kontraktów surowcowych</span></span></div>
   <MarketStories catalog={catalog} onApply={applyStory}/>
   <div className="market-workspace comparison-workspace">
@@ -107,7 +107,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
     <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(n=><option key={n} value={n}>{n} s</option>)}</select></Field><Field label="Motyw rolki"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
     {loading&&<p role="status" className="helper">Wczytywanie historii…</p>}{visibleError&&<p role="alert" className="error">{visibleError}</p>}
    </section>
-   <ReelPreview config={config} duration={duration} valid={valid}/>
+   {active&&<ReelPreview config={config} duration={duration} valid={valid}/>}
    <aside className="market-results comparison-results"><h2>Na końcu historii</h2><p className="muted">{result.baseDate||start} → {result.endDate||end}</p>
     {valid&&<div className="comparison-totals">{result.series.map(s=><div key={s.id} className="comparison-total"><span translate={s.nameIsCustom?'no':undefined} style={{borderLeftColor:s.color}}>{s.name}</span>{s.schedule&&<small translate="no">{periodAmount(s.schedule.amount,s.schedule.frequency,uiLanguage)}</small>}<strong>{value(s.points.at(-1).y,result.unit)}</strong>{result.summaries[s.id]&&<small>Wpłaty: {value(result.summaries[s.id].contributions,'zł')} · wynik: {value(result.summaries[s.id].profit,'zł')}</small>}</div>)}</div>}
     <button className="secondary full" disabled={!valid} onClick={exportCsv}><Download size={16}/>Dane porównania CSV</button>
@@ -115,6 +115,6 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange}){
    </aside>
   </div>
   <details className="market-methodology"><summary>Źródła danych i biblioteka logotypów</summary><div><p>Dane są lokalnym snapshotem. Akcje: {manifest?.retrievedAt?.slice(0,10)}; ETF-y i surowce: {extras?.retrievedAt?.slice(0,10)}. Pełny dostępny zakres zależy od instrumentu. Nie używamy nieukończonej sesji.</p><p>Filtr rynku oznacza kraj spółki, a dla funduszy miejsce notowania. Ekspozycję opisuje nazwa. ADR to amerykański kwit depozytowy, nie lokalna akcja. Historia symbolu może obejmować poprzedników prawnych i zmiany działalności.</p><div className="market-source-links">{selectedAssets.filter(Boolean).map(a=><a key={a.symbol} href={a.sourceUrl} target="_blank" rel="noreferrer">{a.symbol} · historia</a>)}<a href="https://api.nbp.pl/" target="_blank" rel="noreferrer">Kursy NBP</a><a href="https://www.spdrgoldshares.com/usa/gld/" target="_blank" rel="noreferrer">GLD</a><a href="https://www.ishares.com/us/products/239855/ishares-silver-trust-fund" target="_blank" rel="noreferrer">SLV</a><a href="https://www.uscfinvestments.com/uso" target="_blank" rel="noreferrer">USO</a></div><p>Logotypy są przechowywane lokalnie według symbolu giełdowego. Domyślne kolory można zmienić; jasność wybranych kolorów dostosowano do czytelności na ciemnej rolce. Znaki należą do ich właścicieli.</p><a href="/logos/manifest.json" target="_blank" rel="noreferrer">Spis logotypów i źródeł</a></div></details>
-  {exporting&&<ExportModal config={config} duration={duration} onClose={()=>setExporting(false)}/>}
+  {active&&exporting&&<ExportModal config={config} duration={duration} onClose={()=>setExporting(false)}/>}
  </>;
 }
