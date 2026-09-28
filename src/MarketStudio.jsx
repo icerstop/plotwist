@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowUpRight, Database, Download, Info, Search } from 'lucide-react';
-import { ExportModal, Field, ReelPreview } from './components.jsx';
+import { ExportModal, Field, FontPicker, ReelPreview } from './components.jsx';
 import { downloadBlob } from './data.js';
 import { fromDay, marketCsv, marketStartDate, priceSeries, simulateDailyInvestment, toDay, validateMarketRange } from './market.js';
 
@@ -12,7 +12,7 @@ async function readJson(path, signal) {
   return r.json();
 }
 
-export default function MarketStudio() {
+export default function MarketStudio({fontId='arial',onFontChange}) {
   const [manifest, setManifest] = useState(null), [fx, setFx] = useState(null), [stock, setStock] = useState(null);
   const [symbol, setSymbol] = useState('NVDA'), [region, setRegion] = useState('Wszystkie'), [search, setSearch] = useState('');
   const [start, setStart] = useState('2020-01-01'), [end, setEnd] = useState('');
@@ -56,8 +56,8 @@ export default function MarketStudio() {
     series: chartSeries, title: customTitle ? title : generatedTitle,
     subtitle: mode === 'dca' ? `${stock?.name || symbol}: ${investment || 0} zł/dzień vs ${expenseName || 'napój'}: ${expense || 0} zł/dzień` : basis === 'split' ? 'Cena zamknięcia · korekta o splity' : 'Cena nominalna · odtworzona z korekt splitowych',
     source: mode === 'dca' ? 'Yahoo Finance + NBP · bez dywidend, opłat i podatków' : 'Yahoo Finance · historia dzienna · bez bieżącej sesji',
-    format: '9:16', theme, chart: 'line', unit: mode === 'dca' ? 'zł' : stock?.currency || '', xType: 'date'
-  }), [chartSeries, customTitle, title, generatedTitle, mode, stock, symbol, expenseName, investment, expense, basis, theme]);
+    format: '9:16', theme, fontId, chart: 'line', unit: mode === 'dca' ? 'zł' : stock?.currency || '', xType: 'date'
+  }), [chartSeries, customTitle, title, generatedTitle, mode, stock, symbol, expenseName, investment, expense, basis, theme, fontId]);
   const priceRangeError = useMemo(() => { if (!stock) return ''; try { validateMarketRange(stock, start, end); return ''; } catch (e) { return e.message; } }, [stock, start, end]);
   const visibleError = error || (mode === 'dca' ? result.error : priceRangeError);
   const valid = !loading && !visibleError && chartSeries.length > 0 && chartSeries.every(s => s.points.length >= 2);
@@ -94,7 +94,7 @@ export default function MarketStudio() {
           {Number(investment)!==Number(expense)&&<div className="budget-note"><span>Porównujesz różne budżety: {investment || 0} zł i {expense || 0} zł.</span><button onClick={()=>setExpense(investment)}>Wyrównaj kwoty</button></div>}
           <Field label="Twój codzienny zakup"><input maxLength="35" value={expenseName} onChange={e=>setExpenseName(e.target.value)} placeholder="Np. Coca-Cola, kawa, przekąska"/></Field>
         </>:<Field label="Rodzaj ceny"><select value={basis} onChange={e=>setBasis(e.target.value)}><option value="split">Close — po korekcie o splity</option><option value="raw">Cena nominalna — odtworzona</option></select><small>Korekta o splity zapewnia ciągłość wykresu. Cena nominalna może gwałtownie spaść w dniu splitu.</small></Field>}
-        <Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:generatedTitle} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/></Field>
+        <FontPicker value={fontId} onChange={onFontChange}/><Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:generatedTitle} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/></Field>
         <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(t=><option key={t} value={t}>{t} s</option>)}</select></Field><Field label="Motyw rolki"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
         {loading&&<p className="helper" role="status">Wczytywanie notowań…</p>}{visibleError&&<p className="error" role="alert">{visibleError}</p>}
       </section>

@@ -3,10 +3,12 @@ import {ArrowUpRight,Check,ChevronRight,Copy,Download,Lightbulb,Pause,Play,Searc
 import {ideas,matchIdeas,sources} from './catalog.js';
 import {drawReel,recordReel} from './render.js';
 import {downloadBlob} from './data.js';
+import {reelFonts,reelFont} from './reel-style.js';
 
 export function Brand(){return <span className="brand"><span className="brand-bars"><i/><i/><i/></span>plotwist<span className="brand-dot">.</span></span>;}
 export function Spark({color='lime'}){return <span className={`spark ${color}`}><svg viewBox="0 0 90 64" aria-hidden="true"><path d="M4 55 L14 47 L24 43 L34 32 L44 37 L54 30 L64 21 L74 20 L86 5"/></svg></span>;}
 export function Field({label,children,hint}){return <label className="field"><span className="field-label">{label}</span>{children}{hint&&<small>{hint}</small>}</label>;}
+export function FontPicker({value,onChange}){return <Field label="Czcionka rolki"><select aria-label="Czcionka rolki" value={value} onChange={e=>onChange(e.target.value)} style={{fontFamily:reelFont(value)}}>{reelFonts.map(f=><option key={f.id} value={f.id} style={{fontFamily:f.family}}>{f.name}</option>)}</select><span className="font-sample" style={{fontFamily:reelFont(value)}}>Twoja historia. 0123456789</span></Field>;}
 export function Modal({title,onClose,children}){
  const ref=useRef();useEffect(()=>{const el=ref.current;el.showModal();return ()=>el.close();},[]);
  return <dialog ref={ref} onCancel={onClose} onClick={e=>{if(e.target===ref.current)onClose();}}><header><h2>{title}</h2><button className="icon-btn" onClick={onClose} aria-label="Zamknij"><X size={21}/></button></header>{children}</dialog>;

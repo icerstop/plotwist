@@ -1,13 +1,13 @@
 import React,{useEffect,useMemo,useState} from 'react';
 import {ArrowUpRight,BrainCircuit,Download,Info,Search} from 'lucide-react';
-import {ExportModal,Field,ReelPreview} from './components.jsx';
+import {ExportModal,Field,FontPicker,ReelPreview} from './components.jsx';
 import {downloadBlob} from './data.js';
 import {marketCsv} from './market.js';
 import {aiDate,aiFormats,aiValue,rankAt,selectAiRows,timelineSelection} from './ai.js';
 import './ai.css';
 const json=async(path,signal)=>{const r=await fetch(path,{signal});if(!r.ok)throw new Error('Nie udało się wczytać danych benchmarku. Odśwież stronę.');return r.json();};
 const safeUrl=url=>/^https:\/\//.test(url||'')?url:undefined;
-export default function AIStudio(){
+export default function AIStudio({fontId='arial',onFontChange}){
  const [manifest,setManifest]=useState(null),[data,setData]=useState(null),[id,setId]=useState('eci'),[error,setError]=useState('');
  const [basis,setBasis]=useState('release'),[start,setStart]=useState(''),[end,setEnd]=useState(''),[query,setQuery]=useState(''),[organization,setOrganization]=useState(''),[protocol,setProtocol]=useState('');
  const [mode,setMode]=useState('timeline'),[duration,setDuration]=useState(20),[theme,setTheme]=useState('dark'),[title,setTitle]=useState('Jak szybko rozwija się AI?'),[comparison,setComparison]=useState(''),[page,setPage]=useState(0),[exporting,setExporting]=useState(false);
@@ -22,7 +22,7 @@ export default function AIStudio(){
  const chosen=ranked.find(r=>r.modelId===comparison)||ranked[0];
  const chartRows=mode==='timeline'?timeline:rows;
  const scope=[organization,query?`Filtr: ${query}`:'',protocol].filter(Boolean).join(' · ');
- const config=useMemo(()=>({format:'9:16',title,theme,ai:{rows:chartRows,benchmark:data,basis,mode,scope,comparison:chosen?.modelId}}),[chartRows,data,basis,mode,title,theme,scope,chosen?.modelId]);
+ const config=useMemo(()=>({format:'9:16',title,theme,fontId,ai:{rows:chartRows,benchmark:data,basis,mode,scope,comparison:chosen?.modelId}}),[chartRows,data,basis,mode,title,theme,fontId,scope,chosen?.modelId]);
  const valid=!!data&&rows.length>0&&(!start||!end||start<=end)&&(mode!=='duel'||!!data.baseline);
  const missingDates=data?.rows.filter(r=>!aiDate(r,basis)).length||0;
  const latest=data?.rows.map(r=>r.observedAt?.slice(0,10)||r.releaseDate).filter(Boolean).sort().at(-1);
@@ -47,7 +47,7 @@ export default function AIStudio(){
        {protocols.length>1&&<Field label="Protokół / źródło"><select value={protocol} onChange={e=>setProtocol(e.target.value)}><option value="">Wszystkie · porównanie orientacyjne</option>{protocols.map(p=><option key={p}>{p}</option>)}</select></Field>}
        {orgs.length>1&&<Field label="Organizacja"><select value={organization} onChange={e=>setOrganization(e.target.value)}><option value="">Wszystkie organizacje</option>{orgs.map(o=><option key={o}>{o}</option>)}</select></Field>}
        <div className="search-field ai-search"><Search size={17}/><input aria-label="Filtr modeli AI" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Filtruj, np. GPT, Claude, Gemini…"/></div>
-       <Field label="Tytuł rolki"><textarea maxLength="75" rows="2" value={title} onChange={e=>setTitle(e.target.value)}/></Field>
+       <FontPicker value={fontId} onChange={onFontChange}/><Field label="Tytuł rolki"><textarea maxLength="75" rows="2" value={title} onChange={e=>setTitle(e.target.value)}/></Field>
        <div className="field-pair"><Field label="Długość rolki AI"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(d=><option key={d} value={d}>{d} s</option>)}</select></Field><Field label="Motyw AI"><select value={theme} onChange={e=>setTheme(e.target.value)}><option value="dark">Po zmroku</option><option value="light">Jasna strona</option></select></Field></div>
        {error&&<p role="alert" className="error">{error}</p>}{!data&&!error&&<p role="status">Wczytywanie wyników…</p>}{data&&!rows.length&&<p role="status" className="error">Brak pomiarów dla tego filtra. Zmień daty, nazwę lub protokół.</p>}
      </section>

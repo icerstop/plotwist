@@ -92,3 +92,7 @@ Rozdzielamy datę premiery od daty pomiaru / publikacji. Oś premier to retrospe
 `node scripts/fetch-data.mjs` pobiera wszystkie strony World Bank bez filtra dat. Import własnego wskaźnika działa tak samo. Selektory lat wynikają z niepustych obserwacji wybranych krajów; puste wartości pozostają lukami. Przycisk „Cała dostępna historia” przywraca pełny zakres, a zmiana wskaźnika automatycznie wybiera jego historię. Najnowszy rok może być inny dla każdego wskaźnika i kraju. Dane przyszłe nie są dopisywane.
 
 Pobieranie akcji używa pierwszej daty handlu podanej przez Yahoo oraz jawnego `interval=1d`. Nie używa `range=max`, ponieważ Yahoo potrafi wtedy zwrócić interwał kwartalny. Skrypt sprawdza otrzymaną częstotliwość. Ceny i kursy walut mają niezależne zakresy. Moduł AI już wcześniej korzystał z pełnej historii źródeł i nie miał limitu roku 2000.
+
+## Czcionki i podpis rolek
+
+W zakładce Wygląd w Studiu oraz w ustawieniach Giełdy i AI/LLM można wybrać Arial, Georgia, Verdana, Trebuchet MS, Impact lub Courier New. Są to czcionki systemowe z określonymi zamiennikami. Wybór jest wspólny dla trybów i zapisywany razem z projektem w przeglądarce. Ten sam renderer obsługuje podgląd, PNG i wideo. Pod każdą rolką znajduje się wyśrodkowany podpis Jakub Bilski oraz X: @jakub_bilski · IG: jakub__bilski. Źródła i metodologia mają osobne miejsce nad podpisem.
