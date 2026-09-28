@@ -10,7 +10,7 @@ export function drawReel(canvas,config,progress=1){
  const width=1080,height=format==='1:1'?1080:format==='4:5'?1350:1920;if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
  const dark=theme==='dark';const bg=dark?'#111514':'#f7f9f3',fg=dark?'#f8faf6':'#111514',muted=dark?'#adb5af':'#616a62';
  ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);const colors=dark?['#bcf34a','#b18aff','#8fabb6']:['#568800','#7951c7','#486c80'];
- ctx.fillStyle=colors[0];[20,36,56].forEach((h,i)=>ctx.fillRect(78+i*18,118-h,10,h));ctx.fillStyle=fg;ctx.font=`bold 38px ${font}`;ctx.fillText('plotwist',150,117);
+ ctx.fillStyle=colors[0];[20,36,56].forEach((h,i)=>ctx.fillRect(78+i*18,118-h,10,h));
  ctx.fillStyle=fg;ctx.font=`bold ${height<1400?75:config.compactTitle?110:145}px ${font}`;const headingY=height<1400?230:320;const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,height<1400?83:config.compactTitle?120:151,height<1400?2:3);
  ctx.fillStyle=muted;ctx.font=`29px ${font}`;wrap(ctx,subtitle,78,headingY+headingHeight+20,910,40,2);
  const legendStep=config.compactTitle?52:43;

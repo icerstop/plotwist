@@ -17,7 +17,7 @@ export function drawAiReel(canvas,config,progress=1){
  const ctx=canvas.getContext('2d');if(canvas.width!==1080||canvas.height!==1920){canvas.width=1080;canvas.height=1920;}
  const dark=theme==='dark',bg=dark?'#101612':'#f6f8ef',fg=dark?'#f3f8eb':'#152017',muted=dark?'#aab6ab':'#576657',accent=dark?'#c0ef66':'#557b20',purple=dark?'#bca1ff':'#7452b4',panel=dark?'#1a251e':'#e9efde',grid=dark?'#344239':'#cbd7c4';
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
- ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));wrap(ctx,'plotwist / AI',155,121,700,34,1,fg);
+ ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));
  wrap(ctx,title||b.name,76,240,928,83,3,fg);
  wrap(ctx,b.name,76,565,928,33,2,accent);
  if(scope)wrap(ctx,scope,76,648,928,23,2,muted);
