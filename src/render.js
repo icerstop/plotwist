@@ -32,12 +32,9 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  drawSignature(ctx,width,height,config.fontId,dark,config);
 }
 export function formatValue(n,language='pl'){const locale=language==='en'?'en-GB':'pl-PL';if(Math.abs(n)>=1e6)return (n/1e6).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' m':' mln');if(Math.abs(n)>=10000)return (n/1000).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' k':' tys.');return n.toLocaleString(locale,{maximumFractionDigits:1});}
-export async function recordReel(config,duration,onProgress,signal){
+export async function recordReel(config,duration,onProgress,signal,{fps=60}={}){
  await preloadReelAssets(config);if(signal?.aborted)throw new Error('Eksport anulowany.');
- if(typeof MediaRecorder==='undefined')throw new Error('Ta przeglądarka nie obsługuje nagrywania wideo. Pobierz klatkę PNG lub użyj Chrome/Edge.');
- const mime=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm','video/mp4'].find(m=>MediaRecorder.isTypeSupported(m));if(!mime)throw new Error('Brak obsługi formatu wideo. Użyj Chrome lub Edge.');
- const canvas=document.createElement('canvas');drawReel(canvas,config,0);const stream=canvas.captureStream(30);const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:8000000});const chunks=[];
- return new Promise((resolve,reject)=>{let raf,started;const cleanup=()=>{cancelAnimationFrame(raf);stream.getTracks().forEach(t=>t.stop());signal?.removeEventListener('abort',abort);};const abort=()=>{if(recorder.state!=='inactive')recorder.stop();cleanup();reject(new Error('Eksport anulowany.'));};signal?.addEventListener('abort',abort,{once:true});recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};recorder.onerror=()=>{cleanup();reject(new Error('Nie udało się nagrać wideo.'));};recorder.onstop=()=>{cleanup();if(!signal?.aborted)resolve({blob:new Blob(chunks,{type:mime}),extension:mime.includes('mp4')?'mp4':'webm'});};
- const frame=now=>{started??=now;const p=Math.min((now-started)/(duration*1000),1);drawReel(canvas,config,Math.min(p/.9,1),p*duration);onProgress(p);if(p<1)raf=requestAnimationFrame(frame);else recorder.stop();};recorder.start(250);raf=requestAnimationFrame(frame);
- });
+ const {encodeReel}=await import('./video-export.js');
+ const canvas=document.createElement('canvas');drawReel(canvas,config,0,0);
+ return encodeReel({canvas,draw:(progress,time)=>drawReel(canvas,config,progress,time),duration,fps,onProgress,signal});
 }

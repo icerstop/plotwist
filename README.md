@@ -1,6 +1,6 @@
 # plotwist
 
-Studio animowanych wykresów do rolek z niezależnym wyborem języka menu i rolki (PL/EN). React + Vite, Canvas 2D i MediaRecorder. Aplikacja nie potrzebuje płatnego API ani serwera AI.
+Studio animowanych wykresów do rolek z niezależnym wyborem języka menu i rolki (PL/EN). React + Vite, Canvas 2D, WebCodecs i Mediabunny. Aplikacja nie potrzebuje płatnego API ani serwera AI.
 
 ## Uruchomienie
 
@@ -32,7 +32,7 @@ CSV zachowuje cenę i walutę źródłową, cenę przeliczoną, przelicznik oraz
 - Do 3 serii, zakres lat, skala oryginalna lub indeks 100, wykres liniowy lub słupkowy, motywy jasny i ciemny.
 - Symulacja codziennych wpłat oraz wydatków na kawę, z jawnymi założeniami.
 - Import CSV, walidacja wartości i lat, obsługa polskich przecinków dziesiętnych przy separatorze średnikowym, zachowanie brakujących obserwacji.
-- Animacja, przewijanie, eksport 1080p WebM (MP4 tylko jeśli brak WebM i przeglądarka obsługuje MP4), eksport PNG i JSON z danymi/metodologią.
+- Animacja, przewijanie, eksport 1080p z wyborem stałych 30/60 fps: MP4/H.264, a przy braku obsługi kodera H.264 — WebM/VP9 lub VP8. Eksport PNG i JSON z danymi/metodologią.
 - 27 pomysłów redakcyjnych, w tym 9 działających zestawów/modeli. Pozostałe są jasno oznaczone jako pomysły wymagające zebrania danych.
 - Katalog 13 źródeł; podłączone World Bank, Yahoo Finance i NBP, pozostałe opisane jako propozycje.
 - Dopasowanie własnego opisu do biblioteki słowami kluczowymi, losowanie tematu, prompt do skopiowania do ChatGPT.
@@ -46,7 +46,9 @@ World Bank: https://datahelpdesk.worldbank.org/knowledgebase/articles/889392
 
 Model inwestycji stosuje efektywną dzienną stopę `(1 + stopa_roczna)^(1/365) - 1`, wpłaty na koniec każdego dnia, 365 dni rocznie. Wykres pokazuje portfel, sumę wpłat i wydatki na kawę. Bez podatków, opłat, inflacji i ryzyka zmiennej stopy. Nie są to notowania konkretnego aktywa.
 
-Eksport nagrywa canvas w czasie rzeczywistym. Kartę należy utrzymać aktywną. Wideo jest bez dźwięku; serwisy wymagające MP4 potrzebują konwersji WebM. Brak zależności od FFmpeg w przeglądarce.
+Eksport renderuje każdą klatkę oddzielnie: film 12 s przy 60 fps zawiera 720 klatek. Czas animacji i GIF-ów wynika z indeksu klatki, a nie czasu pracy komputera. Zapis czeka na koder zamiast opuszczać klatki; liczba zakodowanych klatek jest sprawdzana przed pobraniem. Domyślnie 60 fps, opcjonalnie 30 fps. Eksport może trwać dłużej niż film. Kartę trzeba pozostawić otwartą; wstrzymanie karty w tle może wydłużyć pracę, lecz nie tworzy przerw w pliku. Anulowanie zwalnia zasoby kodera i nie pobiera niepełnego filmu.
+
+MP4/H.264 jest wybierany, jeśli przeglądarka obsługuje kodowanie w danym rozmiarze i klatkażu; w przeciwnym razie używany jest WebM. Wideo jest bez dźwięku. Kodowanie odbywa się lokalnie, bez płatnego API i bez wysyłania klatek na serwer. Biblioteka kodera jest ładowana dopiero po rozpoczęciu eksportu. Wymagane WebCodecs/VideoEncoder (np. aktualny Chrome lub Edge); brak obsługi pokazuje komunikat, bez powrotu do zawodnego nagrywania w czasie rzeczywistym. Brak zależności od FFmpeg w przeglądarce.
 
 ## Rozwój projektu
 
@@ -87,7 +89,7 @@ Symulacja:
 - Ponad 10 dni bez notowania albo kursu FX przerywa obliczenia, zamiast wyceniać portfel po nieaktualnej wartości.
 - Wynik ponad wpłaty = wartość portfela wraz z gotówką minus suma wpłat, a nie minus wydatki na konsumpcję.
 
-Dostępne eksporty: pełny spis sesji CSV dla zakresu, dziennik symulacji CSV z datą użytego kursu i ceny, założenia JSON, pionowa rolka WebM i PNG. Tryb Kurs akcji działa na dziennej osi czasu. Bieżąca, potencjalnie niezakończona sesja jest zawsze pomijana.
+Dostępne eksporty: pełny spis sesji CSV dla zakresu, dziennik symulacji CSV z datą użytego kursu i ceny, założenia JSON, pionowa rolka MP4/WebM i PNG. Tryb Kurs akcji działa na dziennej osi czasu. Bieżąca, potencjalnie niezakończona sesja jest zawsze pomijana.
 
 Publiczny dostęp nie nadaje automatycznie prawa do komercyjnej redystrybucji danych. Przed takim zastosowaniem należy zapewnić odpowiednie warunki dostawcy.
 
@@ -95,7 +97,7 @@ Publiczny dostęp nie nadaje automatycznie prawa do komercyjnej redystrybucji da
 
 Moduł zawiera 5886 obserwacji w 19 zestawach i wersjach testów (snapshot 28.09.2026): ECI, GPQA Diamond, MATH Level 5, OTIS Mock AIME, SWE-bench Verified v1/v2, cztery zestawy FrontierMath, MMLU 5-shot, ARC-AGI-1/2, HLE, cztery kombinacje quizów TrackingAI (Offline/Mensa × tekst/Vision) i Codeforces 2024. Zakres każdego źródła jest niezależny; nie każdy benchmark ma najnowsze modele.
 
-Cztery formy: karty na osi czasu (do 8 wybranych rekordów), zmieniający się ranking, mapa punktowa postępu, porównanie AI z opisanym punktem odniesienia dla GPQA i Codeforces. Dostępny eksport 1080×1920 WebM/PNG, CSV wszystkich przefiltrowanych danych i JSON z metodologią oraz identyfikatorami scen. Renderer podglądu i eksportu jest wspólny.
+Cztery formy: karty na osi czasu (do 8 wybranych rekordów), zmieniający się ranking, mapa punktowa postępu, porównanie AI z opisanym punktem odniesienia dla GPQA i Codeforces. Dostępny eksport 1080×1920 MP4/WebM/PNG, CSV wszystkich przefiltrowanych danych i JSON z metodologią oraz identyfikatorami scen. Renderer podglądu i eksportu jest wspólny.
 
 Rozdzielamy datę premiery od daty pomiaru / publikacji. Oś premier to retrospektywa, a nie dowód dostępności wyniku w tamtym czasie. ECI nie jest IQ. TrackingAI to eksperymentalny quiz, nie psychometryczna miara człowieka. Wartości, daty, źródła i ograniczenia pozostają w filmach i eksportach. Niedatowane raporty zewnętrzne pozostają odrębnymi obserwacjami. Szczegóły i źródła: `research/ai/README.md`.
 
@@ -131,7 +133,7 @@ Pliki PNG/JPG/WebP/GIF do 12 MB są dekodowane w przeglądarce i zapisywane raze
 
 `gifuct-js` jest ładowany dopiero dla GIF-a. Dekoder składa klatki z obsługą przezroczystości, przesunięć oraz disposal 2/3. Jednocześnie rozpakowuje jedną łatkę i skaluje wynik do budżetu pamięci (20 mln pikseli na GIF, 40 mln łącznie); duże GIF-y mogą mieć mniejszą rozdzielczość. Limit wejściowy: 400 klatek i 8 mln pikseli na klatkę. Obrazy statyczne mają maks. 1920 px dłuższego boku. WebP/PNG są traktowane jako obrazy statyczne; animacje obsługiwane są w GIF.
 
-Podgląd, przewijanie i MediaRecorder używają tego samego deterministycznego zegara. Wideo zachowuje ruch GIF-ów; PNG pokazuje końcową klatkę rolki. Eksport blokowany jest podczas wczytywania/dekodowania dodatków. `src/media-timeline.js` odpowiada za czas i geometrię, `src/reel-media.js` za pliki i zapis, `src/visual-render.js` za wspólną kompozycję, a `src/VisualSettings.jsx` za edytor i stan.
+Podgląd, przewijanie i eksport klatka po klatce używają tego samego deterministycznego zegara. Wideo zachowuje ruch GIF-ów; PNG pokazuje końcową klatkę rolki. Eksport blokowany jest podczas wczytywania/dekodowania dodatków. `src/media-timeline.js` odpowiada za czas i geometrię, `src/reel-media.js` za pliki i zapis, `src/visual-render.js` za wspólną kompozycję, a `src/VisualSettings.jsx` za edytor i stan.
 
 
 ### Formy prezentacji i płynność

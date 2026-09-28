@@ -1,5 +1,17 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Płynność wideo|Video frame rate
+60 fps · płynniejszy ruch|60 fps · smoother motion
+30 fps · mniejszy plik|30 fps · smaller file
+Wideo 1080p bez dźwięku, ze źródłem danych. MP4 (H.264), a jeśli przeglądarka go nie obsługuje — WebM.|Silent 1080p video with data sources. MP4 (H.264), or WebM if the browser does not support it.
+Każda klatka jest renderowana osobno. Eksport może potrwać dłużej niż film; jego tempo nie zmienia płynności wideo. Nie zamykaj karty przed zakończeniem.|Every frame is rendered individually. Export may take longer than the video; its speed does not affect playback smoothness. Keep the tab open until it finishes.
+Finalizowanie pliku…|Finalizing file…
+Anuluj eksport|Cancel export
+Eksport anulowany.|Export cancelled.
+Nieprawidłowa długość lub liczba klatek wideo.|Invalid video duration or frame rate.
+Ta przeglądarka nie obsługuje eksportu klatka po klatce. Użyj aktualnego Chrome lub Edge albo pobierz PNG.|This browser does not support frame-by-frame export. Use an up-to-date Chrome or Edge, or download a PNG.
+Brak obsługi kodowania wideo w tym rozmiarze. Spróbuj 30 fps lub aktualnego Chrome/Edge.|Video encoding at this size is unavailable. Try 30 fps or an up-to-date Chrome/Edge.
+Eksport nie zawiera wszystkich klatek. Spróbuj ponownie.|The export does not contain every frame. Please try again.
 Waluta cen|Price currency
 Oryginalna waluta notowania|Original quote currency
 USD · dolar amerykański|USD · US dollar
