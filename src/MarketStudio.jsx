@@ -1,3 +1,4 @@
+import ComparisonStudio from './ComparisonStudio.jsx';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowUpRight, Database, Download, Info, Search } from 'lucide-react';
 import { ExportModal, Field, FontPicker, ReelPreview } from './components.jsx';
@@ -17,7 +18,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   const [symbol, setSymbol] = useState('NVDA'), [region, setRegion] = useState('Wszystkie'), [search, setSearch] = useState('');
   const [start, setStart] = useState('2020-01-01'), [end, setEnd] = useState('');
   const [investment, setInvestment] = useState('5'), [expense, setExpense] = useState('3'), [expenseName, setExpenseName] = useState('Coca-Cola');
-  const [mode, setMode] = useState('dca'), [basis, setBasis] = useState('split');
+  const [mode, setMode] = useState('compare'), [basis, setBasis] = useState('split');
   const [title, setTitle] = useState('5 zł dziennie w NVIDIA.'), [customTitle, setCustomTitle] = useState(false);
   const [duration, setDuration] = useState(12), [theme, setTheme] = useState('dark');
   const [loading, setLoading] = useState(true), [error, setError] = useState(''), [exporting, setExporting] = useState(false);
@@ -77,12 +78,13 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   function exportMethodology() {
     downloadBlob(new Blob([JSON.stringify({ stock: { symbol: stock.symbol, currency: stock.currency, sourceUrl: stock.sourceUrl, retrievedAt: stock.retrievedAt, splits: stock.splits, priceMethod: stock.priceMethod }, fx: { sourceUrl: fx.sourceUrl, retrievedAt: fx.retrievedAt }, inputs: { start, end, dailyInvestment: Number(investment), dailyExpense: Number(expense), expenseName }, methodology: result.methodology, summary }, null, 2)], { type: 'application/json' }), `plotwist-${symbol}-metodologia.json`);
   }
+  if(mode==='compare')return <div className="market-page"><div className="market-switch comparison-tabs" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label])=><button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={()=>setMode(id)}>{label}</button>)}</div>{error&&<p role="alert" className="error">{error}</p>}<ComparisonStudio manifest={manifest} fx={fx} fontId={fontId} onFontChange={onFontChange}/></div>;
   return <div className="market-page">
     <div className="market-heading"><div><h1>Mały nawyk. Prawdziwa historia.</h1><p>Codzienne wpłaty spotykają historyczne ceny akcji.</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
     <div className="market-meta"><Database size={15}/>{manifest ? <span>{manifest.stocks.length} spółek · {manifest.totalObservations.toLocaleString('pl-PL')} cen zamknięcia · USA i Europa</span> : <span>Wczytywanie katalogu…</span>}<span>Snapshot: {manifest?.retrievedAt.slice(0,10) || '…'}</span></div>
     <div className="market-workspace">
       <section className="market-controls" aria-label="Ustawienia inwestowania">
-        <div className="market-switch" role="tablist" aria-label="Tryb giełdowy">{[['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label]) => <button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={() => {setMode(id);setCustomTitle(false);}}>{label}</button>)}</div>
+        <div className="market-switch" role="tablist" aria-label="Tryb giełdowy">{[['compare','Wiele serii'],['dca','Inwestycja vs nawyk'],['prices','Kurs akcji']].map(([id,label]) => <button role="tab" aria-selected={mode===id} className={mode===id?'selected':''} key={id} onClick={() => {setMode(id);setCustomTitle(false);}}>{label}</button>)}</div>
         <div className="market-regions">{['Wszystkie','USA','Europa'].map(r => <button key={r} className={region===r?'selected':''} onClick={() => setRegion(r)}>{r}</button>)}</div>
         <div className="search-field market-search"><Search size={17}/><input aria-label="Szukaj spółki" placeholder="NVIDIA, Apple, ASML, Polska…" value={search} onChange={e=>setSearch(e.target.value)}/></div>
         <Field label="Spółka i rynek"><select value={symbol} onChange={e=>selectStock(e.target.value)}>{!filtered.some(s=>s.symbol===symbol)&&<option value={symbol}>{stock?.name || symbol} (wybrana)</option>}{filtered.map(s=><option key={s.symbol} value={s.symbol}>{s.name} · {s.symbol} · {s.country}</option>)}</select><small>{filtered.length} pasujących spółek · wybrana: {stock?.exchange || '…'} · {stock?.currency || '…'}</small></Field>
