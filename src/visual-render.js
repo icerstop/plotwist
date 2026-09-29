@@ -1,3 +1,4 @@
+import {registerElement} from './reel-elements.js';
 import {mediaFrame} from './reel-media.js';
 import {coverRect,stickerMotion} from './media-timeline.js';
 import {themeOf} from './reel-design.js';
@@ -35,6 +36,7 @@ export function drawVisualOverlays(ctx,w,h,config,time=0,layer='front'){
   ctx.save();ctx.beginPath();ctx.rect(0,0,w,safeHeight);ctx.clip();
   ctx.translate(w*sticker.x/100,safeHeight*sticker.y/100+motion.dy);ctx.rotate(sticker.rotation*Math.PI/180);ctx.globalAlpha=sticker.opacity*motion.opacity;
   if(sticker.shadow){ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=24;ctx.shadowOffsetY=10;}
+  registerElement(ctx,`sticker:${sticker.id}`,{x:-width/2,y:-height/2,w:width,h:height},{stickerId:sticker.id,clip:{x:0,y:0,w,h:safeHeight}});
   ctx.drawImage(frame,-width/2,-height/2,width,height);ctx.restore();
  }
 }

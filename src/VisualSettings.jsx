@@ -37,7 +37,10 @@ export function VisualProvider({children}){
  function reset(){releaseAllMedia();setFiles({});setVisuals(v=>({...emptyVisuals(),design:v.design}));setError('');}
  function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch})}));}
  function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
- const context={visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
+ function element(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,elements:{...v.design.elements,[id]:{...v.design.elements[id],...patch}}})}));}
+ function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
+ function restoreComposition(saved){setVisuals(v=>({...v,design:normalizeDesign(saved.design),stickers:v.stickers.map(s=>({...s,...saved.stickers.find(old=>old.id===s.id)}))}));}
+ const context={element,textStyle,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,visuals,duration}),[config,visuals,duration]);}

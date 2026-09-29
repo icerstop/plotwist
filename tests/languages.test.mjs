@@ -64,7 +64,7 @@ test('English numeric and date formatting leaves values unchanged',()=>{
 
 function rendered(config){
  const text=[];
- const ctx=new Proxy({globalAlpha:1,measureText:s=>({width:String(s).length*8}),fillText:s=>text.push(String(s))},{get:(target,key)=>key in target?target[key]:()=>{}});
+ const ctx=new Proxy({canvas:{width:1080,height:1920},getTransform:()=>({a:1,b:0,c:0,d:1,e:0,f:0}),globalAlpha:1,measureText:s=>({width:String(s).length*8}),fillText:s=>text.push(String(s))},{get:(target,key)=>key in target?target[key]:()=>{}});
  drawReel({getContext:()=>ctx},config,1,20);
  return text.join('\n');
 }

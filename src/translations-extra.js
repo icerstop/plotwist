@@ -582,4 +582,23 @@ Słońce i inne źródła odnawialne|Solar and other renewables
 Polska · CPI rok poprzedni = 100|Poland · CPI previous year = 100
 Polska · poziom cen (1950 = 100)|Poland · price level (1950 = 100)
 Siła nabywcza 100 zł (ceny 2000)|Purchasing power of PLN 100 (2000 prices)
+Edytuj na podglądzie|Edit on preview
+Zakończ edycję|Finish editing
+Cofnij zmianę elementu|Undo element change
+Wybrany element|Selected element
+Kliknij element na rolce|Click an element on the reel
+Symbol wykresu|Chart symbol
+Wykres i legenda|Chart and legend
+Obrazek / GIF|Image / GIF
+Tekst wykresu|Chart text
+Czcionka elementu|Element font
+Czcionka całej rolki|Reel default font
+Kolor elementu|Element color
+Skala elementu|Element scale
+Obrót elementu|Element rotation
+Przywróć wybrany element|Reset selected element
+Edytor elementów rolki|Reel element editor
+Obróć element|Rotate element
+Zmień rozmiar elementu|Resize element
+Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Esc: odznacz.|Drag to move. Circle: rotate. Corner: resize. Arrows: 1 px, Shift: 10 px. Esc: deselect.
 `;

@@ -47,7 +47,7 @@ test('chart height restores old drafts, clamps bad settings and leaves the value
 
 function recorder(){
  const drawn=[],stack=[];
- const ctx=new Proxy({font:'24px Arial',fillStyle:'#000000',globalAlpha:1,textAlign:'left',save(){stack.push({font:this.font,fillStyle:this.fillStyle,globalAlpha:this.globalAlpha,textAlign:this.textAlign});},restore(){Object.assign(this,stack.pop());},measureText(t){return {width:String(t).length*(parseFloat(this.font.match(/[\d.]+px/)?.[0])||24)*.5};},fillText(t,x,y){drawn.push({text:String(t),font:this.font,color:this.fillStyle,x,y});}}, {get:(o,k)=>k in o?o[k]:(...args)=>{for(const v of args)if(typeof v==='number')assert.ok(Number.isFinite(v));}});
+ const ctx=new Proxy({canvas:{width:1080,height:1920},getTransform:()=>({a:1,b:0,c:0,d:1,e:0,f:0}),font:'24px Arial',fillStyle:'#000000',globalAlpha:1,textAlign:'left',save(){stack.push({font:this.font,fillStyle:this.fillStyle,globalAlpha:this.globalAlpha,textAlign:this.textAlign});},restore(){Object.assign(this,stack.pop());},measureText(t){return {width:String(t).length*(parseFloat(this.font.match(/[\d.]+px/)?.[0])||24)*.5};},fillText(t,x,y){drawn.push({text:String(t),font:this.font,color:this.fillStyle,x,y});}}, {get:(o,k)=>k in o?o[k]:(...args)=>{for(const v of args)if(typeof v==='number')assert.ok(Number.isFinite(v));}});
  return {drawn,canvas:{width:1080,height:1920,getContext:()=>ctx},stack};
 }
 const base={title:'Title',subtitle:'Subtitle',source:'Source',fontId:'arial',series:[{name:'Series',points:[{x:2020,y:10},{x:2021,y:20}]}]};

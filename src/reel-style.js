@@ -1,18 +1,7 @@
-import {bundledFonts} from './font-catalog.js';
+import {reelFonts,reelFont} from './reel-fonts.js';
+export {reelFonts,reelFont,reelFontGroups} from './reel-fonts.js';
+import {beginElement} from './reel-elements.js';
 import {themeOf,textSize,textColor,designOf} from './reel-design.js';
-export const reelFontGroups=[{id:'sans',name:'Proste · bezszeryfowe'},{id:'serif',name:'Szeryfowe · redakcyjne'},{id:'display',name:'Wąskie · do tytułów'},{id:'mono',name:'Maszynowe · techniczne'}];
-export const reelFonts = [
- {id:'arial',name:'Arial · prosta',family:'Arial, Helvetica, sans-serif',group:'sans'},
- {id:'georgia',name:'Georgia · redakcyjna',family:'Georgia, "Times New Roman", serif',group:'serif'},
- {id:'libre-baskerville',name:'Libre Baskerville',family:'"Libre Baskerville", Georgia, serif',face:'Libre Baskerville',file:'/fonts/libre-baskerville/LibreBaskerville-Variable.ttf',weight:'400 700',group:'serif'},
- {id:'verdana',name:'Verdana · czytelna',family:'Verdana, Geneva, sans-serif',group:'sans'},
- {id:'trebuchet',name:'Trebuchet MS · miękka',family:'"Trebuchet MS", Arial, sans-serif',group:'sans'},
- {id:'impact',name:'Impact · wyrazista',family:'Impact, "Arial Narrow", sans-serif',group:'display'},
- {id:'courier',name:'Courier New · maszynowa',family:'"Courier New", Courier, monospace',group:'mono'},
- ...bundledFonts
-];
-export const reelFont = id => (reelFonts.find(f=>f.id===id)||reelFonts[0]).family;
-
 // Keep titles in frame when a bundled font has different text metrics.
 const titleFits=new WeakMap();
 export function reelTitleSize(ctx,text,fontId,preferred,width,maxLines,maxHeight=Infinity){
@@ -51,12 +40,17 @@ export function preloadReelFont(id){
 
 // Shared by the preview, PNG cover and video frames in all three studios.
 export function drawSignature(ctx,width,height,fontId,dark,config={}){
- const family=reelFont(fontId);
+ const family=reelFont(designOf(config).text?.signature?.fontId||fontId);
  const align=designOf(config).signatureAlign,x=align==='left'?76:align==='right'?width-76:width/2,theme=themeOf(config);
+ ctx.font=`${textSize(config,'signature',24)}px ${family}`;
+ const w=Math.min(width-152,Math.max(ctx.measureText('X: @jakub_bilski  ·  IG: jakub__bilski').width,200));
+ const end=beginElement(ctx,config,'signature',{x:x-(align==='left'?0:align==='right'?w:w/2),y:height-94,w,h:76});
  ctx.save();ctx.globalAlpha=1;ctx.textAlign=align;ctx.textBaseline='alphabetic';
  ctx.fillStyle=textColor(config,'signature',theme.fg);ctx.font=`bold ${textSize(config,'signature',28)}px ${family}`;
  ctx.fillText('Jakub Bilski',x,height-64,width-152);
  ctx.fillStyle=textColor(config,'signature',theme.muted);ctx.font=`${textSize(config,'signature',24)}px ${family}`;
  ctx.fillText('X: @jakub_bilski  ·  IG: jakub__bilski',x,height-25,width-152);
- ctx.restore();
+ ctx.restore();end();
 }
+
+export const configFontIds=config=>[...new Set([config.fontId,...Object.values(designOf(config).text||{}).map(t=>t.fontId)].filter(Boolean))];

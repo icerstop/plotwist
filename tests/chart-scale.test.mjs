@@ -53,7 +53,7 @@ test('AI axis expands smoothly before a discrete observation, preserving earlier
  assert.equal(visibleAiBounds(rows,time-1,first,last,20,0).max,12);
 });
 test('preview/export renderer respects both scale options and the chosen reel language',()=>{
- const drawn=[];const ctx=new Proxy({measureText:t=>({width:String(t).length*10}),fillText:t=>drawn.push(t),globalAlpha:1},{get:(o,k)=>k in o?o[k]:(...args)=>{for(const v of args)if(typeof v==='number')assert.ok(Number.isFinite(v),`${String(k)} must have finite coordinates`);}});
+ const drawn=[];const ctx=new Proxy({canvas:{width:1080,height:1920},getTransform:()=>({a:1,b:0,c:0,d:1,e:0,f:0}),measureText:t=>({width:String(t).length*10}),fillText:t=>drawn.push(t),globalAlpha:1},{get:(o,k)=>k in o?o[k]:(...args)=>{for(const v of args)if(typeof v==='number')assert.ok(Number.isFinite(v),`${String(k)} must have finite coordinates`);}});
  const canvas={width:1080,height:1920,getContext:()=>ctx};
  const config=localizeReelConfig({series,chart:'line',title:'Test',subtitle:'Test',source:'Test',unit:'USD',axisRange:'dynamic',axisScale:'log'},'en');
  drawReel(canvas,config,.05,.6);assert.ok(drawn.includes('Expanding range · Log scale'));

@@ -1,3 +1,4 @@
+import {beginElement,textRect} from './reel-elements.js';
 import {translate} from './translations.js';
 import {drawAiBrandComparison} from './ai-brand-render.js';
 import {aiValue as formatAiValue,frameAt} from './ai.js';
@@ -6,18 +7,20 @@ import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
 import {crossText} from './series-render.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
 import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
-import {themeOf,textSize,textColor,setReelText,beginReelSection,chartTop} from './reel-design.js';
+import {themeOf,textSize,textColor,setReelText,beginReelSection,chartTop,designOf} from './reel-design.js';
 function typography(font,language,config){
 function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels'){
  if(!custom)text=translate(text,language);
  const originalSize=size;size=role==='title'?size:textSize(config,role,size);
- ctx.font=`${originalSize>=60?'bold ':''}${size}px ${font}`;if(color)ctx.fillStyle=textColor(config,role,color);
+ ctx.font=`${originalSize>=60?'bold ':''}${size}px ${reelFont(designOf(config).text[role]?.fontId||config.fontId)}`;if(color)ctx.fillStyle=textColor(config,role,color);
  const words=String(text||'').split(/\s+/);let lines=[],line='';
  for(const word of words){if(ctx.measureText(`${line} ${word}`).width>width&&line){lines.push(line);line=word;}else line=line?`${line} ${word}`:word;}if(line)lines.push(line);
- lines.slice(0,max).forEach((s,i)=>ctx.fillText(i===max-1&&lines.length>max?`${s.slice(0,-2)}…`:s,x,y+i*size*1.22,width));
+ const shown=lines.slice(0,max).map((s,i)=>i===max-1&&lines.length>max?`${s.slice(0,-2)}…`:s);
+ const end=role==='title'?beginElement(ctx,config,'title',textRect(ctx,shown,x,y,size*1.22,width)):()=>{};
+ shown.forEach((s,i)=>ctx.fillText(s,x,y+i*size*1.22,width));end();
  return Math.min(lines.length,max)*size*1.22;
 }
-function fit(ctx,text,width,size,min=26){size=textSize(config,'values',size);ctx.font=`bold ${size}px ${font}`;while(size>min&&ctx.measureText(text).width>width){size--;ctx.font=`bold ${size}px ${font}`;}ctx.fillStyle=textColor(config,'values',ctx.fillStyle);return size;}
+function fit(ctx,text,width,size,min=26){const font=reelFont(designOf(config).text.values.fontId||config.fontId);size=textSize(config,'values',size);ctx.font=`bold ${size}px ${font}`;while(size>min&&ctx.measureText(text).width>width){size--;ctx.font=`bold ${size}px ${font}`;}ctx.fillStyle=textColor(config,'values',ctx.fillStyle);return size;}
 return {wrap,fit};
 }
 export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
@@ -29,11 +32,13 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
  drawVisualBackground(ctx,1080,1920,config,timeSeconds);
  const endHeader=beginReelSection(ctx,config,'header',1080,1920);
- ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));
- wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,config.fontId,textSize(config,'title',83),928,3,270),3,fg,true,'title');
+ const endMark=beginElement(ctx,config,'mark',{x:76,y:73,w:49,h:50});
+ ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));endMark();
+ wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270),3,fg,true,'title');
+ const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:528,w:928,h:132});
  wrap(ctx,b.name,76,565,928,33,1,accent,false,'subtitle');
  if(scope)wrap(ctx,scope,76,628,928,23,2,muted,false,'subtitle');
- endHeader();
+ endSubtitle();endHeader();
  const first=rows[0],last=rows.at(-1),transition=config.transition??.65,duration=config.duration||20;
  const frame=mode==='scatter'?frameAt(rows,progress):null;
  if(!first)return;
@@ -126,6 +131,8 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  drawVisualOverlays(ctx,1080,1920,config,timeSeconds);
  const dating=basis==='release'?'Wg premier · retrospektywa, pomiary mogły być późniejsze':'Wg dat testu / publikacji · bez interpolacji';
  const warning=b.id.startsWith('iq-')?'Quiz TrackingAI ≠ psychometryczne IQ człowieka':b.id==='eci'?'ECI ≠ IQ · aktualne przeliczenie historii':b.id==='codeforces2024'?'Percentyl wśród uczestników · 10 zgłoszeń':b.id.startsWith('swe-')?'Wynik systemu z narzędziami; wersje środowiska rozdzielone':b.id==='gpqa'&&mode==='duel'?'Eksperci dziedzinowi; różne protokoły ewaluacji':['frontiermath','frontiermath4'].includes(b.id)?'Od 13.11.2025 budżet tokenów 10× większy; porównanie orientacyjne':b.caveat;
+ const endSource=beginElement(ctx,config,'source',{x:76,y:1673,w:928,h:158});
  wrap(ctx,dating,76,1700,928,22,2,muted,false,'source');wrap(ctx,warning,76,1760,928,22,2,muted,false,'source');wrap(ctx,`${b.source} · dane ${b.retrievedAt}`,76,1821,928,23,1,muted,false,'source');
+ endSource();
  drawSignature(ctx,1080,1920,config.fontId,dark,config);
 }

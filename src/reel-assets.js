@@ -1,4 +1,4 @@
-import {preloadReelFont} from './reel-style.js';
+import {preloadReelFont,configFontIds} from './reel-style.js';
 const images=new Map();
 function loadImage(path){
  if(images.has(path))return images.get(path).promise;
@@ -11,5 +11,5 @@ function loadImage(path){
 export const getReelLogo=path=>images.get(path)?.image;
 export async function preloadReelAssets(config){
  const logos=[...(config.series||[]).map(s=>s.logo),...(config.ai?.groupBy==='brand'&&config.ai.showBrandLogos!==false?config.ai.brands.map(b=>b.logo):[])].filter(Boolean);
- await Promise.all([preloadReelFont(config.fontId),...[...new Set(logos)].map(loadImage)]);
+ await Promise.all([...configFontIds(config).map(preloadReelFont),...[...new Set(logos)].map(loadImage)]);
 }

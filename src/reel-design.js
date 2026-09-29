@@ -1,3 +1,5 @@
+import {reelFonts,reelFont} from './reel-fonts.js';
+import {beginElement,elementIds} from './reel-elements.js';
 // Shared design contract for every preview, PNG and recorded video frame.
 export const reelThemes = [
  {id:'dark',name:'Studio · ciemny',bg:'#111514',fg:'#f8faf6',muted:'#adb5af',panel:'#1d2822',grid:'#344239',colors:['#bcf34a','#b18aff','#8fabb6'],dark:true},
@@ -17,9 +19,10 @@ export const reelLayouts=[{id:'classic',name:'Klasyczny',description:'Nagłówek
 const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
 const number=(v,fallback,min,max)=>Number.isFinite(Number(v))?clamp(Number(v),min,max):fallback;
 export function normalizeDesign(raw={}){
- const text={};for(const role of textRoles){const t=raw.text?.[role.id]||{};text[role.id]={size:number(t.size,100,role.min,role.max),color:/^#[0-9a-f]{6}$/i.test(t.color||'')?t.color:null};}
+ const text={};for(const role of textRoles){const t=raw.text?.[role.id]||{};text[role.id]={size:number(t.size,100,role.min,role.max),fontId:reelFonts.some(f=>f.id===t.fontId)?t.fontId:null,color:/^#[0-9a-f]{6}$/i.test(t.color||'')?t.color:null};}
  const positions={};for(const id of ['header','content']){const p=raw.positions?.[id]||{};positions[id]={x:number(p.x,50,0,100),y:number(p.y,0,-20,20),scale:number(p.scale,100,65,100)};}
- return {theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',chartHeight:number(raw.chartHeight??100,100,50,100),text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
+ const elements=Object.fromEntries(elementIds.map(id=>{const e=raw.elements?.[id]||{};return [id,{x:number(e.x,0,-100,100),y:number(e.y,0,-100,100),scale:number(e.scale,100,25,200),rotation:number(e.rotation,0,-180,180)}];}));
+ return {elements,theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',chartHeight:number(raw.chartHeight??100,100,50,100),text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
 }
 export const designOf=config=>config.visuals?.design||normalizeDesign({theme:config.theme});
 export const themeOf=config=>reelThemes.find(t=>t.id===designOf(config).theme)||reelThemes[0];
@@ -46,6 +49,7 @@ export function seriesPlotLayout(config,width,height,headerBottom){
  return {top:chartTop(config,top,bottom),bottom,legendStep,headerScale};
 }
 export function setReelText(ctx,config,role,size,family,color,weight=''){
+ family=designOf(config).text?.[role]?.fontId?reelFont(designOf(config).text[role].fontId):family;
  ctx.font=`${weight?weight+' ':''}${textSize(config,role,size)}px ${family}`;
  if(color)ctx.fillStyle=textColor(config,role,color);
 }
@@ -67,7 +71,8 @@ export function sectionTransform(config,section,width,height){
  const y=clamp(targetY+p.y*height/100,32,end-base.h*scale);
  return {x,y,scale,base,footerTop:end};
 }
-export function beginReelSection(ctx,config,section,width,height){
+export function beginReelSection(ctx,config,section,width,height,rect){
  const t=sectionTransform(config,section,width,height);ctx.save();ctx.translate(t.x,t.y);ctx.scale(t.scale,t.scale);ctx.translate(-t.base.x,-t.base.y);
- return ()=>ctx.restore();
+ const end=section==='content'?beginElement(ctx,config,'content',rect||t.base):()=>{};
+ return ()=>{end();ctx.restore();};
 }

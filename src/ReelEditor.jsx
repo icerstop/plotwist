@@ -1,0 +1,78 @@
+import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
+import {MousePointer2,RotateCcw,Undo2,Check} from 'lucide-react';
+import {useVisualStatus} from './VisualSettings.jsx';
+import {reelFonts,reelFontGroups} from './reel-fonts.js';
+import {themeOf,textRoles} from './reel-design.js';
+import {reelElements,hitElement,canvasViewport,identityElement} from './reel-elements.js';
+import {useLanguages} from './language-context.js';
+import {translate} from './translations.js';
+import './reel-editor.css';
+
+const names={mark:'Symbol wykresu',title:'Tytuł',subtitle:'Opis pod tytułem',content:'Wykres i legenda',date:'Data / rok',source:'Źródła i metodologia',signature:'Podpis autora'};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const angle=v=>((v+180)%360+360)%360-180;
+const snapshot=v=>({design:structuredClone(v.design),stickers:structuredClone(v.stickers)});
+
+export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,valid}){
+ const v=useVisualStatus(),{uiLanguage}=useLanguages(),svg=useRef(),gesture=useRef(),history=useRef([]);
+ const [selected,setSelected]=useState(null),[regions,setRegions]=useState([]),[viewport,setViewport]=useState(null),[undoCount,setUndoCount]=useState(0),[chartRole,setChartRole]=useState('labels');
+ useLayoutEffect(()=>{if(enabled&&valid)setRegions(reelElements(canvas.current));},[config,revision,enabled,valid,canvas]);
+ useEffect(()=>{
+  const el=canvas.current;if(!el)return;
+  const update=()=>{const box=el.getBoundingClientRect(),parent=el.parentElement.getBoundingClientRect(),r=canvasViewport(box,el.width,el.height);setViewport({...r,left:r.left-parent.left,top:r.top-parent.top});};
+  const observer=new ResizeObserver(update);observer.observe(el);update();return()=>observer.disconnect();
+ },[canvas,config.format,enabled]);
+ const region=regions.find(r=>r.id===selected),sticker=region?.stickerId?v.visuals.stickers.find(s=>s.id===region.stickerId):null;
+ const role=selected==='content'?chartRole:textRoles.some(r=>r.id===selected)?selected:null,t=role?v.visuals.design.text[role]:null;
+ const transform=sticker?{rotation:sticker.rotation,scale:sticker.size}:v.visuals.design.elements[selected]||identityElement();
+ const label=r=>r?.stickerId?v.visuals.stickers.find(s=>s.id===r.stickerId)?.name||'Obrazek / GIF':names[r?.id]||'';
+ function remember(){const s=snapshot(v.visuals);if(JSON.stringify(history.current.at(-1))!==JSON.stringify(s)){history.current.push(s);if(history.current.length>40)history.current.shift();}setUndoCount(history.current.length);}
+ function undo(){const previous=history.current.pop();if(previous)v.restoreComposition(previous);setUndoCount(history.current.length);}
+ function changeTransform(patch){if(sticker)v.sticker(sticker.id,{...(patch.scale!==undefined?{size:patch.scale}:{}),...(patch.rotation!==undefined?{rotation:patch.rotation}:{})});else v.element(selected,patch);}
+ function point(e){const box=svg.current.getBoundingClientRect();return {x:(e.clientX-box.left)/box.width*canvas.current.width,y:(e.clientY-box.top)/box.height*canvas.current.height};}
+ function start(e,kind='move'){
+  if(e.button!==0)return;const p=point(e),hit=kind==='move'?hitElement(regions,p):region;
+  if(!hit){setSelected(null);return;}e.preventDefault();onPause();setSelected(hit.id);remember();
+  const s=hit.stickerId?v.visuals.stickers.find(s=>s.id===hit.stickerId):null;
+  gesture.current={id:hit.id,kind,start:p,center:hit.center,sticker:s,original:s?{...s}:{...v.visuals.design.elements[hit.id]},before:snapshot(v.visuals),distance:Math.hypot(p.x-hit.center.x,p.y-hit.center.y),angle:Math.atan2(p.y-hit.center.y,p.x-hit.center.x)};
+  svg.current.setPointerCapture(e.pointerId);svg.current.focus();
+ }
+ function move(e){
+  const g=gesture.current;if(!g)return;const p=point(e),o=g.original,w=canvas.current.width,h=canvas.current.height;let patch;
+  if(g.kind==='rotate')patch={rotation:angle(o.rotation+(Math.atan2(p.y-g.center.y,p.x-g.center.x)-g.angle)*180/Math.PI)};
+  else if(g.kind==='scale'){const scale=(g.sticker?o.size:o.scale)*Math.hypot(p.x-g.center.x,p.y-g.center.y)/Math.max(1,g.distance);patch=g.sticker?{size:clamp(scale,5,100)}:{scale:clamp(scale,25,200)};}
+  else patch={x:clamp(o.x+(p.x-g.start.x)/w*100,g.sticker?0:-100,100),y:clamp(o.y+(p.y-g.start.y)/(g.sticker?h-(config.ai?260:195):h)*100,g.sticker?0:-100,100)};
+  if(g.sticker)v.sticker(g.sticker.id,patch);else v.element(g.id,patch);
+ }
+ function finish(e,cancel=false){const g=gesture.current;if(!g)return;if(cancel)v.restoreComposition(g.before);gesture.current=null;if(svg.current.hasPointerCapture(e.pointerId))svg.current.releasePointerCapture(e.pointerId);}
+ function keys(e){
+  if(e.key==='Escape'){if(gesture.current)v.restoreComposition(gesture.current.before);gesture.current=null;setSelected(null);e.preventDefault();return;}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo();return;}
+  if(!region||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
+  e.preventDefault();remember();const step=e.shiftKey?10:1,dx=e.key==='ArrowLeft'?-step:e.key==='ArrowRight'?step:0,dy=e.key==='ArrowUp'?-step:e.key==='ArrowDown'?step:0;
+  const o=sticker||v.visuals.design.elements[selected];const patch={x:clamp(o.x+dx/canvas.current.width*100,sticker?0:-100,100),y:clamp(o.y+dy/(canvas.current.height-(sticker?(config.ai?260:195):0))*100,sticker?0:-100,100)};
+  if(sticker)v.sticker(sticker.id,patch);else v.element(selected,patch);
+ }
+ const corners=region?.corners,top=corners?{x:(corners[0].x+corners[1].x)/2,y:(corners[0].y+corners[1].y)/2}:null;
+ const unit=viewport?.scale||1,handle=top?{x:top.x+(top.x-region.center.x)/Math.max(1,Math.hypot(top.x-region.center.x,top.y-region.center.y))*26/unit,y:top.y+(top.y-region.center.y)/Math.max(1,Math.hypot(top.x-region.center.x,top.y-region.center.y))*26/unit}:null;
+ const color=t?.color||(['labels','subtitle','source'].includes(role)?themeOf(config).muted:themeOf(config).fg);
+ return <>
+  {enabled&&valid&&viewport&&<svg ref={svg} className="reel-edit-overlay" style={{left:viewport.left,top:viewport.top,width:viewport.width,height:viewport.height}} viewBox={`0 0 ${canvas.current.width} ${canvas.current.height}`} tabIndex="0" role="application" aria-label="Edytor elementów rolki" onPointerDown={start} onPointerMove={move} onPointerUp={finish} onPointerCancel={e=>finish(e,true)} onKeyDown={keys}>
+   {regions.map(r=><polygon key={r.id} className="reel-hit-region" points={r.corners.map(p=>`${p.x},${p.y}`).join(' ')}><title>{translate(label(r),uiLanguage)}</title></polygon>)}
+   {region&&<g className="reel-selection"><polygon points={corners.map(p=>`${p.x},${p.y}`).join(' ')}/><line x1={top.x} y1={top.y} x2={handle.x} y2={handle.y}/><circle className="reel-rotate-handle" data-handle="rotate" cx={handle.x} cy={handle.y} r={7/unit} onPointerDown={e=>{e.stopPropagation();start(e,'rotate');}}><title>Obróć element</title></circle><rect className="reel-scale-handle" data-handle="scale" x={corners[2].x-6/unit} y={corners[2].y-6/unit} width={12/unit} height={12/unit} onPointerDown={e=>{e.stopPropagation();start(e,'scale');}}><title>Zmień rozmiar elementu</title></rect></g>}
+  </svg>}
+  <div className="reel-edit-controls">
+   <div className="reel-edit-toolbar"><button type="button" className={`secondary ${enabled?'is-editing':''}`} aria-pressed={enabled} disabled={!valid} onClick={()=>{onPause();setEnabled(!enabled);}}>{enabled?<Check size={15}/>:<MousePointer2 size={15}/>}<span>{enabled?'Zakończ edycję':'Edytuj na podglądzie'}</span></button>{enabled&&<button type="button" className="icon-btn" aria-label="Cofnij zmianę elementu" disabled={!undoCount} onClick={undo}><Undo2 size={18}/></button>}</div>
+   {enabled&&<div className="reel-inspector">
+    <label>Wybrany element<select aria-label="Wybrany element" value={region?selected:''} onChange={e=>setSelected(e.target.value||null)}><option value="">Kliknij element na rolce</option>{regions.map(r=><option key={r.id} value={r.id}>{label(r)}</option>)}</select></label>
+    {region?<>
+     {selected==='content'&&<label>Tekst wykresu<select aria-label="Tekst wykresu" value={chartRole} onChange={e=>setChartRole(e.target.value)}><option value="labels">Etykiety i osie</option><option value="values">Wartości liczbowe</option></select></label>}
+     {t&&<><label>Czcionka elementu<select aria-label="Czcionka elementu" value={t.fontId||''} onChange={e=>{remember();v.textStyle(role,{fontId:e.target.value||null});}}><option value="">Czcionka całej rolki</option>{reelFontGroups.map(g=><optgroup key={g.id} label={g.name}>{reelFonts.filter(f=>f.group===g.id).map(f=><option key={f.id} value={f.id}>{f.name}</option>)}</optgroup>)}</select></label><label className="reel-color">Kolor elementu<input type="color" aria-label="Kolor elementu" value={color} onFocus={remember} onChange={e=>v.textStyle(role,{color:e.target.value})}/><code>{color}</code></label></>}
+     <div className="reel-inspector-pair"><label>Skala elementu<input aria-label="Skala elementu" type="number" min={sticker?5:25} max={sticker?100:200} step="1" value={Math.round(transform.scale)} onFocus={remember} onChange={e=>changeTransform({scale:clamp(Number(e.target.value),sticker?5:25,sticker?100:200)})}/></label><label>Obrót elementu<input aria-label="Obrót elementu" type="number" min="-180" max="180" step="1" value={Math.round(transform.rotation)} onFocus={remember} onChange={e=>changeTransform({rotation:clamp(Number(e.target.value),-180,180)})}/></label></div>
+     <button type="button" className="text-btn" onClick={()=>{remember();if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,{fontId:null,color:null,size:100});}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
+    </>:null}
+    <p>Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Esc: odznacz.</p>
+   </div>}
+  </div>
+ </>;
+}

@@ -4,7 +4,7 @@ import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTi
 import {reelFont} from './reel-style.js';
 import {clamp,lerp,rankMotion} from './presentation.js';
 import {aiValue} from './ai.js';
-import {themeOf,textSize,textColor,chartTop} from './reel-design.js';
+import {themeOf,textSize,textColor,chartTop,designOf} from './reel-design.js';
 
 function ellipsis(ctx,text,width){let value=String(text||'');if(ctx.measureText(value).width<=width)return value;while(value.length&&ctx.measureText(value+'…').width>width)value=value.slice(0,-1);return value+'…';}
 export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,grid,panel,wrap}){
@@ -16,6 +16,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  const byId=(f,id)=>f.leaders.find(l=>l.brand.id===id);
  const color=brand=>themeOf(config).dark?brand.color:darken(brand.color);
  function text(value,x,y,width,size,fill=fg,bold=false,role='labels'){
+  const font=reelFont(designOf(config).text[role]?.fontId||config.fontId);
   ctx.fillStyle=textColor(config,role,fill);let px=textSize(config,role,size);
   // Dense brand rows have a fixed vertical rhythm; fit names and keep scores whole.
   if(role==='labels')px=Math.min(px,size+4);
