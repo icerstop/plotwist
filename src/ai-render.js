@@ -30,7 +30,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  drawVisualBackground(ctx,1080,1920,config,timeSeconds);
  const endHeader=beginReelSection(ctx,config,'header',1080,1920);
  ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));
- wrap(ctx,title||b.name,76,240,928,reelTitleSize(ctx,title||b.name,config.fontId,textSize(config,'title',83),928,3,270),3,fg,true,'title');
+ wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,config.fontId,textSize(config,'title',83),928,3,270),3,fg,true,'title');
  wrap(ctx,b.name,76,565,928,33,1,accent,false,'subtitle');
  if(scope)wrap(ctx,scope,76,628,928,23,2,muted,false,'subtitle');
  endHeader();

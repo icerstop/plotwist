@@ -17,8 +17,10 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  const endHeader=beginReelSection(ctx,config,'header',width,height);
  ctx.fillStyle=colors[0];[20,36,56].forEach((h,i)=>ctx.fillRect(78+i*18,118-h,10,h));
  const preferred=textSize(config,'title',height<1400?75:config.compactTitle?110:145),maxLines=height<1400?2:3;
- const headerBottom=height<1400?height*.46-28:670,headingY=height<1400?200:240;
- const titleSize=reelTitleSize(ctx,title||'Twoja historia.',config.fontId,preferred,920,maxLines,headerBottom-headingY-100);
+ const headerBottom=height<1400?height*.46-28:670,baseHeadingY=height<1400?200:240;
+ // Lower the heading without changing its font fit or the chart's position.
+ const headingY=baseHeadingY+(height<1400?40:64);
+ const titleSize=reelTitleSize(ctx,title||'Twoja historia.',config.fontId,preferred,920,maxLines,headerBottom-baseHeadingY-100);
  ctx.fillStyle=textColor(config,'title',fg);ctx.font=`bold ${titleSize}px ${font}`;const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines);
  setReelText(ctx,config,'subtitle',29,font,muted);wrap(ctx,subtitle||'',78,headingY+headingHeight+16,910,textSize(config,'subtitle',35),2);
  endHeader();const endContent=beginReelSection(ctx,config,'content',width,height);
