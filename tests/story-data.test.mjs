@@ -91,6 +91,7 @@ test('exports remain chronological, preserve missing cells and escape provenance
 test('saved variants round-trip and reject unknown data references',()=>{
  const settings=config(['apple--iphone-revenue'],{start:'2010-01-01',mode:'index',title:'My history'});
  assert.equal(readStoryProject(storyProject(settings,manifest.builtAt),manifest).title,'My history');
+ const cleared={...settings,selected:[]};assert.deepEqual(readStoryProject(storyProject(cleared,manifest.builtAt),manifest).selected,[]); // Removing the last series must survive a reload.
  assert.throws(()=>readStoryProject(storyProject(config(['../../private']),manifest.builtAt),manifest),/nieznane/);
 });
 test('date labels retain annual/fiscal precision and original reports match saved receipts',()=>{

@@ -53,7 +53,7 @@ export function storyCsv(rows,sources){
 export function readStoryProject(value,manifest){
  if(value?.type!=='plotwist-story-project'||value.version!==1)throw Error('To nie jest projekt z biblioteki historii.');
  const s=value.settings,known=new Set(manifest.series.map(s=>s.id));
- if(!s||!Array.isArray(s.selected)||!s.selected.length||s.selected.length>6||s.selected.some(x=>!known.has(x?.id))||new Set(s.selected.map(x=>x.id)).size!==s.selected.length)throw Error('Projekt zawiera nieznane lub powtórzone serie.');
+ if(!s||!Array.isArray(s.selected)||s.selected.length>6||s.selected.some(x=>!known.has(x?.id))||new Set(s.selected.map(x=>x.id)).size!==s.selected.length)throw Error('Projekt zawiera nieznane lub powtórzone serie.');
  const iso=v=>!v||/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v;
  if(!iso(s.start)||!iso(s.end))throw Error('Nieprawidłowe daty w projekcie.');
  return {...storyDefaults,topic:s.topic==='all'||manifest.topics.some(t=>t.id===s.topic)?s.topic:'apple',selected:s.selected.map(x=>({id:x.id,color:/^#[0-9a-f]{6}$/i.test(x.color)?x.color:storyColors[0],label:String(x.label||'').slice(0,80)})),start:s.start||'',end:s.end||'',title:String(s.title||'').slice(0,80),mode:s.mode==='index'?'index':'native',chart:['line','area','bar','ranking','cards'].includes(s.chart)?s.chart:'line',format:['9:16','1:1','4:5'].includes(s.format)?s.format:'9:16',duration:[6,12,20,30].includes(s.duration)?s.duration:12};
