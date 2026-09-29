@@ -1,5 +1,34 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Wyszukaj GIF-y online|Search GIFs online
+Szukaj GIF-ów|Search GIFs
+Np. money, wow, robot…|Try money, wow, robot…
+Wyszukaj GIF-y|Find GIFs
+Wstaw GIF jako|Insert GIF as
+Dodatek na rolce|Reel overlay
+Tło rolki|Reel background
+Masz już 3 dodatki. Usuń jeden lub wstaw GIF jako tło.|You already have 3 overlays. Remove one or use the GIF as a background.
+Wybrany GIF zastąpi obecne tło.|The selected GIF will replace the current background.
+Spróbuj ponownie|Try again
+Pobieranie i przygotowywanie GIF-a…|Downloading and preparing GIF…
+GIF ustawiony jako tło.|GIF set as the background.
+GIF dodany do rolki. Możesz go przesunąć na podglądzie.|GIF added to the reel. Move it directly on the preview.
+Wyszukiwanie GIF-ów…|Searching GIFs…
+Brak GIF-ów dla tego hasła. Spróbuj innego, najlepiej po angielsku.|No GIFs found. Try another keyword, preferably in English.
+Wyniki wyszukiwania GIF-ów|GIF search results
+Wstaw GIF|Insert GIF
+Więcej GIF-ów|More GIFs
+Bez konta i klucza API. Wstawione GIF-y zapisują się w tej przeglądarce.|No account or API key needed. Inserted GIFs are saved in this browser.
+GIF zachowuje własne tempo i liczbę klatek. Wykres nadal animuje się w 30 lub 60 fps.|GIFs keep their original timing and frame rate. The chart still animates at 30 or 60 fps.
+Usługa GIF-ów zwróciła nieprawidłową odpowiedź. Spróbuj ponownie.|The GIF service returned an invalid response. Please try again.
+Za dużo zapytań do usługi GIF-ów. Spróbuj za chwilę.|Too many requests to the GIF service. Try again shortly.
+Wyszukiwarka GIF-ów jest chwilowo niedostępna. Spróbuj ponownie.|GIF search is temporarily unavailable. Please try again.
+Nieprawidłowy adres GIF-a. Wybierz inny wynik.|Invalid GIF address. Choose another result.
+Nie udało się pobrać GIF-a. Spróbuj ponownie lub wybierz inny.|Could not download the GIF. Try again or choose another one.
+Ten GIF przekracza 12 MB. Wybierz mniejszy.|This GIF exceeds 12 MB. Choose a smaller one.
+Ten wynik nie zawiera animacji GIF. Wybierz inny.|This result does not contain a GIF animation. Choose another one.
+Usługa GIF-ów nie odpowiada. Spróbuj ponownie.|The GIF service is not responding. Please try again.
+Nie można połączyć się z usługą GIF-ów. Sprawdź połączenie i spróbuj ponownie.|Could not connect to the GIF service. Check your connection and try again.
 Wspólny wskaźnik|Shared metric
 Opisy w legendzie|Legend labels
 Automatycznie · wspólny wskaźnik raz|Automatic · show the shared metric once

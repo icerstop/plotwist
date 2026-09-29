@@ -11,6 +11,14 @@ npm run dev
 
 Produkcja: `npm run build` (katalog `dist`). Weryfikacja obliczeń i CSV: `npm test`.
 
+## GIF-y z wyszukiwarki
+
+**Wygląd → Tło i dodatki → Wyszukaj GIF-y online** korzysta z publicznego [API GifSnap](https://gifsnap.com/docs), bez konta, klucza i opłat za zapytania. Wyniki można wstawiać jako dodatek (maks. 3) lub tło. Wyszukiwanie ma paginację, anulowanie poprzednich zapytań i krótką pamięć podręczną. Dostępność wyników zależy od zewnętrznej usługi; ręczny upload nadal działa.
+
+Adapter `src/gif-search.js` używa proxy mediów GifSnap z CORS, ponieważ bezpośredni CDN nie udostępniał CORS podczas weryfikacji 2026-09-29. Przyjmujemy pliki GIF, sprawdzamy sygnaturę i limit 12 MB także podczas pobierania. Wyniki WebP/wideo są pomijane, aby nie wstawiać nieruchomej klatki zamiast animacji. Dotychczasowy dekoder ogranicza liczbę klatek i pamięć obrazu.
+
+Wybrany plik oraz identyfikator, tytuł i dostawca zapisują się w lokalnym szkicu IndexedDB. Po wstawieniu eksport korzysta z przygotowanych klatek, bez zapytań do usługi. Oryginalne opóźnienia klatek GIF-a są zachowane: GIF 12,5 fps w filmie 60 fps powtarza klatki, nie spowalniając wykresu. PNG pozostaje pojedynczym kadrem. Położenie, rozmiar, obrót i tempo są regulowane istniejącymi narzędziami edytora.
+
 ## Repozytorium i rozwój
 
 Prywatne repozytorium GitHub: https://github.com/icerstop/plotwist. Zawiera kod, lokalne zasoby, snapshoty danych i dotychczasową historię zmian. Katalogi `node_modules`, `dist`, pliki `.env*` oraz dane robocze Sites są ignorowane.

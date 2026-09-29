@@ -4,6 +4,8 @@ import {ImagePlus,Trash2,ChevronUp,ChevronDown,RotateCcw} from 'lucide-react';
 import {decodeMedia,loadVisualDraft,saveVisualDraft,mediaAsset,releaseMedia} from './reel-media.js';
 import './visual-settings.css';
 import {normalizeDesign,reelThemes,reelLayouts,textRoles} from './reel-design.js';
+import GifSearch from './GifSearch.jsx';
+import {downloadGif,gifError,GIF_PROVIDER,GIF_DOCS} from './gif-search.js';
 
 const defaultBackground={type:'theme',color:'#142a35',color2:'#453375',angle:115,pattern:'none',animate:false,veil:0,assetId:null,fit:'cover',opacity:1,speed:1};
 const emptyVisuals=()=>({logo:normalizeLogo(),background:{...defaultBackground},stickers:[],design:normalizeDesign()});
@@ -25,17 +27,20 @@ export function VisualProvider({children}){
  function sticker(id,patch){setVisuals(v=>({...v,stickers:v.stickers.map(s=>s.id===id?{...s,...patch}:s)}));}
  function forget(id){if(!id)return;releaseMedia(id);setFiles(f=>{const next={...f};delete next[id];return next;});}
  function remove(id){const found=visuals.stickers.find(s=>s.id===id);setVisuals(v=>({...v,stickers:v.stickers.filter(s=>s.id!==id)}));forget(found?.assetId);}
- async function upload(file,target){
-  if(!file||operation.current||!ready)return;
-  if(target==='sticker'&&visuals.stickers.length>=3){setError('Możesz dodać maksymalnie 3 obrazki lub GIF-y.');return;}
+ async function upload(input,target,source=null){
+  if(!input||operation.current||!ready)return false;
+  if(target==='sticker'&&visuals.stickers.length>=3){setError('Możesz dodać maksymalnie 3 obrazki lub GIF-y.');return false;}
   operation.current=true;setBusy(true);setError('');
   try{
+   const file=typeof input==='function'?await input():input;
    const id=await decodeMedia(file);setFiles(f=>({...f,[id]:file}));
-   if(target==='background'){const old=visuals.background.assetId;background({type:'image',assetId:id,veil:.55,opacity:1});forget(old);}
+   if(target==='background'){const old=visuals.background.assetId;background({type:'image',assetId:id,veil:.55,opacity:1,source});forget(old);}
    else if(target==='logo'){const old=visuals.logo.assetId;logo({type:'custom',assetId:id,name:file.name});forget(old);}
-   else setVisuals(v=>({...v,stickers:[...v.stickers,{id,assetId:id,name:file.name,x:83,y:10,size:18,rotation:0,opacity:1,motion:'none',speed:1,layer:'front',visible:true,shadow:false}]}));
-  }catch(e){setError(e.message);}finally{operation.current=false;setBusy(false);}
+   else setVisuals(v=>({...v,stickers:[...v.stickers,{id,assetId:id,name:source?.title||file.name,source,x:83,y:10,size:18,rotation:0,opacity:1,motion:'none',speed:1,layer:'front',visible:true,shadow:false}]}));
+   return true;
+  }catch(e){setError(source?gifError(e):e.message);return false;}finally{operation.current=false;setBusy(false);}
  }
+ function importGif(item,target){return upload(()=>downloadGif(item),target,{provider:GIF_PROVIDER,id:item.id,title:item.title,url:item.url,providerUrl:GIF_DOCS});}
  function reorder(id,direction){setVisuals(v=>{const list=[...v.stickers],i=list.findIndex(s=>s.id===id),j=i+direction;if(j<0||j>=list.length)return v;[list[i],list[j]]=[list[j],list[i]];return {...v,stickers:list};});}
  function reset(){const keep=visuals.logo.assetId;for(const id of Object.keys(files))if(id!==keep)releaseMedia(id);setFiles(f=>keep&&f[keep]?{[keep]:f[keep]}:{});setVisuals(v=>({...emptyVisuals(),logo:v.logo,design:v.design}));setError('');}
  function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch})}));}
@@ -44,7 +49,7 @@ export function VisualProvider({children}){
  function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
  function metricLabel(key,language,text){setVisuals(v=>({...v,design:normalizeDesign({...v.design,metricLabels:{...v.design.metricLabels,[key]:{...v.design.metricLabels[key],[language]:text}}})}));}
  function restoreComposition(saved){setVisuals(v=>({...v,design:normalizeDesign(saved.design),stickers:v.stickers.map(s=>({...s,...saved.stickers.find(old=>old.id===s.id)}))}));}
- const context={logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
+ const context={logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,visuals,duration}),[config,visuals,duration]);}
@@ -113,6 +118,7 @@ export function VisualEditor(){
    <label className="visual-field">Wzór w tle<select value={b.pattern} onChange={e=>v.background({pattern:e.target.value})}><option value="none">Bez wzoru</option><option value="grid">Delikatna siatka</option><option value="dots">Drobne punkty</option></select></label>
    <Range label="Osłona pod tekst i wykres" value={Math.round(b.veil*100)} max={90} onChange={n=>v.background({veil:n/100})}/><p className="visual-hint">Osłona przyciemnia tło w ciemnym motywie, a rozjaśnia w jasnym. Kolor tekstu zmienisz motywem rolki.</p>
    <div className="visual-section-title"><h3>Obrazki i GIF-y</h3><span>{v.visuals.stickers.length}/3</span></div>
+   <GifSearch onAdd={v.importGif} full={v.visuals.stickers.length>=3} busy={v.busy} error={v.error}/>
    {v.visuals.stickers.map((s,i)=>{const asset=mediaAsset(s.assetId);return <details className="sticker-editor" key={s.id} open={v.visuals.stickers.length===1?true:undefined}><summary><img src={asset?.thumbnail} alt=""/><span>{s.name}<small>{asset?.type==='gif'?'Animowany GIF':'Obraz'} · {s.visible?'widoczny':'ukryty'}</small></span></summary><div className="sticker-body">
     <div className="sticker-actions"><label className="visual-check"><input type="checkbox" checked={s.visible} onChange={e=>v.sticker(s.id,{visible:e.target.checked})}/>Pokaż dodatek</label><button type="button" className="icon-btn" aria-label={`Usuń dodatek ${i+1}`} onClick={()=>v.remove(s.id)}><Trash2 size={16}/></button></div>
     <div className="sticker-positions" role="group" aria-label={`Pozycja dodatku ${i+1}`}>{[['Lewy górny',16,10],['Środek u góry',50,10],['Prawy górny',84,10]].map(([name,x,y])=><button type="button" key={name} onClick={()=>v.sticker(s.id,{x,y})}>{name}</button>)}</div>
