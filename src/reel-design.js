@@ -19,12 +19,32 @@ const number=(v,fallback,min,max)=>Number.isFinite(Number(v))?clamp(Number(v),mi
 export function normalizeDesign(raw={}){
  const text={};for(const role of textRoles){const t=raw.text?.[role.id]||{};text[role.id]={size:number(t.size,100,role.min,role.max),color:/^#[0-9a-f]{6}$/i.test(t.color||'')?t.color:null};}
  const positions={};for(const id of ['header','content']){const p=raw.positions?.[id]||{};positions[id]={x:number(p.x,50,0,100),y:number(p.y,0,-20,20),scale:number(p.scale,100,65,100)};}
- return {theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
+ return {theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',chartHeight:number(raw.chartHeight??100,100,50,100),text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
 }
 export const designOf=config=>config.visuals?.design||normalizeDesign({theme:config.theme});
 export const themeOf=config=>reelThemes.find(t=>t.id===designOf(config).theme)||reelThemes[0];
 export const textSize=(config,role,size)=>size*(designOf(config).text?.[role]?.size??100)/100;
 export const textColor=(config,role,fallback)=>designOf(config).text?.[role]?.color||fallback;
+// Resize only the plot, anchored above the legend. Old saved designs fill the space.
+export const chartTop=(config,top,bottom)=>bottom-(bottom-top)*number(designOf(config).chartHeight??100,100,50,100)/100;
+export function seriesPlotLayout(config,width,height,headerBottom){
+ const short=height<1400,header=sectionTransform(config,'header',width,height),content=sectionTransform(config,'content',width,height);
+ const legendStep=Math.max(config.compactTitle?52:43,textSize(config,'labels',27)+16,textSize(config,'values',27)+16);
+ const bottom=height-(short?235:285)-100-(Math.max(1,config.series?.length||0)-1)*legendStep;
+ const gap=48,minPlot=Math.min(280,height*.18);
+ let headerScale=1,top=content.base.y+32;
+ if(designOf(config).layout!=='chart-first'){
+  const maxHeaderEnd=content.y+(bottom-minPlot-gap-content.base.y)*content.scale;
+  headerScale=clamp((maxHeaderEnd-header.y)/((headerBottom-header.base.y)*header.scale),.25,1);
+  const headerEnd=header.y+(headerBottom-header.base.y)*header.scale*headerScale;
+  top=content.base.y+(headerEnd+gap-content.y)/content.scale;
+ }else{
+  headerScale=clamp((header.footerTop-header.y)/((headerBottom-header.base.y)*header.scale),.25,1);
+ }
+ // Manual offsets can consume the remaining room; keep a positive plot in that case.
+ top=Math.min(top,bottom-100);
+ return {top:chartTop(config,top,bottom),bottom,legendStep,headerScale};
+}
 export function setReelText(ctx,config,role,size,family,color,weight=''){
  ctx.font=`${weight?weight+' ':''}${textSize(config,role,size)}px ${family}`;
  if(color)ctx.fillStyle=textColor(config,role,color);
@@ -32,7 +52,8 @@ export function setReelText(ctx,config,role,size,family,color,weight=''){
 // Fit whole sections uniformly: charts, logos and type keep their proportions.
 // Positions are clamped to the content area; the attribution footer stays separate.
 export function sectionTransform(config,section,width,height){
- const ai=!!config.ai,short=height<1400,start=ai?690:short?height*.46:700,end=ai?1690:height-(short?205:220);
+ const ai=!!config.ai,short=height<1400,plot=['line','area','bar'].includes(config.chart||'line');
+ const start=ai?690:short?height*(plot ? .24 : .46):700,end=ai?1690:height-(short?205:220);
  const base=section==='header'?{x:50,y:50,w:980,h:start-75}:{x:50,y:start,w:980,h:end-start};
  const d=designOf(config),p=d.positions?.[section]||{x:50,y:0,scale:100};
  let scale=1,targetY=base.y;

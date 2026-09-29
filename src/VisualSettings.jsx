@@ -62,6 +62,9 @@ function DesignEditor(){
   <button type="button" className="text-btn" onClick={()=>updateText({size:100,color:null})}>Przywróć styl tego tekstu</button>
   <p className="visual-hint">100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p>
   <div className="visual-section-title"><h3>Kompozycja</h3></div>
+  <Range label="Wysokość wykresu" value={d.chartHeight} min={50} max={100} onChange={chartHeight=>v.design({chartHeight})}/>
+  <p className="visual-hint">100% wypełnia dostępne miejsce między nagłówkiem a legendą. Suwak zmienia wysokość obszaru osi, bez zmiany rozmiaru tekstu i skali wartości. Dotyczy linii, obszarów, kolumn i wykresów punktowych.</p>
+  <button type="button" className="text-btn" onClick={()=>v.design({chartHeight:100})}>Dopasuj wysokość do wolnego miejsca</button>
   <div className="reel-layout-grid" role="group" aria-label="Układ rolki">{reelLayouts.map(l=><button type="button" key={l.id} aria-pressed={d.layout===l.id} className={d.layout===l.id?'selected':''} onClick={()=>v.design({layout:l.id,positions:normalizeDesign().positions})}><span className={`layout-mini ${l.id}`} aria-hidden="true"><i/><b/></span><strong>{l.name}</strong><small>{l.description}</small></button>)}</div>
   <details className="reel-position-editor"><summary>Dopasuj położenie elementów</summary>
    <label className="visual-field">Przesuwany element<select aria-label="Przesuwany element" value={section} onChange={e=>setSection(e.target.value)}><option value="header">Nagłówek i opis</option><option value="content">Wykres i legenda</option></select></label>

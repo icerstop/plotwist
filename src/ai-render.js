@@ -6,7 +6,7 @@ import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
 import {crossText} from './series-render.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
 import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
-import {themeOf,textSize,textColor,setReelText,beginReelSection} from './reel-design.js';
+import {themeOf,textSize,textColor,setReelText,beginReelSection,chartTop} from './reel-design.js';
 function typography(font,language,config){
 function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels'){
  if(!custom)text=translate(text,language);
@@ -85,7 +85,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    ctx.restore();wrap(ctx,`${b.unit} · ostatni dostępny pomiar każdego wariantu`,76,1625,920,28,2,muted);
  } else if(mode==='records'){
    const motion=aiMotionFrame(rows,progress,duration,transition,timeSeconds),{frames,frame:now,before:old,mix,current}=motion;
-   const top=815,bottom=1410,left=130,right=960,axis=aiAxis();
+   const bottom=1410,top=chartTop(config,815,bottom),left=130,right=960,axis=aiAxis();
    const start=frames[0].time,end=frames.at(-1).time,x=t=>left+(t-start)/(end-start||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
    if(caption)wrap(ctx,caption,left,top-22,850,23,1,muted);
    wrap(ctx,`${b.unit} · najwyższy dotąd wynik w filtrze`,76,727,920,30,2,muted);
@@ -103,7 +103,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    if(now.record.id!==old.record.id&&mix<1){recordLabel(old.record,clamp(1-mix*2));recordLabel(now.record,clamp(mix*2-1));}else recordLabel(now.record,1);
    wrap(ctx,new Date(current).toISOString().slice(0,10),76,1669,920,27,1,muted,false,'date');
  } else if(mode==='scatter'){
-   const top=775,bottom=1450,left=130,right=960;
+   const bottom=1450,top=chartTop(config,775,bottom),left=130,right=960;
    const axis=aiAxis(),min=axis.min,max=axis.max;
    const t0=Date.parse(first.date),t1=Date.parse(last.date);const x=d=>left+(Date.parse(d)-t0)/(t1-t0||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
    if(caption)wrap(ctx,caption,left,top-22,850,23,1,muted);

@@ -90,6 +90,9 @@ Przesuwany element|Element to move
 Nagłówek i opis|Heading and subtitle
 Wykres i legenda|Chart and legend
 Skala elementu|Element scale
+Wysokość wykresu|Chart height
+100% wypełnia dostępne miejsce między nagłówkiem a legendą. Suwak zmienia wysokość obszaru osi, bez zmiany rozmiaru tekstu i skali wartości. Dotyczy linii, obszarów, kolumn i wykresów punktowych.|100% fills the available space between the heading and legend. The slider changes the plot height without changing text size or the value scale. Applies to line, area, column and scatter charts.
+Dopasuj wysokość do wolnego miejsca|Fit chart to available space
 Położenie poziome|Horizontal position
 Przesunięcie pionowe|Vertical offset
 Przywróć pozycję elementu|Reset element position

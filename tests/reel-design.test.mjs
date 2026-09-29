@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeDesign,reelThemes,reelLayouts,sectionTransform} from '../src/reel-design.js';
+import {normalizeDesign,reelThemes,reelLayouts,sectionTransform,seriesPlotLayout,chartTop} from '../src/reel-design.js';
 import {drawReel} from '../src/render.js';
 
 test('preset foreground and secondary text remain readable on every theme background',()=>{
@@ -18,6 +18,33 @@ test('section movement and scaling stay on canvas and clear of attribution in al
  }
 });
 
+test('plots use the room below the measured header and keep the legend above the footer',()=>{
+ for(const height of [1080,1350,1920])for(const count of [1,5,6])for(const layout of reelLayouts){
+  const config={compactTitle:true,series:Array.from({length:count},()=>({})),visuals:{design:normalizeDesign({layout:layout.id})}};
+  const rawHeaderEnd=height<1400?430:590,full=seriesPlotLayout(config,1080,height,rawHeaderEnd);
+  const half=seriesPlotLayout({...config,visuals:{design:normalizeDesign({layout:layout.id,chartHeight:50})}},1080,height,rawHeaderEnd);
+  assert.ok(full.bottom-full.top>=190,`visible plot: ${height}, ${count}, ${layout.id}`);
+  assert.ok(Math.abs(half.bottom-half.top-(full.bottom-full.top)/2)<1e-8);
+  assert.equal(half.bottom,full.bottom);assert.equal(half.headerScale,full.headerScale);assert.equal(half.legendStep,full.legendStep);
+  assert.ok(full.bottom+100+(count-1)*full.legendStep<=height-235);
+  if(layout.id!=='chart-first'){
+   const h=sectionTransform(config,'header',1080,height),c=sectionTransform(config,'content',1080,height);
+   const headerEnd=h.y+(rawHeaderEnd-h.base.y)*h.scale*full.headerScale,plotTop=c.y+(full.top-c.base.y)*c.scale;
+   assert.ok(plotTop-headerEnd>=47.99,'header and plot do not overlap');
+  }
+ }
+ const config={compactTitle:true,series:Array(5).fill({})},plot=seriesPlotLayout(config,1080,1350,430);
+ assert.ok(plot.bottom-plot.top>300,'4:5 example no longer has the old 159 px plot');
+});
+
+test('chart height restores old drafts, clamps bad settings and leaves the value scale independent',()=>{
+ assert.equal(normalizeDesign().chartHeight,100);assert.equal(normalizeDesign({chartHeight:null}).chartHeight,100);
+ assert.equal(normalizeDesign({chartHeight:'bad'}).chartHeight,100);assert.equal(normalizeDesign({chartHeight:0}).chartHeight,50);assert.equal(normalizeDesign({chartHeight:999}).chartHeight,100);
+ const config={visuals:{design:normalizeDesign({chartHeight:75})}};
+ assert.equal(chartTop(config,200,1000),400);assert.equal(chartTop({...config,axisScale:'log',axisRange:'dynamic'},200,1000),400);
+ assert.equal(normalizeDesign(JSON.parse(JSON.stringify(config.visuals.design))).chartHeight,75);
+});
+
 function recorder(){
  const drawn=[],stack=[];
  const ctx=new Proxy({font:'24px Arial',fillStyle:'#000000',globalAlpha:1,textAlign:'left',save(){stack.push({font:this.font,fillStyle:this.fillStyle,globalAlpha:this.globalAlpha,textAlign:this.textAlign});},restore(){Object.assign(this,stack.pop());},measureText(t){return {width:String(t).length*(parseFloat(this.font.match(/[\d.]+px/)?.[0])||24)*.5};},fillText(t,x,y){drawn.push({text:String(t),font:this.font,color:this.fillStyle,x,y});}}, {get:(o,k)=>k in o?o[k]:(...args)=>{for(const v of args)if(typeof v==='number')assert.ok(Number.isFinite(v));}});
@@ -26,6 +53,16 @@ function recorder(){
 const base={title:'Title',subtitle:'Subtitle',source:'Source',fontId:'arial',series:[{name:'Series',points:[{x:2020,y:10},{x:2021,y:20}]}]};
 const rows=[{id:'a',modelId:'a',model:'Model A',date:'2020-01-01',score:10},{id:'b',modelId:'b',model:'Model B',date:'2021-01-01',score:20}];
 const benchmark={id:'eci',name:'Benchmark',unit:'pts',source:'Source',retrievedAt:'2026-01-01',baseline:{name:'Human',score:12,note:'Reference'}};
+test('height control changes series and AI plot geometry without moving text or changing data',()=>{
+ const configs=['line','area','bar'].map(chart=>({...base,format:'4:5',chart})).concat(['records','scatter'].map(mode=>({...base,ai:{rows,benchmark,mode,basis:'release'}})));
+ for(const config of configs){
+  const render=chartHeight=>{const r=recorder(),ctx=r.canvas.getContext(),lines=[];ctx.moveTo=(x,y)=>lines.push([x,y]);drawReel(r.canvas,{...config,visuals:{design:normalizeDesign({chartHeight})}},1,12);return {text:r.drawn,lines};};
+  const full=render(100),half=render(50);
+  assert.notDeepEqual(full.lines,half.lines);
+  for(const text of ['Title','Jakub Bilski'])assert.deepEqual(full.text.filter(t=>t.text===text),half.text.filter(t=>t.text===text));
+  assert.deepEqual(full.text.map(t=>t.text),half.text.map(t=>t.text));
+ }
+});
 test('line, area and column legends smoothly swap complete rows and remain repeatable on seek',()=>{
  const series=[{name:'Alpha',color:'#ff0000',customColor:true,points:[{x:0,y:20},{x:1,y:5},{x:2,y:4}]},{name:'Beta',color:'#0000ff',customColor:true,points:[{x:0,y:10},{x:1,y:30},{x:2,y:40}]}];
  const original=structuredClone(series);

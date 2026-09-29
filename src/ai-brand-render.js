@@ -4,7 +4,7 @@ import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTi
 import {reelFont} from './reel-style.js';
 import {clamp,lerp,rankMotion} from './presentation.js';
 import {aiValue} from './ai.js';
-import {themeOf,textSize,textColor} from './reel-design.js';
+import {themeOf,textSize,textColor,chartTop} from './reel-design.js';
 
 function ellipsis(ctx,text,width){let value=String(text||'');if(ctx.measureText(value).width<=width)return value;while(value.length&&ctx.measureText(value+'…').width>width)value=value.slice(0,-1);return value+'…';}
 export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,grid,panel,wrap}){
@@ -46,7 +46,9 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  const range=scale.dynamic?visibleAiBounds(raw,current,history.times[0],history.times.at(-1),duration,transition):bounds(raw.map(r=>r.score));
  const axis=createAxis(range,{log:scale.log,dynamic:scale.dynamic,includeZero:!scale.log,fixedDomain:[Math.min(0,range.min),b.max||Math.max(1,range.max)]});
  if(mode==='records'){
-  const left=144,right=962,top=840,bottom=1210;
+  const singleColumn=brands.length<=4;
+  const legendHeight=singleColumn?(brands.length-1)*82+(showLeaderNames?37:0):(Math.ceil(brands.length/2)-1)*119+(showLeaderNames?80:43);
+  const legendTop=1615-legendHeight,left=144,right=962,bottom=legendTop-97,top=chartTop(config,840,bottom);
   const first=history.times[0],last=history.times.at(-1),x=t=>left+(t-first)/(last-first||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top),currentX=x(current);
   if(caption)wrap(ctx,caption,left,top-25,840,21,1,muted);
   for(const tick of axis.ticks){ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(tick));ctx.lineTo(right,y(tick));ctx.stroke();ctx.textAlign='right';text(formatAxisTick(tick,config.language),left-20,y(tick)+8,118,24,muted);ctx.textAlign='left';}
@@ -59,8 +61,8 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   }ctx.restore();
   text(history.start,left,bottom+39,390,24,muted);ctx.textAlign='right';text(history.end,right,bottom+39,390,24,muted);ctx.textAlign='left';
   const legend=rankMotion(brands.map(brand=>byId(before,brand.id)?.score),brands.map(brand=>byId(frame,brand.id)?.score),mix);
-  brands.forEach((brand,i)=>{const singleColumn=brands.length<=4,{from,to,position}=legend[i];
-   const x=76+(singleColumn?0:lerp(from%2,to%2,mix)*482),y=1307+(singleColumn?position*82:lerp(Math.floor(from/2),Math.floor(to/2),mix)*119),now=byId(frame,brand.id),old=byId(before,brand.id);
+  brands.forEach((brand,i)=>{const {from,to,position}=legend[i];
+   const x=76+(singleColumn?0:lerp(from%2,to%2,mix)*482),y=legendTop+(singleColumn?position*82:lerp(Math.floor(from/2),Math.floor(to/2),mix)*119),now=byId(frame,brand.id),old=byId(before,brand.id);
    identity(brand,now?.winner,old?.winner,x,y,singleColumn?660:430,!singleColumn);
    exactScore(now,old,singleColumn?776:x,singleColumn?y:y+(showLeaderNames?80:43),singleColumn?225:430,singleColumn?34:29);
   });

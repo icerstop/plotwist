@@ -4,8 +4,8 @@ import { reelFont, reelTitleSize, drawSignature } from './reel-style.js';
 import { preloadReelAssets } from './reel-assets.js';
 import { drawVisualBackground, drawVisualOverlays } from './visual-render.js';
 import {drawSeriesContent} from './series-render.js';
-import {themeOf,textSize,textColor,setReelText,beginReelSection} from './reel-design.js';
-function wrap(ctx,text,x,y,width,lineHeight,maxLines=3){const words=text.split(/\s+/);let line='',lines=[];for(const w of words){if(ctx.measureText(line+' '+w).width>width&&line){lines.push(line);line=w;}else line=line?line+' '+w:w;}if(line)lines.push(line);lines.slice(0,maxLines).forEach((l,i)=>ctx.fillText(i===maxLines-1&&lines.length>maxLines?l+'…':l,x,y+i*lineHeight));return Math.min(lines.length,maxLines)*lineHeight;}
+import {themeOf,textSize,textColor,setReelText,beginReelSection,seriesPlotLayout} from './reel-design.js';
+function wrap(ctx,text,x,y,width,lineHeight,maxLines=3,draw=true){const words=text.split(/\s+/);let line='',lines=[];for(const w of words){if(ctx.measureText(line+' '+w).width>width&&line){lines.push(line);line=w;}else line=line?line+' '+w:w;}if(line)lines.push(line);if(draw)lines.slice(0,maxLines).forEach((l,i)=>ctx.fillText(i===maxLines-1&&lines.length>maxLines?l+'…':l,x,y+i*lineHeight));return Math.min(lines.length,maxLines)*lineHeight;}
 export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
  if(config.ai){drawAiReel(canvas,config,progress,timeSeconds);return;}
  const ctx=canvas.getContext('2d'); const {series=[],title,subtitle,source,theme='dark',format='9:16',chart='line',unit='',isCoffee=false,xType='year'}=config;
@@ -15,17 +15,25 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  ctx.textAlign='left';ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);
  drawVisualBackground(ctx,width,height,config,timeSeconds);
  const endHeader=beginReelSection(ctx,config,'header',width,height);
- ctx.fillStyle=colors[0];[20,36,56].forEach((h,i)=>ctx.fillRect(78+i*18,118-h,10,h));
  const preferred=textSize(config,'title',height<1400?75:config.compactTitle?110:145),maxLines=height<1400?2:3;
  const headerBottom=height<1400?height*.46-28:670,baseHeadingY=height<1400?200:240;
  // Lower the heading without changing its font fit or the chart's position.
  const headingY=baseHeadingY+(height<1400?40:64);
  const titleSize=reelTitleSize(ctx,title||'Twoja historia.',config.fontId,preferred,920,maxLines,headerBottom-baseHeadingY-100);
- ctx.fillStyle=textColor(config,'title',fg);ctx.font=`bold ${titleSize}px ${font}`;const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines);
- setReelText(ctx,config,'subtitle',29,font,muted);wrap(ctx,subtitle||'',78,headingY+headingHeight+16,910,textSize(config,'subtitle',35),2);
+ ctx.font=`bold ${titleSize}px ${font}`;
+ const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines,false),subtitleY=headingY+headingHeight+16,subtitleStep=textSize(config,'subtitle',35);
+ setReelText(ctx,config,'subtitle',29,font,muted);
+ const subtitleHeight=wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2,false);
+ const headerEnd=subtitleHeight?subtitleY+subtitleHeight-subtitleStep+textSize(config,'subtitle',29)*.3:headingY+headingHeight-titleSize*1.08+titleSize*.3;
+ const plot=seriesPlotLayout(config,width,height,headerEnd),hasPlot=['line','area','bar'].includes(chart);
+ // Only a crowded small frame needs a more compact header; the height slider
+ // itself never scales text, logos, the legend or the attribution footer.
+ if(hasPlot){ctx.translate(50,50);ctx.scale(plot.headerScale,plot.headerScale);ctx.translate(-50,-50);}
+ ctx.fillStyle=colors[0];[20,36,56].forEach((h,i)=>ctx.fillRect(78+i*18,118-h,10,h));
+ ctx.fillStyle=textColor(config,'title',fg);ctx.font=`bold ${titleSize}px ${font}`;wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines);
+ setReelText(ctx,config,'subtitle',29,font,muted);wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2);
  endHeader();const endContent=beginReelSection(ctx,config,'content',width,height);
- const legendStep=config.compactTitle?52:43;
- const top=height<1400?height*.48:config.compactTitle?height*.43:height*.47,bottom=Math.min(height===1080?700:height===1350?920:height*.75,height-(height<1400?235:285)-100-(Math.max(1,series.length)-1)*legendStep),left=135,right=900;
+ const {top,bottom,legendStep}=plot;
  const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop:height<1400?height*.48:730,formatValue:n=>formatValue(n,config.language),timeSeconds});
  endContent();
  drawVisualOverlays(ctx,width,height,config,timeSeconds);
