@@ -496,4 +496,60 @@ Podaj dodatnią kwotę wpłaty w złotych.|Enter a positive contribution amount 
 Nieprawidłowa częstotliwość.|Invalid frequency.
 Nieprawidłowy zakres harmonogramu.|Invalid schedule range.
 Cel i regularny wydatek wymagają trybu „Inwestycje w PLN”. Usuń je lub zmień tryb.|Goals and recurring expenses require “Investments in PLN” mode. Remove them or change mode.
+Biblioteka danych|Data library
+Wczytywanie biblioteki…|Loading library…
+Pomysły mają już swoje dane.|Your ideas now have datasets.
+Otwórz bibliotekę danych|Open data library
+Częściowy zakres|Partial coverage
+Dane opracowane|Data prepared
+Symulacja|Simulation
+serii ·|series ·
+serii w bibliotece historii|series in the story library
+CSV i JSON ze źródłami. Zakres części tematów jest ograniczony.|CSV and JSON with sources. Some topics have partial coverage.
+Opracowane dane chronologiczne, definicje, jednostki i linki do źródeł. Oddzielone pomiary, obliczenia i progi minimalne.|Chronological datasets, definitions, units and direct source links. Measurements, calculations and lower bounds are kept distinct.
+Nie udało się wczytać biblioteki danych.|Could not load the data library.
+Dodaj przynajmniej jedną serię.|Add at least one series.
+Na jednej rolce można pokazać maksymalnie 6 serii.|A reel supports up to 6 series.
+Data początkowa musi poprzedzać końcową.|The start date must precede the end date.
+Te serie mają różne jednostki. Wybierz indeks 100, aby porównać tempo zmian, albo usuń niezgodne serie.|These series have different units. Choose index 100 to compare relative change, or remove incompatible series.
+Indeks zmian wymaga konkretnych wartości. Seria z progami „ponad” lub dolną granicą może być pokazana w oryginalnej jednostce.|Growth indices require exact values. A series with lower bounds or “more than” thresholds can use its original unit.
+Indeks 100 wymaga dodatniej wartości początkowej. Zmień zakres dat.|Index 100 requires a positive starting value. Change the date range.
+To nie jest projekt z biblioteki historii.|This is not a story-library project.
+Projekt zawiera nieznane lub powtórzone serie.|The project contains unknown or duplicate series.
+Nieprawidłowe daty w projekcie.|Invalid project dates.
+iPhone · przychody|iPhone · revenue
+iPhone · sprzedane sztuki|iPhone · units sold
+Apple · cena zamknięcia|Apple · closing price
+Apple · kurs na koniec roku fiskalnego|Apple · fiscal-year-end price
+Spotify · przychody|Spotify · revenue
+Azure · dolna granica przychodów|Azure · revenue lower bound
+mln USD / rok|USD million / year
+mln USD / kwartał|USD million / quarter
+mln USD / rok fiskalny|USD million / fiscal year
+mln EUR / rok|EUR million / year
+USD / akcję|USD / share
+mln sztuk / rok|million units / year
+mln sztuk|million units
+mln MAU|million MAU
+mln WAU|million WAU
+mln subskrybentów|million subscribers
+EUR / miesiąc|EUR / month
+indeks 100|index 100
+indeks 1950 = 100|index 1950 = 100
+indeks r/r|year-on-year index
+zgłoszenia / rok|applications / year
+zgłoszenia / mln osób|applications / million people
+mies. płacy brutto / m²|months of gross pay / m²
+PLN / miesiąc|PLN / month
+zł w cenach 2000|PLN at 2000 prices
+USD / mln tokenów (3:1)|USD / million tokens (3:1)
+% nowych aut|% of new cars
+h / pracownika / rok|hours / worker / year
+sekundy|seconds
+tranzystory|transistors
+Adopcja aplikacji · udokumentowane punkty|App adoption · documented milestones
+Słońce i inne źródła odnawialne|Solar and other renewables
+Polska · CPI rok poprzedni = 100|Poland · CPI previous year = 100
+Polska · poziom cen (1950 = 100)|Poland · price level (1950 = 100)
+Siła nabywcza 100 zł (ceny 2000)|Purchasing power of PLN 100 (2000 prices)
 `;

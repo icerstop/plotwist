@@ -1,0 +1,254 @@
+{
+  "builtAt": "2026-09-29T00:34:07.841444+00:00",
+  "topics": 27,
+  "series": 1066,
+  "observations": 41649,
+  "missingCells": 15724,
+  "duplicateDates": 0,
+  "nonFiniteValues": 0,
+  "coverage": [
+    {
+      "id": "IT.NET.USER.ZS",
+      "status": "ready",
+      "series": 12,
+      "observations": 404,
+      "start": "1990-12-31",
+      "end": "2025-12-31",
+      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+    },
+    {
+      "id": "NY.GDP.PCAP.KD",
+      "status": "ready",
+      "series": 12,
+      "observations": 732,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+    },
+    {
+      "id": "SP.DYN.LE00.IN",
+      "status": "ready",
+      "series": 12,
+      "observations": 780,
+      "start": "1960-12-31",
+      "end": "2024-12-31",
+      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+    },
+    {
+      "id": "IT.CEL.SETS.P2",
+      "status": "ready",
+      "series": 12,
+      "observations": 625,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+    },
+    {
+      "id": "GB.XPD.RSDV.GD.ZS",
+      "status": "ready",
+      "series": 12,
+      "observations": 327,
+      "start": "1996-12-31",
+      "end": "2023-12-31",
+      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+    },
+    {
+      "id": "EG.ELC.ACCS.ZS",
+      "status": "ready",
+      "series": 12,
+      "observations": 399,
+      "start": "1990-12-31",
+      "end": "2024-12-31",
+      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+    },
+    {
+      "id": "SP.URB.TOTL.IN.ZS",
+      "status": "ready",
+      "series": 12,
+      "observations": 792,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+    },
+    {
+      "id": "NE.EXP.GNFS.ZS",
+      "status": "ready",
+      "series": 12,
+      "observations": 672,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+    },
+    {
+      "id": "coffee",
+      "status": "simulation",
+      "series": 0,
+      "observations": 0,
+      "start": null,
+      "end": null,
+      "limitations": "Model matematyczny w dotychczasowym studiu. Nie istnieje źródłowy historyczny dataset dla hipotetycznej stałej stopy zwrotu."
+    },
+    {
+      "id": "battery",
+      "status": "partial",
+      "series": 1,
+      "observations": 34,
+      "start": "1991-12-31",
+      "end": "2024-12-31",
+      "limitations": "Pobrano historię ogniw, nie całych pakietów. Brak porównywalnej historii pakietów z tego źródła."
+    },
+    {
+      "id": "solar",
+      "status": "partial",
+      "series": 82,
+      "observations": 1284,
+      "start": "1984-12-31",
+      "end": "2025-12-31",
+      "limitations": "LCOE nowych elektrowni, ceny stałe 2025. Ten zbiór nie obejmuje paliw kopalnych ani cen energii dla gospodarstw domowych."
+    },
+    {
+      "id": "storage",
+      "status": "ready",
+      "series": 4,
+      "observations": 136,
+      "start": "1956-12-31",
+      "end": "2023-12-31",
+      "limitations": "Najniższa historyczna cena odnotowana do danego roku; nie średnia cena rynkowa. Serie HDD, SSD, RAM i flash są rozdzielone."
+    },
+    {
+      "id": "chips",
+      "status": "partial",
+      "series": 1,
+      "observations": 39,
+      "start": "1971-12-31",
+      "end": "2021-12-31",
+      "limitations": "Zestaw OWID/Rupp pokazuje historyczny trend mikroprocesorów; nie identyfikuje pojedynczych chipów ani GPU. Ułamkowe liczby pozostawiono tak, jak publikuje źródło."
+    },
+    {
+      "id": "ev",
+      "status": "partial",
+      "series": 64,
+      "observations": 817,
+      "start": "2010-12-31",
+      "end": "2025-12-31",
+      "limitations": "Dostępny udział BEV + PHEV łącznie. To nie jest udział samych BEV; brak prognoz. Metadane źródła mają niespójne oznaczenie edycji 2025/2026, zachowane w pakiecie."
+    },
+    {
+      "id": "work",
+      "status": "ready",
+      "series": 274,
+      "observations": 10028,
+      "start": "1870-12-31",
+      "end": "2023-12-31",
+      "limitations": "Produktywność PPP i godziny pochodzą z Penn World Table 11.0. Godziny przed 1950 r. z Huberman/Minns dotyczą innej populacji, dlatego zachowano je jako osobne serie."
+    },
+    {
+      "id": "nvidia",
+      "status": "partial",
+      "series": 3,
+      "observations": 150,
+      "start": "2014-04-27",
+      "end": "2026-07-26",
+      "limitations": "Daty końca kwartałów fiskalnych. Druga seria obejmuje wszystkie obszary poza Data Center, a nie samo Gaming. W FY2027 NVIDIA połączyła pozostałe segmenty jako Edge Computing; zmianę raportowania opisano w metadanych."
+    },
+    {
+      "id": "space",
+      "status": "ready",
+      "series": 65,
+      "observations": 80,
+      "start": "1962-12-31",
+      "end": "2019-12-31",
+      "limitations": "Koszt USD 2021/kg na LEO przypisany do roku pierwszego udanego startu rakiety, nie historia cennika każdego roku. Dostępne rekordy minimalnego kosztu i pojedyncze rakiety."
+    },
+    {
+      "id": "apple",
+      "status": "ready",
+      "series": 4,
+      "observations": 11586,
+      "start": "1980-12-12",
+      "end": "2026-09-25",
+      "limitations": "Roczne przychody iPhone 2008–2025 oraz sprzedaż sztuk 2008–2018. Apple zakończyło raportowanie sztuk; nie uzupełniono ich szacunkami. Przychody i ceny akcji mają inne jednostki. Wczesna kategoria obejmuje też produkty i usługi powiązane."
+    },
+    {
+      "id": "spotify",
+      "status": "ready",
+      "series": 4,
+      "observations": 36,
+      "start": "2017-12-31",
+      "end": "2025-12-31",
+      "limitations": "Roczne obserwacje 2017–2025: MAU, Premium oraz miesięczne ARPU uśrednione za rok. Nie należy dzielić rocznych przychodów przez stan subskrybentów na koniec roku i nazywać wyniku ARPU."
+    },
+    {
+      "id": "cloud",
+      "status": "partial",
+      "series": 3,
+      "observations": 23,
+      "start": "2014-12-31",
+      "end": "2026-06-30",
+      "limitations": "AWS i Google Cloud: przychody roczne. Azure: tylko oficjalnie ujawnione progi >75 i >100 mld USD dla FY2025/26, jako oddzielna seria dolnych granic. Brak wymyślonej historii Azure."
+    },
+    {
+      "id": "ai-cost",
+      "status": "ready",
+      "series": 21,
+      "observations": 119,
+      "start": "2021-11-20",
+      "end": "2025-02-05",
+      "limitations": "Historyczny minimalny koszt osiągnięcia danego progu benchmarku, według Epoch AI. Cena mieszana 3:1 wejście:wyjście; nie koszt całego zadania ani aktualny cennik. Różne progi benchmarków pozostają osobnymi seriami."
+    },
+    {
+      "id": "patents",
+      "status": "ready",
+      "series": 332,
+      "observations": 8360,
+      "start": "1980-12-31",
+      "end": "2021-12-31",
+      "limitations": "Wnioski patentowe rezydentów (WIPO przez World Bank), liczby bezwzględne i na milion mieszkańców. To nie liczba udzielonych patentów. Można łączyć z już dostępnymi nakładami B+R."
+    },
+    {
+      "id": "inflation",
+      "status": "ready",
+      "series": 3,
+      "observations": 178,
+      "start": "1950-12-31",
+      "end": "2025-12-31",
+      "limitations": "Roczne CPI GUS od 1950 r. Łańcuch cen obliczono mnożąc indeksy rok do roku; nie sumując inflacji. Kwota 100 zł oznacza siłę nabywczą współczesnej jednostki pieniężnej w cenach roku bazowego, nie historyczny banknot sprzed denominacji."
+    },
+    {
+      "id": "wages",
+      "status": "ready",
+      "series": 85,
+      "observations": 3772,
+      "start": "2002-12-31",
+      "end": "2026-06-30",
+      "limitations": "17 miast. Ceny transakcyjne NBP, rynek pierwotny i wtórny. Płace GUS BDL: brutto, podmioty 10+ i sfera budżetowa. Wskaźnik dostępności: średnia z 4 kwartałów cen / średnia miesięczna płaca w tym samym mieście i roku. Nie jest czasem oszczędzania po kosztach życia."
+    },
+    {
+      "id": "gaming",
+      "status": "partial",
+      "series": 18,
+      "observations": 249,
+      "start": "1998-03-31",
+      "end": "2026-03-31",
+      "limitations": "Oficjalne roczne dostawy sprzętu Nintendo w latach fiskalnych kończących się 31 marca. Nie sell-through. Starsze konsole nie mają kompletnej historii od premiery; skumulowane serie tworzone tylko od pierwszego roku sprzedaży. Kolumny zbiorcze „2015~” i „2024~” pominięto, bo nie oznaczają jednego roku. Brak kompletnej historii Sony/Microsoft."
+    },
+    {
+      "id": "adoption",
+      "status": "partial",
+      "series": 4,
+      "observations": 23,
+      "start": "2011-12-31",
+      "end": "2025-07-31",
+      "limitations": "Oddzielono MAU, WAU i regiony. Facebook: roczne MAU 2011–2023, później firma zakończyła raportowanie tej miary. Instagram, ChatGPT i TikTok: komunikaty o kamieniach milowych, nie ciągłe pomiary. Brak wspólnej definicji pozwalającej na uczciwy wyścig wszystkich aplikacji do 100 mln."
+    },
+    {
+      "id": "internet-speed",
+      "status": "partial",
+      "series": 2,
+      "observations": 4,
+      "start": "2019-11-30",
+      "end": "2023-03-31",
+      "limitations": "Archiwalne pomiary Ofcom dla Wielkiej Brytanii: mediana realnej przepustowości domowego łącza do routera, 2019 i 2023. To nie historia reklamowanych prędkości ani modemów od lat 90."
+    }
+  ]
+}

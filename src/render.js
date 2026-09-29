@@ -1,4 +1,4 @@
-import { displayDate } from './market.js';
+import { timelineDate } from './observation-date.js';
 import { drawAiReel } from './ai-render.js';
 import { reelFont, reelTitleSize, drawSignature } from './reel-style.js';
 import { preloadReelAssets } from './reel-assets.js';
@@ -27,7 +27,7 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop:height<1400?height*.48:730,formatValue:n=>formatValue(n,config.language),timeSeconds});
  endContent();
  drawVisualOverlays(ctx,width,height,config,timeSeconds);
- setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';ctx.fillText(xType==='date'?displayDate(Math.floor(current),config.language):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)),1000,height-175,924);ctx.textAlign='left';
+ setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';ctx.fillText(xType==='date'?timelineDate(current,config):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)),1000,height-175,924);ctx.textAlign='left';
  setReelText(ctx,config,'source',24,font,muted);wrap(ctx,source||'',80,height-132,920,textSize(config,'source',27),2);
  drawSignature(ctx,width,height,config.fontId,dark,config);
 }

@@ -33,7 +33,7 @@ export function visibleSeriesBounds(series,current,log=false){
   if(!prefix){let range=bounds([]);prefix=s.points.map(p=>{range=extend(range,bounds([p.y]));return range;});seriesBoundsCache.set(s.points,prefix);}
   const index=upperBound(s.points,current,p=>p.x)-1,previous=s.points[index],p=s.points[index+1];
   if(index>=0)result=extend(result,prefix[index]);
-   if(p&&previous&&Number.isFinite(previous.y)&&Number.isFinite(p.y)&&p.x>previous.x){
+   if(s.interpolation!=='step'&&p&&previous&&Number.isFinite(previous.y)&&Number.isFinite(p.y)&&p.x>previous.x){
     const t=clamp((current-previous.x)/(p.x-previous.x));
     const v=log?Math.exp(lerp(Math.log(previous.y),Math.log(p.y),t)):lerp(previous.y,p.y,t);
     result=extend(result,bounds([v]));

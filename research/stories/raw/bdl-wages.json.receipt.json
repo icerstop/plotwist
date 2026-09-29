@@ -1,0 +1,6 @@
+{
+  "url": "https://bdl.stat.gov.pl/api/v1/data/by-variable/64428?format=json&unit-level=5&page-size=100",
+  "retrievedAt": "2026-09-28T22:55:00.595Z",
+  "bytes": 105098,
+  "sha256": "88dc6e06efb92bba380c5ee5a0044b97519f73f36dcc439267ff67b0ec6abbe9"
+}

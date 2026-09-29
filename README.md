@@ -143,3 +143,10 @@ W każdym module panel „Sposób prezentacji” jest dostępny przy ustawieniac
 Przejścia: płynne 0,65 s, spokojne 1,1 s, dynamiczne 0,3 s lub wyłączone. Ustawienie jest wspólne dla modułów w bieżącej sesji. AI zmienia całą kartę (model, rzeczywisty wynik, datę i niepewność) łagodnym wygaszeniem i pojawieniem. Nie wylicza fikcyjnego wyniku między różnymi modelami. Ranking animuje pozycję i długość słupka; podpisy pokazują wyłącznie rzeczywiste wartości. Gęste daty skracają przejście przed kolejnym pomiarem. Dłuższa rolka lub węższy zakres zwiększa czas na odczyt.
 
 Schody rekordów to historyczne maksimum w wybranym filtrze, nie wynik jednego modelu ani interpolacja między pomiarami. Zwykły ranking nadal używa ostatniego wyniku wariantu, więc późniejszy gorszy wynik obniża pozycję. Puste wartości nie stają się zerami; brak przyszłych danych w klatkach. PNG, podgląd i wideo używają tego samego renderera i czasu. Ostatnie 10% filmu domyka przejście do końcowych wyników. Przewijanie i ponowne odtworzenie dają ten sam stan dla tego samego czasu.
+
+
+## Biblioteka historii
+
+„Pomysły” prowadzą teraz do 26 opracowanych tematów z danymi (1066 serii, 41 649 obserwacji); 27. karta jest symulacją. Nowa **Biblioteka danych** pozwala wybierać do 6 serii z różnych tematów, ustawiać zakres, etykiety i kolory, porównywać zgodne jednostki albo indeks 100 oraz korzystać z pięciu form prezentacji i wspólnego eksportu wideo. Dane są chronologiczne, ze źródłem, jednostką i dokładnością okresu. Częściowe opracowania mają jawne ograniczenia.
+
+Eksporty CSV/JSON wybranych obserwacji, osobne pliki każdego tematu i ZIP całej biblioteki są dostępne z panelu. Szkic zapisuje się lokalnie; wariant ustawień można pobrać i ponownie wczytać. Źródła, metodologia, ograniczenia i odtwarzanie: [research/stories/README.md](research/stories/README.md). Przewodnik po pomysłach: [public/stories/STORY-GUIDE.md](public/stories/STORY-GUIDE.md). `npm run data:stories` wymaga Pythona 3 z beautifulsoup4, lxml i openpyxl; nie używa sieci ani płatnego API.

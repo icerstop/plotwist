@@ -42,7 +42,7 @@ const seriesCache=new WeakMap();
 export function seriesFrame(series,progress,duration,transition,timeSeconds){
  let dates=seriesCache.get(series);if(!dates){dates=[...new Set(series.flatMap(s=>s.points.map(p=>p.x)))].sort((a,b)=>a-b);seriesCache.set(series,dates);}
  const event=eventAt(dates,progress,duration,transition,timeSeconds);
- const at=x=>series.map((s,index)=>{const i=upperBound(s.points,x,p=>p.x)-1;const point=s.points[i];return {series:s,index,value:Number.isFinite(point?.y)?point.y:null};});
+ const at=x=>series.map((s,index)=>{const i=upperBound(s.points,x,p=>p.x)-1;const point=s.points[i];return {series:s,index,point,value:Number.isFinite(point?.y)?point.y:null};});
  return {...event,values:at(event.current),before:at(dates[event.previous])};
 }
 const aiCache=new WeakMap();

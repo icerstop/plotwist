@@ -1,0 +1,372 @@
+Benchmark,Threshold model,Performance range,Model Name,Release Date,USD per 1M Tokens
+MMLU,GPT-3,"[43.9, 100]",GPT-3.5,2022-11-30,20.0
+MMLU,GPT-3,"[43.9, 100]",GPT-4-0314,2023-03-14,37.5
+MMLU,GPT-3,"[43.9, 100]",GPT-3.5-Turbo-2023-06,2023-06-13,3.25
+MMLU,GPT-3,"[43.9, 100]",GPT-3.5-Turbo-2023-11,2023-11-06,0.75
+MMLU,GPT-3,"[43.9, 100]",GPT-4 Turbo,2023-11-06,15.0
+MMLU,GPT-3,"[43.9, 100]",Llama 2-70B Chat,2023-12-01,0.7625
+MMLU,GPT-3,"[43.9, 100]",Llama 2-13B,2023-12-08,0.35
+MMLU,GPT-3,"[43.9, 100]",GPT-3.5-Turbo-2024-01,2024-01-25,0.75
+MMLU,GPT-3,"[43.9, 100]",Mistral-Large-2024-02,2024-02-26,6.0
+MMLU,GPT-3,"[43.9, 100]",Mistral-Small-2024-02,2024-02-26,1.5
+MMLU,GPT-3,"[43.9, 100]",Claude-3-Haiku,2024-03-04,0.5
+MMLU,GPT-3,"[43.9, 100]",Claude-3-Sonnet,2024-03-04,6.0
+MMLU,GPT-3,"[43.9, 100]",Claude-3-Opus,2024-03-04,30.0
+MMLU,GPT-3,"[43.9, 100]",Llama 2-13B,2024-04-14,0.22
+MMLU,GPT-3,"[43.9, 100]",Mistral-8x22,2024-04-17,1.2
+MMLU,GPT-3,"[43.9, 100]",Llama-3-Instruct-70B,2024-04-18,0.89
+MMLU,GPT-3,"[43.9, 100]",Llama-3-Instruct-8B,2024-04-18,0.15
+MMLU,GPT-3,"[43.9, 100]",Gemini-1.5-Flash-2024-05,2024-05-10,0.13
+MMLU,GPT-3,"[43.9, 100]",GPT-4o-2024-05,2024-05-13,7.5
+MMLU,GPT-3,"[43.9, 100]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+MMLU,GPT-3,"[43.9, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+MMLU,GPT-3,"[43.9, 100]",Gemma-2-9B,2024-06-24,0.13
+MMLU,GPT-3,"[43.9, 100]",Gemma-2-27B,2024-06-24,0.26
+MMLU,GPT-3,"[43.9, 100]",Mistral-NeMo,2024-07-18,0.13
+MMLU,GPT-3,"[43.9, 100]",GPT-4o-mini,2024-07-18,0.26
+MMLU,GPT-3,"[43.9, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+MMLU,GPT-3,"[43.9, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+MMLU,GPT-3,"[43.9, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+MMLU,GPT-3,"[43.9, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MMLU,GPT-3,"[43.9, 100]",Claude 2,2024-08-12,12.0
+MMLU,GPT-3,"[43.9, 100]",Gemini 1.0 Pro,2024-08-12,0.75
+MMLU,GPT-3,"[43.9, 100]",Command R+,2024-08-13,6.0
+MMLU,GPT-3,"[43.9, 100]",DeepSeek-Coder-V2 236B,2024-09-11,0.175
+MMLU,GPT-3,"[43.9, 100]",Jamba 1.5-Large,2024-09-12,3.5
+MMLU,GPT-3,"[43.9, 100]",Command R+,2024-09-13,4.375
+MMLU,GPT-3,"[43.9, 100]",Mistral 7B,2024-09-14,0.25
+MMLU,GPT-3,"[43.9, 100]",Reka Core,2024-09-14,4.0
+MMLU,GPT-3,"[43.9, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MMLU,GPT-3,"[43.9, 100]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+MMLU,GPT-3,"[43.9, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MMLU,GPT-3,"[43.9, 100]",Claude-3.5-Haiku,2024-10-22,1.6
+MMLU,GPT-3,"[43.9, 100]",Mistral-Large-2-2024-11,2024-11-18,3.0
+MMLU,GPT-3,"[43.9, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MMLU,GPT-3,"[43.9, 100]",Phi 4,2024-12-13,0.1225
+MMLU,GPT-3,"[43.9, 100]",Mistral Small 3,2025-01-30,0.475
+MMLU,GPT-3,"[43.9, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+MMLU,GPT-3.5,"[64.8, 100]",GPT-4-0314,2023-03-14,37.5
+MMLU,GPT-3.5,"[64.8, 100]",GPT-3.5-Turbo-2023-06,2023-06-13,3.25
+MMLU,GPT-3.5,"[64.8, 100]",GPT-4 Turbo,2023-11-06,15.0
+MMLU,GPT-3.5,"[64.8, 100]",Llama 2-70B Chat,2023-12-01,0.7625
+MMLU,GPT-3.5,"[64.8, 100]",GPT-3.5-Turbo-2024-01,2024-01-25,0.75
+MMLU,GPT-3.5,"[64.8, 100]",Mistral-Large-2024-02,2024-02-26,6.0
+MMLU,GPT-3.5,"[64.8, 100]",Mistral-Small-2024-02,2024-02-26,1.5
+MMLU,GPT-3.5,"[64.8, 100]",Claude-3-Sonnet,2024-03-04,6.0
+MMLU,GPT-3.5,"[64.8, 100]",Claude-3-Opus,2024-03-04,30.0
+MMLU,GPT-3.5,"[64.8, 100]",Mistral-8x22,2024-04-17,1.2
+MMLU,GPT-3.5,"[64.8, 100]",Llama-3-Instruct-70B,2024-04-18,0.89
+MMLU,GPT-3.5,"[64.8, 100]",GPT-4o-2024-05,2024-05-13,7.5
+MMLU,GPT-3.5,"[64.8, 100]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+MMLU,GPT-3.5,"[64.8, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+MMLU,GPT-3.5,"[64.8, 100]",Gemma-2-9B,2024-06-24,0.13
+MMLU,GPT-3.5,"[64.8, 100]",Gemma-2-27B,2024-06-24,0.26
+MMLU,GPT-3.5,"[64.8, 100]",Mistral-NeMo,2024-07-18,0.13
+MMLU,GPT-3.5,"[64.8, 100]",GPT-4o-mini,2024-07-18,0.26
+MMLU,GPT-3.5,"[64.8, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+MMLU,GPT-3.5,"[64.8, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+MMLU,GPT-3.5,"[64.8, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+MMLU,GPT-3.5,"[64.8, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MMLU,GPT-3.5,"[64.8, 100]",Claude 2,2024-08-12,12.0
+MMLU,GPT-3.5,"[64.8, 100]",Gemini 1.0 Pro,2024-08-12,0.75
+MMLU,GPT-3.5,"[64.8, 100]",Command R+,2024-08-13,6.0
+MMLU,GPT-3.5,"[64.8, 100]",DeepSeek-Coder-V2 236B,2024-09-11,0.175
+MMLU,GPT-3.5,"[64.8, 100]",Jamba 1.5-Large,2024-09-12,3.5
+MMLU,GPT-3.5,"[64.8, 100]",Command R+,2024-09-13,4.375
+MMLU,GPT-3.5,"[64.8, 100]",Reka Core,2024-09-14,4.0
+MMLU,GPT-3.5,"[64.8, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MMLU,GPT-3.5,"[64.8, 100]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+MMLU,GPT-3.5,"[64.8, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MMLU,GPT-3.5,"[64.8, 100]",Claude-3.5-Haiku,2024-10-22,1.6
+MMLU,GPT-3.5,"[64.8, 100]",Mistral-Large-2-2024-11,2024-11-18,3.0
+MMLU,GPT-3.5,"[64.8, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MMLU,GPT-3.5,"[64.8, 100]",Phi 4,2024-12-13,0.1225
+MMLU,GPT-3.5,"[64.8, 100]",Mistral Small 3,2025-01-30,0.475
+MMLU,GPT-3.5,"[64.8, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",GPT-4-0314,2023-03-14,37.5
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",GPT-3.5-Turbo-2023-06,2023-06-13,3.25
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",GPT-4 Turbo,2023-11-06,15.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Llama 2-70B Chat,2023-12-01,0.7625
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",GPT-3.5-Turbo-2024-01,2024-01-25,0.75
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Mistral-Large-2024-02,2024-02-26,6.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Mistral-Small-2024-02,2024-02-26,1.5
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Claude-3-Sonnet,2024-03-04,6.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Claude-3-Opus,2024-03-04,30.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Mistral-8x22,2024-04-17,1.2
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Llama-3-Instruct-70B,2024-04-18,0.89
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",GPT-4o-2024-05,2024-05-13,7.5
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Gemma-2-9B,2024-06-24,0.13
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Gemma-2-27B,2024-06-24,0.26
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",GPT-4o-mini,2024-07-18,0.26
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Claude 2,2024-08-12,12.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Gemini 1.0 Pro,2024-08-12,0.75
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Command R+,2024-08-13,6.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",DeepSeek-Coder-V2 236B,2024-09-11,0.175
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Jamba 1.5-Large,2024-09-12,3.5
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Command R+,2024-09-13,4.375
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Reka Core,2024-09-14,4.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Claude-3.5-Haiku,2024-10-22,1.6
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Mistral-Large-2-2024-11,2024-11-18,3.0
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Phi 4,2024-12-13,0.1225
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Mistral Small 3,2025-01-30,0.475
+MMLU,GPT-3.5 Turbo,"[68.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+MMLU,GPT-4-0314,"[86.0, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+MMLU,GPT-4-0314,"[86.0, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+MMLU,GPT-4-0314,"[86.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MMLU,GPT-4-0314,"[86.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MMLU,GPT-4-0314,"[86.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MMLU,GPT-4-0314,"[86.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MMLU,GPT-4 Turbo,"[87.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MMLU,GPT-4 Turbo,"[87.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",GPT-4-0125,2024-01-25,15.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Claude-3-Sonnet,2024-03-04,6.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Claude-3-Opus,2024-03-04,30.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Mistral-8x22,2024-04-17,1.2
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Llama-3-Instruct-70B,2024-04-18,0.89
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",GPT-4o-2024-05,2024-05-13,7.5
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Gemma-2-27B,2024-06-24,0.26
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Mistral-NeMo,2024-07-18,0.13
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",GPT-4o-mini,2024-07-18,0.26
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Claude 2,2024-08-12,12.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Gemini 1.0 Pro,2024-08-12,0.75
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Claude 2.1,2024-08-12,12.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Command R+,2024-08-13,6.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Jamba 1.5-Large,2024-09-12,3.5
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Command R+,2024-09-13,4.375
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Claude-3.5-Haiku,2024-10-22,1.6
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Mistral-Large-2-2024-11,2024-11-18,3.0
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Mistral Small 3,2025-01-30,0.475
+GPQA Diamond,GPT-4-0314,"[33.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+GPQA Diamond,GPT-4 Turbo,"[50.0, 100]",Claude-3-Opus,2024-03-04,30.0
+GPQA Diamond,GPT-4 Turbo,"[50.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+GPQA Diamond,GPT-4 Turbo,"[50.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+GPQA Diamond,GPT-4 Turbo,"[50.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+GPQA Diamond,GPT-4 Turbo,"[50.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+GPQA Diamond,GPT-4 Turbo,"[50.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+GPQA Diamond,GPT-4o-2024-05,"[53.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+GPQA Diamond,GPT-4o-2024-05,"[53.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+GPQA Diamond,GPT-4o-2024-05,"[53.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+GPQA Diamond,GPT-4o-2024-05,"[53.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+GPQA Diamond,Claude-3.5-Sonnet-2024-06,"[56.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",GPT-4 Turbo,2023-11-06,15.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",GPT-3.5-Turbo-2024-01,2024-01-25,0.75
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Mistral-Large-2024-02,2024-02-26,6.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Mistral-Small-2024-02,2024-02-26,1.5
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Claude-3-Opus,2024-03-04,30.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Mistral-8x22,2024-04-17,1.2
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Llama-3-Instruct-70B,2024-04-18,0.89
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",GPT-4o-2024-05,2024-05-13,7.5
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Gemma-2-9B,2024-06-24,0.13
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Gemma-2-27B,2024-06-24,0.26
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Mistral-NeMo,2024-07-18,0.13
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",GPT-4o-mini,2024-07-18,0.26
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",DeepSeek-Coder-V2 236B,2024-09-11,0.175
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Jamba 1.5-Large,2024-09-12,3.5
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Reka Core,2024-09-14,4.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Claude-3.5-Haiku,2024-10-22,1.6
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Mistral-Large-2-2024-11,2024-11-18,3.0
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Phi 4,2024-12-13,0.1225
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Mistral Small 3,2025-01-30,0.475
+MATH-500,GPT-3.5-Turbo-2023-06,"[44.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+MATH-500,GPT-4 Turbo,"[74.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MATH-500,GPT-4 Turbo,"[74.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MATH-500,GPT-4 Turbo,"[74.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MATH-500,GPT-4 Turbo,"[74.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MATH-500,GPT-4 Turbo,"[74.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+MATH-500,GPT-4 Turbo,"[74.0, 100]",Mistral Small 3,2025-01-30,0.475
+MATH-500,GPT-4 Turbo,"[74.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+MATH-500,GPT-4o-2024-05,"[79.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MATH-500,GPT-4o-2024-05,"[79.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MATH-500,GPT-4o-2024-05,"[79.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+MATH-500,GPT-4o-2024-05,"[79.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+MATH 5,GPT-4-0613,"[23.0, 100]",GPT-4-0125,2024-01-25,15.0
+MATH 5,GPT-4-0613,"[23.0, 100]",Claude-3-Opus,2024-03-04,30.0
+MATH 5,GPT-4-0613,"[23.0, 100]",GPT-4o-2024-05,2024-05-13,7.5
+MATH 5,GPT-4-0613,"[23.0, 100]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+MATH 5,GPT-4-0613,"[23.0, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+MATH 5,GPT-4-0613,"[23.0, 100]",Gemma-2-27B,2024-06-24,0.26
+MATH 5,GPT-4-0613,"[23.0, 100]",GPT-4o-mini,2024-07-18,0.26
+MATH 5,GPT-4-0613,"[23.0, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+MATH 5,GPT-4-0613,"[23.0, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+MATH 5,GPT-4-0613,"[23.0, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+MATH 5,GPT-4-0613,"[23.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MATH 5,GPT-4-0613,"[23.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MATH 5,GPT-4-0613,"[23.0, 100]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+MATH 5,GPT-4-0613,"[23.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MATH 5,GPT-4-0613,"[23.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MATH 5,GPT-4-0613,"[23.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+MATH 5,GPT-4-0613,"[23.0, 100]",Mistral Small 3,2025-01-30,0.475
+MATH 5,GPT-4-0613,"[23.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+MATH 5,GPT-4 Turbo,"[36.0, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+MATH 5,GPT-4 Turbo,"[36.0, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+MATH 5,GPT-4 Turbo,"[36.0, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+MATH 5,GPT-4 Turbo,"[36.0, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+MATH 5,GPT-4 Turbo,"[36.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+MATH 5,GPT-4 Turbo,"[36.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MATH 5,GPT-4 Turbo,"[36.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MATH 5,GPT-4 Turbo,"[36.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MATH 5,GPT-4 Turbo,"[36.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+MATH 5,GPT-4 Turbo,"[36.0, 100]",Mistral Small 3,2025-01-30,0.475
+MATH 5,GPT-4 Turbo,"[36.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+MATH 5,GPT-4o-2024-05,"[48.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+MATH 5,GPT-4o-2024-05,"[48.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+MATH 5,GPT-4o-2024-05,"[48.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+MATH 5,GPT-4o-2024-05,"[48.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+MATH 5,GPT-4o-2024-05,"[48.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+HumanEval,GPT-4-0314,"[67.0, 100]",GPT-4 Turbo,2023-11-06,15.0
+HumanEval,GPT-4-0314,"[67.0, 100]",GPT-3.5-Turbo-2024-01,2024-01-25,0.75
+HumanEval,GPT-4-0314,"[67.0, 100]",Mistral-Large-2024-02,2024-02-26,6.0
+HumanEval,GPT-4-0314,"[67.0, 100]",Mistral-Small-2024-02,2024-02-26,1.5
+HumanEval,GPT-4-0314,"[67.0, 100]",Claude-3-Sonnet,2024-03-04,6.0
+HumanEval,GPT-4-0314,"[67.0, 100]",Claude-3-Opus,2024-03-04,30.0
+HumanEval,GPT-4-0314,"[67.0, 100]",Mistral-8x22,2024-04-17,1.2
+HumanEval,GPT-4-0314,"[67.0, 100]",GPT-4o-2024-05,2024-05-13,7.5
+HumanEval,GPT-4-0314,"[67.0, 100]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+HumanEval,GPT-4-0314,"[67.0, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+HumanEval,GPT-4-0314,"[67.0, 100]",GPT-4o-mini,2024-07-18,0.26
+HumanEval,GPT-4-0314,"[67.0, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+HumanEval,GPT-4-0314,"[67.0, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+HumanEval,GPT-4-0314,"[67.0, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+HumanEval,GPT-4-0314,"[67.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+HumanEval,GPT-4-0314,"[67.0, 100]",DeepSeek-Coder-V2 236B,2024-09-11,0.175
+HumanEval,GPT-4-0314,"[67.0, 100]",Reka Core,2024-09-14,4.0
+HumanEval,GPT-4-0314,"[67.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+HumanEval,GPT-4-0314,"[67.0, 100]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+HumanEval,GPT-4-0314,"[67.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+HumanEval,GPT-4-0314,"[67.0, 100]",Claude-3.5-Haiku,2024-10-22,1.6
+HumanEval,GPT-4-0314,"[67.0, 100]",Mistral-Large-2-2024-11,2024-11-18,3.0
+HumanEval,GPT-4-0314,"[67.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+HumanEval,GPT-4-0314,"[67.0, 100]",Phi 4,2024-12-13,0.1225
+HumanEval,GPT-4-0314,"[67.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+HumanEval,GPT-4-0314,"[67.0, 100]",Mistral Small 3,2025-01-30,0.475
+HumanEval,GPT-4-0314,"[67.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",GPT-4 Turbo,2023-11-06,15.0
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",GPT-3.5-Turbo-2024-01,2024-01-25,0.75
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Mistral-Small-2024-02,2024-02-26,1.5
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Claude-3-Sonnet,2024-03-04,6.0
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Claude-3-Opus,2024-03-04,30.0
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Mistral-8x22,2024-04-17,1.2
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",GPT-4o-2024-05,2024-05-13,7.5
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",GPT-4o-mini,2024-07-18,0.26
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Mistral-Large-2-2024-07,2024-07-24,3.0
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",GPT-4o-2024-08,2024-08-06,4.38
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",DeepSeek-Coder-V2 236B,2024-09-11,0.175
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Reka Core,2024-09-14,4.0
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Claude-3.5-Haiku,2024-10-22,1.6
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Mistral-Large-2-2024-11,2024-11-18,3.0
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",GPT-4o-2024-11,2024-11-20,4.38
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",DeepSeek-V3,2024-12-26,0.4775
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Mistral Small 3,2025-01-30,0.475
+HumanEval,GPT-3.5-Turbo-2023-06,"[71.0, 100]",Gemini 2.0 Flash,2025-02-05,0.175
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-4-0314,2023-03-14,37.5
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-4-0613,2023-06-13,37.5
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-3.5-Turbo-2023-06,2023-06-13,3.25
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-4 Turbo,2023-11-06,15.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-4-0125,2024-01-25,15.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-3.5-Turbo-2024-01,2024-01-25,0.75
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Mistral-Large-2024-02,2024-02-26,6.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Claude-3-Sonnet,2024-03-04,6.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Claude-3-Opus,2024-03-04,30.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Mistral-8x22,2024-04-17,1.2
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Llama-3-Instruct-70B,2024-04-18,0.89
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-4o-2024-05,2024-05-13,7.5
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Gemma-2-9B,2024-06-24,0.13
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Gemma-2-27B,2024-06-24,0.26
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-4o-mini,2024-07-18,0.26
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Mistral-Large-2-2024-07,2024-07-24,3.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-4o-2024-08,2024-08-06,4.38
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Gemini 1.0 Pro,2024-08-12,0.75
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Command R,2024-08-13,0.75
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Command R+,2024-08-13,6.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",DeepSeek-Coder-V2 236B,2024-09-11,0.175
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Jamba 1.5-Large,2024-09-12,3.5
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Command R+,2024-09-13,4.375
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Reka Core,2024-09-14,4.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Claude-3.5-Haiku,2024-10-22,1.6
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Mistral-Large-2-2024-11,2024-11-18,3.0
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",GPT-4o-2024-11,2024-11-20,4.38
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Phi 4,2024-12-13,0.1225
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",DeepSeek-V3,2024-12-26,0.4775
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Mistral Small 3,2025-01-30,0.475
+LMSys Chatbot Arena ELO,GPT-3.5 Turbo,"[1106.0, inf]",Gemini 2.0 Flash,2025-02-05,0.175
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",GPT-4-0125,2024-01-25,15.0
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Claude-3-Opus,2024-03-04,30.0
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",GPT-4o-2024-05,2024-05-13,7.5
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Gemini-1.5-Pro-2024-05,2024-05-23,2.19
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Gemma-2-9B,2024-06-24,0.13
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Gemma-2-27B,2024-06-24,0.26
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",GPT-4o-mini,2024-07-18,0.26
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Llama-3.1-Instruct-70B,2024-07-23,0.72
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Mistral-Large-2-2024-07,2024-07-24,3.0
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",GPT-4o-2024-08,2024-08-06,4.38
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Command R+,2024-08-13,6.0
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Jamba 1.5-Large,2024-09-12,3.5
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Command R+,2024-09-13,4.375
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Reka Core,2024-09-14,4.0
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Gemini-1.5-Flash-2024-09,2024-09-24,0.13
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Claude-3.5-Haiku,2024-10-22,1.6
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Mistral-Large-2-2024-11,2024-11-18,3.0
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",GPT-4o-2024-11,2024-11-20,4.38
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Phi 4,2024-12-13,0.1225
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",DeepSeek-V3,2024-12-26,0.4775
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Mistral Small 3,2025-01-30,0.475
+LMSys Chatbot Arena ELO,GPT-4-0314,"[1186.0, inf]",Gemini 2.0 Flash,2025-02-05,0.175
+LMSys Chatbot Arena ELO,GPT-4 Turbo,"[1256.0, inf]",Claude-3.5-Sonnet-2024-06,2024-06-20,6.0
+LMSys Chatbot Arena ELO,GPT-4 Turbo,"[1256.0, inf]",Llama-3.1-Instruct-405B,2024-07-23,3.5
+LMSys Chatbot Arena ELO,GPT-4 Turbo,"[1256.0, inf]",GPT-4o-2024-08,2024-08-06,4.38
+LMSys Chatbot Arena ELO,GPT-4 Turbo,"[1256.0, inf]",Gemini-1.5-Pro-2024-09,2024-09-24,2.19
+LMSys Chatbot Arena ELO,GPT-4 Turbo,"[1256.0, inf]",Claude-3.5-Sonnet-2024-10,2024-10-22,6.0
+LMSys Chatbot Arena ELO,GPT-4 Turbo,"[1256.0, inf]",GPT-4o-2024-11,2024-11-20,4.38
+LMSys Chatbot Arena ELO,GPT-4 Turbo,"[1256.0, inf]",DeepSeek-V3,2024-12-26,0.4775
+LMSys Chatbot Arena ELO,GPT-4 Turbo,"[1256.0, inf]",Gemini 2.0 Flash,2025-02-05,0.175
+LMSys Chatbot Arena ELO,GPT-4o-2024-05,"[1285.0, inf]",GPT-4o-2024-11,2024-11-20,4.38
