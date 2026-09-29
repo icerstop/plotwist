@@ -1,0 +1,63 @@
+/* One workspace in every studio: data, preview, appearance. */
+.app main{min-width:0}
+.reel-workspace.reel-workspace{
+ --workspace-height:max(560px,calc(100dvh - 100px));
+ display:grid;
+ grid-template-columns:minmax(260px,1fr) minmax(220px,1.1fr) minmax(300px,1fr);
+ align-items:stretch;
+ height:var(--workspace-height);
+ min-height:0;
+ overflow:clip;
+}
+.reel-data-column{min-width:0;min-height:0;overflow-y:auto;scrollbar-gutter:stable;border-right:1px solid var(--line);background:#fff}
+.reel-data-column>.editor,.reel-data-column>.market-controls,.reel-data-column>.ai-controls,.reel-data-column>.story-controls{min-width:0;padding:22px 20px;border:0}
+.reel-data-column>.inspiration,.reel-data-column>.market-results,.reel-data-column>.ai-story-controls{display:block;padding:22px 20px;border:0;border-top:1px solid var(--line);min-width:0}
+.reel-data-column .inspiration .idea-prompt{margin-top:24px}
+.reel-data-column .comparison-totals,.reel-data-column .market-story-picker{grid-template-columns:minmax(0,1fr)}
+.reel-data-column .market-story-picker{gap:14px}
+.reel-data-column .market-stories{padding:12px}
+.reel-data-column .market-stories summary>span{display:block;margin:3px 0 0}
+.reel-data-column .market-results>h2,.reel-data-column .market-results>.muted{grid-column:auto}
+.reel-workspace.reel-workspace>.preview{
+ position:relative;top:auto;align-self:stretch;grid-column:2;grid-row:1;
+ height:100%;padding:20px 18px;overflow:hidden;border-radius:0;
+}
+.reel-workspace>.preview .preview-top{flex-shrink:0;margin-bottom:16px;gap:10px}
+.reel-workspace>.preview .canvas-wrap{
+ width:min(100%,calc((var(--workspace-height) - 210px) * var(--reel-aspect)));
+ min-height:0;flex-shrink:0;margin:auto 0;
+}
+.reel-workspace>.preview .canvas-wrap canvas{width:100%;height:auto;max-height:none}
+.reel-workspace>.preview .player{margin-top:18px;gap:10px;flex-shrink:0}
+.reel-workspace>.preview .preview-caption{margin-top:12px;text-align:center}
+.reel-workspace>.preview .language-note{font-size:11px;margin:8px 0 0}
+.reel-workspace>.reel-appearance{
+ grid-column:3;grid-row:1;position:relative;display:flex;flex-direction:column;
+ align-self:stretch;max-width:none;min-height:0;height:100%;margin:0;
+ border:0;border-left:1px solid var(--line);border-radius:0;box-shadow:none;
+}
+.reel-workspace>.reel-appearance>.reel-appearance-heading,.reel-workspace>.reel-appearance>.reel-edit-toolbar,.reel-workspace>.reel-appearance>.reel-appearance-tabs{flex-shrink:0}
+.reel-workspace>.reel-appearance>.reel-appearance-content{flex:1;height:auto;max-height:none;min-height:0}
+.market-page,.ai-page,.story-page{max-width:1900px}
+
+@media(min-width:1000px) and (max-width:1279px){
+ .app{grid-template-columns:70px minmax(0,1fr)}
+ .sidebar{align-items:center;padding:22px 8px}
+ .sidebar .brand-link{margin:0 0 35px}.sidebar .brand{font-size:0;gap:0}.sidebar .brand-dot{display:none}
+ .sidebar nav button{padding:13px}.sidebar nav button>span,.sidebar .sidebar-bottom{display:none}
+ .market-page,.ai-page,.story-page{padding-left:16px;padding-right:16px}
+ .reel-workspace.reel-workspace{grid-template-columns:minmax(250px,1fr) minmax(200px,1fr) minmax(285px,1fr)}
+ .reel-data-column>.editor,.reel-data-column>.market-controls,.reel-data-column>.ai-controls,.reel-data-column>.story-controls{padding:20px 14px}
+ .reel-workspace>.preview{padding-left:12px;padding-right:12px}
+ .reel-workspace>.preview .preview-top{font-size:9px;letter-spacing:.4px}
+ .reel-workspace .reel-appearance-content{padding:12px}
+}
+
+@media(max-width:999px){
+ .reel-workspace.reel-workspace{display:flex;flex-direction:column;height:auto;overflow:clip}
+ .reel-workspace.reel-workspace>.preview{order:0;position:static;height:auto;padding:22px}
+ .reel-workspace>.preview .canvas-wrap{width:min(100%,300px);margin:0}
+ .reel-data-column{order:1;overflow:visible;scrollbar-gutter:auto;border-right:0;border-top:1px solid var(--line)}
+ .reel-workspace>.reel-appearance{order:2;height:auto;border-left:0;border-top:1px solid var(--line)}
+ .reel-workspace>.reel-appearance>.reel-appearance-content{flex:none;height:65dvh;max-height:none}
+}

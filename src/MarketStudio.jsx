@@ -111,7 +111,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
     {mode!=='compare'&&<section id={`market-panel-${mode}`} role="tabpanel" aria-labelledby={`market-tab-${mode}`} tabIndex={0}>
     <div className="market-heading"><div><h1>{mode==='dca'?'Mały nawyk. Prawdziwa historia.':'Ceny zamknięcia, dzień po dniu'}</h1><p>{mode==='dca'?'Regularne wpłaty spotykają historyczne ceny akcji.':'Historia wybranej spółki, z korektą splitów lub bez niej.'}</p></div><button className="primary" disabled={!valid} onClick={() => setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
     <div className="market-meta"><Database size={15}/>{manifest ? <span>{manifest.stocks.length} spółek · {manifest.totalObservations.toLocaleString(localeFor(uiLanguage))} cen zamknięcia · Polska i świat</span> : <span>Wczytywanie katalogu…</span>}<span>Snapshot: {manifest?.retrievedAt.slice(0,10) || '…'}</span></div>
-    <div className="market-workspace">
+    <div className="market-workspace reel-workspace"><div className="reel-data-column">
       <section className="market-controls" aria-label="Ustawienia inwestowania"><PresentationPicker config={config} value={chart} onChange={setChart}/>
         <div className="market-regions">{['Wszystkie','Polska','USA','Europa','Świat'].map(r => <button key={r} className={region===r?'selected':''} onClick={() => setRegion(r)}>{r}</button>)}</div>
         <div className="search-field market-search"><Search size={17}/><input aria-label="Szukaj spółki" placeholder="NVIDIA, Apple, ASML, Polska…" value={search} onChange={e=>setSearch(e.target.value)}/></div>
@@ -130,7 +130,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
         <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(t=><option key={t} value={t}>{t} s</option>)}</select></Field></div>
         {loading&&<p className="helper" role="status">Wczytywanie notowań…</p>}{visibleError&&<p className="error" role="alert">{visibleError}</p>}
       </section>
-      <ReelPreview config={config} duration={duration} valid={valid}/>
+
       <aside className="market-results">
         <h2>{mode==='dca'?'Co pokazuje historia?':'Wybrane notowanie'}</h2>
         <p className="muted">{start} → {end}</p>
@@ -144,7 +144,8 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
           <p className="helper">{quotes.length.toLocaleString(localeFor(uiLanguage))} sesji w wybranym zakresie. Pełny spis cen znajdziesz pod podglądem.</p>
         </>:null}
         <div className="market-assumptions"><Info size={19}/><div><strong>Założenia są częścią historii</strong><p>Akcje ułamkowe. Zakup po zamknięciu sesji. Wpłaty z dni bez notowań czekają w gotówce. Kurs NBP z poprzedniej dostępnej tabeli.</p><p>Bez dywidend, prowizji, spreadu, podatku i inflacji. To model historyczny.</p></div></div>
-      </aside>
+      </aside></div>
+      <ReelPreview config={config} duration={duration} valid={valid}/>
     </div>
     <section className="price-history" aria-label="Dzienne ceny zamknięcia">
       <div className="price-heading"><div><h2>Ceny zamknięcia, dzień po dniu</h2><p>{stock?.name || symbol} · {stock?.exchange || '…'} · {quoteData.currency || '…'} · {quotes.length.toLocaleString(localeFor(uiLanguage))} sesji w zakresie</p></div><button className="secondary" disabled={!quotes.length} onClick={exportPrices}><Download size={16}/>Pobierz wszystkie ceny CSV</button></div>

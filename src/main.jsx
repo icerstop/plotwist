@@ -6,4 +6,5 @@ import {VisualProvider} from './VisualSettings.jsx';
 import {PresentationProvider} from './Presentation.jsx';
 import './style.css';
 import './market.css';
+import './reel-workspace.css';
 createRoot(document.getElementById('root')).render(<LanguageProvider><PresentationProvider><VisualProvider><App/></VisualProvider></PresentationProvider></LanguageProvider>);

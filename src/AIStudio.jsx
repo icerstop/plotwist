@@ -64,7 +64,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
    <div className="ai-heading"><div><span className="ai-eyebrow"><BrainCircuit size={16}/> ARCHIWUM MOŻLIWOŚCI AI</span><h1>Każdy model ma swój moment.</h1><p>Znajdź przełom. Wybierz formę. Opowiedz historię.</p></div><button className="primary" disabled={!valid} onClick={()=>setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
    <div className="ai-counts"><span>{manifest?.benchmarks.length||'…'} zestawów i wersji testów</span><span>{manifest?.totalObservations.toLocaleString(localeFor(uiLanguage))||'…'} pomiarów</span><span>Dane pobrane: {manifest?.retrievedAt||'…'}</span></div>
    {manifest?.featuredRelease&&<div className="ai-release-update"><div><strong>Nowe wyniki: Claude Sonnet 5.5</strong><p>Premiera 28.09.2026. Raport Anthropic i pomiary Artificial Analysis są osobnymi zestawami. Wyniki ECI i „IQ” zależą od dostępności w źródłach.</p></div><button className="secondary" onClick={()=>{setId(manifest.featuredRelease.benchmarkId);setGroupBy('model');setQuery('');setStart('');setEnd('');setOrganization('');setProtocol('');setMode('ranking');}}>Pokaż nowe wyniki</button></div>}
-   <div className="ai-workspace">
+   <div className="ai-workspace reel-workspace"><div className="reel-data-column">
      <section className="ai-controls" aria-label="Ustawienia benchmarków AI">
        <Field label="Grupowanie wyników"><select aria-label="Grupowanie wyników" value={groupBy} onChange={e=>{const value=e.target.value;setGroupBy(value);if(value==='brand'&&!['records','ranking','timeline'].includes(mode))setMode('records');else if(value==='brand'&&mode==='timeline')setMode('records');}}><option value="model">Pojedyncze modele</option><option value="brand">Najlepsze modele według marki</option></select></Field>
        {groupBy==='brand'&&<div className="ai-brand-controls">
@@ -86,7 +86,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
        <div className="field-pair"><Field label="Długość rolki AI"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(d=><option key={d} value={d}>{d} s</option>)}</select></Field></div>
        {(error||assetError)&&<p role="alert" className="error">{error||assetError}</p>}{!data&&!error&&<p role="status">Wczytywanie wyników…</p>}{data&&!hasResults&&<p role="status" className="error">Brak pomiarów dla tego filtra. Zmień daty, nazwę lub protokół.</p>}
      </section>
-     <div className="ai-preview-column"><ReelPreview config={config} duration={duration} valid={valid}/></div>
+
      <aside className="ai-story-controls">
        <h2>O wybranej historii</h2>
 
@@ -94,7 +94,8 @@ export default function AIStudio({fontId='arial',onFontChange}){
        {groupBy==='model'&&mode==='duel'&&data?.baseline&&<Field label="Model do porównania"><select value={chosen?.modelId||''} onChange={e=>setComparison(e.target.value)}>{ranked.map(r=><option key={r.modelId} value={r.modelId}>{r.model} · {aiValue(r.score)} {data.unit}</option>)}</select></Field>}
        <div className="ai-selection"><strong>{rows.length.toLocaleString(localeFor(uiLanguage))} pomiarów w filtrze</strong><p>{groupBy==='brand'?'Kolor i logo identyfikują markę. Etykieta modelu wskazuje wariant reprezentujący ją w danej chwili. Pełne nazwy konfiguracji i niepewność wyników znajdziesz w tabeli.':mode==='timeline'?`${timeline.length} kart wybranych z kolejnych rekordów w filtrze (maks. 8). Każda karta ma rzeczywistą datę i wartość.`:mode==='ranking'?'Ranking bierze ostatni odnotowany wynik wariantu, nie jego najlepszy wynik. Model pozostaje w rankingu do kolejnego pomiaru.':mode==='records'?'Schody pokazują najwyższy dotąd wynik w tym filtrze. Pomiary różnych modeli nie tworzą ciągłej trajektorii jednego modelu.':mode==='duel'?'Porównanie ostatniego wyniku wybranego modelu z opisanym punktem odniesienia.':'Punkty pojawiają się zgodnie z wybraną osią dat. Puste okresy nie są uzupełniane.'}</p></div>
        <div className="ai-context"><Info size={18}/><p>{basis==='release'?'To retrospektywa wg premier. Wynik mógł zostać zmierzony później; nie pokazujemy stanu wiedzy z dnia premiery.':'To daty testów lub publikacji podane przez źródło. Brak daty pomiaru nie jest zastępowany datą premiery.'}</p></div>
-     </aside>
+     </aside></div>
+     <ReelPreview config={config} duration={duration} valid={valid}/>
    </div>
    {data&&<>
      <div className="ai-method-note"><strong>{data.id.startsWith('iq-')?'„IQ” w cudzysłowie.':data.id==='eci'?'ECI to umowny indeks możliwości.':'Warunki testu mają znaczenie.'}</strong><p>{data.caveat}</p>{data.baseline&&<p><strong>Punkt odniesienia:</strong> {data.baseline.name} · {aiValue(data.baseline.score)} {data.baseline.unit}. {data.baseline.note} <a href={safeUrl(data.baseline.sourceUrl)} target="_blank" rel="noreferrer">Źródło</a></p>}</div>
