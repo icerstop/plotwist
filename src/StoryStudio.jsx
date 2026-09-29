@@ -1,8 +1,7 @@
 import React,{useEffect,useMemo,useRef,useState} from 'react';
 import {ArrowUpRight,Database,Download,FileUp,Plus,Search,Trash2} from 'lucide-react';
-import {ExportModal,Field,FontPicker,ReelPreview} from './components.jsx';
+import {ExportModal,Field,ReelPreview} from './components.jsx';
 import {PresentationPicker,usePresentationSettings} from './Presentation.jsx';
-import {VisualEditor} from './VisualSettings.jsx';
 import {useLanguages,localeFor} from './language-context.js';
 import {translate} from './translations.js';
 import {storySeriesName} from './story-labels.js';
@@ -19,7 +18,7 @@ export default function StoryStudio({initialTopic,fontId,onFontChange}){
  const {setAxisScale}=usePresentationSettings();
  const [manifest,setManifest]=useState(null),[settings,setSettings]=useState(storyDefaults),[loaded,setLoaded]=useState({});
  const [initialized,setInitialized]=useState(false),[busy,setBusy]=useState(false),[loadError,setLoadError]=useState(''),[retry,setRetry]=useState(0);
- const [query,setQuery]=useState(''),[compatible,setCompatible]=useState(false),[tab,setTab]=useState('data'),[page,setPage]=useState(0),[tableSeries,setTableSeries]=useState('all');
+ const [query,setQuery]=useState(''),[compatible,setCompatible]=useState(false),[page,setPage]=useState(0),[tableSeries,setTableSeries]=useState('all');
  const [exporting,setExporting]=useState(false),[notice,setNotice]=useState(''),[storageError,setStorageError]=useState('');
  const fileRef=useRef();
  const set=(key,value)=>setSettings(s=>({...s,[key]:value}));
@@ -81,8 +80,6 @@ export default function StoryStudio({initialTopic,fontId,onFontChange}){
   <div className="page-heading"><div><span className="story-eyebrow">{t('BIBLIOTEKA → WŁASNA HISTORIA','LIBRARY → YOUR STORY')}</span><h1>{t('Dane są. Teraz Twoja perspektywa.','The data is here. Make it your story.')}</h1><p>{t('Wybierz serie, ustaw zakres i ułóż własny wariant wizualizacji.','Choose series, set a date range and compose your own visualization.')}</p></div><a className="secondary" href="/stories/plotwist-story-datasets.zip" download><Download size={16}/>{t('Cała biblioteka ZIP','Full library ZIP')}</a></div>
   <div className="story-stats"><span><strong>{manifest.topics.filter(t=>t.seriesCount).length}</strong>{t('tematów z danymi','topics with data')}</span><span><strong>{number(manifest.series.length)}</strong>{t('serii do wyboru','available series')}</span><span><strong>{number(manifest.topics.reduce((n,t)=>n+t.count,0))}</strong>{t('obserwacji','observations')}</span><small>{t('Snapshot','Snapshot')} {new Date(manifest.builtAt).toLocaleDateString(localeFor(uiLanguage))}<br/>{t('Zakres i kompletność zależą od źródła.','Coverage and completeness vary by source.')}</small></div>
   <div className="story-workspace"><section className="story-controls" aria-label={t('Kompozytor danych','Data composer')}>
-   <div className="tabs">{[['data',t('Dane','Data')],['style',t('Wygląd','Style')]].map(([id,label])=><button key={id} className={tab===id?'active':''} onClick={()=>setTab(id)} aria-pressed={tab===id}>{label}</button>)}</div>
-   {tab==='data'?<>
     <section className="story-browser"><Field label={t('1. Odkryj temat','1. Explore a topic')}><select aria-label={t('Temat danych','Data topic')} value={settings.topic} onChange={e=>{set('topic',e.target.value);setQuery('');}}><option value="all">{t('Wszystkie tematy','All topics')}</option>{manifest.topics.filter(t=>t.seriesCount).map(t=><option key={t.id} value={t.id}>{t.title} · {t.seriesCount}</option>)}</select></Field>
      {topic&&<><div className="story-topic-heading"><span className={`tag ${topic.status==='ready'?'ready':''}`}>{topic.status==='partial'?t('Częściowy zakres','Partial coverage'):t('Dane opracowane','Data prepared')}</span><span>{topic.start?.slice(0,4)}–{topic.end?.slice(0,4)}</span></div><p className="story-note" translate="no">{topic.note}</p><div className="story-actions"><button className="secondary" onClick={preset}><Database size={15}/>{t('Wczytaj zestaw tematu','Load topic preset')}</button><a href={`/stories/${encodeURIComponent(topic.id)}.csv`} download>CSV</a><a href={`/stories/${encodeURIComponent(topic.id)}.json`} download>JSON</a></div></>}
      {topic?.variants&&<details className="story-note"><summary>{t('Jakie historie można z tego ułożyć?','What stories can you tell with this?')}</summary>{topic.variants.map(v=><p key={v} translate="no">{v}</p>)}</details>}
@@ -100,7 +97,6 @@ export default function StoryStudio({initialTopic,fontId,onFontChange}){
     <PresentationPicker config={config} value={settings.chart} onChange={v=>set('chart',v)}/>
     {result.hasSingle&&['line','area'].includes(settings.chart)&&<p className="story-note">{t('Co najmniej jedna seria ma tylko jeden pomiar. Wybierz karty lub słupki, aby go zobaczyć.','At least one series contains a single observation. Use cards or bars to display it.')}</p>}
     <Field label={t('Tytuł rolki','Reel title')}><textarea value={settings.title} placeholder={translate(autoTitle,reelLanguage)} maxLength={80} onChange={e=>set('title',e.target.value)}/></Field><div className="field-pair"><Field label={t('Format','Format')}><select value={settings.format} onChange={e=>set('format',e.target.value)}>{['9:16','1:1','4:5'].map(v=><option key={v}>{v}</option>)}</select></Field><Field label={t('Długość','Duration')}><select value={settings.duration} onChange={e=>set('duration',Number(e.target.value))}>{[6,12,20,30].map(v=><option key={v} value={v}>{v} s</option>)}</select></Field></div>
-   </>:<><FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/></>}
    {busy&&<p role="status" className="helper">{t('Wczytywanie obserwacji…','Loading observations…')}</p>}{loadError&&<p role="alert" className="error">{translate(loadError,uiLanguage)} <button onClick={()=>setRetry(n=>n+1)}>{t('Ponów','Retry')}</button></p>}{result.error&&<p role="alert" className="error">{translate(result.error,uiLanguage)}</p>}
    <div className="story-project"><button className="primary" disabled={!valid} onClick={()=>setExporting(true)}><Download size={16}/>{t('Eksportuj wideo','Export video')}</button><button className="secondary" disabled={!settings.selected.length} onClick={()=>download(storyProject(settings,manifest.builtAt),'plotwist-wariant.json')}><Download size={15}/>{t('Zapisz wariant','Save variant')}</button><button className="secondary" onClick={()=>fileRef.current?.click()}><FileUp size={15}/>{t('Wczytaj wariant','Load variant')}</button><input ref={fileRef} hidden type="file" accept=".json,application/json" onChange={importProject}/><small>{storageError||t('Szkic zapisuje się automatycznie w tej przeglądarce. Plik wariantu przechowuje wybór danych i ustawienia tego panelu; wygląd i media mają osobny wspólny szkic.','The draft is saved in this browser. Variant files store this panel’s data selection and settings; appearance and media use a separate shared draft.')}</small>{notice&&<p role="status">{notice}</p>}</div>
   </section><ReelPreview config={config} duration={settings.duration} valid={valid}/></div>

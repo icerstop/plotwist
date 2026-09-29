@@ -11,9 +11,15 @@ npm run dev
 
 Produkcja: `npm run build` (katalog `dist`). Weryfikacja obliczeń i CSV: `npm test`.
 
+## Wspólny panel wyglądu
+
+Pod podglądem i odtwarzaczem jest jeden panel **Wygląd rolki**: **Styl** (motyw, czcionka całej rolki, opisy legendy), **Układ** (wysokość wykresu, kompozycja, pozycje sekcji, wyrównanie podpisu), **Tło i GIF-y** (logo, tło, media) oraz **Elementy** (czcionka, kolor i rozmiar tekstu, transformacje i ustawienia pojedynczego dodatku). Kliknięcie elementu podczas edycji podglądu wybiera go w tym samym panelu. Kontrolki wyglądu usunięto z lewych paneli danych; matematyczna normalizacja pozostaje przy danych.
+
+Wygląd i pliki mają wspólny szkic IndexedDB, niezależny od wybranego zbioru oraz modułu. Czcionka całej rolki również zapisuje się w tym szkicu; stare projekty zachowują dotychczasową czcionkę jako wartość początkową. Zapis głównego projektu nadal zawiera aktualną czcionkę. Zmiany danych i wariantów nie resetują wyglądu. Wyrównanie i skalowanie całych sekcji zachowuje wcześniejsze zakresy i jest odrębne od transformacji pojedynczych elementów.
+
 ## GIF-y z wyszukiwarki
 
-**Wygląd → Tło i dodatki → Wyszukaj GIF-y online** korzysta z publicznego [API GifSnap](https://gifsnap.com/docs), bez konta, klucza i opłat za zapytania. Wyniki można wstawiać jako dodatek (maks. 3) lub tło. Wyszukiwanie ma paginację, anulowanie poprzednich zapytań i krótką pamięć podręczną. Dostępność wyników zależy od zewnętrznej usługi; ręczny upload nadal działa.
+**Wygląd rolki (pod podglądem) → Tło i GIF-y → Wyszukaj GIF-y online** korzysta z publicznego [API GifSnap](https://gifsnap.com/docs), bez konta, klucza i opłat za zapytania. Wyniki można wstawiać jako dodatek (maks. 3) lub tło. Wyszukiwanie ma paginację, anulowanie poprzednich zapytań i krótką pamięć podręczną. Dostępność wyników zależy od zewnętrznej usługi; ręczny upload nadal działa.
 
 Adapter `src/gif-search.js` używa proxy mediów GifSnap z CORS, ponieważ bezpośredni CDN nie udostępniał CORS podczas weryfikacji 2026-09-29. Przyjmujemy pliki GIF, sprawdzamy sygnaturę i limit 12 MB także podczas pobierania. Wyniki WebP/wideo są pomijane, aby nie wstawiać nieruchomej klatki zamiast animacji. Dotychczasowy dekoder ogranicza liczbę klatek i pamięć obrazu.
 
@@ -119,7 +125,7 @@ Pobieranie akcji używa pierwszej daty handlu podanej przez Yahoo oraz jawnego `
 
 ## Czcionki i podpis rolek
 
-W zakładce Wygląd w Studiu oraz w ustawieniach Giełdy i AI/LLM można wybrać Arial, Georgia, Verdana, Trebuchet MS, Impact lub Courier New. Są to czcionki systemowe z określonymi zamiennikami. Wybór jest wspólny dla trybów i zapisywany razem z projektem w przeglądarce. Ten sam renderer obsługuje podgląd, PNG i wideo. Pod każdą rolką znajduje się wyśrodkowany podpis Jakub Bilski oraz X: @jakub_bilski · IG: jakub__bilski. Źródła i metodologia mają osobne miejsce nad podpisem.
+W panelu Wygląd rolki pod podglądem, w sekcji Styl, można wybrać Arial, Georgia, Verdana, Trebuchet MS, Impact lub Courier New. Są to czcionki systemowe z określonymi zamiennikami. Wybór jest wspólny dla trybów i zapisywany razem z projektem w przeglądarce. Ten sam renderer obsługuje podgląd, PNG i wideo. Pod każdą rolką znajduje się wyśrodkowany podpis Jakub Bilski oraz X: @jakub_bilski · IG: jakub__bilski. Źródła i metodologia mają osobne miejsce nad podpisem.
 
 ## Wiele serii, surowce i logotypy
 
@@ -133,7 +139,7 @@ Porównanie cen używa przecięcia rzeczywistych dni notowań wszystkich instrum
 
 ## Tła, obrazki i animowane GIF-y
 
-Panel **Tło i dodatki** jest dostępny w zakładce Wygląd w Studiu i obok wyboru czcionki w Giełdzie oraz AI/LLM. Ustawienia są wspólne dla trybów. Tło: z motywu, własny kolor, dwukolorowy gradient (4 presety, kąt i opcjonalny ruch) albo lokalny obraz/GIF; dodatkowo siatka/punkty i regulowana osłona poprawiająca czytelność. Obraz tła można przycinać do kadru lub mieścić w całości i regulować jego widoczność.
+Sekcja **Tło i GIF-y** jest częścią wspólnego panelu Wygląd rolki pod podglądem we wszystkich modułach. Ustawienia są wspólne dla trybów. Tło: z motywu, własny kolor, dwukolorowy gradient (4 presety, kąt i opcjonalny ruch) albo lokalny obraz/GIF; dodatkowo siatka/punkty i regulowana osłona poprawiająca czytelność. Obraz tła można przycinać do kadru lub mieścić w całości i regulować jego widoczność.
 
 Do 3 obrazków/GIF-ów ma niezależną pozycję, rozmiar, obrót, przezroczystość, cień, warstwę i kolejność. Dostępne ruchy: unoszenie, pulsowanie, pojawienie się. GIF-y mają tempo 0,25–2× i zapętlają się zgodnie z czasem rolki. Dodatki nad wykresem są przycinane przed obszarem źródeł i podpisu; te informacje rysowane są na końcu.
 

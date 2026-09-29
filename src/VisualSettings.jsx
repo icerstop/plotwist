@@ -3,12 +3,14 @@ import React,{createContext,useContext,useEffect,useMemo,useRef,useState} from '
 import {ImagePlus,Trash2,ChevronUp,ChevronDown,RotateCcw} from 'lucide-react';
 import {decodeMedia,loadVisualDraft,saveVisualDraft,mediaAsset,releaseMedia} from './reel-media.js';
 import './visual-settings.css';
-import {normalizeDesign,reelThemes,reelLayouts,textRoles} from './reel-design.js';
+import {normalizeDesign,reelThemes,reelLayouts} from './reel-design.js';
 import GifSearch from './GifSearch.jsx';
+import {reelFonts} from './reel-fonts.js';
 import {downloadGif,gifError,GIF_PROVIDER,GIF_DOCS} from './gif-search.js';
 
 const defaultBackground={type:'theme',color:'#142a35',color2:'#453375',angle:115,pattern:'none',animate:false,veil:0,assetId:null,fit:'cover',opacity:1,speed:1};
-const emptyVisuals=()=>({logo:normalizeLogo(),background:{...defaultBackground},stickers:[],design:normalizeDesign()});
+const validFont=id=>reelFonts.some(f=>f.id===id)?id:null;
+const emptyVisuals=()=>({fontId:null,logo:normalizeLogo(),background:{...defaultBackground},stickers:[],design:normalizeDesign()});
 const VisualContext=createContext(null);
 export function VisualProvider({children}){
  const [visuals,setVisuals]=useState(emptyVisuals),[files,setFiles]=useState({}),[ready,setReady]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(''),[storage,setStorage]=useState('Wczytywanie dodatków…');
@@ -18,7 +20,7 @@ export function VisualProvider({children}){
   if(draft?.version===1){
    const restored={};let failed=false;
    for(const [id,file] of Object.entries(draft.files||{})){try{await decodeMedia(file,id);restored[id]=file;}catch{failed=true;}}
-   if(active){const v=draft.visuals;setFiles(restored);setVisuals({logo:restoreLogo(v.logo,restored),design:normalizeDesign(v.design),background:{...defaultBackground,...v.background,...(v.background?.assetId&&!restored[v.background.assetId]?{type:'theme',assetId:null}:{})},stickers:(v.stickers||[]).filter(s=>restored[s.assetId]).slice(0,3)});if(failed)setError('Nie udało się przywrócić jednego z plików. Wgraj go ponownie.');}
+   if(active){const v=draft.visuals;setFiles(restored);setVisuals({fontId:validFont(v.fontId),logo:restoreLogo(v.logo,restored),design:normalizeDesign(v.design),background:{...defaultBackground,...v.background,...(v.background?.assetId&&!restored[v.background.assetId]?{type:'theme',assetId:null}:{})},stickers:(v.stickers||[]).filter(s=>restored[s.assetId]).slice(0,3)});if(failed)setError('Nie udało się przywrócić jednego z plików. Wgraj go ponownie.');}
   }
  }catch{if(active)setStorage('Zapis lokalny niedostępny. Dodatki działają w tej sesji.');}finally{if(active)setReady(true);}})();return()=>{active=false;};},[]);
  useEffect(()=>{if(!ready)return;let active=true;setStorage('Zapisywanie w przeglądarce…');const timer=setTimeout(()=>{saveVisualDraft({version:1,visuals,files}).then(()=>{if(active)setStorage('Zapisano w tej przeglądarce');}).catch(()=>{if(active)setStorage('Brak miejsca na zapis. Dodatki działają w tej sesji.');});},450);return()=>{active=false;clearTimeout(timer);};},[visuals,files,ready]);
@@ -42,21 +44,21 @@ export function VisualProvider({children}){
  }
  function importGif(item,target){return upload(()=>downloadGif(item),target,{provider:GIF_PROVIDER,id:item.id,title:item.title,url:item.url,providerUrl:GIF_DOCS});}
  function reorder(id,direction){setVisuals(v=>{const list=[...v.stickers],i=list.findIndex(s=>s.id===id),j=i+direction;if(j<0||j>=list.length)return v;[list[i],list[j]]=[list[j],list[i]];return {...v,stickers:list};});}
- function reset(){const keep=visuals.logo.assetId;for(const id of Object.keys(files))if(id!==keep)releaseMedia(id);setFiles(f=>keep&&f[keep]?{[keep]:f[keep]}:{});setVisuals(v=>({...emptyVisuals(),logo:v.logo,design:v.design}));setError('');}
+ function reset(){const keep=visuals.logo.assetId;for(const id of Object.keys(files))if(id!==keep)releaseMedia(id);setFiles(f=>keep&&f[keep]?{[keep]:f[keep]}:{});setVisuals(v=>({...emptyVisuals(),logo:v.logo,design:v.design,fontId:v.fontId}));setError('');}
  function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch})}));}
  function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
  function element(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,elements:{...v.design.elements,[id]:{...v.design.elements[id],...patch}}})}));}
  function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
  function metricLabel(key,language,text){setVisuals(v=>({...v,design:normalizeDesign({...v.design,metricLabels:{...v.design.metricLabels,[key]:{...v.design.metricLabels[key],[language]:text}}})}));}
  function restoreComposition(saved){setVisuals(v=>({...v,design:normalizeDesign(saved.design),stickers:v.stickers.map(s=>({...s,...saved.stickers.find(old=>old.id===s.id)}))}));}
- const context={logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
+ const context={font:fontId=>setVisuals(v=>({...v,fontId:validFont(fontId)})),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
-export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,visuals,duration}),[config,visuals,duration]);}
+export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,fontId:visuals.fontId||config.fontId,visuals,duration}),[config,visuals,duration]);}
 export const useVisualStatus=()=>useContext(VisualContext);
 export function LegendOptions({beforeChange=()=>{}}){const v=useVisualStatus();return <label className="visual-field">Opisy w legendzie<select aria-label="Opisy w legendzie" value={v.visuals.design.legendMode} onChange={e=>{beforeChange();v.design({legendMode:e.target.value});}}><option value="auto">Automatycznie · wspólny wskaźnik raz</option><option value="full">Pełne nazwy przy każdej serii</option></select><small>Wspólny podpis pojawia się tylko dla zgodnych wskaźników i jednostek. Własne nazwy serii pozostają bez zmian.</small></label>;}
-function Range({label,value,min=0,max=100,step=1,onChange,suffix='%'}){return <label className="visual-range"><span>{label}<output>{value}{suffix}</output></span><input type="range" aria-label={label} min={min} max={max} step={step} value={value} onInput={e=>onChange(Number(e.target.value))} onChange={e=>onChange(Number(e.target.value))}/></label>;}
-function Color({label,value,onChange}){const [draft,setDraft]=useState(value);useEffect(()=>setDraft(value),[value]);return <label className="visual-color"><span>{label}</span><span><input aria-label={label} type="color" value={value} onInput={e=>onChange(e.target.value)} onChange={e=>onChange(e.target.value)}/><input aria-label={`${label} HEX`} maxLength={7} value={draft} onChange={e=>{setDraft(e.target.value);if(/^#[0-9a-f]{6}$/i.test(e.target.value))onChange(e.target.value);}} onBlur={()=>setDraft(value)}/></span></label>;}
+export function Range({label,value,min=0,max=100,step=1,onChange,suffix='%'}){return <label className="visual-range"><span>{label}<output>{value}{suffix}</output></span><input type="range" aria-label={label} min={min} max={max} step={step} value={value} onInput={e=>onChange(Number(e.target.value))} onChange={e=>onChange(Number(e.target.value))}/></label>;}
+export function Color({label,value,onChange}){const [draft,setDraft]=useState(value);useEffect(()=>setDraft(value),[value]);return <label className="visual-color"><span>{label}</span><span><input aria-label={label} type="color" value={value} onInput={e=>onChange(e.target.value)} onChange={e=>onChange(e.target.value)}/><input aria-label={`${label} HEX`} maxLength={7} value={draft} onChange={e=>{setDraft(e.target.value);if(/^#[0-9a-f]{6}$/i.test(e.target.value))onChange(e.target.value);}} onBlur={()=>setDraft(value)}/></span></label>;}
 const presets=[['noc','Atrament','#11232f','#373255'],['aurora','Zorza','#10352e','#343576'],['wine','Bordo','#471e35','#1a263d'],['paper','Papier','#e8eee4','#d6e5e9']];
 function LogoEditor(){
  const v=useVisualStatus(),logo=v.visuals.logo,input=useRef();
@@ -72,44 +74,42 @@ function LogoEditor(){
  </div>;
 }
 const themeOfLogo=id=>(reelThemes.find(t=>t.id===id)||reelThemes[0]).colors[0];
-function DesignEditor(){
- const v=useVisualStatus(),d=v.visuals.design,[role,setRole]=useState('title'),[section,setSection]=useState('header');
- const t=reelThemes.find(t=>t.id===d.theme),r=textRoles.find(t=>t.id===role),value=d.text[role],p=d.positions[section];
- const updateText=patch=>v.design({text:{...d.text,[role]:{...value,...patch}}});
- const updatePosition=patch=>v.design({positions:{...d.positions,[section]:{...p,...patch}}});
- const defaultColor=['subtitle','labels','source'].includes(role)?t.muted:t.fg;
- return <details className="visual-editor design-editor" open><summary>Styl i układ rolki <span>Motywy · typografia · kompozycja</span></summary><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
-  <p className="visual-intro">Ustawienia wspólne dla wszystkich rolek, podglądu i eksportu.</p>
-  <LogoEditor/>
-  <div className="reel-theme-grid" role="group" aria-label="Motyw rolki">{reelThemes.map(t=><button type="button" key={t.id} className={d.theme===t.id?'selected':''} aria-pressed={d.theme===t.id} onClick={()=>v.theme(t.id)}><span className="reel-theme-swatch" style={{background:t.bg,color:t.fg}} aria-hidden="true"><b>Aa</b><i style={{background:t.colors[0]}}/><i style={{background:t.colors[1]}}/></span><span>{t.name}</span></button>)}</div>
+export function StyleEditor({children}){
+ const v=useVisualStatus(),d=v.visuals.design;
+ return <div className="visual-editor design-editor"><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
+   <div className="reel-theme-grid" role="group" aria-label="Motyw rolki">{reelThemes.map(t=><button type="button" key={t.id} className={d.theme===t.id?'selected':''} aria-pressed={d.theme===t.id} onClick={()=>v.theme(t.id)}><span className="reel-theme-swatch" style={{background:t.bg,color:t.fg}} aria-hidden="true"><b>Aa</b><i style={{background:t.colors[0]}}/><i style={{background:t.colors[1]}}/></span><span>{t.name}</span></button>)}</div>
   <p className="visual-hint">Motyw ustawia tło i kolory tekstu. Rozmiary, układ oraz kolory wybranych serii pozostają bez zmian.</p>
-  <div className="visual-section-title"><h3>Typografia</h3></div>
-  <label className="visual-field">Element tekstowy<select aria-label="Element tekstowy" value={role} onChange={e=>setRole(e.target.value)}>{textRoles.map(r=><option key={r.id} value={r.id}>{r.name}</option>)}</select></label>
-  <Range label="Rozmiar tekstu" value={value.size} min={r.min} max={r.max} onChange={size=>updateText({size})}/>
-  <Color label="Kolor tekstu" value={value.color||defaultColor} onChange={color=>updateText({color})}/>
-  <button type="button" className="text-btn" onClick={()=>updateText({size:100,color:null})}>Przywróć styl tego tekstu</button>
-  <p className="visual-hint">100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p>
-  <div className="visual-section-title"><h3>Kompozycja</h3></div>
-  <Range label="Wysokość wykresu" value={d.chartHeight} min={50} max={100} onChange={chartHeight=>v.design({chartHeight})}/>
+
+ {children}
+ <LegendOptions/>
+   <button type="button" className="text-btn visual-reset" onClick={()=>{v.theme('dark');v.design(normalizeDesign());v.logo({type:'none'});}}><RotateCcw size={14}/>Przywróć domyślny styl i układ</button>
+
+ </fieldset></div></div>;
+}
+export function LayoutEditor(){
+ const v=useVisualStatus(),d=v.visuals.design,[section,setSection]=useState('header'),p=d.positions[section];
+ const updatePosition=patch=>v.design({positions:{...d.positions,[section]:{...p,...patch}}});
+ return <div className="visual-editor design-editor"><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
+   <Range label="Wysokość wykresu" value={d.chartHeight} min={50} max={100} onChange={chartHeight=>v.design({chartHeight})}/>
   <p className="visual-hint">100% wypełnia dostępne miejsce między nagłówkiem a legendą. Suwak zmienia wysokość obszaru osi, bez zmiany rozmiaru tekstu i skali wartości. Dotyczy linii, obszarów, kolumn i wykresów punktowych.</p>
   <button type="button" className="text-btn" onClick={()=>v.design({chartHeight:100})}>Dopasuj wysokość do wolnego miejsca</button>
   <div className="reel-layout-grid" role="group" aria-label="Układ rolki">{reelLayouts.map(l=><button type="button" key={l.id} aria-pressed={d.layout===l.id} className={d.layout===l.id?'selected':''} onClick={()=>v.design({layout:l.id,positions:normalizeDesign().positions})}><span className={`layout-mini ${l.id}`} aria-hidden="true"><i/><b/></span><strong>{l.name}</strong><small>{l.description}</small></button>)}</div>
   <details className="reel-position-editor"><summary>Dopasuj położenie elementów</summary>
-   <label className="visual-field">Przesuwany element<select aria-label="Przesuwany element" value={section} onChange={e=>setSection(e.target.value)}><option value="header">Nagłówek i opis</option><option value="content">Wykres i legenda</option></select></label>
-   <Range label="Skala elementu" value={p.scale} min={65} max={100} onChange={scale=>updatePosition({scale})}/>
+   <label className="visual-field">Przesuwana sekcja<select aria-label="Przesuwana sekcja" value={section} onChange={e=>setSection(e.target.value)}><option value="header">Nagłówek i opis</option><option value="content">Wykres i legenda</option></select></label>
+   <Range label="Skala sekcji" value={p.scale} min={65} max={100} onChange={scale=>updatePosition({scale})}/>
    <Range label="Położenie poziome" value={p.x} onChange={x=>updatePosition({x})}/>
    <Range label="Przesunięcie pionowe" value={p.y} min={-20} max={20} onChange={y=>updatePosition({y})}/>
    <button type="button" className="text-btn" onClick={()=>updatePosition({x:50,y:0,scale:100})}>Przywróć pozycję elementu</button>
   </details>
   <label className="visual-field">Wyrównanie podpisu<select aria-label="Wyrównanie podpisu" value={d.signatureAlign} onChange={e=>v.design({signatureAlign:e.target.value})}><option value="left">Do lewej</option><option value="center">Na środku</option><option value="right">Do prawej</option></select></label>
-  <button type="button" className="text-btn visual-reset" onClick={()=>{v.theme('dark');v.design(normalizeDesign());v.logo({type:'none'});}}><RotateCcw size={14}/>Przywróć domyślny styl i układ</button>
- </fieldset></div></details>;
+
+ </fieldset></div></div>;
 }
-export function VisualEditor(){
+export function MediaEditor({onSelect}){
  const v=useVisualStatus(),b=v.visuals.background,bgInput=useRef(),stickerInput=useRef();
- return <><LegendOptions/><DesignEditor/><details className="visual-editor"><summary>Tło i dodatki <span>Obrazy · GIF-y</span></summary><div className="visual-editor-body">
-  <p className="visual-intro">Wspólny wygląd rolek. Wgrane pliki pozostają w tej przeglądarce.</p>
+ return <div className="visual-editor media-editor"><div className="visual-editor-body">
   <fieldset disabled={!v.ready||v.busy}>
+   <LogoEditor/>
    <label className="visual-field">Rodzaj tła<select aria-label="Rodzaj tła" value={b.type} onChange={e=>v.background({type:e.target.value,veil:e.target.value==='theme'?0:e.target.value==='image'?.55:.18})}><option value="theme">Z motywu rolki</option><option value="color">Własny kolor</option><option value="gradient">Gradient</option><option value="image">Obraz lub GIF</option></select></label>
    {b.type==='gradient'&&<><div className="background-presets">{presets.map(([id,name,color,color2])=><button type="button" key={id} title={name} aria-label={`Tło ${name}`} onClick={()=>v.background({color,color2})} style={{background:`linear-gradient(120deg,${color},${color2})`}}><span>{name}</span></button>)}</div><Color label="Kolor początkowy" value={b.color} onChange={color=>v.background({color})}/><Color label="Kolor końcowy" value={b.color2} onChange={color2=>v.background({color2})}/><Range label="Kąt gradientu" value={b.angle} max={360} suffix="°" onChange={angle=>v.background({angle})}/><label className="visual-check"><input type="checkbox" checked={b.animate} onChange={e=>v.background({animate:e.target.checked})}/>Delikatny ruch gradientu</label></>}
    {b.type==='color'&&<Color label="Kolor tła" value={b.color} onChange={color=>v.background({color})}/>}
@@ -119,19 +119,27 @@ export function VisualEditor(){
    <Range label="Osłona pod tekst i wykres" value={Math.round(b.veil*100)} max={90} onChange={n=>v.background({veil:n/100})}/><p className="visual-hint">Osłona przyciemnia tło w ciemnym motywie, a rozjaśnia w jasnym. Kolor tekstu zmienisz motywem rolki.</p>
    <div className="visual-section-title"><h3>Obrazki i GIF-y</h3><span>{v.visuals.stickers.length}/3</span></div>
    <GifSearch onAdd={v.importGif} full={v.visuals.stickers.length>=3} busy={v.busy} error={v.error}/>
-   {v.visuals.stickers.map((s,i)=>{const asset=mediaAsset(s.assetId);return <details className="sticker-editor" key={s.id} open={v.visuals.stickers.length===1?true:undefined}><summary><img src={asset?.thumbnail} alt=""/><span>{s.name}<small>{asset?.type==='gif'?'Animowany GIF':'Obraz'} · {s.visible?'widoczny':'ukryty'}</small></span></summary><div className="sticker-body">
-    <div className="sticker-actions"><label className="visual-check"><input type="checkbox" checked={s.visible} onChange={e=>v.sticker(s.id,{visible:e.target.checked})}/>Pokaż dodatek</label><button type="button" className="icon-btn" aria-label={`Usuń dodatek ${i+1}`} onClick={()=>v.remove(s.id)}><Trash2 size={16}/></button></div>
+   {v.visuals.stickers.map((s,i)=><div className="visual-asset-summary" key={s.id}><img src={mediaAsset(s.assetId)?.thumbnail} alt=""/><span translate="no">{s.name}<small>{s.visible?'widoczny':'ukryty'}</small></span><button type="button" className="secondary" onClick={()=>onSelect('sticker:'+s.id)}>Edytuj dodatek</button></div>)}
+
+   <button type="button" className="secondary full" disabled={v.visuals.stickers.length>=3} onClick={()=>stickerInput.current.click()}><ImagePlus size={16}/>Dodaj obrazek lub GIF</button><input ref={stickerInput} hidden type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-label="Plik dodatku" onChange={e=>{v.upload(e.target.files?.[0],'sticker');e.target.value='';}}/>
+   <p className="visual-hint">PNG, JPG, WebP lub GIF do 12 MB. Do 3 dodatków. GIF-y odtwarzają się w pętli razem z rolką; PNG zachowuje jedną klatkę. Podpis i źródła mają chroniony obszar.</p>
+   <button type="button" className="text-btn visual-reset" onClick={v.reset}><RotateCcw size={14}/>Przywróć proste tło i usuń dodatki</button>
+  </fieldset>
+  {v.busy&&<p role="status" className="helper">Przygotowywanie klatek obrazu…</p>}{v.error&&<p role="alert" className="error">{v.error}</p>}<p className="visual-storage" role="status">{v.storage}</p>
+ </div></div>;
+}
+
+export function StickerControls({sticker:s,index:i,beforeChange=()=>{}}){
+ const v=useVisualStatus(),asset=mediaAsset(s.assetId);
+ return <div className="sticker-body" onFocusCapture={beforeChange} onPointerDownCapture={beforeChange}>
+     <div className="sticker-actions"><label className="visual-check"><input type="checkbox" checked={s.visible} onChange={e=>v.sticker(s.id,{visible:e.target.checked})}/>Pokaż dodatek</label><button type="button" className="icon-btn" aria-label={`Usuń dodatek ${i+1}`} onClick={()=>v.remove(s.id)}><Trash2 size={16}/></button></div>
     <div className="sticker-positions" role="group" aria-label={`Pozycja dodatku ${i+1}`}>{[['Lewy górny',16,10],['Środek u góry',50,10],['Prawy górny',84,10]].map(([name,x,y])=><button type="button" key={name} onClick={()=>v.sticker(s.id,{x,y})}>{name}</button>)}</div>
     <Range label={`Poziomo · dodatek ${i+1}`} value={s.x} onChange={x=>v.sticker(s.id,{x})}/><Range label={`Pionowo · dodatek ${i+1}`} value={s.y} onChange={y=>v.sticker(s.id,{y})}/><Range label={`Rozmiar · dodatek ${i+1}`} value={s.size} min={5} max={100} onChange={size=>v.sticker(s.id,{size})}/><Range label={`Obrót · dodatek ${i+1}`} value={s.rotation} min={-180} max={180} suffix="°" onChange={rotation=>v.sticker(s.id,{rotation})}/><Range label={`Widoczność · dodatek ${i+1}`} value={Math.round(s.opacity*100)} onChange={n=>v.sticker(s.id,{opacity:n/100})}/>
     <label className="visual-field">Ruch dodatku<select aria-label={`Ruch dodatku ${i+1}`} value={s.motion} onChange={e=>v.sticker(s.id,{motion:e.target.value})}><option value="none">Bez dodatkowego ruchu</option><option value="float">Lekkie unoszenie</option><option value="pulse">Pulsowanie</option><option value="enter">Łagodne pojawienie</option></select></label>
     {asset?.type==='gif'&&<Range label={`Tempo GIF-a · dodatek ${i+1}`} value={s.speed} min={.25} max={2} step={.25} suffix="×" onChange={speed=>v.sticker(s.id,{speed})}/>}
     <label className="visual-field">Warstwa<select aria-label={`Warstwa dodatku ${i+1}`} value={s.layer} onChange={e=>v.sticker(s.id,{layer:e.target.value})}><option value="front">Nad wykresem</option><option value="behind">Pod tekstem i wykresem</option></select></label><label className="visual-check"><input type="checkbox" checked={s.shadow} onChange={e=>v.sticker(s.id,{shadow:e.target.checked})}/>Cień pod dodatkiem</label>
     <div className="sticker-order"><button type="button" className="text-btn" disabled={i===0} onClick={()=>v.reorder(s.id,-1)}><ChevronUp size={14}/>Niżej</button><button type="button" className="text-btn" disabled={i===v.visuals.stickers.length-1} onClick={()=>v.reorder(s.id,1)}><ChevronDown size={14}/>Wyżej</button></div>
-   </div></details>;})}
-   <button type="button" className="secondary full" disabled={v.visuals.stickers.length>=3} onClick={()=>stickerInput.current.click()}><ImagePlus size={16}/>Dodaj obrazek lub GIF</button><input ref={stickerInput} hidden type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-label="Plik dodatku" onChange={e=>{v.upload(e.target.files?.[0],'sticker');e.target.value='';}}/>
-   <p className="visual-hint">PNG, JPG, WebP lub GIF do 12 MB. Do 3 dodatków. GIF-y odtwarzają się w pętli razem z rolką; PNG zachowuje jedną klatkę. Podpis i źródła mają chroniony obszar.</p>
-   <button type="button" className="text-btn visual-reset" onClick={v.reset}><RotateCcw size={14}/>Przywróć proste tło i usuń dodatki</button>
-  </fieldset>
-  {v.busy&&<p role="status" className="helper">Przygotowywanie klatek obrazu…</p>}{v.error&&<p role="alert" className="error">{v.error}</p>}<p className="visual-storage" role="status">{v.storage}</p>
- </div></details></>;
+    <button type="button" className="text-btn visual-reset" onClick={()=>v.sticker(s.id,{x:83,y:10,size:18,rotation:0})}><RotateCcw size={14}/>Przywróć wybrany element</button>
+
+ </div>;
 }

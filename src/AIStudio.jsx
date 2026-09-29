@@ -1,10 +1,9 @@
 import {useLanguages,localeFor} from './language-context.js';
 import {translate} from './translations.js';
 import {PresentationPicker} from './Presentation.jsx';
-import {VisualEditor} from './VisualSettings.jsx';
 import React,{useEffect,useMemo,useState} from 'react';
 import {ArrowUpRight,BrainCircuit,Download,Info,Search} from 'lucide-react';
-import {ExportModal,Field,FontPicker,ReelPreview} from './components.jsx';
+import {ExportModal,Field,ReelPreview} from './components.jsx';
 import {downloadBlob} from './data.js';
 import {marketCsv} from './market.js';
 import {aiDate,aiValue as formatAiValue,rankAt,selectAiRows,timelineSelection} from './ai.js';
@@ -83,7 +82,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
        {protocols.length>1&&<Field label="Protokół / źródło"><select value={protocol} onChange={e=>setProtocol(e.target.value)}><option value="">Wszystkie · porównanie orientacyjne</option>{protocols.map(p=><option key={p}>{p}</option>)}</select></Field>}
        {groupBy==='model'&&orgs.length>1&&<Field label="Organizacja"><select value={organization} onChange={e=>setOrganization(e.target.value)}><option value="">Wszystkie organizacje</option>{orgs.map(o=><option key={o}>{o}</option>)}</select></Field>}
        <div className="search-field ai-search"><Search size={17}/><input aria-label="Filtr modeli AI" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Filtruj, np. GPT, Claude, Gemini…"/></div>
-       <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł rolki"><textarea maxLength="75" rows="2" value={titleIsCustom?title:translate(title,reelLanguage)} onChange={e=>{setTitleIsCustom(true);setTitle(e.target.value);}}/>{titleIsCustom&&<button type="button" className="text-btn" onClick={()=>{setTitleIsCustom(false);setTitle(id==='eci'?'Jak szybko rozwija się AI?':id.startsWith('iq-')?'Jak modele rozwiązują test „IQ”?':id==='codeforces2024'?'AI na zawodach programistycznych.':`${data?.name||''}. Kolejne modele.`);}}>Przywróć tytuł automatyczny</button>}</Field>
+       <Field label="Tytuł rolki"><textarea maxLength="75" rows="2" value={titleIsCustom?title:translate(title,reelLanguage)} onChange={e=>{setTitleIsCustom(true);setTitle(e.target.value);}}/>{titleIsCustom&&<button type="button" className="text-btn" onClick={()=>{setTitleIsCustom(false);setTitle(id==='eci'?'Jak szybko rozwija się AI?':id.startsWith('iq-')?'Jak modele rozwiązują test „IQ”?':id==='codeforces2024'?'AI na zawodach programistycznych.':`${data?.name||''}. Kolejne modele.`);}}>Przywróć tytuł automatyczny</button>}</Field>
        <div className="field-pair"><Field label="Długość rolki AI"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(d=><option key={d} value={d}>{d} s</option>)}</select></Field></div>
        {(error||assetError)&&<p role="alert" className="error">{error||assetError}</p>}{!data&&!error&&<p role="status">Wczytywanie wyników…</p>}{data&&!hasResults&&<p role="status" className="error">Brak pomiarów dla tego filtra. Zmień daty, nazwę lub protokół.</p>}
      </section>

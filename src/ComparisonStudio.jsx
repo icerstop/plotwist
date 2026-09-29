@@ -6,11 +6,11 @@ import {frequencyPhrase,periodAmount,scheduleRule} from './recurrence.js';
 import {useLanguages,localeFor} from './language-context.js';
 import {translate} from './translations.js';
 import {PresentationPicker} from './Presentation.jsx';
-import {VisualEditor,useVisualStatus} from './VisualSettings.jsx';
+import {useVisualStatus} from './VisualSettings.jsx';
 import {themeOf} from './reel-design.js';
 import React,{useEffect,useMemo,useState} from 'react';
 import {Download,Plus,Trash2,RotateCcw} from 'lucide-react';
-import {ExportModal,Field,FontPicker,ReelPreview} from './components.jsx';
+import {ExportModal,Field,ReelPreview} from './components.jsx';
 import {buildComparison,comparisonRange} from './comparison.js';
 import {fromDay,marketCsv} from './market.js';
 import {downloadBlob} from './data.js';
@@ -106,7 +106,7 @@ export default function ComparisonStudio({manifest,fx,fontId,onFontChange,active
     <div className="field-pair"><Field label="Od dnia"><input aria-label="Początek porównania" type="date" min={range?.start} max={range?.end} value={start} onInput={e=>setStart(e.target.value)}/></Field><Field label="Do dnia"><input aria-label="Koniec porównania" type="date" min={start} max={range?.end} value={end} onInput={e=>setEnd(e.target.value)}/></Field></div>
     <button className="text-btn range-button" disabled={!range} onClick={()=>{setStart(range.start);setEnd(range.end);}}>Cały wspólny zakres</button>
     {range&&<p className="helper">Wspólna historia: {range.start} – {range.end}</p>}
-    <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł porównania"><textarea rows="2" maxLength={80} value={title} translate="no" placeholder={translate(generatedTitle,reelLanguage)} onChange={e=>setTitle(e.target.value)}/>{title&&<button type="button" className="text-btn" onClick={()=>setTitle('')}>Przywróć tytuł automatyczny</button>}</Field>
+    <Field label="Tytuł porównania"><textarea rows="2" maxLength={80} value={title} translate="no" placeholder={translate(generatedTitle,reelLanguage)} onChange={e=>setTitle(e.target.value)}/>{title&&<button type="button" className="text-btn" onClick={()=>setTitle('')}>Przywróć tytuł automatyczny</button>}</Field>
     <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(n=><option key={n} value={n}>{n} s</option>)}</select></Field></div>
     {loading&&<p role="status" className="helper">Wczytywanie historii…</p>}{visibleError&&<p role="alert" className="error">{visibleError}</p>}
    </section>

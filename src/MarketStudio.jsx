@@ -3,11 +3,10 @@ import {frequencyPhrase,periodAmount,scheduleRule} from './recurrence.js';
 import {useLanguages,localeFor} from './language-context.js';
 import {translate} from './translations.js';
 import {PresentationPicker} from './Presentation.jsx';
-import {VisualEditor} from './VisualSettings.jsx';
 import ComparisonStudio from './ComparisonStudio.jsx';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowUpRight, Database, Download, Info, Search } from 'lucide-react';
-import { ExportModal, Field, FontPicker, ReelPreview } from './components.jsx';
+import { ExportModal, Field, ReelPreview } from './components.jsx';
 import { downloadBlob } from './data.js';
 import { fromDay, marketCsv, marketStartDate, simulateInvestment, toDay, validateMarketRange } from './market.js';
 import {priceQuotes,priceStartDate,priceCurrencyRule} from './market-currency.js';
@@ -127,7 +126,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
           {summary&&Math.abs(summary.contributions-summary.expenses)>.005&&<div className="budget-note"><span>Różne budżety w tym okresie: {money(summary.contributions)} / {money(summary.expenses)}.</span><button onClick={()=>{setExpense(investment);setExpenseFrequency(investmentFrequency);}}>Dopasuj kwotę i częstotliwość</button></div>}
           <Field label="Twój regularny zakup"><input maxLength="35" value={expenseName} onChange={e=>setExpenseName(e.target.value)} placeholder="Np. Coca-Cola, kawa, przekąska"/></Field>
         </>:<><PriceCurrencyPicker value={priceCurrency} onChange={setPriceCurrency}/>{stock&&priceCurrency!=='native'&&priceCurrency!==stock.currency&&<p className="helper"><span>{priceCurrencyRule}</span><br/><span>Historia po przeliczeniu od:</span> {minDate}</p>}<Field label="Rodzaj ceny"><select value={basis} onChange={e=>setBasis(e.target.value)}><option value="split">Close — po korekcie o splity</option><option value="raw">Cena nominalna — odtworzona</option></select><small>Korekta o splity zapewnia ciągłość wykresu. Cena nominalna może gwałtownie spaść w dniu splitu.</small></Field></>}
-        <FontPicker value={fontId} onChange={onFontChange}/><VisualEditor/><Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:translate(generatedTitle,reelLanguage)} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/>{customTitle&&<button type="button" className="text-btn" onClick={()=>setCustomTitle(false)}>Przywróć tytuł automatyczny</button>}</Field>
+        <Field label="Tytuł rolki"><textarea maxLength="80" rows="2" value={customTitle?title:translate(generatedTitle,reelLanguage)} onChange={e=>{setCustomTitle(true);setTitle(e.target.value);}}/>{customTitle&&<button type="button" className="text-btn" onClick={()=>setCustomTitle(false)}>Przywróć tytuł automatyczny</button>}</Field>
         <div className="field-pair"><Field label="Długość rolki"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(t=><option key={t} value={t}>{t} s</option>)}</select></Field></div>
         {loading&&<p className="helper" role="status">Wczytywanie notowań…</p>}{visibleError&&<p className="error" role="alert">{visibleError}</p>}
       </section>

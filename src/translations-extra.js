@@ -1,5 +1,15 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Wygląd rolki|Reel appearance
+Wspólny styl zostaje przy zmianie danych.|Your shared style stays when you change data.
+Ustawienia wyglądu|Appearance settings
+Styl|Style
+Układ|Layout
+Tło i GIF-y|Background & GIFs
+Elementy|Elements
+Edytuj dodatek|Edit overlay
+Przesuwana sekcja|Section to move
+Skala sekcji|Section scale
 Wyszukaj GIF-y online|Search GIFs online
 Szukaj GIF-ów|Search GIFs
 Np. money, wow, robot…|Try money, wow, robot…
