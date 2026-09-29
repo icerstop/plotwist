@@ -1,0 +1,4 @@
+beautifulsoup4
+lxml
+openpyxl
+xlrd==2.0.2

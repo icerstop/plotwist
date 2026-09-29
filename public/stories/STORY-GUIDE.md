@@ -245,3 +245,40 @@ Archiwalne pomiary Ofcom dla Wielkiej Brytanii: mediana realnej przepustowości 
 - Dwie karty Ofcom: rzeczywista mediana prędkości w UK w 2019 i 2023 r.
 - Idealny czas pobrania pliku 1 GB z tych pomiarów. Zbiór nie stanowi pełnej historii modemów ani internetu na świecie.
 
+### Co tanieje najszybciej?
+
+18 serii; 18 obserwacji; 2026-09-22 → 2026-09-22. Status: ready.
+
+Epoch AI, „The plunging price of thought”, 22.09.2026, Figure 1. Średnie składane spadki realnych kosztów w RÓŻNYCH okresach historycznych. Data 22.09.2026 oznacza publikację porównania, nie dzień pomiaru cen. AI: koszt zadania przy ustalonym wyniku, nie cena tokenów ani koszt treningu. Roczne odpowiedniki obliczono ze stóp kwartalnych; nie są prognozą. Dla DNA zachowano zakres 2001–2022 z CSV autorów (tekst raportu podaje też 2001–2025).
+
+- Ranking sześciu historycznych temp spadku kosztów. Okresy porównania są różne i pozostają w nazwach serii.
+- Karty lub słupki: wybierz spadek kwartalny, roczny albo roczny mnożnik tanienia. Roczne wartości są przeliczeniem ze średnich stóp, nie prognozą.
+
+### Ile kosztuje wynik AI?
+
+7 serii; 40 obserwacji; 2023-11-06 → 2026-07-27. Status: ready.
+
+Epoch AI, Figure 2, 22.09.2026: rekordowo niski koszt zadania osiągającego ustalony próg wyniku. 7 krzywych, daty premier przypisane przez autorów, retrospektywny pomiar kosztów. Progi 25% i 75% są skorygowane o zgadywanie: w GPQA odpowiadają surowym wynikom 43,75% i 81,25%. To koszt zadania przy dobranym budżecie tokenów, nie cena miliona tokenów i nie koszt jednego poprawnego rozwiązania. AIME to OTIS Mock; FrontierMath to tiers 1–3. Brak punktu oznacza brak rekordu w tym zestawie, nie zerowy koszt. Schodki nie interpolują niezmierzonych spadków. Końce serii różnią się, ostatni rekord nie jest aktualnym cennikiem API.
+
+- GPQA: koszt zadania dla progów 25% i 75% po korekcie zgadywania. Użyj skali logarytmicznej, aby zobaczyć kolejne rzędy wielkości.
+- Porównaj AIME, FrontierMath i szachy przy tym samym progu skorygowanego wyniku. Procenty różnych testów nie są wspólną miarą inteligencji; model każdego rekordu jest w tabeli danych.
+
+### Ile mocy AI kupuje dolar?
+
+18 serii; 138 obserwacji; 2023-03-31 → 2025-12-31. Status: ready.
+
+Epoch AI, Venkat Somala, 13.08.2026: teoretyczna wydajność TPP za dolara dla chipów dostarczanych w kwartale. H100 w cenie z 2025 r. = 1; kwoty w cenach stałych 2025. To estymacje dostaw i cen, nie pomiary szybkości LLM. NVIDIA: cena dla nabywcy; TPU/Trainium: oszacowany koszt pozyskania — podstawy wyceny są różne. „Inne” to zmienny koszyk chipów. Średnia wszystkich dostaw jest ważona wydatkami, nie liczbą chipów. Brak chipu w kwartale oznacza brak oddzielnego wiersza w źródle, nie zerową wydajność ani brak dostaw. Zestaw zawiera tylko 2023 Q1–2025 Q4; nie dopisano danych z 2026.
+
+- H100/H200 vs GB200/GB300: teoretyczna wydajność za dolara w kolejnych kwartałach. Zachowaj informację o estymacjach i cenach 2025.
+- Wydatki na kolejne generacje chipów lub średnia wydajność ważona wydatkami. Układy TPU i Trainium mają inną podstawę wyceny niż ceny zakupu NVIDIA.
+
+### Genom: od milionów do setek dolarów
+
+2 serii; 156 obserwacji; 2001-09-30 → 2022-05-31. Status: ready.
+
+NHGRI, Wetterstrand, tabela z maja 2022: 78 pomiarów od września 2001 do maja 2022. Nominalne USD, bez korekty inflacji; koszt produkcyjnego sekwencjonowania w ośrodkach programu NHGRI, nie cena konsumenckiego testu DNA ani pełny koszt interpretacji medycznej. Genom: oszacowanie dla 3000 Mb z pokryciem zależnym od technologii. Megabaza: surowa sekwencja. Od stycznia 2008 zmiana technologii na NGS i założeń porównania. Brak dopisanych późniejszych cen. Źródło podaje miesiące, nie ciągłe pomiary dzienne; linie łączą tylko dostępne obserwacje.
+
+- Pełna historia kosztu genomu na osi logarytmicznej: wrzesień 2001 – maj 2022.
+- Zbliżenie na przełom 2007–2009, gdy NHGRI przechodziło na sekwencjonowanie nowej generacji.
+- Karty pierwszego i ostatniego pomiaru albo koszt jednej megabazy. Nie opisuj tych kosztów jako ceny konsumenckiego testu DNA.
+

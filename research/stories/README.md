@@ -1,12 +1,13 @@
 # Biblioteka historii — snapshot 29.09.2026
 
-Opracowano 27 kart z „Znajdź swoją następną historię”: 26 tematów ma dane, karta kawy pozostaje modelem hipotetycznym. Katalog zawiera **1066 serii, 41 649 niepustych obserwacji i 15 724 jawne braki**. Historia sięga 1870 r.; ostatni okres zależy od źródła. To snapshot, nie bieżący feed.
+Opracowano 31 kart z „Znajdź swoją następną historię”: 30 tematów ma dane, karta kawy pozostaje modelem hipotetycznym. Katalog zawiera **1111 serii, 42 001 niepustych obserwacji i 15 802 jawne braki**. Historia sięga 1870 r.; ostatni okres zależy od źródła. Porównanie średnich temp tanienia odwołuje się dodatkowo do okresów od 1800 r., lecz nie zawiera corocznych cen od tego roku. To snapshot, nie bieżący feed.
 
 ## Pliki
 
 - `raw/`: pobrane CSV, JSON, XLSX, PDF i raporty HTML. Pliki `.receipt.json` zawierają URL, datę pobrania, rozmiar i SHA-256. Normalizacja nie zmienia surowych plików.
 - `extracted-financial-tables.json`: wiersze tabel raportów spółek i stwierdzenia o MAU Facebooka użyte przez normalizer.
-- `story-notes.json`: propozycje historii i wariantów prezentacji dla 18 opracowanych pomysłów.
+- `story-notes.json`: propozycje historii i wariantów prezentacji.
+- `technology-costs.md`: opracowanie czterech nowych tematów Epoch AI / NHGRI, formuły i ograniczenia.
 - `../../public/stories/manifest.json`: serie, źródła, jednostki, częstotliwości, zakresy i ograniczenia.
 - `../../public/stories/<id>.json` i `.csv`: obserwacje jednego tematu.
 - `../../public/stories/all-observations.csv`: wszystko w formacie długim, chronologicznie po dacie i ID serii.
@@ -24,10 +25,10 @@ Rozdzielamy MAU/WAU, stany/przepływy, USD o różnych latach cenowych, przepły
 
 ## Ograniczenia
 
-Częściowy zakres: brak spójnego wyścigu aplikacji do 100 mln; baterie to ogniwa; LCOE obejmuje OZE; tranzystory są trendem OWID bez katalogu modeli; EV obejmuje BEV+PHEV; NVIDIA poza Data Center to połączone pozostałe segmenty; Azure ma tylko ujawnione progi; konsole obejmują Nintendo; prędkość internetu zawiera dwa porównywalne pomiary Ofcom. Patenty w snapshotcie kończą się w 2021 r., a ceny inferencji Epoch w lutym 2025 r. Nie dopisujemy późniejszych lat ani szacunków.
+Częściowy zakres: brak spójnego wyścigu aplikacji do 100 mln; baterie to ogniwa; LCOE obejmuje OZE; tranzystory są trendem OWID bez katalogu modeli; EV obejmuje BEV+PHEV; NVIDIA poza Data Center to połączone pozostałe segmenty; Azure ma tylko ujawnione progi; konsole obejmują Nintendo; prędkość internetu zawiera dwa porównywalne pomiary Ofcom. Patenty w snapshotcie kończą się w 2021 r., a starszy zbiór cen tokenów Epoch w lutym 2025 r.; nowy zbiór kosztów zadania AI zawiera rekordy do lipca 2026 r. Nie dopisujemy późniejszych lat ani szacunków.
 
 ## Odtwarzanie
 
-Python 3 z `beautifulsoup4`, `lxml`, `openpyxl`: z katalogu projektu uruchom `python scripts/build-story-data.py`. Dane są odtwarzane z lokalnych źródeł, bez sieci i API modeli. Normalizer kontroluje daty, unikalność, skończone wartości, źródła, paginację GUS/World Bank i struktury tabel. `npm test` dodatkowo sprawdza wartości referencyjne, obliczenia, jednostki, progi, indeksowanie, chronologię i zapis wariantów.
+Python 3 z `beautifulsoup4`, `lxml`, `openpyxl`, `xlrd` (scripts/requirements-stories.txt): z katalogu projektu uruchom `python scripts/build-story-data.py`. Dane są odtwarzane z lokalnych źródeł, bez sieci i API modeli. Normalizer kontroluje daty, unikalność, skończone wartości, źródła, paginację GUS/World Bank i struktury tabel. `npm test` dodatkowo sprawdza wartości referencyjne, obliczenia, jednostki, progi, indeksowanie, chronologię i zapis wariantów.
 
 Pobieranie: `scripts/fetch-story-sources.mjs` dla OWID (argumenty: slugi); `scripts/fetch-story-files.mjs` dla URL (pary nazwa pliku, URL); `scripts/fetch-story-filings.mjs` dla wybranych raportów SEC. Nowe wydanie źródła wymaga ponownej kontroli definicji i ekstrakcji. Dane OpenAI, TikTok i Ofcom częściowo przepisano z jawnie wskazanych stron/stron PDF; dokładność dat i opis ekstrakcji pozostają w metadanych. Publiczna dostępność nie zastępuje warunków oryginalnego dostawcy.

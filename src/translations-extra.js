@@ -1,5 +1,35 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Co tanieje najszybciej?|What is getting cheaper fastest?
+Ile kosztuje wynik AI?|How much does AI performance cost?
+Ile mocy AI kupuje dolar?|How much AI compute does a dollar buy?
+Genom: od milionów do setek dolarów|A genome: from millions to hundreds of dollars
+Prąd|Electricity
+Baterie litowe|Lithium batteries
+Oświetlenie|Lighting
+Obliczenia|Compute
+Sekwencjonowanie DNA|DNA sequencing
+AI · inferencja|AI · inference
+inferencja|inference
+próg 25%|25% threshold
+próg 75%|75% threshold
+Szachy|Chess
+Inne chipy|Other chips
+moc / USD|compute / USD
+wydatki|spending
+Wszystkie dostawy|All deliveries
+średnia ważona|weighted average
+Koszt sekwencjonowania genomu|Genome sequencing cost
+Koszt megabazy DNA|Cost per megabase of DNA
+USD / zadanie|USD / task
+USD / genom|USD / genome
+% / kwartał|% / quarter
+% / rok|% / year
+× / rok|× / year
+mld USD 2025|bn 2025 USD
+AI, DNA, baterie i koszt postępu|AI, DNA, batteries and the cost of progress
+Ten sam próg wyniku, coraz niższy koszt|The same score threshold at a falling cost
+Co zmieniła rewolucja sekwencjonowania?|What did the sequencing revolution change?
 Terminal-Bench 4.0 · Anthropic|Terminal-Bench 4.0 · Anthropic
 FrontierCode 1.1 Main · raport|FrontierCode 1.1 Main · report
 CursorBench 4.0 · raport|CursorBench 4.0 · report

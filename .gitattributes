@@ -1,0 +1,5 @@
+# Downloaded snapshots must keep their original bytes for SHA-256 receipts.
+research/stories/raw/epoch-thought-* -text
+research/stories/raw/epoch-chip-* -text
+research/stories/raw/nhgri-* -text
+research/stories/raw/cost-of-sequencing-a-full-human-genome.* -text

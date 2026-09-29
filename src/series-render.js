@@ -60,7 +60,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
  ctx.lineWidth=2;setReelText(ctx,config,'labels',25,font,muted);
  const tickCount=Math.min(axis.ticks.length,Math.max(2,Math.floor((bottom-top)/textSize(config,'labels',38))+1));
  const ticks=tickCount<2?axis.ticks:Array.from({length:tickCount},(_,i)=>axis.ticks[Math.round(i*(axis.ticks.length-1)/(tickCount-1))]);
- for(const val of ticks){const y=py(val);ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.fillStyle=textColor(config,'labels',muted);ctx.textAlign='right';fittedText(ctx,formatAxisTick(val,config.language),left-22,y+8,left-30);}
+ for(const val of ticks){const y=py(val);ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.fillStyle=textColor(config,'labels',muted);ctx.textAlign='right';let label=formatAxisTick(val,config.language);if(ctx.measureText(label).width>left-30)label=val.toLocaleString(config.language==='en'?'en-GB':'pl-PL',{notation:'scientific',maximumSignificantDigits:2});ctx.fillText(label,left-22,y+8,left-30);}
  ctx.textAlign='center';
  if(chart==='bar'){
   ctx.fillStyle=textColor(config,'labels',muted);ctx.fillText(xType==='date'?timelineDate(current,config):String(Math.floor(current)),(left+right)/2,bottom+47);

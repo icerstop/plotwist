@@ -40,11 +40,11 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop:height<1400?height*.48:730,formatValue:n=>formatValue(n,config.language),timeSeconds});
  endContent();
  drawVisualOverlays(ctx,width,height,config,timeSeconds);
- setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';const date=xType==='date'?timelineDate(current,config):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current));const endDate=beginElement(ctx,config,'date',textRect(ctx,[date],1000,height-175,0,924));ctx.fillText(date,1000,height-175,924);endDate();ctx.textAlign='left';
+ setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';const date=config.dateLabel||(xType==='date'?timelineDate(current,config):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)));const endDate=beginElement(ctx,config,'date',textRect(ctx,[date],1000,height-175,0,924));ctx.fillText(date,1000,height-175,924);endDate();ctx.textAlign='left';
  setReelText(ctx,config,'source',24,font,muted);wrap(ctx,source||'',80,height-132,920,textSize(config,'source',27),2,true,config,'source');
  drawSignature(ctx,width,height,config.fontId,dark,config);
 }
-export function formatValue(n,language='pl'){const locale=language==='en'?'en-GB':'pl-PL';if(Math.abs(n)>=1e6)return (n/1e6).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' m':' mln');if(Math.abs(n)>=10000)return (n/1000).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' k':' tys.');return n.toLocaleString(locale,{maximumFractionDigits:1});}
+export function formatValue(n,language='pl'){const locale=language==='en'?'en-GB':'pl-PL';if(Math.abs(n)>=1e6)return (n/1e6).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' m':' mln');if(Math.abs(n)>=10000)return (n/1000).toLocaleString(locale,{maximumFractionDigits:1})+(language==='en'?' k':' tys.');if(n!==0&&Math.abs(n)<1)return n.toLocaleString(locale,{maximumSignificantDigits:3});return n.toLocaleString(locale,{maximumFractionDigits:1});}
 export async function recordReel(config,duration,onProgress,signal,{fps=60}={}){
  await preloadReelAssets(config);if(signal?.aborted)throw new Error('Eksport anulowany.');
  const {encodeReel}=await import('./video-export.js');

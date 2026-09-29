@@ -10,6 +10,7 @@ export function PresentationProvider({children}){
  return <MotionContext.Provider value={value}>{children}</MotionContext.Provider>;
 }
 export function usePresentationConfig(config){const {transition,axisRange,axisScale}=useContext(MotionContext);return useMemo(()=>({...config,transition,axisRange,axisScale}),[config,transition,axisRange,axisScale]);}
+export function usePresentationSettings(){return useContext(MotionContext);}
 export function PresentationPicker({family='series',value,onChange,hasBaseline=false,config={}}){
  const {transition,setTransition,axisRange,setAxisRange,axisScale,setAxisScale}=useContext(MotionContext),formats=family==='ai'?(config.ai?.groupBy==='brand'?aiBrandFormats:aiFormats):seriesFormats;
  const {hasAxis,logReason}=useMemo(()=>scaleAvailability(config),[config]);

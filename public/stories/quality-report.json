@@ -1,9 +1,9 @@
 {
-  "builtAt": "2026-09-29T00:34:07.841444+00:00",
-  "topics": 27,
-  "series": 1066,
-  "observations": 41649,
-  "missingCells": 15724,
+  "builtAt": "2026-09-29T15:12:43.229640+00:00",
+  "topics": 31,
+  "series": 1111,
+  "observations": 42001,
+  "missingCells": 15802,
   "duplicateDates": 0,
   "nonFiniteValues": 0,
   "coverage": [
@@ -249,6 +249,42 @@
       "start": "2019-11-30",
       "end": "2023-03-31",
       "limitations": "Archiwalne pomiary Ofcom dla Wielkiej Brytanii: mediana realnej przepustowości domowego łącza do routera, 2019 i 2023. To nie historia reklamowanych prędkości ani modemów od lat 90."
+    },
+    {
+      "id": "technology-costs",
+      "status": "ready",
+      "series": 18,
+      "observations": 18,
+      "start": "2026-09-22",
+      "end": "2026-09-22",
+      "limitations": "Epoch AI, „The plunging price of thought”, 22.09.2026, Figure 1. Średnie składane spadki realnych kosztów w RÓŻNYCH okresach historycznych. Data 22.09.2026 oznacza publikację porównania, nie dzień pomiaru cen. AI: koszt zadania przy ustalonym wyniku, nie cena tokenów ani koszt treningu. Roczne odpowiedniki obliczono ze stóp kwartalnych; nie są prognozą. Dla DNA zachowano zakres 2001–2022 z CSV autorów (tekst raportu podaje też 2001–2025)."
+    },
+    {
+      "id": "ai-task-cost",
+      "status": "ready",
+      "series": 7,
+      "observations": 40,
+      "start": "2023-11-06",
+      "end": "2026-07-27",
+      "limitations": "Epoch AI, Figure 2, 22.09.2026: rekordowo niski koszt zadania osiągającego ustalony próg wyniku. 7 krzywych, daty premier przypisane przez autorów, retrospektywny pomiar kosztów. Progi 25% i 75% są skorygowane o zgadywanie: w GPQA odpowiadają surowym wynikom 43,75% i 81,25%. To koszt zadania przy dobranym budżecie tokenów, nie cena miliona tokenów i nie koszt jednego poprawnego rozwiązania. AIME to OTIS Mock; FrontierMath to tiers 1–3. Brak punktu oznacza brak rekordu w tym zestawie, nie zerowy koszt. Schodki nie interpolują niezmierzonych spadków. Końce serii różnią się, ostatni rekord nie jest aktualnym cennikiem API."
+    },
+    {
+      "id": "ai-chip-value",
+      "status": "ready",
+      "series": 18,
+      "observations": 138,
+      "start": "2023-03-31",
+      "end": "2025-12-31",
+      "limitations": "Epoch AI, Venkat Somala, 13.08.2026: teoretyczna wydajność TPP za dolara dla chipów dostarczanych w kwartale. H100 w cenie z 2025 r. = 1; kwoty w cenach stałych 2025. To estymacje dostaw i cen, nie pomiary szybkości LLM. NVIDIA: cena dla nabywcy; TPU/Trainium: oszacowany koszt pozyskania — podstawy wyceny są różne. „Inne” to zmienny koszyk chipów. Średnia wszystkich dostaw jest ważona wydatkami, nie liczbą chipów. Brak chipu w kwartale oznacza brak oddzielnego wiersza w źródle, nie zerową wydajność ani brak dostaw. Zestaw zawiera tylko 2023 Q1–2025 Q4; nie dopisano danych z 2026."
+    },
+    {
+      "id": "dna-cost",
+      "status": "ready",
+      "series": 2,
+      "observations": 156,
+      "start": "2001-09-30",
+      "end": "2022-05-31",
+      "limitations": "NHGRI, Wetterstrand, tabela z maja 2022: 78 pomiarów od września 2001 do maja 2022. Nominalne USD, bez korekty inflacji; koszt produkcyjnego sekwencjonowania w ośrodkach programu NHGRI, nie cena konsumenckiego testu DNA ani pełny koszt interpretacji medycznej. Genom: oszacowanie dla 3000 Mb z pokryciem zależnym od technologii. Megabaza: surowa sekwencja. Od stycznia 2008 zmiana technologii na NGS i założeń porównania. Brak dopisanych późniejszych cen. Źródło podaje miesiące, nie ciągłe pomiary dzienne; linie łączą tylko dostępne obserwacje."
     }
   ]
 }

@@ -8,6 +8,7 @@ import csv, json, re, math, hashlib, zipfile, io, calendar
 import openpyxl
 from bs4 import BeautifulSoup, XMLParsedAsHTMLWarning
 import warnings
+from build_technology_costs import add_cost_topics
 warnings.filterwarnings('ignore',category=XMLParsedAsHTMLWarning)
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -285,6 +286,8 @@ for dt,v in [('2019-11',42.1),('2023-03',69.4)]:point(s,dt,v,sid,'month')
 s=series('internet-speed','download-time','Pobranie 1 GB · idealny czas','sekundy','seconds','event','8 000 megabitów / Mbit/s. 1 GB dziesiętny; bez narzutu i ograniczeń serwera.','derived',entity='United Kingdom')
 for dt,v in [('2019-11',42.1),('2023-03',69.4)]:point(s,dt,8000/v,sid,'month')
 
+add_cost_topics(RAW, topic, series, point, source, TOPICS, SOURCES)
+
 # Prune entirely empty series, sort chronologically, enforce unique observation dates.
 for sid in list(SERIES):
  s=SERIES[sid]
@@ -309,12 +312,12 @@ for t in TOPICS.values():
  if not t['defaults']:t['defaults']=[sid for sid in t['seriesIds'] if SERIES[sid]['count']>=2][:1]
  t['count']=sum(SERIES[s]['count'] for s in t['seriesIds']);t['seriesCount']=len(t['seriesIds'])
  t['start']=min((SERIES[s]['start'] for s in t['seriesIds']),default=None);t['end']=max((SERIES[s]['end'] for s in t['seriesIds']),default=None)
- t['defaultMode']='index' if t['id']=='apple' else 'native'
- t['defaultChart']='cards' if t['id']=='adoption' else 'line'
+ t.setdefault('defaultMode','index' if t['id']=='apple' else 'native')
+ t.setdefault('defaultChart','cards' if t['id']=='adoption' else 'line')
 for src in SOURCES.values():
  n=src['name'].lower()
  labels=[('yahoo','Yahoo Finance'),('apple','Apple / SEC'),('spotify','Spotify / SEC'),('amazon','Amazon / SEC'),('alphabet','Alphabet / SEC'),('meta','Meta / SEC'),('facebook','Meta / SEC'),('nvidia','NVIDIA / OWID'),('nintendo','Nintendo'),('microsoft','Microsoft'),('gus','GUS'),('nbp','NBP'),('openai','OpenAI'),('tiktok','TikTok'),('ofcom','Ofcom'),('epoch','Epoch AI'),('wipo','WIPO / World Bank'),('world bank','World Bank'),('irena','IRENA / OWID'),('iea','IEA / OWID')]
- src['shortName']=next((label for word,label in labels if word in n),'OWID')
+ src['shortName']='NHGRI' if 'nhgri' in n else next((label for word,label in labels if word in n),'OWID')
 angles=json.loads((ROOT/'research/stories/story-notes.json').read_text(encoding='utf8'))
 for t in TOPICS.values():t['variants']=angles.get(t['id'],['Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.'] if t['seriesCount'] else ['Model hipotetyczny w module Studio; historyczne symulacje wpłat w module Giełda.'])
 manifest={'schemaVersion':1,'builtAt':NOW,'topics':list(TOPICS.values()),'series':[{k:v for k,v in s.items() if k!='points'} for s in SERIES.values()],'sources':list(SOURCES.values())}
@@ -342,10 +345,13 @@ guide=readme+'\n## Tematy i dostępna historia\n\n'
 for t in TOPICS.values():
  guide+=f"### {t['title']}\n\n{t['seriesCount']} serii; {t['count']} obserwacji; {t['start'] or '—'} → {t['end'] or '—'}. Status: {t['status']}.\n\n{t['note']}\n\n"+'\n'.join('- '+a for a in t['variants'])+'\n\n'
 (OUT/'STORY-GUIDE.md').write_text(guide,encoding='utf8')
+(OUT/'TECHNOLOGY-COSTS.md').write_text((ROOT/'research/stories/technology-costs.md').read_text(encoding='utf8'),encoding='utf8')
 with zipfile.ZipFile(OUT/'plotwist-story-datasets.zip','w',compression=zipfile.ZIP_DEFLATED) as z:
  for p in OUT.iterdir():
   if p.suffix in ['.json','.csv','.md']:z.write(p,p.name)
  for p in RAW.glob('*.metadata.json'):z.write(p,'source-metadata/'+p.name)
+ for pattern in ['epoch-thought-*','epoch-chip-performance.csv*','nhgri-sequencing-costs.xls*']:
+  for p in RAW.glob(pattern):z.write(p,'technology-cost-sources/'+p.name)
  z.write(ROOT/'research/stories/extracted-financial-tables.json','evidence/extracted-financial-tables.json')
 print(json.dumps({k:v for k,v in quality.items() if k!='coverage'},ensure_ascii=False))
 for t in TOPICS.values():print(t['id'],t['seriesCount'],t['count'],t['start'],t['end'],t['status'])

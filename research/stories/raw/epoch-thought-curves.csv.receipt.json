@@ -1,0 +1,9 @@
+{
+  "url": "https://raw.githubusercontent.com/droodman/inference-cost/9163c17ee7217b9f09ac51bcc71ed64c18c04bc8/data/cost_truncated_curves.csv",
+  "retrievedAt": "2026-09-29T14:50:17.505439+00:00",
+  "sha256": "578091c3ee84dffeefe71bdefdbb799344e180f7e0293fb0d47216be6eea79e4",
+  "bytes": 2502805,
+  "repositoryCommit": "9163c17ee7217b9f09ac51bcc71ed64c18c04bc8",
+  "reportUrl": "https://epoch.ai/publications/the-plunging-price-of-thought",
+  "reportPublishedAt": "2026-09-22"
+}

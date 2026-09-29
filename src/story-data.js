@@ -31,7 +31,7 @@ export function buildStoryChart(series,settings){
   if(settings.mode==='index'&&base<=0)throw Error('Indeks 100 wymaga dodatniej wartości początkowej. Zmień zakres dat.');
   bases.push({id:s.id,date:first.date,period:first.period,datePrecision:first.datePrecision,fiscalYear:first.fiscalYear,value:base,unit:s.unit});
   // A missing annual observation is a gap, never a made-up zero or measurement.
-  let trimmed=points.filter(p=>p.date>=first.date&&p.date<=last.date);
+  let trimmed=s.includeEmptyPeriods?points:points.filter(p=>p.date>=first.date&&p.date<=last.date);
   if(s.frequency==='annual'&&s.datePrecisions.every(p=>p==='year')){
    const byYear=new Map(trimmed.map(p=>[p.date.slice(0,4),p]));trimmed=[];
    for(let y=Number(first.date.slice(0,4));y<=Number(last.date.slice(0,4));y++)trimmed.push(byYear.get(String(y))||{date:`${y}-12-31`,value:null,datePrecision:'year',period:String(y)});
