@@ -1,6 +1,6 @@
 {
   "rulesVersion": "2026-09-28.1",
-  "generatedAt": "2026-09-28T21:08:05.152Z",
+  "generatedAt": "2026-09-29T13:09:42.058Z",
   "policy": "Source organizations take precedence. Explicit family aliases only fill missing organizations. Third-party fine-tunes and joint publishers remain separate. Unknown names remain unresolved. Brand attribution does not verify the version behind an API alias.",
   "references": [
     "https://github.com/deepseek-ai/DeepSeek-R1",
@@ -539,7 +539,7 @@
   "benchmarks": [
     {
       "id": "gpqa",
-      "observations": 313,
+      "observations": 314,
       "unassigned": 0,
       "models": [
         {
@@ -3358,6 +3358,15 @@
           "publisher": "Alibaba",
           "method": "source-organization",
           "sourceUrl": "https://epoch.ai/benchmarks/gpqa-diamond"
+        },
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/gpqa-diamond"
         }
       ]
     },
@@ -4342,7 +4351,7 @@
     },
     {
       "id": "mock-aime",
-      "observations": 291,
+      "observations": 292,
       "unassigned": 0,
       "models": [
         {
@@ -6963,6 +6972,15 @@
           "publisher": "Meta",
           "method": "source-organization",
           "sourceUrl": "https://epoch.ai/benchmarks/otis-mock-aime-2024-2025"
+        },
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/otis-mock-aime-2024-2025"
         }
       ]
     },
@@ -8204,7 +8222,7 @@
     },
     {
       "id": "frontiermath-v2",
-      "observations": 108,
+      "observations": 109,
       "unassigned": 0,
       "models": [
         {
@@ -9178,6 +9196,15 @@
           "publisher": "Meta",
           "method": "source-organization",
           "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tier-4-v2"
+        },
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tier-4-v2"
         }
       ]
     },
@@ -9838,7 +9865,7 @@
     },
     {
       "id": "frontiermath4-v2",
-      "observations": 64,
+      "observations": 65,
       "unassigned": 0,
       "models": [
         {
@@ -10414,6 +10441,15 @@
           "sourceOrganization": "Meta AI",
           "brandId": "meta",
           "publisher": "Meta",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tier-4-v2"
+        },
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
           "method": "source-organization",
           "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tier-4-v2"
         }
@@ -12327,7 +12363,7 @@
     },
     {
       "id": "arc1",
-      "observations": 247,
+      "observations": 253,
       "unassigned": 1,
       "models": [
         {
@@ -14552,12 +14588,66 @@
           "publisher": "OpenAI",
           "method": "source-organization",
           "sourceUrl": "https://epoch.ai/benchmarks/arc-agi"
+        },
+        {
+          "modelId": "claude-opus-5-5_max::rec1IeqwhlQmodx2I",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi"
+        },
+        {
+          "modelId": "gpt-6-sol_max::rec4dBo80VpXStHHy",
+          "model": "GPT-6 Sol (max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi"
+        },
+        {
+          "modelId": "gpt-6-sol_xhigh::rec91MbIWxiDlcmQ4",
+          "model": "GPT-6 Sol (xhigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi"
+        },
+        {
+          "modelId": "gpt-6-luna_max::rechAUouXDDP6RpVC",
+          "model": "GPT-6 Luna (max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi"
+        },
+        {
+          "modelId": "gpt-6-luna_xhigh::recHglCFl3xioSDrp",
+          "model": "GPT-6 Luna (xhigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi"
+        },
+        {
+          "modelId": "claude-opus-5-5_xhigh::recZsJ27udDHU9Av1",
+          "model": "Claude Opus 5.5 (xhigh)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi"
         }
       ]
     },
     {
       "id": "arc2",
-      "observations": 227,
+      "observations": 233,
       "unassigned": 1,
       "models": [
         {
@@ -16597,6 +16687,60 @@
         {
           "modelId": "gpt-6-astra_xhigh::recuO4X9wY6J0GPRP",
           "model": "GPT-6 Astra (xhigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2"
+        },
+        {
+          "modelId": "claude-opus-5-5_max::reciGvWCfQIQzEmnO",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2"
+        },
+        {
+          "modelId": "claude-opus-5-5_xhigh::recjdCxN2bD3djTOO",
+          "model": "Claude Opus 5.5 (xhigh)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2"
+        },
+        {
+          "modelId": "gpt-6-luna_xhigh::recsVJik0zbPW04yN",
+          "model": "GPT-6 Luna (xhigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2"
+        },
+        {
+          "modelId": "gpt-6-sol_xhigh::recw7reHorlfa9MLF",
+          "model": "GPT-6 Sol (xhigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2"
+        },
+        {
+          "modelId": "gpt-6-luna_max::recZ0B5ZSsbbYsh8s",
+          "model": "GPT-6 Luna (max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2"
+        },
+        {
+          "modelId": "gpt-6-sol_max::recZ0Sr94tS2G6Ud4",
+          "model": "GPT-6 Sol (max)",
           "sourceOrganization": "OpenAI",
           "brandId": "openai",
           "publisher": "OpenAI",
@@ -20021,7 +20165,7 @@
     },
     {
       "id": "iq-offline-vision",
-      "observations": 551,
+      "observations": 553,
       "unassigned": 0,
       "models": [
         {
@@ -20800,7 +20944,7 @@
     },
     {
       "id": "iq-mensa-vision",
-      "observations": 527,
+      "observations": 528,
       "unassigned": 0,
       "models": [
         {
@@ -21124,6 +21268,382 @@
           "publisher": "OpenAI",
           "method": "source-organization",
           "sourceUrl": "https://openai.com/index/learning-to-reason-with-llms/"
+        }
+      ]
+    },
+    {
+      "id": "terminal4-report",
+      "observations": 3,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_xhigh",
+          "model": "Claude Opus 5.5 (xhigh)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "frontiercode11-report",
+      "observations": 5,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_xhigh",
+          "model": "Claude Sonnet 5.5 (xhigh)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5-system-card#page=111"
+        },
+        {
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "gpt-6-sol_reported",
+          "model": "GPT-6 Sol (reported)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "cursor4-report",
+      "observations": 3,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "gdpval21-report",
+      "observations": 4,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "gpt-6-sol_reported",
+          "model": "GPT-6 Sol (reported)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "briefcase11-report",
+      "observations": 4,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "gpt-6-sol_reported",
+          "model": "GPT-6 Sol (reported)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "hle-tools-report",
+      "observations": 3,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "osworld21-partial-report",
+      "observations": 3,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "chartography-report",
+      "observations": 4,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "gpt-6-sol_reported",
+          "model": "GPT-6 Sol (reported)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "aa-intelligence-sep26",
+      "observations": 2,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5"
+        }
+      ]
+    },
+    {
+      "id": "terminal4-aa-sep26",
+      "observations": 3,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5"
+        },
+        {
+          "modelId": "gpt-6-astra_xhigh",
+          "model": "GPT-6 Astra (xhigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5"
         }
       ]
     }

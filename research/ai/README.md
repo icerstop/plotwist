@@ -1,6 +1,6 @@
 # Dane do rolek o możliwościach AI
 
-Pobrano 28.09.2026. To historyczne obserwacje zawarte w obecnym snapshotcie źródeł, nie zbiór dawnych zrzutów leaderboardów.
+Zaktualizowano 29.09.2026. To historyczne obserwacje zawarte w obecnym snapshotcie źródeł, nie zbiór dawnych zrzutów leaderboardów.
 
 ## Źródła
 
@@ -24,3 +24,16 @@ Zakres pokrycia zależy od źródła. Np. MMLU z tego archiwum kończy się w 20
 ## Licencje
 
 Wewnętrzne pomiary Epoch oraz ECI: CC BY 4.0, przypisanie autorstwa Epoch AI. Dane zewnętrzne zachowują licencje źródłowe. TrackingAI nie deklaruje otwartej licencji w pobranym CSV. Raporty producentów są cytowanymi źródłami faktów; nie redystrybuujemy pytań, odpowiedzi ani logów benchmarków. Strona pozostaje prywatna.
+
+
+## Aktualizacja Sonnet 5.5 — 29.09.2026
+
+Odświeżono pełne archiwum Epoch i dziennik TrackingAI; formuły punktowe TrackingAI pozostają takie same. W tej wersji: 29 zestawów, 5939 obserwacji (wcześniej 19 / 5886). W pobranym ECI i czterech quizach IQ nadal brak wyników Sonnet 5.5. Nie dopisujemy im punktów z innych testów.
+
+Dodano osiem osobnych zestawów z [raportu premierowego Anthropic](https://www.anthropic.com/claude-sonnet-5-5): Terminal-Bench 4.0, FrontierCode 1.1 Main, CursorBench 4.0, GDPval-AA v2.1, AA-Briefcase v1.1, HLE z narzędziami, OSWorld 2.1 partial oraz Chartography bez narzędzi. Dane i konfiguracje sprawdzono w [System Card](https://www.anthropic.com/claude-sonnet-5-5-system-card), strony 109, 111, 113, 115, 118, 125, 129, 133–134. Zapisano publikację 28.09.2026 oddzielnie od premier modeli; nie znamy dni wykonania pomiarów. Retrospektywa premier nie jest historią stanu wiedzy.
+
+`sonnet-5-5-report.json` zachowuje oryginalne komórki tabeli i SHA-256 pobranych źródeł. `scripts/extract-sonnet55-report.py` odtwarza ekstrakcję z lokalnego HTML i jawnie opisanych uzupełnień z System Card. HTML jest pomijany przez Git; źródła można pobrać z trzech adresów w tym dokumencie. PDF jest zachowany lokalnie i w repozytorium. Ta ekstrakcja jest przypisana do snapshotu 29.09.2026, a skrypt odświeżający Epoch nie zmienia jej daty.
+
+Osobno dodano dwa zestawy z [niezależnego raportu Artificial Analysis](https://artificialanalysis.ai/articles/claude-sonnet-5-5): Intelligence Index i Terminal-Bench 4.0. To mały zestaw porównań z tego raportu, nie pełne historyczne leaderboardy. 64% w AA i 70,6% w raporcie Anthropic pochodzą z różnych konfiguracji. Elo i punkty indeksu nie są procentami ani IQ. Sonnet 5.5 był testowany przez AA przed premierą z błędem structured outputs; raport zapowiada ponowne pomiary. Domyślny fallback może angażować starszy model.
+
+FrontierCode: Sonnet 5.5 max = 46,2%, xhigh = 52,1%. To dwa oddzielne warianty. OSWorld pokazuje partial score, nie ścisły pass rate. HLE i Chartography z narzędziami oraz bez narzędzi nie są łączone.

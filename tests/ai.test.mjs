@@ -25,3 +25,21 @@ test('shipped snapshots: unique IDs, finite scores, dates, separate sources and 
  for(const r of d.rows){assert.ok(Number.isFinite(r.score));if(d.max)assert.ok(r.score>=0&&r.score<=d.max);assert.ok(r.sourceUrl.startsWith('https://'));if(r.releaseDate)assert.match(r.releaseDate,/^\d{4}-\d{2}-\d{2}$/);if(r.observedAt)assert.match(r.observedAt,/^\d{4}-\d{2}-\d{2}/);if(b.id==='swe-v2')assert.ok(r.observedAt>='2026-02-12');if(b.id==='swe-v1')assert.ok(r.observedAt<'2026-02-12');if(b.id.startsWith('iq-'))assert.equal(/vision/i.test(r.model),b.id.endsWith('-vision'));}}
  assert.equal(m.totalObservations,count);
 });
+
+
+test('Sonnet 5.5 release data keeps configurations, publication dates and independent scores separate',()=>{
+ const read=id=>JSON.parse(fs.readFileSync(`public/ai/${id}.json`));
+ const report=read('terminal4-report'),aa=read('terminal4-aa-sep26');
+ const sonnet=d=>d.rows.find(r=>r.modelId==='claude-sonnet-5-5_max');
+ assert.equal(sonnet(report).score,70.6);assert.equal(sonnet(aa).score,64);
+ assert.equal(sonnet(report).releaseDate,'2026-09-28');assert.equal(sonnet(report).observedAt,'2026-09-28');assert.equal(sonnet(report).dateKind,'publication');
+ assert.equal(report.rows.find(r=>r.modelId==='claude-opus-5-5_xhigh').releaseDate,'2026-09-22');
+ assert.ok(!report.rows.some(r=>r.modelId.startsWith('gpt-6-sol'))); // Unreported is not zero.
+ const fc=read('frontiercode11-report');assert.equal(sonnet(fc).score,46.2);assert.equal(fc.rows.find(r=>r.modelId==='claude-sonnet-5-5_xhigh').score,52.1);
+ assert.equal(read('gdpval21-report').unit,'Elo');assert.equal(read('gdpval21-report').max,undefined);
+ assert.equal(read('osworld21-partial-report').rows[0].protocol,'OSWorld 2.1 · partial score');
+ assert.ok(read('hle-tools-report').rows.every(r=>r.protocol.includes('with tools')));
+ const m=read('manifest');
+ for(const id of ['eci','iq-offline','iq-offline-vision','iq-mensa','iq-mensa-vision'])assert.equal(m.featuredRelease.missingBenchmarks.includes(id),!read(id).rows.some(r=>/sonnet[\s_-]*5[.\s_-]*5/i.test(`${r.model} ${r.modelId}`)));
+ for(const id of m.featuredRelease.benchmarkIds){const b=read(id);assert.ok(sonnet(b));assert.ok(b.rows.every(r=>r.dateKind==='publication'&&r.sourceUrl.startsWith('https://')));}
+});

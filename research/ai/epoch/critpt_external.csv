@@ -4,11 +4,16 @@ gpt-6-astra_max,0.317142857142857,2026-09-03,OpenAI,United States of America,1.0
 
 This suggests around 1e27 FLOP (corresponding to ~100k GB200s over 90 days at 25% FP8 MFU). See more detailed estimate in this notebook, yielding a CI of ~[5e26, 2e27] FLOP.
 https://colab.research.google.com/drive/1DRlugIQs-_zoV66AJT1gQg6I1-NX7NqN ",GPT-6 Astra (max),,recchwRSFo4NJR8y2
+claude-opus-5-5_max,0.317142857142857,2026-09-22,Anthropic,United States of America,,,"Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",,recCMhoGESWuXr0FY
+claude-opus-5-5_xhigh,0.317142857142857,2026-09-22,Anthropic,United States of America,,,"Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",,rec3ntl7wmky8zgSD
 gpt-6-astra_xhigh,0.314285714285714,2026-09-03,OpenAI,United States of America,1.0001e+27,"per OpenAI and affiliates (e.g. Nvidia), 6 Astra was trained on at least 100,000 GB200s in Abilene, Texas (so 100,000 in ""Hardware quantity"" is a lower bound/underestimate).
 
 This suggests around 1e27 FLOP (corresponding to ~100k GB200s over 90 days at 25% FP8 MFU). See more detailed estimate in this notebook, yielding a CI of ~[5e26, 2e27] FLOP.
 https://colab.research.google.com/drive/1DRlugIQs-_zoV66AJT1gQg6I1-NX7NqN ",GPT-6 Astra (xhigh),,recONBqYxzUiCO8Iy
+claude-sonnet-5-5_max,0.314285714285714,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",,recYaEJ1U2tB7mXbb
 claude-fable-5-1_xhigh,0.311428571428571,2026-09-01,Anthropic,United States of America,,,"Claude Fable 5.1 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",,recDxO947Y2IBUxq1
+claude-sonnet-5-5_xhigh,0.311428571428571,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",,recQsr4Jck0UXOrW5
+gpt-6-sol_max,0.308571428571429,2026-09-22,OpenAI,United States of America,,,GPT-6 Sol (max),,recf4LRWte36QGiRZ
 gpt-5.5-pro_xhigh,0.305714285714286,2026-04-23,OpenAI,United States of America,,,GPT-5.5 Pro (xhigh),,recB9otf2Iy1aL15O
 claude-fable-5-1_high,0.302857142857143,2026-09-01,Anthropic,United States of America,,,"Claude Fable 5.1 (Adaptive Reasoning, High Effort, Default Fallback)",,recdIJdHkHz5QHHB8
 gpt-5.4-pro-2026-03-05_xhigh,0.3,2026-03-05,OpenAI,United States of America,,,GPT-5.4 Pro (xhigh),,recpj4aTRQU6UUqUg
@@ -27,6 +32,7 @@ https://colab.research.google.com/drive/1DRlugIQs-_zoV66AJT1gQg6I1-NX7NqN ",GPT-
 gpt-5.6-sol_xhigh,0.286,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Sol (xhigh),,recCCEqC3wisl7qU4
 claude-fable-5_max,0.2857142857,2026-06-09,Anthropic,United States of America,,,"Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback)",,recVfxdxUtc8D2L0n
 claude-opus-5_high,0.282857142857143,2026-07-24,Anthropic,United States of America,,,"Claude Opus 5 (Adaptive Reasoning, High Effort)",,recQhcpUHUieJGpId
+gpt-6-sol_xhigh,0.28,2026-09-22,OpenAI,United States of America,,,GPT-6 Sol (xhigh),,recKaQ454dgxqYtiY
 claude-opus-5_xhigh,0.277142857142857,2026-07-24,Anthropic,United States of America,,,"Claude Opus 5 (Adaptive Reasoning, Xhigh Effort)",,recqe0FCEPFJX8Adc
 claude-fable-5-1_low,0.277142857142857,2026-09-01,Anthropic,United States of America,,,"Claude Fable 5.1 (Adaptive Reasoning, Low Effort, Default Fallback)",,rec2RJ8EQ2qMVtCE8
 gpt-5.5_xhigh,0.271428571428571,2026-04-23,OpenAI,United States of America,,,GPT-5.5 (xhigh),,rec7ob5La2ExbJeLM
@@ -40,6 +46,7 @@ gemini-3-deep-think-preview,0.257142857142857,2026-02-12,Google DeepMind,United 
 gpt-5.6-sol_high,0.257142857142857,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Sol (high),,recrwnRfpJKrmslqN
 gpt-5.5_high,0.254285714285714,2026-04-23,OpenAI,United States of America,,,GPT-5.5 (high),,recLoNQxQteSxrTSI
 muse-spark-1.3_max,0.248571428571429,2026-09-02,Meta AI,United States of America,,,Muse Spark 1.3 (max),,recWjWRh1an30zEd3
+claude-sonnet-5-5_high,0.245714285714286,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",,recYKDTmD85rWCMgJ
 gpt-5.4-2026-03-05_xhigh,0.23428571430000003,2026-03-05,OpenAI,United States of America,,,GPT-5.4 (xhigh),,recRZ2byfLFxfUg3P
 kimi-k3_max,0.234,2026-07-16,Moonshot,China,2.0001e+25,"Based on peer models such as Kimi K2.6 and DeepSeek V4 Pro, plausibly was trained on roughly 30T tokens (likely between 15T and 60T). Using the heuristic that C = 6ND, 30T pretraining tokens would imply ~1.9e25 FLOP. This is a somewhat uncertain estimate (more uncertain than estimates based on disclosed active params and token counts, but comparable to estimates based on disclosed GPU-hours).
 
@@ -58,6 +65,7 @@ gpt-6-astra_none,0.197142857142857,2026-09-03,OpenAI,United States of America,1.
 
 This suggests around 1e27 FLOP (corresponding to ~100k GB200s over 90 days at 25% FP8 MFU). See more detailed estimate in this notebook, yielding a CI of ~[5e26, 2e27] FLOP.
 https://colab.research.google.com/drive/1DRlugIQs-_zoV66AJT1gQg6I1-NX7NqN ",GPT-6 Astra (Non-reasoning),,recFv6W9bqROZOfW9
+gpt-6-luna_max,0.19428571428571403,2026-09-22,OpenAI,United States of America,,,GPT-6 Luna (max),,recdQWgHi9c8JmLJ9
 glm-5.3_max,0.191428571428571,2026-08-14,Z.ai (Zhipu AI),China,,,GLM-5.3 (max),,recLWpumgBpzZU4y1
 gpt-5.5_medium,0.18571428571428603,2026-04-23,OpenAI,United States of America,,,GPT-5.5 (medium),,rec9tobYSj0aIDyTz
 gemini-3.8-flash_high,0.182857142857143,2026-09-02,Google DeepMind,United States of America,,,Gemini 3.8 Flash (high),,recKtVPT8wSqnhvJT
@@ -68,8 +76,10 @@ muse-spark-1.2_xhigh,0.177142857142857,2026-08-05,Meta AI,United States of Ameri
 qwen3.8-max-0902_unknown,0.177142857142857,2026-09-01,Alibaba,China,,,Qwen3.8 Max (0902),,recFmHGKzOkLYr23L
 grok-4.7_xhigh,0.177142857142857,2026-09-21,xAI,United States of America,,,Grok 4.7 (xhigh),,recOgLdIJweeu6Ha0
 gpt-5.6-terra_medium,0.174285714285714,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Terra (medium),,recd5XH0K1FBEWW6T
+gpt-6-luna_xhigh,0.174285714285714,2026-09-22,OpenAI,United States of America,,,GPT-6 Luna (xhigh),,recJ5WqxbFJU5Y4eJ
 grok-4.6_high,0.171428571428571,2026-08-12,xAI,United States of America,,,Grok 4.6 (high),,rec7IzR3Isff3P54Q
 claude-sonnet-5_max,0.168571428571429,2026-06-30,Anthropic,United States of America,,,"Claude Sonnet 5 (Adaptive Reasoning, Max Effort)",,reczNcIVusSshoSMi
+claude-sonnet-5-5_medium,0.168571428571429,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",,recDQgFsyjxLBioyD
 gpt-5.6-luna_high,0.165714285714286,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Luna (high),,recAl58eDFCqhYed8
 deepseek-v4-flash-0731_max,0.165714285714286,2026-07-31,DeepSeek,China,2.496e+24,"From https://api-docs.deepseek.com/updates/: ""DeepSeek-V4-Flash-0731 keeps the same model architecture and size as DeepSeek-V4-Flash-Preview, and was only re-post-trained.""
 
@@ -91,6 +101,7 @@ gpt-5-2025-08-07_high,0.126,2025-08-07,OpenAI,United States of America,6.6e+25,"
 https://docs.google.com/document/d/1V2jIk365LnhH4WDoCw5dYJjZr1Htw8IHaK1noMf5Y48/edit?tab=t.z871imftkus","GPT-5 (high, code & web)",202.3,recdr3BrRL90Bz4BD
 gemini-3.8-flash_medium,0.122857142857143,2026-09-02,Google DeepMind,United States of America,,,Gemini 3.8 Flash (medium),,rec4GH6UtiducrcoH
 claude-opus-4-7_max,0.12,2026-04-16,Anthropic,United States of America,,,"Claude Opus 4.7 (Adaptive Reasoning, Max Effort)",,recet99FlOwSOYz79
+claude-sonnet-5-5_low,0.114285714285714,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",,recsjfVJkxRo3UG8a
 muse-spark,0.11330612244898002,2026-04-08,Meta AI,United States of America,,,Muse Spark,,recb3XQxDm31GDzUB
 gemini-3.6-flash_high,0.105714285714286,2026-07-21,Google DeepMind,United States of America,,,Gemini 3.6 Flash (high),,recqwxOipLyu5aMnZ
 gpt-5.4-mini-2026-03-17_xhigh,0.1,2026-03-17,OpenAI,United States of America,,,GPT-5.4 mini (xhigh),,recLA3xembg5N2dya

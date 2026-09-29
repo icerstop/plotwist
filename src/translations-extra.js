@@ -1,5 +1,32 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Terminal-Bench 4.0 · Anthropic|Terminal-Bench 4.0 · Anthropic
+FrontierCode 1.1 Main · raport|FrontierCode 1.1 Main · report
+CursorBench 4.0 · raport|CursorBench 4.0 · report
+GDPval-AA v2.1 · raport|GDPval-AA v2.1 · report
+AA-Briefcase v1.1 · raport|AA-Briefcase v1.1 · report
+HLE · z narzędziami · Anthropic|HLE · with tools · Anthropic
+OSWorld 2.1 · partial · raport|OSWorld 2.1 · partial · report
+Chartography · bez narzędzi|Chartography · without tools
+66 zadań; Claude Code --bare, safeguards i domyślny fallback. Sonnet 5.5: max; Opus 5.5: xhigh. Bez dostępu do internetu; zasoby buforowane. Osobno od Terminal-Bench 2.0 i pomiarów Artificial Analysis.|66 tasks; Claude Code --bare, safeguards and default fallback. Sonnet 5.5: max; Opus 5.5: xhigh. No internet access; resources cached. Separate from Terminal-Bench 2.0 and Artificial Analysis measurements.
+Zestaw Main, nie Extended. Zachowujemy osobno max i xhigh: większy wysiłek nie musi dawać lepszego wyniku. Claude Code / Codex CLI; wyniki Cognition przytoczone w raporcie Anthropic.|Main set, not Extended. Max and xhigh are separate: greater effort does not always improve the score. Claude Code / Codex CLI; Cognition results cited in Anthropic's report.
+Wyniki zmierzone przez Cursor i przytoczone w raporcie Anthropic. Osobna wersja 4.0, bez łączenia ze starszymi edycjami.|Measured by Cursor and cited in Anthropic's report. Version 4.0 is kept separate from earlier editions.
+Ranking Elo, nie procent ani IQ. Pomiary Artificial Analysis przytoczone przez Anthropic; 220 zadań zawodowych. Sonnet 5.5 testowano przed premierą z błędem structured outputs, naprawionym w wersji publicznej.|Elo rating, not a percentage or IQ. Artificial Analysis measurements cited by Anthropic; 220 professional tasks. Sonnet 5.5 was tested before release with a structured-output bug, fixed in the public version.
+Ranking Elo, nie procent. Pomiary Artificial Analysis przytoczone przez Anthropic. Sonnet 5.5 testowano przed premierą z błędem structured outputs; ponowny pomiar może zmienić wynik.|Elo rating, not a percentage. Artificial Analysis measurements cited by Anthropic. Sonnet 5.5 was tested before release with a structured-output bug; a rerun may change the score.
+Wyszukiwanie, pobieranie stron i wykonywanie kodu. Budżet 980 tys. tokenów, bez kompakcji; blokowanie źródeł zawierających odpowiedzi HLE. Osobno od wyników bez narzędzi.|Web search, page fetching and code execution. A 980k-token budget without compaction; sources containing HLE answers are blocked. Separate from results without tools.
+Partial score: częściowy kredyt za punkty kontrolne, nie odsetek zadań w pełni rozwiązanych. 108 zadań, 1080p, limit 500 kroków, max effort.|Partial score: credit for completed checkpoints, not the share of fully solved tasks. 108 tasks, 1080p, a 500-step limit, max effort.
+Rozpoznawanie specjalistycznych wykresów bez narzędzi. Oddzielnie od wariantu z kodem i kadrowaniem obrazu. Niektóre wyniki GPT-6 Sol mogły poprzedzać poprawkę obsługi obrazów.|Specialized chart understanding without tools. Separate from the variant with code and image cropping. Some GPT-6 Sol scores may predate the image-understanding fix.
+Snapshot dwóch modeli z raportu 28.09.2026. Indeks Artificial Analysis nie jest ECI ani IQ; nie łączymy różnych wydań indeksu.|Two-model snapshot from the 28 September 2026 report. The Artificial Analysis index is neither ECI nor IQ; index editions remain separate.
+Wyniki Artificial Analysis zaokrąglone do pełnych procentów w raporcie. Oddzielnie od konfiguracji Anthropic (70,6% dla Sonnet 5.5).|Artificial Analysis results rounded to whole percentages in its report. Separate from Anthropic's configuration (70.6% for Sonnet 5.5).
+Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.|Published on 28 September 2026; this is not the test execution date. Configurations, budgets and environments may differ. These scores are not IQ measurements.
+Nowe wyniki: Claude Sonnet 5.5|New results: Claude Sonnet 5.5
+Pokaż nowe wyniki|Show new results
+Premiera 28.09.2026. Raport Anthropic i pomiary Artificial Analysis są osobnymi zestawami. Wyniki ECI i „IQ” zależą od dostępności w źródłach.|Released 28 September 2026. Anthropic's report and Artificial Analysis measurements are separate datasets. ECI and “IQ” results depend on source availability.
+Praca zawodowa|Professional work
+Obsługa komputera|Computer use
+Wizja|Vision
+pkt indeksu|index points
+
 Płynność wideo|Video frame rate
 60 fps · płynniejszy ruch|60 fps · smoother motion
 30 fps · mniejszy plik|30 fps · smaller file

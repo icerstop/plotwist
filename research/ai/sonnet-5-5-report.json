@@ -1,0 +1,847 @@
+{
+  "publishedAt": "2026-09-28",
+  "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+  "sourceTable": [
+    [
+      "",
+      "Sonnet 5.5",
+      "Sonnet 5",
+      "Opus 5.5",
+      "GPT-6 Sol"
+    ],
+    [
+      "Agentic coding Terminal-Bench 4.0",
+      "70.6%",
+      "10.3%",
+      "66.4%¹",
+      "—"
+    ],
+    [
+      "Agentic coding FrontierCode 1.1 (Main)",
+      "46.2% Max²",
+      "42.4%",
+      "54.4%",
+      "49.3%"
+    ],
+    [
+      "Agentic coding CursorBench 4.0",
+      "55.5%",
+      "34.1%",
+      "57.8%",
+      "—"
+    ],
+    [
+      "Knowledge work GDPval-AA v2.1³",
+      "1844",
+      "1449",
+      "1846",
+      "1487⁴"
+    ],
+    [
+      "Knowledge work AA-Briefcase v1.1³",
+      "1811",
+      "1359",
+      "1822",
+      "1483⁴"
+    ],
+    [
+      "Multidisciplinary reasoning Humanity’s Last Exam",
+      "64.5% with tools",
+      "54.9% with tools",
+      "67.7% with tools",
+      "—"
+    ],
+    [
+      "Computer use OSWorld 2.1",
+      "80.1% partial",
+      "57.0% partial",
+      "81.8% partial",
+      "—"
+    ],
+    [
+      "Visual chart recognition Chartography",
+      "61.6% no tools",
+      "15.6% no tools",
+      "64.4% no tools",
+      "53.6%⁴ no tools"
+    ]
+  ],
+  "systemCardUrl": "https://www.anthropic.com/claude-sonnet-5-5-system-card",
+  "systemCardPages": [
+    109,
+    111,
+    113,
+    115,
+    118,
+    125,
+    129,
+    133,
+    134
+  ],
+  "sourceFiles": [
+    {
+      "file": "sonnet-5-5-announcement.html",
+      "sha256": "7fadc6dca2e0cc883a047d8ba41810b815951f242df2c2ea91cb35b02c59a2a8"
+    },
+    {
+      "file": "sonnet-5-5-system-card.pdf",
+      "sha256": "89cfd6a6d3aa6148eaf23f4a53006950ee7746009f381237c62920c720725785"
+    },
+    {
+      "file": "sonnet-5-5-artificial-analysis.html",
+      "sha256": "29f10b34b80938b5410d0dd7773332c918e3324dc4925f2f8baa885471c1e566"
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "terminal4-report",
+      "name": "Terminal-Bench 4.0 · Anthropic",
+      "category": "Kod",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "66 zadań; Claude Code --bare, safeguards i domyślny fallback. Sonnet 5.5: max; Opus 5.5: xhigh. Bez dostępu do internetu; zasoby buforowane. Osobno od Terminal-Bench 2.0 i pomiarów Artificial Analysis.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "rows": [
+        {
+          "id": "terminal4-report-claude-sonnet-5-5-max",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 70.6,
+          "effort": "max",
+          "protocol": "Terminal-Bench 4.0 · Claude Code",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. 66 zadań; Claude Code --bare, safeguards i domyślny fallback. Sonnet 5.5: max; Opus 5.5: xhigh. Bez dostępu do internetu; zasoby buforowane. Osobno od Terminal-Bench 2.0 i pomiarów Artificial Analysis. Konfiguracja: max.",
+          "sourceCell": "70.6%",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "terminal4-report-claude-sonnet-5-max",
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-06-30",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 10.3,
+          "effort": "max",
+          "protocol": "Terminal-Bench 4.0 · Claude Code",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. 66 zadań; Claude Code --bare, safeguards i domyślny fallback. Sonnet 5.5: max; Opus 5.5: xhigh. Bez dostępu do internetu; zasoby buforowane. Osobno od Terminal-Bench 2.0 i pomiarów Artificial Analysis. Konfiguracja: max.",
+          "sourceCell": "10.3%",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "terminal4-report-claude-opus-5-5-xhigh",
+          "modelId": "claude-opus-5-5_xhigh",
+          "model": "Claude Opus 5.5 (xhigh)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 66.4,
+          "effort": "xhigh",
+          "protocol": "Terminal-Bench 4.0 · Claude Code",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. 66 zadań; Claude Code --bare, safeguards i domyślny fallback. Sonnet 5.5: max; Opus 5.5: xhigh. Bez dostępu do internetu; zasoby buforowane. Osobno od Terminal-Bench 2.0 i pomiarów Artificial Analysis. Konfiguracja: xhigh.",
+          "sourceCell": "66.4%¹",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frontiercode11-report",
+      "name": "FrontierCode 1.1 Main · raport",
+      "category": "Kod",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Zestaw Main, nie Extended. Zachowujemy osobno max i xhigh: większy wysiłek nie musi dawać lepszego wyniku. Claude Code / Codex CLI; wyniki Cognition przytoczone w raporcie Anthropic.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "rows": [
+        {
+          "id": "frontiercode11-report-claude-sonnet-5-5-max",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 46.2,
+          "effort": "max",
+          "protocol": "FrontierCode 1.1 · Main",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Zestaw Main, nie Extended. Zachowujemy osobno max i xhigh: większy wysiłek nie musi dawać lepszego wyniku. Claude Code / Codex CLI; wyniki Cognition przytoczone w raporcie Anthropic. Konfiguracja: max.",
+          "sourceCell": "46.2% Max²",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "frontiercode11-report-claude-sonnet-5-max",
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-06-30",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 42.4,
+          "effort": "max",
+          "protocol": "FrontierCode 1.1 · Main",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Zestaw Main, nie Extended. Zachowujemy osobno max i xhigh: większy wysiłek nie musi dawać lepszego wyniku. Claude Code / Codex CLI; wyniki Cognition przytoczone w raporcie Anthropic. Konfiguracja: max.",
+          "sourceCell": "42.4%",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "frontiercode11-report-claude-opus-5-5-max",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 54.4,
+          "effort": "max",
+          "protocol": "FrontierCode 1.1 · Main",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Zestaw Main, nie Extended. Zachowujemy osobno max i xhigh: większy wysiłek nie musi dawać lepszego wyniku. Claude Code / Codex CLI; wyniki Cognition przytoczone w raporcie Anthropic. Konfiguracja: max.",
+          "sourceCell": "54.4%",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "frontiercode11-report-gpt-6-sol-reported",
+          "modelId": "gpt-6-sol_reported",
+          "model": "GPT-6 Sol (reported)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 49.3,
+          "effort": "reported",
+          "protocol": "FrontierCode 1.1 · Main",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Zestaw Main, nie Extended. Zachowujemy osobno max i xhigh: większy wysiłek nie musi dawać lepszego wyniku. Claude Code / Codex CLI; wyniki Cognition przytoczone w raporcie Anthropic. Konfiguracja: reported.",
+          "sourceCell": "49.3%",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "frontiercode11-report-claude-sonnet-5-5-xhigh",
+          "modelId": "claude-sonnet-5-5_xhigh",
+          "model": "Claude Sonnet 5.5 (xhigh)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 52.1,
+          "effort": "xhigh",
+          "protocol": "FrontierCode 1.1 · Main",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5-system-card#page=111",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Zestaw Main, xhigh; 46.2% w tej samej tabeli dotyczy max. Źródło: System Card, s. 111.",
+          "sourceCell": "52.1% Main, xhigh; section 8.4, page 111",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cursor4-report",
+      "name": "CursorBench 4.0 · raport",
+      "category": "Kod",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Wyniki zmierzone przez Cursor i przytoczone w raporcie Anthropic. Osobna wersja 4.0, bez łączenia ze starszymi edycjami.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "rows": [
+        {
+          "id": "cursor4-report-claude-sonnet-5-5-max",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 55.5,
+          "effort": "max",
+          "protocol": "CursorBench 4.0 · Cursor agent",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Wyniki zmierzone przez Cursor i przytoczone w raporcie Anthropic. Osobna wersja 4.0, bez łączenia ze starszymi edycjami. Konfiguracja: max.",
+          "sourceCell": "55.5%",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "cursor4-report-claude-sonnet-5-max",
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-06-30",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 34.1,
+          "effort": "max",
+          "protocol": "CursorBench 4.0 · Cursor agent",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Wyniki zmierzone przez Cursor i przytoczone w raporcie Anthropic. Osobna wersja 4.0, bez łączenia ze starszymi edycjami. Konfiguracja: max.",
+          "sourceCell": "34.1%",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "cursor4-report-claude-opus-5-5-max",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 57.8,
+          "effort": "max",
+          "protocol": "CursorBench 4.0 · Cursor agent",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Wyniki zmierzone przez Cursor i przytoczone w raporcie Anthropic. Osobna wersja 4.0, bez łączenia ze starszymi edycjami. Konfiguracja: max.",
+          "sourceCell": "57.8%",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gdpval21-report",
+      "name": "GDPval-AA v2.1 · raport",
+      "category": "Praca zawodowa",
+      "unit": "Elo",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Ranking Elo, nie procent ani IQ. Pomiary Artificial Analysis przytoczone przez Anthropic; 220 zadań zawodowych. Sonnet 5.5 testowano przed premierą z błędem structured outputs, naprawionym w wersji publicznej.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "rows": [
+        {
+          "id": "gdpval21-report-claude-sonnet-5-5-max",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 1844.0,
+          "effort": "max",
+          "protocol": "GDPval-AA v2.1 · AA",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Ranking Elo, nie procent ani IQ. Pomiary Artificial Analysis przytoczone przez Anthropic; 220 zadań zawodowych. Sonnet 5.5 testowano przed premierą z błędem structured outputs, naprawionym w wersji publicznej. Konfiguracja: max.",
+          "sourceCell": "1844",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "gdpval21-report-claude-sonnet-5-max",
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-06-30",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 1449.0,
+          "effort": "max",
+          "protocol": "GDPval-AA v2.1 · AA",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Ranking Elo, nie procent ani IQ. Pomiary Artificial Analysis przytoczone przez Anthropic; 220 zadań zawodowych. Sonnet 5.5 testowano przed premierą z błędem structured outputs, naprawionym w wersji publicznej. Konfiguracja: max.",
+          "sourceCell": "1449",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "gdpval21-report-claude-opus-5-5-max",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 1846.0,
+          "effort": "max",
+          "protocol": "GDPval-AA v2.1 · AA",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Ranking Elo, nie procent ani IQ. Pomiary Artificial Analysis przytoczone przez Anthropic; 220 zadań zawodowych. Sonnet 5.5 testowano przed premierą z błędem structured outputs, naprawionym w wersji publicznej. Konfiguracja: max.",
+          "sourceCell": "1846",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "gdpval21-report-gpt-6-sol-reported",
+          "modelId": "gpt-6-sol_reported",
+          "model": "GPT-6 Sol (reported)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 1487.0,
+          "effort": "reported",
+          "protocol": "GDPval-AA v2.1 · AA",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Ranking Elo, nie procent ani IQ. Pomiary Artificial Analysis przytoczone przez Anthropic; 220 zadań zawodowych. Sonnet 5.5 testowano przed premierą z błędem structured outputs, naprawionym w wersji publicznej. Konfiguracja: reported.",
+          "sourceCell": "1487⁴",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "briefcase11-report",
+      "name": "AA-Briefcase v1.1 · raport",
+      "category": "Praca zawodowa",
+      "unit": "Elo",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Ranking Elo, nie procent. Pomiary Artificial Analysis przytoczone przez Anthropic. Sonnet 5.5 testowano przed premierą z błędem structured outputs; ponowny pomiar może zmienić wynik.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "rows": [
+        {
+          "id": "briefcase11-report-claude-sonnet-5-5-max",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 1811.0,
+          "effort": "max",
+          "protocol": "AA-Briefcase v1.1 · AA",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Ranking Elo, nie procent. Pomiary Artificial Analysis przytoczone przez Anthropic. Sonnet 5.5 testowano przed premierą z błędem structured outputs; ponowny pomiar może zmienić wynik. Konfiguracja: max.",
+          "sourceCell": "1811",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "briefcase11-report-claude-sonnet-5-max",
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-06-30",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 1359.0,
+          "effort": "max",
+          "protocol": "AA-Briefcase v1.1 · AA",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Ranking Elo, nie procent. Pomiary Artificial Analysis przytoczone przez Anthropic. Sonnet 5.5 testowano przed premierą z błędem structured outputs; ponowny pomiar może zmienić wynik. Konfiguracja: max.",
+          "sourceCell": "1359",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "briefcase11-report-claude-opus-5-5-max",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 1822.0,
+          "effort": "max",
+          "protocol": "AA-Briefcase v1.1 · AA",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Ranking Elo, nie procent. Pomiary Artificial Analysis przytoczone przez Anthropic. Sonnet 5.5 testowano przed premierą z błędem structured outputs; ponowny pomiar może zmienić wynik. Konfiguracja: max.",
+          "sourceCell": "1822",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "briefcase11-report-gpt-6-sol-reported",
+          "modelId": "gpt-6-sol_reported",
+          "model": "GPT-6 Sol (reported)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 1483.0,
+          "effort": "reported",
+          "protocol": "AA-Briefcase v1.1 · AA",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Ranking Elo, nie procent. Pomiary Artificial Analysis przytoczone przez Anthropic. Sonnet 5.5 testowano przed premierą z błędem structured outputs; ponowny pomiar może zmienić wynik. Konfiguracja: reported.",
+          "sourceCell": "1483⁴",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hle-tools-report",
+      "name": "HLE · z narzędziami · Anthropic",
+      "category": "Wiedza",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Wyszukiwanie, pobieranie stron i wykonywanie kodu. Budżet 980 tys. tokenów, bez kompakcji; blokowanie źródeł zawierających odpowiedzi HLE. Osobno od wyników bez narzędzi.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "rows": [
+        {
+          "id": "hle-tools-report-claude-sonnet-5-5-max",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 64.5,
+          "effort": "max",
+          "protocol": "HLE · with tools · Anthropic",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Wyszukiwanie, pobieranie stron i wykonywanie kodu. Budżet 980 tys. tokenów, bez kompakcji; blokowanie źródeł zawierających odpowiedzi HLE. Osobno od wyników bez narzędzi. Konfiguracja: max.",
+          "sourceCell": "64.5% with tools",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "hle-tools-report-claude-sonnet-5-max",
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-06-30",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 54.9,
+          "effort": "max",
+          "protocol": "HLE · with tools · Anthropic",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Wyszukiwanie, pobieranie stron i wykonywanie kodu. Budżet 980 tys. tokenów, bez kompakcji; blokowanie źródeł zawierających odpowiedzi HLE. Osobno od wyników bez narzędzi. Konfiguracja: max.",
+          "sourceCell": "54.9% with tools",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "hle-tools-report-claude-opus-5-5-max",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 67.7,
+          "effort": "max",
+          "protocol": "HLE · with tools · Anthropic",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Wyszukiwanie, pobieranie stron i wykonywanie kodu. Budżet 980 tys. tokenów, bez kompakcji; blokowanie źródeł zawierających odpowiedzi HLE. Osobno od wyników bez narzędzi. Konfiguracja: max.",
+          "sourceCell": "67.7% with tools",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "osworld21-partial-report",
+      "name": "OSWorld 2.1 · partial · raport",
+      "category": "Obsługa komputera",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Partial score: częściowy kredyt za punkty kontrolne, nie odsetek zadań w pełni rozwiązanych. 108 zadań, 1080p, limit 500 kroków, max effort.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "rows": [
+        {
+          "id": "osworld21-partial-report-claude-sonnet-5-5-max",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 80.1,
+          "effort": "max",
+          "protocol": "OSWorld 2.1 · partial score",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Partial score: częściowy kredyt za punkty kontrolne, nie odsetek zadań w pełni rozwiązanych. 108 zadań, 1080p, limit 500 kroków, max effort. Konfiguracja: max.",
+          "sourceCell": "80.1% partial",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "osworld21-partial-report-claude-sonnet-5-max",
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-06-30",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 57.0,
+          "effort": "max",
+          "protocol": "OSWorld 2.1 · partial score",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Partial score: częściowy kredyt za punkty kontrolne, nie odsetek zadań w pełni rozwiązanych. 108 zadań, 1080p, limit 500 kroków, max effort. Konfiguracja: max.",
+          "sourceCell": "57.0% partial",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "osworld21-partial-report-claude-opus-5-5-max",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 81.8,
+          "effort": "max",
+          "protocol": "OSWorld 2.1 · partial score",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Partial score: częściowy kredyt za punkty kontrolne, nie odsetek zadań w pełni rozwiązanych. 108 zadań, 1080p, limit 500 kroków, max effort. Konfiguracja: max.",
+          "sourceCell": "81.8% partial",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chartography-report",
+      "name": "Chartography · bez narzędzi",
+      "category": "Wizja",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Rozpoznawanie specjalistycznych wykresów bez narzędzi. Oddzielnie od wariantu z kodem i kadrowaniem obrazu. Niektóre wyniki GPT-6 Sol mogły poprzedzać poprawkę obsługi obrazów.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "rows": [
+        {
+          "id": "chartography-report-claude-sonnet-5-5-max",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 61.6,
+          "effort": "max",
+          "protocol": "Chartography · no tools",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Rozpoznawanie specjalistycznych wykresów bez narzędzi. Oddzielnie od wariantu z kodem i kadrowaniem obrazu. Niektóre wyniki GPT-6 Sol mogły poprzedzać poprawkę obsługi obrazów. Konfiguracja: max.",
+          "sourceCell": "61.6% no tools",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "chartography-report-claude-sonnet-5-max",
+          "modelId": "claude-sonnet-5_max",
+          "model": "Claude Sonnet 5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-06-30",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 15.6,
+          "effort": "max",
+          "protocol": "Chartography · no tools",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Rozpoznawanie specjalistycznych wykresów bez narzędzi. Oddzielnie od wariantu z kodem i kadrowaniem obrazu. Niektóre wyniki GPT-6 Sol mogły poprzedzać poprawkę obsługi obrazów. Konfiguracja: max.",
+          "sourceCell": "15.6% no tools",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "chartography-report-claude-opus-5-5-max",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 64.4,
+          "effort": "max",
+          "protocol": "Chartography · no tools",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Rozpoznawanie specjalistycznych wykresów bez narzędzi. Oddzielnie od wariantu z kodem i kadrowaniem obrazu. Niektóre wyniki GPT-6 Sol mogły poprzedzać poprawkę obsługi obrazów. Konfiguracja: max.",
+          "sourceCell": "64.4% no tools",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        },
+        {
+          "id": "chartography-report-gpt-6-sol-reported",
+          "modelId": "gpt-6-sol_reported",
+          "model": "GPT-6 Sol (reported)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 53.6,
+          "effort": "reported",
+          "protocol": "Chartography · no tools",
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Rozpoznawanie specjalistycznych wykresów bez narzędzi. Oddzielnie od wariantu z kodem i kadrowaniem obrazu. Niektóre wyniki GPT-6 Sol mogły poprzedzać poprawkę obsługi obrazów. Konfiguracja: reported.",
+          "sourceCell": "53.6%⁴ no tools",
+          "additionalSourceUrls": [
+            "https://www.anthropic.com/claude-sonnet-5-5-system-card"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aa-intelligence-sep26",
+      "name": "Artificial Analysis Intelligence Index · 09.2026",
+      "category": "Przekrojowe",
+      "unit": "pkt indeksu",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis · 28.09.2026",
+      "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+      "description": "Snapshot dwóch modeli z raportu 28.09.2026. Indeks Artificial Analysis nie jest ECI ani IQ; nie łączymy różnych wydań indeksu.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu Artificial Analysis; przypisanie autorstwa.",
+      "rows": [
+        {
+          "id": "aa-intelligence-sep26-claude-sonnet-5-5",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 56,
+          "effort": "max",
+          "protocol": "Artificial Analysis Intelligence Index · 09.2026",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Sonnet 5.5: przedpremierowy model z błędem structured outputs; default fallback włączony. Źródło zapowiada ponowne pomiary."
+        },
+        {
+          "id": "aa-intelligence-sep26-claude-opus-5-5",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 58,
+          "effort": "max",
+          "protocol": "Artificial Analysis Intelligence Index · 09.2026",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Sonnet 5.5: przedpremierowy model z błędem structured outputs; default fallback włączony. Źródło zapowiada ponowne pomiary."
+        }
+      ]
+    },
+    {
+      "id": "terminal4-aa-sep26",
+      "name": "Terminal-Bench 4.0 · Artificial Analysis",
+      "category": "Kod",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis · 28.09.2026",
+      "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+      "description": "Wyniki Artificial Analysis zaokrąglone do pełnych procentów w raporcie. Oddzielnie od konfiguracji Anthropic (70,6% dla Sonnet 5.5).",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu Artificial Analysis; przypisanie autorstwa.",
+      "rows": [
+        {
+          "id": "terminal4-aa-sep26-claude-sonnet-5-5",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 64,
+          "effort": "max",
+          "protocol": "Terminal-Bench 4.0 · Artificial Analysis",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Sonnet 5.5: przedpremierowy model z błędem structured outputs; default fallback włączony. Źródło zapowiada ponowne pomiary."
+        },
+        {
+          "id": "terminal4-aa-sep26-claude-opus-5-5",
+          "modelId": "claude-opus-5-5_max",
+          "model": "Claude Opus 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-22",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 60,
+          "effort": "max",
+          "protocol": "Terminal-Bench 4.0 · Artificial Analysis",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Sonnet 5.5: przedpremierowy model z błędem structured outputs; default fallback włączony. Źródło zapowiada ponowne pomiary."
+        },
+        {
+          "id": "terminal4-aa-sep26-gpt-6-astra",
+          "modelId": "gpt-6-astra_xhigh",
+          "model": "GPT-6 Astra (xhigh)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-03",
+          "observedAt": "2026-09-28",
+          "dateKind": "publication",
+          "score": 60,
+          "effort": "xhigh",
+          "protocol": "Terminal-Bench 4.0 · Artificial Analysis",
+          "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+          "notes": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ. Sonnet 5.5: przedpremierowy model z błędem structured outputs; default fallback włączony. Źródło zapowiada ponowne pomiary."
+        }
+      ]
+    }
+  ],
+  "retrievedAt": "2026-09-29"
+}

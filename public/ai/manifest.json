@@ -1,7 +1,7 @@
 {
-  "retrievedAt": "2026-09-28",
+  "retrievedAt": "2026-09-29",
   "sourceArchive": "https://epoch.ai/data/benchmark_data.zip",
-  "totalObservations": 5886,
+  "totalObservations": 5939,
   "benchmarks": [
     {
       "id": "gpqa",
@@ -22,21 +22,21 @@
         "note": "Grupa ekspertów w ewaluacji OpenAI; nie przeciętny człowiek. Inny protokół niż pomiary Epoch.",
         "sourceUrl": "https://epoch.ai/benchmarks/gpqa-diamond"
       },
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/gpqa_diamond.csv",
-          "sha256": "fbda38ebf8000ccd955005ecfb0b22297e4a9ced1869563777e40849e1534232"
+          "sha256": "c1dbde808f7d0dd9fbc42b3822e6439e7cf8a54b032d0f2e674d88fa94656ae5"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
-      "count": 313,
-      "models": 313,
+      "count": 314,
+      "models": 314,
       "firstDate": "2023-03-14",
-      "lastDate": "2026-09-02"
+      "lastDate": "2026-09-22"
     },
     {
       "id": "math5",
@@ -51,7 +51,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/math_level_5.csv",
@@ -59,7 +59,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
       "count": 108,
@@ -80,21 +80,21 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/otis_mock_aime_2024_2025.csv",
-          "sha256": "74dc055ff76b3d7895b35103d13127b1f2c17c753c579ed239279137982228e7"
+          "sha256": "80bc9caec8b059998a8146168785a64ce7eee855880c7c1474fae7e7f6857b93"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
-      "count": 291,
-      "models": 291,
+      "count": 292,
+      "models": 292,
       "firstDate": "2023-03-14",
-      "lastDate": "2026-09-17"
+      "lastDate": "2026-09-22"
     },
     {
       "id": "swe-v2",
@@ -109,7 +109,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Wyniki zależą od środowiska i narzędzi. v1 i v2 są rozdzielone.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/swe_bench_verified.csv",
@@ -117,7 +117,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
       "count": 24,
@@ -138,7 +138,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Wyniki zależą od środowiska i narzędzi. v1 i v2 są rozdzielone.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/swe_bench_verified.csv",
@@ -146,7 +146,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
       "count": 11,
@@ -167,7 +167,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/frontiermath.csv",
@@ -175,7 +175,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
       "count": 101,
@@ -196,21 +196,21 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/frontiermath_tiers_1_3_v2.csv",
-          "sha256": "2e709279acb474ea57ebd2b255acf56cd87002b78da100cad9dbd1f929b9d789"
+          "sha256": "b8bbd406c755816a18114a9a3bbbc2c9f88393ceb92b32030f59e18da31efa7f"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
-      "count": 108,
-      "models": 108,
+      "count": 109,
+      "models": 109,
       "firstDate": "2024-01-25",
-      "lastDate": "2026-09-18"
+      "lastDate": "2026-09-22"
     },
     {
       "id": "frontiermath4",
@@ -225,7 +225,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/frontiermath_tier_4.csv",
@@ -233,7 +233,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
       "count": 72,
@@ -254,21 +254,21 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/frontiermath_tier_4_v2.csv",
-          "sha256": "3b2e0155ee7ac16e25185f54295aadc293c1384029cd2f945d0813b5b66af758"
+          "sha256": "becdfca412c42e2c9cdcf5a5246ae351fdd2847d39292ca93c3afe486668e0a9"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
-      "count": 64,
-      "models": 64,
+      "count": 65,
+      "models": 65,
       "firstDate": "2025-01-31",
-      "lastDate": "2026-09-18"
+      "lastDate": "2026-09-22"
     },
     {
       "id": "mmlu",
@@ -283,15 +283,15 @@
       "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
       "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/mmlu_external.csv",
-          "sha256": "e4752463b5520b42e95cac34cc94b1b6e69cb41d4833c4c677f0350f963802cb"
+          "sha256": "dd1c6138a8fed2cef7ca25318a23c2f4fc216ada94c1aeb995aaa098dcf9b857"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
       "count": 211,
@@ -312,21 +312,21 @@
       "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
       "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/arc_agi_external.csv",
-          "sha256": "a582faf8caec9e1b6b1b81b70718b295afbc786aa4ea50acc12fc053ff7a80b6"
+          "sha256": "d9a63f0ab837014a928b17afa6451fbc6d518d5342bc77c9542a650880b1227f"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
-      "count": 247,
-      "models": 247,
+      "count": 253,
+      "models": 253,
       "firstDate": "2024-09-12",
-      "lastDate": "2026-09-03"
+      "lastDate": "2026-09-22"
     },
     {
       "id": "arc2",
@@ -341,21 +341,21 @@
       "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
       "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/arc_agi_2_external.csv",
-          "sha256": "3c55a7f8a185e0bdfdd690840080d155a6ee1504d8dcbe927651eac9db78aa6f"
+          "sha256": "2c1f18b1f30db0a1940b433b825463f6f8962b0c94fcbb8dea3d37459602fb35"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
-      "count": 227,
-      "models": 227,
+      "count": 233,
+      "models": 233,
       "firstDate": "2024-07-18",
-      "lastDate": "2026-09-03"
+      "lastDate": "2026-09-22"
     },
     {
       "id": "hle",
@@ -370,7 +370,7 @@
       "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
       "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
       "baseline": null,
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/hle_external.csv",
@@ -378,7 +378,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "22f3b8b947d6990a24a50ec3c39126b1a3d7774612e23e3e38ce40cbde892b70"
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
         }
       ],
       "count": 54,
@@ -397,7 +397,7 @@
       "sourceUrl": "https://epoch.ai/eci",
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Retrospektywne przeliczenie całej historii w aktualnej wersji indeksu. Przedziały: bootstrap 90%. Brak ludzkiego punktu odniesienia.",
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "epoch/epoch_capabilities_index/eci_scores.csv",
@@ -421,11 +421,11 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))",
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "tracking-iq.csv",
-          "sha256": "5a24858e8e49e2b9ca60f6dd9482d6a65cb32b48297fa060eddc7be2771ab2d2"
+          "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
         }
       ],
       "count": 1355,
@@ -445,17 +445,17 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))",
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "tracking-iq.csv",
-          "sha256": "5a24858e8e49e2b9ca60f6dd9482d6a65cb32b48297fa060eddc7be2771ab2d2"
+          "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
         }
       ],
-      "count": 551,
+      "count": 553,
       "models": 32,
       "firstDate": "2024-05-14",
-      "lastDate": "2026-09-27"
+      "lastDate": "2026-09-28"
     },
     {
       "id": "iq-mensa",
@@ -469,11 +469,11 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × (test_score − 5.833))",
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "tracking-iq.csv",
-          "sha256": "5a24858e8e49e2b9ca60f6dd9482d6a65cb32b48297fa060eddc7be2771ab2d2"
+          "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
         }
       ],
       "count": 1350,
@@ -493,17 +493,17 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × (test_score − 5.833))",
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [
         {
           "file": "tracking-iq.csv",
-          "sha256": "5a24858e8e49e2b9ca60f6dd9482d6a65cb32b48297fa060eddc7be2771ab2d2"
+          "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
         }
       ],
-      "count": 527,
+      "count": 528,
       "models": 31,
       "firstDate": "2024-05-14",
-      "lastDate": "2026-09-27"
+      "lastDate": "2026-09-28"
     },
     {
       "id": "codeforces2024",
@@ -524,19 +524,306 @@
         "note": "50. percentyl z definicji skali; to uczestnicy konkursów, nie populacja ludzi.",
         "sourceUrl": "https://openai.com/index/learning-to-reason-with-llms/"
       },
-      "retrievedAt": "2026-09-28",
+      "retrievedAt": "2026-09-29",
       "provenance": [],
       "count": 4,
       "models": 4,
       "firstDate": "2024-09-12",
       "lastDate": "2024-09-12"
+    },
+    {
+      "id": "terminal4-report",
+      "name": "Terminal-Bench 4.0 · Anthropic",
+      "category": "Kod",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "66 zadań; Claude Code --bare, safeguards i domyślny fallback. Sonnet 5.5: max; Opus 5.5: xhigh. Bez dostępu do internetu; zasoby buforowane. Osobno od Terminal-Bench 2.0 i pomiarów Artificial Analysis.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 3,
+      "models": 3,
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "frontiercode11-report",
+      "name": "FrontierCode 1.1 Main · raport",
+      "category": "Kod",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Zestaw Main, nie Extended. Zachowujemy osobno max i xhigh: większy wysiłek nie musi dawać lepszego wyniku. Claude Code / Codex CLI; wyniki Cognition przytoczone w raporcie Anthropic.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 5,
+      "models": 5,
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "cursor4-report",
+      "name": "CursorBench 4.0 · raport",
+      "category": "Kod",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Wyniki zmierzone przez Cursor i przytoczone w raporcie Anthropic. Osobna wersja 4.0, bez łączenia ze starszymi edycjami.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 3,
+      "models": 3,
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "gdpval21-report",
+      "name": "GDPval-AA v2.1 · raport",
+      "category": "Praca zawodowa",
+      "unit": "Elo",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Ranking Elo, nie procent ani IQ. Pomiary Artificial Analysis przytoczone przez Anthropic; 220 zadań zawodowych. Sonnet 5.5 testowano przed premierą z błędem structured outputs, naprawionym w wersji publicznej.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 4,
+      "models": 4,
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "briefcase11-report",
+      "name": "AA-Briefcase v1.1 · raport",
+      "category": "Praca zawodowa",
+      "unit": "Elo",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Ranking Elo, nie procent. Pomiary Artificial Analysis przytoczone przez Anthropic. Sonnet 5.5 testowano przed premierą z błędem structured outputs; ponowny pomiar może zmienić wynik.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 4,
+      "models": 4,
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "hle-tools-report",
+      "name": "HLE · z narzędziami · Anthropic",
+      "category": "Wiedza",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Wyszukiwanie, pobieranie stron i wykonywanie kodu. Budżet 980 tys. tokenów, bez kompakcji; blokowanie źródeł zawierających odpowiedzi HLE. Osobno od wyników bez narzędzi.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 3,
+      "models": 3,
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "osworld21-partial-report",
+      "name": "OSWorld 2.1 · partial · raport",
+      "category": "Obsługa komputera",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Partial score: częściowy kredyt za punkty kontrolne, nie odsetek zadań w pełni rozwiązanych. 108 zadań, 1080p, limit 500 kroków, max effort.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 3,
+      "models": 3,
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "chartography-report",
+      "name": "Chartography · bez narzędzi",
+      "category": "Wizja",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Anthropic · raport 28.09.2026",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "description": "Rozpoznawanie specjalistycznych wykresów bez narzędzi. Oddzielnie od wariantu z kodem i kadrowaniem obrazu. Niektóre wyniki GPT-6 Sol mogły poprzedzać poprawkę obsługi obrazów.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu; przypisanie do źródeł i autorów ewaluacji.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 4,
+      "models": 4,
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "aa-intelligence-sep26",
+      "name": "Artificial Analysis Intelligence Index · 09.2026",
+      "category": "Przekrojowe",
+      "unit": "pkt indeksu",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis · 28.09.2026",
+      "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+      "description": "Snapshot dwóch modeli z raportu 28.09.2026. Indeks Artificial Analysis nie jest ECI ani IQ; nie łączymy różnych wydań indeksu.",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu Artificial Analysis; przypisanie autorstwa.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 2,
+      "models": 2,
+      "firstDate": "2026-09-22",
+      "lastDate": "2026-09-28"
+    },
+    {
+      "id": "terminal4-aa-sep26",
+      "name": "Terminal-Bench 4.0 · Artificial Analysis",
+      "category": "Kod",
+      "unit": "%",
+      "max": 100,
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis · 28.09.2026",
+      "sourceUrl": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+      "description": "Wyniki Artificial Analysis zaokrąglone do pełnych procentów w raporcie. Oddzielnie od konfiguracji Anthropic (70,6% dla Sonnet 5.5).",
+      "caveat": "Raport opublikowano 28.09.2026; to nie data wykonania testu. Konfiguracje, budżety i środowiska mogą się różnić. Wyniki nie są pomiarami IQ.",
+      "license": "Wartości z publicznego raportu Artificial Analysis; przypisanie autorstwa.",
+      "retrievedAt": "2026-09-29",
+      "provenance": [
+        {
+          "file": "sonnet-5-5-report.json",
+          "sha256": "80fe9fa8ec37badeb0baadc5b4255512110caf8b4298c8d7dfc6300276eb26ca"
+        },
+        {
+          "file": "epoch/model_metadata.csv",
+          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+        }
+      ],
+      "count": 3,
+      "models": 3,
+      "firstDate": "2026-09-03",
+      "lastDate": "2026-09-28"
     }
   ],
   "audit": [
     {
       "id": "gpqa",
-      "input": 313,
-      "accepted": 313,
+      "input": 314,
+      "accepted": 314,
       "invalid": 0
     },
     {
@@ -547,8 +834,8 @@
     },
     {
       "id": "mock-aime",
-      "input": 291,
-      "accepted": 291,
+      "input": 292,
+      "accepted": 292,
       "invalid": 0
     },
     {
@@ -571,8 +858,8 @@
     },
     {
       "id": "frontiermath-v2",
-      "input": 108,
-      "accepted": 108,
+      "input": 109,
+      "accepted": 109,
       "invalid": 0
     },
     {
@@ -583,8 +870,8 @@
     },
     {
       "id": "frontiermath4-v2",
-      "input": 64,
-      "accepted": 64,
+      "input": 65,
+      "accepted": 65,
       "invalid": 0
     },
     {
@@ -595,14 +882,14 @@
     },
     {
       "id": "arc1",
-      "input": 247,
-      "accepted": 247,
+      "input": 253,
+      "accepted": 253,
       "invalid": 0
     },
     {
       "id": "arc2",
-      "input": 227,
-      "accepted": 227,
+      "input": 233,
+      "accepted": 233,
       "invalid": 0
     },
     {
@@ -611,5 +898,30 @@
       "accepted": 54,
       "invalid": 0
     }
-  ]
+  ],
+  "featuredRelease": {
+    "model": "Claude Sonnet 5.5",
+    "releaseDate": "2026-09-28",
+    "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+    "benchmarkId": "terminal4-report",
+    "benchmarkIds": [
+      "terminal4-report",
+      "frontiercode11-report",
+      "cursor4-report",
+      "gdpval21-report",
+      "briefcase11-report",
+      "hle-tools-report",
+      "osworld21-partial-report",
+      "chartography-report",
+      "aa-intelligence-sep26",
+      "terminal4-aa-sep26"
+    ],
+    "missingBenchmarks": [
+      "eci",
+      "iq-offline",
+      "iq-offline-vision",
+      "iq-mensa",
+      "iq-mensa-vision"
+    ]
+  }
 }

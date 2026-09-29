@@ -1,5 +1,7 @@
 Model version,Accuracy,Accuracy Standard Error,Reasoning effort,Release date,Organization,Country,Training compute (FLOP),Training compute notes,Name,Provider,Latency (seconds),Cost per test (USD),Source,Notes
 claude-fable-5-1_max,1.0,,,2026-09-01,Anthropic,United States of America,,,anthropic/claude-fable-5-1,,478.303,2.70347,https://www.vals.ai/benchmarks/proof_bench,
+claude-opus-5-5_max,1.0,,,2026-09-22,Anthropic,United States of America,,,anthropic/claude-opus-5-5,,351.035,0.961648,https://www.vals.ai/benchmarks/proof_bench,
+claude-sonnet-5-5_max,1.0,,,2026-09-28,Anthropic,United States of America,,,anthropic/claude-sonnet-5-5,,347.583,0.558327,https://www.vals.ai/benchmarks/proof_bench,
 claude-opus-5_max,0.99,0.04163,,2026-07-24,Anthropic,United States of America,,,anthropic/claude-opus-5,Anthropic,590.9,1.786125,https://www.vals.ai/benchmarks/proof_bench,"ProofBench v1.1 re-grade (vals.ai, 2026-08-14): corrected Lean formalizations + hardened grader (rejects sorry/admit shortcuts, larger elaboration budgets). Not comparable to v1.0-era values. Updated 2026-08-18 after multi-agent verification."
 gpt-6-astra_unknown,0.99,,,2026-09-03,OpenAI,United States of America,1.0001e+27,"per OpenAI and affiliates (e.g. Nvidia), 6 Astra was trained on at least 100,000 GB200s in Abilene, Texas (so 100,000 in ""Hardware quantity"" is a lower bound/underestimate).
 

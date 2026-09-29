@@ -8,6 +8,7 @@ gpt-6-astra_xhigh,0.9333333333333333,2026-09-03,OpenAI,United States of America,
 This suggests around 1e27 FLOP (corresponding to ~100k GB200s over 90 days at 25% FP8 MFU). See more detailed estimate in this notebook, yielding a CI of ~[5e26, 2e27] FLOP.
 https://colab.research.google.com/drive/1DRlugIQs-_zoV66AJT1gQg6I1-NX7NqN ",GPT-6 Astra (XHigh),,,recuO4X9wY6J0GPRP
 gpt-5.6-sol_max,0.925,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Sol (Max),1.44,,recIQjZYogw8GYgLW
+claude-opus-5-5_xhigh,0.925,2026-09-22,Anthropic,United States of America,,,Claude Opus 5.5 (XHigh),,,recjdCxN2bD3djTOO
 gpt-6-astra_high,0.9208333333333333,2026-09-03,OpenAI,United States of America,1.0001e+27,"per OpenAI and affiliates (e.g. Nvidia), 6 Astra was trained on at least 100,000 GB200s in Abilene, Texas (so 100,000 in ""Hardware quantity"" is a lower bound/underestimate).
 
 This suggests around 1e27 FLOP (corresponding to ~100k GB200s over 90 days at 25% FP8 MFU). See more detailed estimate in this notebook, yielding a CI of ~[5e26, 2e27] FLOP.
@@ -16,11 +17,13 @@ gpt-6-astra_medium,0.9208333333333333,2026-09-03,OpenAI,United States of America
 
 This suggests around 1e27 FLOP (corresponding to ~100k GB200s over 90 days at 25% FP8 MFU). See more detailed estimate in this notebook, yielding a CI of ~[5e26, 2e27] FLOP.
 https://colab.research.google.com/drive/1DRlugIQs-_zoV66AJT1gQg6I1-NX7NqN ",GPT-6 Astra (Medium),,,recQLii7vQCYRgYaO
+claude-opus-5-5_max,0.9166666666666666,2026-09-22,Anthropic,United States of America,,,Claude Opus 5.5 (Max),,,reciGvWCfQIQzEmnO
 claude-opus-5_max,0.9042,2026-07-24,Anthropic,United States of America,,,Claude Opus 5 (Max),,,recRyRMLEzUUt9Acr
 gpt-5.6-sol_xhigh,0.9,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Sol (xHigh),1.04,,recjEDHJMdFvdEoxY
 gpt-5.6-sol_xhigh,0.9,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Sol (XHigh),,,rechqnvfszeSZZcTx
 claude-fable-5-1_max,0.9,2026-09-01,Anthropic,United States of America,,,Claude Fable 5.1 (Max),,,recI68BcNmOFzBN1F
 claude-fable-5-1_xhigh,0.9,2026-09-01,Anthropic,United States of America,,,Claude Fable 5.1 (XHigh),,,recZtv97M9zVWp43I
+gpt-6-sol_max,0.8958333333333335,2026-09-22,OpenAI,United States of America,,,GPT-6 Sol (Max),,,recZ0Sr94tS2G6Ud4
 claude-fable-5_max,0.8916666666666667,2026-06-09,Anthropic,United States of America,,,Claude Fable 5 (Max),,,recu2ZdK004X3AWeO
 claude-fable-5-1_high,0.8875000000000001,2026-09-01,Anthropic,United States of America,,,Claude Fable 5.1 (High),,,recHs8jTkcWuXJSC9
 claude-fable-5_xhigh,0.8833333333333333,2026-06-09,Anthropic,United States of America,,,Claude Fable 5 (XHigh),,,rectyLB4NFarEdw0u
@@ -46,6 +49,7 @@ gpt-5.5_high,0.8333,2026-04-23,OpenAI,United States of America,,,GPT-5.5 (High),
 gpt-5.4-pro-2026-03-05_xhigh,0.8333,2026-03-05,OpenAI,United States of America,,,GPT-5.4 Pro (XHigh),,,recoggJGwWvf6rzzm
 claude-fable-5_medium,0.8250000000000001,2026-06-09,Anthropic,United States of America,,,Claude Fable 5 (Medium),,,recOj0wdwD2kU9r8l
 claude-fable-5-1_low,0.7833333333333333,2026-09-01,Anthropic,United States of America,,,Claude Fable 5.1 (Low),,,recgGXbNz9PP5hyy2
+gpt-6-sol_xhigh,0.7805555555555556,2026-09-22,OpenAI,United States of America,,,GPT-6 Sol (XHigh),,,recw7reHorlfa9MLF
 gemini-3.1-pro-preview,0.771,2026-02-19,Google DeepMind,United States of America,,,Gemini 3.1 Pro (Preview,0.9622,,recqiypjdc93Zi185
 gemini-3.1-pro-preview,0.7708,2026-02-19,Google DeepMind,United States of America,,,Gemini 3.1 Pro (Preview),0.9622,,recbE2tiH9D8MeBaF
 claude-fable-5_low,0.7680555555555555,2026-06-09,Anthropic,United States of America,,,Claude Fable 5 (Low),,,rech4ukMMdk3W0Q5a
@@ -91,6 +95,7 @@ gpt-6-astra_none,0.5958333333333333,2026-09-03,OpenAI,United States of America,1
 This suggests around 1e27 FLOP (corresponding to ~100k GB200s over 90 days at 25% FP8 MFU). See more detailed estimate in this notebook, yielding a CI of ~[5e26, 2e27] FLOP.
 https://colab.research.google.com/drive/1DRlugIQs-_zoV66AJT1gQg6I1-NX7NqN ",GPT-6 Astra (None),,,recrfBvJzhO8K1XGJ
 gpt-5.6-luna_max,0.5954,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Luna (Max),0.67,,rec0Or1yRuToQETpO
+gpt-6-luna_max,0.5930555555555556,2026-09-22,OpenAI,United States of America,,,GPT-6 Luna (Max),,,recZ0B5ZSsbbYsh8s
 claude-sonnet-4-6_max,0.5833,2026-02-17,Anthropic,United States of America,,,Claude Sonnet 4.6 (Max),2.7179,,reco6ICSvrm675Zqs
 deepseek-v4-pro-0813_low,0.5625,2026-08-13,DeepSeek,China,9.702e+24,From https://api-docs.deepseek.com/news/news260813/: built on the DeepSeek-V4-Pro (Preview) model structure with a DSpark speculative-decoding module; agent-focused post-training upgrades. Pre-training compute carried over from DeepSeek-V4-Pro (6 * 49e9 active parameters * 33e12 tokens = 9.702E24).,DeepSeek V4 Pro 0813 (Low),,,recnvqDqZzZ6fLyzg
 deepseek-v4-flash-0731_high,0.5597222222222221,2026-07-31,DeepSeek,China,2.496e+24,"From https://api-docs.deepseek.com/updates/: ""DeepSeek-V4-Flash-0731 keeps the same model architecture and size as DeepSeek-V4-Flash-Preview, and was only re-post-trained.""
@@ -116,6 +121,7 @@ deepseek-v4-flash-0731_low,0.4597222222222222,2026-07-31,DeepSeek,China,2.496e+2
 gemini-3-deep-think-preview,0.4514,2026-02-12,Google DeepMind,United States of America,,,Gemini 3 Deep Think (Preview) ²,,,recQNM7laEXnYaZlu
 gpt-5.2-2025-12-11_high,0.4333,2025-12-11,OpenAI,United States of America,,,GPT-5.2 (High),1.393,,recZgpSoatzOtn3rb
 gpt-5.6-sol_low,0.425,2026-07-09,OpenAI,United States of America,,,GPT-5.6 Sol (Low),0.32,,recYYBTJBos18GflF
+gpt-6-luna_xhigh,0.41944444444444445,2026-09-22,OpenAI,United States of America,,,GPT-6 Luna (XHigh),,,recsVJik0zbPW04yN
 inkling-small_xhigh,0.40138888888888885,2026-07-15,Thinking Machines,United States of America,,,Inkling Small (XHigh),,,recsPDzpQmPtMA77v
 gpt-5.2-pro-2025-12-11_medium,0.3847,2025-12-11,OpenAI,United States of America,,,GPT-5.2 Pro (Medium),8.9928,,recNfd2GOThl8JJsR
 claude-opus-4-5-20251101_64K,0.3764,2025-11-24,Anthropic,United States of America,,Flagship model from a leading developer in mid-2025; very likely it used >1e25 FLOP.,"Opus 4.5 (Thinking, 64K)",2.4,,recv5sJsLP2dDw5bN

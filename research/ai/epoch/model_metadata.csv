@@ -162,6 +162,7 @@ claude-opus-5_medium,Claude Opus 5,2026-07-24,Claude Opus 5 (medium),Anthropic,U
 claude-opus-5_unknown,Claude Opus 5,2026-07-24,Claude Opus 5 (unknown),Anthropic,United States of America,API access,
 claude-opus-5_xhigh,Claude Opus 5,2026-07-24,Claude Opus 5 (xhigh),Anthropic,United States of America,API access,
 claude-opus-5-5_max,Claude Opus 5.5,2026-09-22,Claude Opus 5.5 (max),Anthropic,United States of America,API access,
+claude-opus-5-5_xhigh,Claude Opus 5.5,2026-09-22,Claude Opus 5.5 (xhigh),Anthropic,United States of America,API access,
 claude-sonnet-4-5-20250929,Claude Sonnet 4.5,2025-09-29,Claude Sonnet 4.5 (no thinking),Anthropic,United States of America,API access,
 claude-sonnet-4-5-20250929_1K,Claude Sonnet 4.5,2025-09-29,Claude Sonnet 4.5 (1k thinking),Anthropic,United States of America,API access,
 claude-sonnet-4-5-20250929_2K,Claude Sonnet 4.5,2025-09-29,Claude Sonnet 4.5 (2k thinking),Anthropic,United States of America,API access,
@@ -201,6 +202,11 @@ claude-sonnet-5_max,Claude Sonnet 5,2026-06-30,Claude Sonnet 5 (max),Anthropic,U
 claude-sonnet-5_medium,Claude Sonnet 5,2026-06-30,Claude Sonnet 5 (medium),Anthropic,United States of America,API access,
 claude-sonnet-5_unknown,Claude Sonnet 5,2026-06-30,Claude Sonnet 5 (unknown thinking),Anthropic,United States of America,API access,
 claude-sonnet-5_xhigh,Claude Sonnet 5,2026-06-30,Claude Sonnet 5 (xhigh),Anthropic,United States of America,API access,
+claude-sonnet-5-5_high,Claude Sonnet 5.5,2026-09-28,Claude Sonnet 5.5 (high),Anthropic,United States of America,API access,
+claude-sonnet-5-5_low,Claude Sonnet 5.5,2026-09-28,Claude Sonnet 5.5 (low),Anthropic,United States of America,API access,
+claude-sonnet-5-5_max,Claude Sonnet 5.5,2026-09-28,Claude Sonnet 5.5 (max),Anthropic,United States of America,API access,
+claude-sonnet-5-5_medium,Claude Sonnet 5.5,2026-09-28,Claude Sonnet 5.5 (medium),Anthropic,United States of America,API access,
+claude-sonnet-5-5_xhigh,Claude Sonnet 5.5,2026-09-28,Claude Sonnet 5.5 (xhigh),Anthropic,United States of America,API access,
 claude-strudel-v4-p,claude-strudel-v4-p,2025-05-22,,Anthropic,United States of America,API access,
 claude-strudel-v4-p_high,claude-strudel-v4-p_high,2025-05-22,,Anthropic,United States of America,API access,
 claude-strudel-v4-p_max,claude-strudel-v4-p_max,2025-05-22,,Anthropic,United States of America,API access,
@@ -586,8 +592,10 @@ gpt-6-astra_promax,GPT-6 Astra,2026-09-03,"GPT-6 Astra (pro, max)",OpenAI,United
 gpt-6-astra_unknown,GPT-6 Astra,2026-09-03,GPT-6 Astra (unknown thinking),OpenAI,United States of America,API access,1.0001e+27
 gpt-6-astra_xhigh,GPT-6 Astra,2026-09-03,GPT-6 Astra (xhigh),OpenAI,United States of America,API access,1.0001e+27
 gpt-6-luna_max,GPT-6 Luna,2026-09-22,GPT-6 Luna (max),OpenAI,United States of America,API access,
+gpt-6-luna_xhigh,GPT-6 Luna,2026-09-22,GPT-6 Luna (xhigh),OpenAI,United States of America,API access,
 gpt-6-sol_max,GPT-6 Sol,2026-09-22,GPT-6 Sol (max),OpenAI,United States of America,API access,
-gpt-j-6b,GPT-J-6B,2021-08-05,,"EleutherAI,LAION","Germany,United States of America",Open weights (unrestricted),1.5e+22
+gpt-6-sol_xhigh,GPT-6 Sol,2026-09-22,GPT-6 Sol (xhigh),OpenAI,United States of America,API access,
+gpt-j-6b,GPT-J-6B,2021-08-05,,"EleutherAI,LAION","United States of America,Germany",Open weights (unrestricted),1.5e+22
 gpt-neo-2.7B,GPT-Neo-2.7B,2021-03-30,,EleutherAI,United States of America,Open weights (unrestricted),7.9e+21
 gpt-neox-20b,GPT-NeoX-20B,2022-04-07,,EleutherAI,United States of America,Open weights (unrestricted),9.31627008e+22
 gpt-oss-20b,gpt-oss-20b,2025-08-05,,OpenAI,United States of America,Open weights (unrestricted),5.49e+23
@@ -669,7 +677,7 @@ internlm-chat-20b,internlm-chat-20b,2023-09-17,,,,,
 InternVL-Chat-V1-5,InternVL-Chat-V1-5,2024-04-18,,,,,
 InternVL-Chat-ViT-6B-Vicuna-7B,InternVL-Chat-ViT-6B-Vicuna-7B,2023-12-25,,,,,
 InternVL-Chat-ViT-6B-Vicuna-13B,InternVL-Chat-ViT-6B-Vicuna-13B,2024-08-16,,,,,
-InternVL2_5-78B,InternVL2_5-78B,2024-12-06,,"Shanghai AI Lab,SenseTime,Tsinghua University,Nanjing University,Fudan University,Chinese University of Hong Kong (CUHK),Shanghai Jiao Tong University","Hong Kong,China",Open weights (restricted use),
+InternVL2_5-78B,InternVL2_5-78B,2024-12-06,,"Shanghai AI Lab,SenseTime,Tsinghua University,Nanjing University,Fudan University,Chinese University of Hong Kong (CUHK),Shanghai Jiao Tong University","China,Hong Kong",Open weights (restricted use),
 InternVL2-40B,InternVL2-40B,2024-07-08,,Shanghai AI Lab,China,Open weights (unrestricted),
 kangaroo,kangaroo,2024-11-13,,,,,
 Kimi-Dev-72B,Kimi Dev 72b,2025-06-16,,Moonshot,China,Open weights (unrestricted),

@@ -1,4 +1,5 @@
 Model version,mean_score,Best score (across scorers),Release date,Organization,Country,Training compute (FLOP),Training compute notes,stderr,Log viewer,Logs,Started at,id
+claude-opus-5-5_max,0.9122807017543859,0.9122807017543859,2026-09-22,Anthropic,United States of America,,,0.016786209858442095,,,2026-09-22T18:27:39.000Z,LPxhvBNEn7S3xkRZUgcvc9
 muse-spark-1.3_max,0.7403508771929824,0.7403508771929824,2026-09-02,Meta AI,United States of America,,,0.026016750822385526,,,2026-09-18T16:34:54.000Z,6735DShGR4Zu5KZ2U6n4pC
 muse-spark-1.3_xhigh,0.743859649122807,0.743859649122807,2026-09-02,Meta AI,United States of America,,,0.025901524747773286,,,2026-09-16T22:00:25.000Z,JeYksd3f2RkegmxCcZyBMQ
 qwen3.8-max-0902_xhigh,0.656140350877193,0.656140350877193,2026-09-01,Alibaba,China,,,0.02818576398907258,,,2026-09-02T18:04:58.000Z,FpQf5xBwJPb4ZEo6SgdKWq

@@ -6,12 +6,13 @@ const {retrievedAt}=JSON.parse(await fs.readFile(`${raw}/source-receipt.json`,'u
 const epochUrl='https://epoch.ai/benchmarks/use-this-data';
 const read=async file=>parseCsv(await fs.readFile(`${raw}/${file}`,'utf8'));
 const meta=new Map((await read('epoch/model_metadata.csv')).filter(r=>r.model_version).map(r=>[r.model_version,r]));
-const datasets=[],audit=[];
+const datasets=[],audit=[],sonnet55Coverage=new Map();
 await fs.mkdir(out,{recursive:true});
 async function save(d,files){
   const ids=new Set();d.rows=d.rows.filter(r=>{if(ids.has(r.id))return false;ids.add(r.id);return true;}).sort((a,b)=>(a.observedAt||a.releaseDate||'').localeCompare(b.observedAt||b.releaseDate||'')||a.id.localeCompare(b.id));
   if(!d.rows.length)throw new Error(`Empty benchmark: ${d.id}`);
-  d.retrievedAt=retrievedAt;
+  sonnet55Coverage.set(d.id,d.rows.some(r=>/sonnet[\s_-]*5[.\s_-]*5/i.test(`${r.model} ${r.modelId}`)));
+  d.retrievedAt=d.retrievedAt||retrievedAt;
   d.provenance=await Promise.all(files.map(async file=>({file,sha256:createHash('sha256').update(await fs.readFile(`${raw}/${file}`)).digest('hex')})));
   await fs.writeFile(`${out}/${d.id}.json`,JSON.stringify(d));
   const {rows,...summary}=d;
@@ -57,5 +58,8 @@ for(const source of ['Offline Test','Mensa Norway'])for(const vision of [false,t
  await save({id,name:`„IQ” · ${source}${vision?' · Vision':' · tekst'}`,category:'IQ eksperymentalne',description:'Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.',unit:'pkt „IQ”',defaultBasis:'observed',source:'TrackingAI · Maxim Lott',sourceUrl:'https://www.trackingai.org/home',license:'Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.',caveat:'To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.',formula:source==='Offline Test'?'round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))':'round(63.5 + 3 × (test_score − 5.833))',rows},['tracking-iq.csv']);
 }
 await save({id:'codeforces2024',name:'Codeforces · raport OpenAI 2024',category:'AI vs człowiek',description:'Symulowane konkursy, maksymalnie 10 zgłoszeń. Percentyl odnosi się do uczestników Codeforces, nie wszystkich programistów.',unit:'percentyl',max:100,defaultBasis:'observed',source:'OpenAI · 12.09.2024',sourceUrl:'https://openai.com/index/learning-to-reason-with-llms/',license:'Wartości z opublikowanego raportu; przypisanie do źródła.',caveat:'Wspólna data publikacji, nie chronologia premier. o1 z raportu nie jest tym samym co publiczne o1-preview. Specjalistyczny wariant do IOI jest odrębnym systemem.',baseline:{name:'Mediana uczestników',score:50,unit:'percentyl',note:'50. percentyl z definicji skali; to uczestnicy konkursów, nie populacja ludzi.',sourceUrl:'https://openai.com/index/learning-to-reason-with-llms/'},rows:[['GPT-4o',11,808],['o1-preview',62,1258],['o1 (raport badawczy)',89,1673],['o1 dostrojony do IOI',93,1807]].map(([model,score,elo],i)=>({id:`cf-${i}`,modelId:model,model,organization:'OpenAI',releaseDate:null,observedAt:'2024-09-12',score,elo,protocol:'Symulacja · 10 zgłoszeń',sourceUrl:'https://openai.com/index/learning-to-reason-with-llms/',notes:`Rating Codeforces: ${elo}. Data publikacji raportu.`}))},[]);
-await fs.writeFile(`${out}/manifest.json`,JSON.stringify({retrievedAt,sourceArchive:'https://epoch.ai/data/benchmark_data.zip',totalObservations:datasets.reduce((a,d)=>a+d.count,0),benchmarks:datasets,audit},null,2));
+const releaseReport=JSON.parse(await fs.readFile(`${raw}/sonnet-5-5-report.json`,'utf8'));
+for(const benchmark of releaseReport.benchmarks)await save({...benchmark,retrievedAt:releaseReport.retrievedAt},['sonnet-5-5-report.json','epoch/model_metadata.csv']);
+const featuredRelease={model:'Claude Sonnet 5.5',releaseDate:'2026-09-28',sourceUrl:releaseReport.sourceUrl,benchmarkId:'terminal4-report',benchmarkIds:releaseReport.benchmarks.map(b=>b.id),missingBenchmarks:['eci',...datasets.filter(d=>d.id.startsWith('iq-')).map(d=>d.id)].filter(id=>!sonnet55Coverage.get(id))};
+await fs.writeFile(`${out}/manifest.json`,JSON.stringify({retrievedAt,sourceArchive:'https://epoch.ai/data/benchmark_data.zip',totalObservations:datasets.reduce((a,d)=>a+d.count,0),benchmarks:datasets,audit,featuredRelease},null,2));
 console.log(JSON.stringify({benchmarks:datasets.length,observations:datasets.reduce((a,d)=>a+d.count,0),audit},null,2));

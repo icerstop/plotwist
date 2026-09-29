@@ -1,1 +1,37 @@
-{"retrievedAt":"2026-09-28","sources":["https://epoch.ai/data/benchmark_data.zip","https://www.trackingai.org/app/database/proj_IQ/score_logs/iq/daily_logs.csv","https://www.trackingai.org/assets/js/charts/charts_IQ.js?v=20260923-1"],"manualEvidence":["https://openai.com/index/learning-to-reason-with-llms/","https://epoch.ai/benchmarks/gpqa-diamond","https://epoch.ai/benchmarks/swe-bench-verified","https://epoch.ai/data/eci-documentation/methodology"]}
+{
+  "retrievedAt": "2026-09-29",
+  "sources": [
+    "https://epoch.ai/data/benchmark_data.zip",
+    "https://www.trackingai.org/app/database/proj_IQ/score_logs/iq/daily_logs.csv",
+    "https://www.trackingai.org/assets/js/charts/charts_IQ.js?v=20260923-1"
+  ],
+  "manualEvidence": [
+    "https://openai.com/index/learning-to-reason-with-llms/",
+    "https://epoch.ai/benchmarks/gpqa-diamond",
+    "https://epoch.ai/benchmarks/swe-bench-verified",
+    "https://epoch.ai/data/eci-documentation/methodology",
+    "https://www.anthropic.com/claude-sonnet-5-5",
+    "https://www.anthropic.com/claude-sonnet-5-5-system-card",
+    "https://artificialanalysis.ai/articles/claude-sonnet-5-5"
+  ],
+  "downloads": [
+    {
+      "url": "https://epoch.ai/data/benchmark_data.zip",
+      "file": "epoch-benchmarks.zip",
+      "retrievedAt": "2026-09-29T13:07:48.922119+00:00",
+      "sha256": "8748d8b3eb6eb375ceff338666bf83d8e1b67a410031f6bfc70687e633318d3b"
+    },
+    {
+      "url": "https://www.trackingai.org/app/database/proj_IQ/score_logs/iq/daily_logs.csv",
+      "file": "tracking-iq.csv",
+      "retrievedAt": "2026-09-29T13:07:48.922119+00:00",
+      "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
+    },
+    {
+      "url": "https://www.trackingai.org/assets/js/charts/charts_IQ.js",
+      "file": "tracking-formula-latest.js",
+      "retrievedAt": "2026-09-29T13:07:48.922119+00:00",
+      "sha256": "fac35b8f5080d7ae64e480dd43ff4ec8e168b13027f9192383fe14736d90db65"
+    }
+  ]
+}
