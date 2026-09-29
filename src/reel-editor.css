@@ -7,6 +7,14 @@
 .reel-selection .reel-rotate-handle,.reel-selection .reel-scale-handle{pointer-events:all;fill:white;stroke:#376bdd;stroke-width:2}
 .reel-rotate-handle{cursor:grab}.reel-scale-handle{cursor:nwse-resize}
 .reel-edit-overlay:focus-visible{outline:2px solid #376bdd;outline-offset:5px}
+.reel-alignment-guides{pointer-events:none}
+.reel-alignment-guides line{vector-effect:non-scaling-stroke;stroke:#d436ba;stroke-width:1;filter:drop-shadow(0 0 1px #fff)}
+.reel-center-guides line{stroke-dasharray:5 5;opacity:.55}
+.reel-snap-guide line{stroke-width:1.5}
+.reel-snap-guide rect{fill:#a91a90;stroke:#fff;stroke-width:1;vector-effect:non-scaling-stroke}
+.reel-snap-guide text{fill:#fff;text-anchor:middle;dominant-baseline:central;font-family:Arial,sans-serif}
+.reel-appearance .reel-inspector .reel-snap-toggle{display:flex;align-items:center;gap:9px;padding-bottom:2px;font-weight:600}
+.reel-snap-toggle input{width:17px;height:17px;flex-shrink:0;accent-color:#688c39}
 .reel-edit-controls{width:100%;margin-top:16px;position:relative;z-index:4;color:#233028;text-align:left}
 .reel-edit-toolbar{display:flex;align-items:center;gap:6px}.reel-edit-toolbar>.secondary{flex:1;font-size:12px;justify-content:center;padding:10px 9px}
 .reel-edit-toolbar .is-editing{background:#e9f0ff;border-color:#a4bcea;color:#2457a7}

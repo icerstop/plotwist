@@ -661,6 +661,8 @@ Siła nabywcza 100 zł (ceny 2000)|Purchasing power of PLN 100 (2000 prices)
 Edytuj na podglądzie|Edit on preview
 Zakończ edycję|Finish editing
 Cofnij zmianę elementu|Undo element change
+Przyciąganie i prowadnice|Snapping and guides
+Środek, krawędzie, ¼ i ¾ rolki oraz wyrównanie do innych elementów. Przytrzymaj Alt, aby przesuwać swobodnie.|Centre, edges, ¼ and ¾ of the reel, and alignment with other elements. Hold Alt to move freely.
 Wybrany element|Selected element
 Kliknij element na rolce|Click an element on the reel
 Symbol wykresu|Chart symbol
