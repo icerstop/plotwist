@@ -11,8 +11,7 @@
 }
 .reel-data-column{min-width:0;min-height:0;overflow-y:auto;scrollbar-gutter:stable;border-right:1px solid var(--line);background:#fff}
 .reel-data-column>.editor,.reel-data-column>.market-controls,.reel-data-column>.ai-controls,.reel-data-column>.story-controls{min-width:0;padding:22px 20px;border:0}
-.reel-data-column>.inspiration,.reel-data-column>.market-results,.reel-data-column>.ai-story-controls{display:block;padding:22px 20px;border:0;border-top:1px solid var(--line);min-width:0}
-.reel-data-column .inspiration .idea-prompt{margin-top:24px}
+.reel-data-column>.market-results,.reel-data-column>.ai-story-controls{display:block;padding:22px 20px;border:0;border-top:1px solid var(--line);min-width:0}
 .reel-data-column .comparison-totals,.reel-data-column .market-story-picker{grid-template-columns:minmax(0,1fr)}
 .reel-data-column .market-story-picker{gap:14px}
 .reel-data-column .market-stories{padding:12px}
