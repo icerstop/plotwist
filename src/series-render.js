@@ -10,10 +10,10 @@ export function crossText(ctx,previous,current,x,y,mix=1,maxWidth=1000){
  ctx.save();ctx.globalAlpha*=Math.max(0,mix*2-1);ctx.fillText(current,x,y+8*(1-mix),maxWidth);ctx.restore();
 }
 export function fittedText(ctx,text,x,y,width){let label=String(text);while(ctx.measureText(label).width>width&&label.length>1)label=label.slice(0,-1);if(label!==String(text))label=label.slice(0,-1)+'…';ctx.fillText(label,x,y);}
-function logoLabel(ctx,series,x,y,font,fg,maxWidth,config){
+function logoLabel(ctx,series,x,y,font,fg,maxWidth,config,fontLimit=Infinity){
  const logo=getReelLogo(series.logo);let offset=0;
  if(logo){ctx.fillStyle='#fff';ctx.fillRect(x,y-29,38,38);const ratio=Math.min(30/logo.naturalWidth,30/logo.naturalHeight);ctx.drawImage(logo,x+19-logo.naturalWidth*ratio/2,y-10-logo.naturalHeight*ratio/2,logo.naturalWidth*ratio,logo.naturalHeight*ratio);offset=51;}
- setReelText(ctx,config,'labels',27,font,fg);const suffix=series.scheduleText?` · ${series.scheduleText}`:'',suffixWidth=ctx.measureText(suffix).width;
+ setReelText(ctx,config,'labels',Math.min(27,fontLimit/textSize(config,'labels',1)),font,fg);const suffix=series.scheduleText?` · ${series.scheduleText}`:'',suffixWidth=ctx.measureText(suffix).width;
  fittedText(ctx,series.name,x+offset,y,Math.max(40,maxWidth-offset-suffixWidth));if(suffix)ctx.fillText(suffix,x+maxWidth-suffixWidth,y);
 }
 const extentCache=new WeakMap();
@@ -43,8 +43,8 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
   const yStart=contentTop,yEnd=height-(height<1400?205:290),count=series.length;
   if(chart==='cards'){
    const columns=count===1?1:2,rows=Math.ceil(count/columns),gap=20,w=(924-gap*(columns-1))/columns,h=(yEnd-yStart-gap*(rows-1))/rows;
-   values.forEach((entry,i)=>{const x=78+i%columns*(w+gap),y=yStart+Math.floor(i/columns)*(h+gap);ctx.fillStyle=panel;ctx.fillRect(x,y,w,h);ctx.fillStyle=color(i);ctx.fillRect(x,y,5,h);logoLabel(ctx,entry.series,x+22,y+42,font,fg,w-44,config);
-    const now=rowText(entry),old=rowText(before[i]);let size=Math.min(textSize(config,'values',80),h*.34);ctx.font=`bold ${size}px ${reelFont(designOf(config).text.values.fontId||config.fontId)}`;while(size>20&&Math.max(ctx.measureText(now).width,ctx.measureText(old).width)>w-44){size--;ctx.font=`bold ${size}px ${reelFont(designOf(config).text.values.fontId||config.fontId)}`;}ctx.fillStyle=textColor(config,'values',color(i));crossText(ctx,old,now,x+22,y+h*.72,mix);
+   values.forEach((entry,i)=>{const x=78+i%columns*(w+gap),y=yStart+Math.floor(i/columns)*(h+gap);ctx.fillStyle=panel;ctx.fillRect(x,y,w,h);ctx.fillStyle=color(i);ctx.fillRect(x,y,5,h);logoLabel(ctx,entry.series,x+22,y+Math.min(42,h*.34),font,fg,w-44,config,h*.3);
+    const now=rowText(entry),old=rowText(before[i]);let size=Math.min(textSize(config,'values',80),h*.34);ctx.font=`bold ${size}px ${reelFont(designOf(config).text.values.fontId||config.fontId)}`;while(size>20&&Math.max(ctx.measureText(now).width,ctx.measureText(old).width)>w-44){size--;ctx.font=`bold ${size}px ${reelFont(designOf(config).text.values.fontId||config.fontId)}`;}ctx.fillStyle=textColor(config,'values',color(i));crossText(ctx,old,now,x+22,y+h*(h<120?.8:.72),mix);
    });
   }else{
    const sorted=items=>items.toSorted((a,b)=>(b.value??-Infinity)-(a.value??-Infinity)||a.index-b.index);

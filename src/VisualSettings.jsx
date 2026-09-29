@@ -42,12 +42,14 @@ export function VisualProvider({children}){
  function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
  function element(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,elements:{...v.design.elements,[id]:{...v.design.elements[id],...patch}}})}));}
  function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
+ function metricLabel(key,language,text){setVisuals(v=>({...v,design:normalizeDesign({...v.design,metricLabels:{...v.design.metricLabels,[key]:{...v.design.metricLabels[key],[language]:text}}})}));}
  function restoreComposition(saved){setVisuals(v=>({...v,design:normalizeDesign(saved.design),stickers:v.stickers.map(s=>({...s,...saved.stickers.find(old=>old.id===s.id)}))}));}
- const context={logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
+ const context={logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,visuals,duration}),[config,visuals,duration]);}
 export const useVisualStatus=()=>useContext(VisualContext);
+export function LegendOptions({beforeChange=()=>{}}){const v=useVisualStatus();return <label className="visual-field">Opisy w legendzie<select aria-label="Opisy w legendzie" value={v.visuals.design.legendMode} onChange={e=>{beforeChange();v.design({legendMode:e.target.value});}}><option value="auto">Automatycznie · wspólny wskaźnik raz</option><option value="full">Pełne nazwy przy każdej serii</option></select><small>Wspólny podpis pojawia się tylko dla zgodnych wskaźników i jednostek. Własne nazwy serii pozostają bez zmian.</small></label>;}
 function Range({label,value,min=0,max=100,step=1,onChange,suffix='%'}){return <label className="visual-range"><span>{label}<output>{value}{suffix}</output></span><input type="range" aria-label={label} min={min} max={max} step={step} value={value} onInput={e=>onChange(Number(e.target.value))} onChange={e=>onChange(Number(e.target.value))}/></label>;}
 function Color({label,value,onChange}){const [draft,setDraft]=useState(value);useEffect(()=>setDraft(value),[value]);return <label className="visual-color"><span>{label}</span><span><input aria-label={label} type="color" value={value} onInput={e=>onChange(e.target.value)} onChange={e=>onChange(e.target.value)}/><input aria-label={`${label} HEX`} maxLength={7} value={draft} onChange={e=>{setDraft(e.target.value);if(/^#[0-9a-f]{6}$/i.test(e.target.value))onChange(e.target.value);}} onBlur={()=>setDraft(value)}/></span></label>;}
 const presets=[['noc','Atrament','#11232f','#373255'],['aurora','Zorza','#10352e','#343576'],['wine','Bordo','#471e35','#1a263d'],['paper','Papier','#e8eee4','#d6e5e9']];
@@ -100,7 +102,7 @@ function DesignEditor(){
 }
 export function VisualEditor(){
  const v=useVisualStatus(),b=v.visuals.background,bgInput=useRef(),stickerInput=useRef();
- return <><DesignEditor/><details className="visual-editor"><summary>Tło i dodatki <span>Obrazy · GIF-y</span></summary><div className="visual-editor-body">
+ return <><LegendOptions/><DesignEditor/><details className="visual-editor"><summary>Tło i dodatki <span>Obrazy · GIF-y</span></summary><div className="visual-editor-body">
   <p className="visual-intro">Wspólny wygląd rolek. Wgrane pliki pozostają w tej przeglądarce.</p>
   <fieldset disabled={!v.ready||v.busy}>
    <label className="visual-field">Rodzaj tła<select aria-label="Rodzaj tła" value={b.type} onChange={e=>v.background({type:e.target.value,veil:e.target.value==='theme'?0:e.target.value==='image'?.55:.18})}><option value="theme">Z motywu rolki</option><option value="color">Własny kolor</option><option value="gradient">Gradient</option><option value="image">Obraz lub GIF</option></select></label>

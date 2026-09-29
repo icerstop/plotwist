@@ -11,6 +11,7 @@ export const reelThemes = [
 ];
 export const textRoles=[
  {id:'title',name:'Tytuł',min:60,max:140}, {id:'subtitle',name:'Opis pod tytułem',min:75,max:140},
+ {id:'metric',name:'Wspólny wskaźnik',min:75,max:150},
  {id:'labels',name:'Etykiety i osie',min:80,max:140}, {id:'values',name:'Wartości liczbowe',min:75,max:150},
  {id:'date',name:'Data / rok',min:75,max:140}, {id:'source',name:'Źródła i metodologia',min:85,max:110},
  {id:'signature',name:'Podpis autora',min:75,max:120}
@@ -19,10 +20,11 @@ export const reelLayouts=[{id:'classic',name:'Klasyczny',description:'Nagłówek
 const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
 const number=(v,fallback,min,max)=>Number.isFinite(Number(v))?clamp(Number(v),min,max):fallback;
 export function normalizeDesign(raw={}){
+ const metricLabels=Object.fromEntries(Object.entries(raw.metricLabels||{}).filter(([key,value])=>key.length<500&&value&&typeof value==='object').slice(0,200).map(([key,value])=>[key,{pl:typeof value.pl==='string'?value.pl.slice(0,160):'',en:typeof value.en==='string'?value.en.slice(0,160):''}]));
  const text={};for(const role of textRoles){const t=raw.text?.[role.id]||{};text[role.id]={size:number(t.size,100,role.min,role.max),fontId:reelFonts.some(f=>f.id===t.fontId)?t.fontId:null,color:/^#[0-9a-f]{6}$/i.test(t.color||'')?t.color:null};}
  const positions={};for(const id of ['header','content']){const p=raw.positions?.[id]||{};positions[id]={x:number(p.x,50,0,100),y:number(p.y,0,-20,20),scale:number(p.scale,100,65,100)};}
  const elements=Object.fromEntries(elementIds.map(id=>{const e=raw.elements?.[id]||{};return [id,{x:number(e.x,0,-100,100),y:number(e.y,0,-100,100),scale:number(e.scale,100,25,200),rotation:number(e.rotation,0,-180,180)}];}));
- return {elements,theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',chartHeight:number(raw.chartHeight??100,100,50,100),text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
+ return {elements,legendMode:raw.legendMode==='full'?'full':'auto',metricLabels,theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',chartHeight:number(raw.chartHeight??100,100,50,100),text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
 }
 export const designOf=config=>config.visuals?.design||normalizeDesign({theme:config.theme});
 export const themeOf=config=>reelThemes.find(t=>t.id===designOf(config).theme)||reelThemes[0];
@@ -34,10 +36,10 @@ export function seriesPlotLayout(config,width,height,headerBottom){
  const short=height<1400,header=sectionTransform(config,'header',width,height),content=sectionTransform(config,'content',width,height);
  const legendStep=Math.max(config.compactTitle?52:43,textSize(config,'labels',27)+16,textSize(config,'values',27)+16);
  const bottom=height-(short?235:285)-100-(Math.max(1,config.series?.length||0)-1)*legendStep;
- const gap=48,minPlot=Math.min(280,height*.18);
+ const gap=48,minPlot=Math.min(280,height*.18),captionSpace=config.metricCaption?textSize(config,'metric',38)*2+26:0;
  let headerScale=1,top=content.base.y+32;
  if(designOf(config).layout!=='chart-first'){
-  const maxHeaderEnd=content.y+(bottom-minPlot-gap-content.base.y)*content.scale;
+  const maxHeaderEnd=content.y+(bottom-minPlot-gap-captionSpace-content.base.y)*content.scale;
   headerScale=clamp((maxHeaderEnd-header.y)/((headerBottom-header.base.y)*header.scale),.25,1);
   const headerEnd=header.y+(headerBottom-header.base.y)*header.scale*headerScale;
   top=content.base.y+(headerEnd+gap-content.y)/content.scale;
@@ -45,7 +47,7 @@ export function seriesPlotLayout(config,width,height,headerBottom){
   headerScale=clamp((header.footerTop-header.y)/((headerBottom-header.base.y)*header.scale),.25,1);
  }
  // Manual offsets can consume the remaining room; keep a positive plot in that case.
- top=Math.min(top,bottom-100);
+ top=Math.min(top+captionSpace,bottom-100);
  return {top:chartTop(config,top,bottom),bottom,legendStep,headerScale};
 }
 export function setReelText(ctx,config,role,size,family,color,weight=''){

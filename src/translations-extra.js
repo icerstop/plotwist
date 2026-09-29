@@ -1,5 +1,12 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Wspólny wskaźnik|Shared metric
+Opisy w legendzie|Legend labels
+Automatycznie · wspólny wskaźnik raz|Automatic · show the shared metric once
+Pełne nazwy przy każdej serii|Full names for every series
+Wspólny podpis pojawia się tylko dla zgodnych wskaźników i jednostek. Własne nazwy serii pozostają bez zmian.|A shared caption appears only for matching metrics and units. Custom series names stay unchanged.
+Własny podpis wskaźnika|Custom metric caption
+Wpis dotyczy tego wskaźnika i języka rolki. Puste pole przywraca nazwę automatyczną.|Applies to this metric and reel language. Leave empty to restore the automatic name.
 Co tanieje najszybciej?|What is getting cheaper fastest?
 Ile kosztuje wynik AI?|How much does AI performance cost?
 Ile mocy AI kupuje dolar?|How much AI compute does a dollar buy?

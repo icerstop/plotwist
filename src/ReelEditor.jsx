@@ -1,6 +1,6 @@
 import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {MousePointer2,RotateCcw,Undo2,Check} from 'lucide-react';
-import {useVisualStatus} from './VisualSettings.jsx';
+import {useVisualStatus,LegendOptions} from './VisualSettings.jsx';
 import {reelFonts,reelFontGroups} from './reel-fonts.js';
 import {themeOf,textRoles} from './reel-design.js';
 import {reelElements,hitElement,canvasViewport,identityElement} from './reel-elements.js';
@@ -8,13 +8,13 @@ import {useLanguages} from './language-context.js';
 import {translate} from './translations.js';
 import './reel-editor.css';
 
-const names={mark:'Logo rolki',title:'Tytuł',subtitle:'Opis pod tytułem',content:'Wykres i legenda',date:'Data / rok',source:'Źródła i metodologia',signature:'Podpis autora'};
+const names={mark:'Logo rolki',title:'Tytuł',subtitle:'Opis pod tytułem',metric:'Wspólny wskaźnik',content:'Wykres i legenda',date:'Data / rok',source:'Źródła i metodologia',signature:'Podpis autora'};
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const angle=v=>((v+180)%360+360)%360-180;
 const snapshot=v=>({design:structuredClone(v.design),stickers:structuredClone(v.stickers)});
 
 export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,valid}){
- const v=useVisualStatus(),{uiLanguage}=useLanguages(),svg=useRef(),gesture=useRef(),history=useRef([]);
+ const v=useVisualStatus(),{uiLanguage,reelLanguage}=useLanguages(),svg=useRef(),gesture=useRef(),history=useRef([]);
  const [selected,setSelected]=useState(null),[regions,setRegions]=useState([]),[viewport,setViewport]=useState(null),[undoCount,setUndoCount]=useState(0),[chartRole,setChartRole]=useState('labels');
  useLayoutEffect(()=>{if(enabled&&valid)setRegions(reelElements(canvas.current));},[config,revision,enabled,valid,canvas]);
  useEffect(()=>{
@@ -64,12 +64,14 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   <div className="reel-edit-controls">
    <div className="reel-edit-toolbar"><button type="button" className={`secondary ${enabled?'is-editing':''}`} aria-pressed={enabled} disabled={!valid} onClick={()=>{onPause();setEnabled(!enabled);}}>{enabled?<Check size={15}/>:<MousePointer2 size={15}/>}<span>{enabled?'Zakończ edycję':'Edytuj na podglądzie'}</span></button>{enabled&&<button type="button" className="icon-btn" aria-label="Cofnij zmianę elementu" disabled={!undoCount} onClick={undo}><Undo2 size={18}/></button>}</div>
    {enabled&&<div className="reel-inspector">
+    {config.series?.some(s=>s.labelParts)&&<LegendOptions beforeChange={remember}/>}
     <label>Wybrany element<select aria-label="Wybrany element" value={region?selected:''} onChange={e=>setSelected(e.target.value||null)}><option value="">Kliknij element na rolce</option>{regions.map(r=><option key={r.id} value={r.id}>{label(r)}</option>)}</select></label>
     {region?<>
+     {selected==='metric'&&config.commonMetric&&<label>Własny podpis wskaźnika<input aria-label="Własny podpis wskaźnika" maxLength={160} value={v.visuals.design.metricLabels[config.commonMetric.key]?.[reelLanguage]||''} placeholder={config.commonMetric.labels[reelLanguage]} onFocus={remember} onChange={e=>v.metricLabel(config.commonMetric.key,reelLanguage,e.target.value)}/><small>Wpis dotyczy tego wskaźnika i języka rolki. Puste pole przywraca nazwę automatyczną.</small></label>}
      {selected==='content'&&<label>Tekst wykresu<select aria-label="Tekst wykresu" value={chartRole} onChange={e=>setChartRole(e.target.value)}><option value="labels">Etykiety i osie</option><option value="values">Wartości liczbowe</option></select></label>}
      {t&&<><label>Czcionka elementu<select aria-label="Czcionka elementu" value={t.fontId||''} onChange={e=>{remember();v.textStyle(role,{fontId:e.target.value||null});}}><option value="">Czcionka całej rolki</option>{reelFontGroups.map(g=><optgroup key={g.id} label={g.name}>{reelFonts.filter(f=>f.group===g.id).map(f=><option key={f.id} value={f.id}>{f.name}</option>)}</optgroup>)}</select></label><label className="reel-color">Kolor elementu<input type="color" aria-label="Kolor elementu" value={color} onFocus={remember} onChange={e=>v.textStyle(role,{color:e.target.value})}/><code>{color}</code></label></>}
      <div className="reel-inspector-pair"><label>Skala elementu<input aria-label="Skala elementu" type="number" min={sticker?5:25} max={sticker?100:200} step="1" value={Math.round(transform.scale)} onFocus={remember} onChange={e=>changeTransform({scale:clamp(Number(e.target.value),sticker?5:25,sticker?100:200)})}/></label><label>Obrót elementu<input aria-label="Obrót elementu" type="number" min="-180" max="180" step="1" value={Math.round(transform.rotation)} onFocus={remember} onChange={e=>changeTransform({rotation:clamp(Number(e.target.value),-180,180)})}/></label></div>
-     <button type="button" className="text-btn" onClick={()=>{remember();if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,{fontId:null,color:null,size:100});}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
+     <button type="button" className="text-btn" onClick={()=>{remember();if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,{fontId:null,color:null,size:100});if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
     </>:null}
     <p>Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Esc: odznacz.</p>
    </div>}

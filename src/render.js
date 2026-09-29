@@ -35,9 +35,13 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  drawReelLogo(ctx,config,timeSeconds);
  ctx.fillStyle=textColor(config,'title',fg);ctx.font=`bold ${titleSize}px ${titleFont}`;wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines,true,config,'title');
  setReelText(ctx,config,'subtitle',29,font,muted);wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2,true,config,'subtitle');
- endHeader();const endContent=beginReelSection(ctx,config,'content',width,height,{x:70,y:hasPlot?plot.top-40:(height<1400?height*.48:730)-50,w:940,h:(hasPlot?plot.bottom+125+(series.length-1)*plot.legendStep:height-210)-(hasPlot?plot.top-40:(height<1400?height*.48:730)-50)});
+ endHeader();
+ const metricStep=textSize(config,'metric',38),contentTop=(height<1400?height*.48:730)+(config.metricCaption?metricStep*2+26:0);
+ const contentY=(hasPlot?plot.top:contentTop)-(config.metricCaption?metricStep*2+76:hasPlot?40:50);
+ const endContent=beginReelSection(ctx,config,'content',width,height,{x:70,y:contentY,w:940,h:(hasPlot?plot.bottom+125+(series.length-1)*plot.legendStep:height-210)-contentY});
  const {top,bottom,legendStep}=plot;
- const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop:height<1400?height*.48:730,formatValue:n=>formatValue(n,config.language),timeSeconds});
+ if(config.metricCaption){setReelText(ctx,config,'metric',32,font,fg,'bold');wrap(ctx,config.metricCaption,hasPlot?135:78,(hasPlot?top:contentTop)-metricStep*2-30,hasPlot?765:924,metricStep,2,true,config,'metric');}
+ const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue:n=>formatValue(n,config.language),timeSeconds});
  endContent();
  drawVisualOverlays(ctx,width,height,config,timeSeconds);
  setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';const date=config.dateLabel||(xType==='date'?timelineDate(current,config):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)));const endDate=beginElement(ctx,config,'date',textRect(ctx,[date],1000,height-175,0,924));ctx.fillText(date,1000,height-175,924);endDate();ctx.textAlign='left';
