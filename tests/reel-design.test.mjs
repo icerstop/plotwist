@@ -26,6 +26,19 @@ function recorder(){
 const base={title:'Title',subtitle:'Subtitle',source:'Source',fontId:'arial',series:[{name:'Series',points:[{x:2020,y:10},{x:2021,y:20}]}]};
 const rows=[{id:'a',modelId:'a',model:'Model A',date:'2020-01-01',score:10},{id:'b',modelId:'b',model:'Model B',date:'2021-01-01',score:20}];
 const benchmark={id:'eci',name:'Benchmark',unit:'pts',source:'Source',retrievedAt:'2026-01-01',baseline:{name:'Human',score:12,note:'Reference'}};
+test('line, area and column legends smoothly swap complete rows and remain repeatable on seek',()=>{
+ const series=[{name:'Alpha',color:'#ff0000',customColor:true,points:[{x:0,y:20},{x:1,y:5},{x:2,y:4}]},{name:'Beta',color:'#0000ff',customColor:true,points:[{x:0,y:10},{x:1,y:30},{x:2,y:40}]}];
+ const original=structuredClone(series);
+ for(const chart of ['line','area','bar']){
+  const positions=(p,time=p*10.8)=>{const {canvas,drawn}=recorder();drawReel(canvas,{...base,series,chart,duration:12},p,time);return ['Alpha','Beta'].map(name=>drawn.find(t=>t.text===name).y);};
+  const start=positions(0),boundary=positions(.5),mid=positions(.53),end=positions(1,12);
+  assert.ok(start[0]<start[1]);assert.deepEqual(boundary,start,'new measurement starts at the preceding positions');
+  assert.ok(end[0]>end[1]);
+  assert.ok(mid[0]>start[0]&&mid[0]<end[0]);assert.ok(mid[1]<start[1]&&mid[1]>end[1]);
+  assert.deepEqual(positions(.53),mid,'backwards seeking matches export at the same timestamp');
+ }
+ assert.deepEqual(series,original,'sorting does not reorder data or change series colours');
+});
 test('shared PNG/video renderer applies independent text styles in series and AI presentations',()=>{
  const visuals={design:normalizeDesign({theme:'light',text:{title:{size:70,color:'#123456'},values:{size:140,color:'#654321'},signature:{size:120,color:'#234567'}}})};
  const configs=['line','bar','area','ranking','cards'].map(chart=>({...base,chart,visuals})).concat(['timeline','records','ranking','scatter','duel'].map(mode=>({...base,visuals,ai:{rows,benchmark,mode,basis:'release'}})));

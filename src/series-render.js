@@ -1,6 +1,6 @@
 import {timelineDate,observationPeriod} from './observation-date.js';
 import {getReelLogo} from './reel-assets.js';
-import {seriesFrame,lerp} from './presentation.js';
+import {seriesFrame,lerp,rankMotion} from './presentation.js';
 import {resolveScale,bounds,visibleSeriesBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
 import {textSize,textColor,setReelText} from './reel-design.js';
 export function crossText(ctx,previous,current,x,y,mix=1,maxWidth=1000){
@@ -63,6 +63,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
   ctx.fillStyle=textColor(config,'labels',muted);ctx.fillText(xType==='date'?timelineDate(current,config):String(Math.floor(current)),(left+right)/2,bottom+47);
  }else for(let i=0;i<=4;i++){const x=minX+(maxX-minX)*i/4;ctx.fillStyle=textColor(config,'labels',muted);ctx.fillText(xType==='date'?timelineDate(Math.round(x),config):String(Math.round(x)),px(x),bottom+47,180);}
  ctx.textAlign='left';
+ const legend=rankMotion(before.map(row=>row.value),values.map(row=>row.value),mix);
  series.forEach((s,i)=>{
   ctx.strokeStyle=ctx.fillStyle=color(i);ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.setLineDash(s.dashed?[18,14]:[]);
   if(chart==='bar'){
@@ -74,7 +75,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
    }
    ctx.beginPath();let previous=null;for(const p of s.points){if(!Number.isFinite(p.y)){previous=null;continue;}if(previous){if(s.interpolation==='step')ctx.lineTo(px(p.x),py(previous.y));ctx.lineTo(px(p.x),py(p.y));}else ctx.moveTo(px(p.x),py(p.y));previous=p;}ctx.stroke();ctx.restore();
   }
-  ctx.setLineDash([]);const y=bottom+100+i*legendStep;ctx.fillStyle=color(i);ctx.fillRect(80,y-21,6,24);logoLabel(ctx,s,108,y,font,fg,505,config);setReelText(ctx,config,'values',27,font,fg);ctx.textAlign='right';crossText(ctx,rowText(before[i]),rowText(values[i]),1000,y,mix,350);ctx.textAlign='left';
+  ctx.setLineDash([]);const y=bottom+100+legend[i].position*legendStep;ctx.fillStyle=color(i);ctx.fillRect(80,y-21,6,24);logoLabel(ctx,s,108,y,font,fg,505,config);setReelText(ctx,config,'values',27,font,fg);ctx.textAlign='right';crossText(ctx,rowText(before[i]),rowText(values[i]),1000,y,mix,350);ctx.textAlign='left';
  });
  return current;
 }

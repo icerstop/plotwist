@@ -21,6 +21,19 @@ export const aiBrandFormats = [
 export const clamp = value => Math.max(0,Math.min(1,value));
 export const ease = value => {const t=clamp(value);return t*t*(3-2*t);};
 export const lerp = (a,b,t) => a+(b-a)*t;
+// Keep series identity separate from rank. Missing values come last and ties
+// retain the selection order. Frame-local positions also work when seeking or exporting.
+export function rankMotion(previous,values,mix=1){
+ const ranks=items=>{
+  const result=[];
+  items.map((value,index)=>({index,value:Number.isFinite(value)?value:-Infinity}))
+   .sort((a,b)=>b.value-a.value||a.index-b.index)
+   .forEach((item,rank)=>{result[item.index]=rank;});
+  return result;
+ };
+ const from=ranks(previous),to=ranks(values);
+ return to.map((rank,index)=>({from:from[index],to:rank,position:lerp(from[index],rank,clamp(mix))}));
+}
 // Outgoing and incoming cards retain their own model, score, date and uncertainty.
 export function sceneAt(count,progress,duration=20,transition=.65){
  if(!count)return {index:-1,previous:-1,mix:1};

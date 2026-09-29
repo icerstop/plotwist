@@ -1,6 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {sceneAt,eventAt,seriesFrame,aiEvents,aiMotionFrame} from '../src/presentation.js';
+import {sceneAt,eventAt,seriesFrame,aiEvents,aiMotionFrame,rankMotion} from '../src/presentation.js';
+
+test('legend ranks put missing values last, keep ties stable and preserve series identity',()=>{
+ const values=Object.freeze([NaN,-5,null,0,5,5]);
+ assert.deepEqual(rankMotion(values,values).map(r=>r.position),[4,3,5,2,0,1]);
+ assert.deepEqual(rankMotion([],[]),[]);
+ assert.equal(rankMotion([0],[null])[0].position,0);
+ const before=Object.freeze([30,20,10]),after=Object.freeze([10,30,20]);
+ const frame=rankMotion(before,after,.25);
+ assert.deepEqual(frame.map(r=>r.position),[.5,.75,1.75]);
+ rankMotion(after,before,1);
+ assert.deepEqual(rankMotion(before,after,.25),frame,'seeking does not depend on previously rendered frames');
+ assert.deepEqual(rankMotion(before,after,1).map(r=>r.position),[2,0,1]);
+});
 
 test('cards crossfade whole observations and leave time to read each exact score',()=>{
  assert.deepEqual(sceneAt(0,.5),{index:-1,previous:-1,mix:1});

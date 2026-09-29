@@ -2,7 +2,7 @@ import {aiBrandMotion,aiModelLabel} from './ai-brand-history.js';
 import {getReelLogo} from './reel-assets.js';
 import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
 import {reelFont} from './reel-style.js';
-import {clamp,lerp} from './presentation.js';
+import {clamp,lerp,rankMotion} from './presentation.js';
 import {aiValue} from './ai.js';
 import {themeOf,textSize,textColor} from './reel-design.js';
 
@@ -58,7 +58,9 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
    ctx.lineTo(currentX,y(previous.score));ctx.stroke();
   }ctx.restore();
   text(history.start,left,bottom+39,390,24,muted);ctx.textAlign='right';text(history.end,right,bottom+39,390,24,muted);ctx.textAlign='left';
-  brands.forEach((brand,i)=>{const singleColumn=brands.length<=4,x=76+(singleColumn?0:(i%2)*482),y=1307+(singleColumn?i*82:Math.floor(i/2)*119),now=byId(frame,brand.id),old=byId(before,brand.id);
+  const legend=rankMotion(brands.map(brand=>byId(before,brand.id)?.score),brands.map(brand=>byId(frame,brand.id)?.score),mix);
+  brands.forEach((brand,i)=>{const singleColumn=brands.length<=4,{from,to,position}=legend[i];
+   const x=76+(singleColumn?0:lerp(from%2,to%2,mix)*482),y=1307+(singleColumn?position*82:lerp(Math.floor(from/2),Math.floor(to/2),mix)*119),now=byId(frame,brand.id),old=byId(before,brand.id);
    identity(brand,now?.winner,old?.winner,x,y,singleColumn?660:430,!singleColumn);
    exactScore(now,old,singleColumn?776:x,singleColumn?y:y+(showLeaderNames?80:43),singleColumn?225:430,singleColumn?34:29);
   });

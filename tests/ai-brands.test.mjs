@@ -82,6 +82,19 @@ test('export preloads the selected AI logos and honours the logo toggle',async()
   await preloadReelAssets({...config,ai:{...config.ai,showBrandLogos:true}});assert.deepEqual(loads.sort(),['/logos/ai/alibaba.svg','/logos/ai/openai.svg']);
  }finally{globalThis.Image=old;}
 });
+
+test('AI line legends animate descending ranks in both column and grid layouts',()=>{
+ for(const count of [3,6]){
+  const brands=aiBrands.slice(0,count),rows=brands.flatMap((brand,i)=>['2024-01-01','2024-01-02','2024-01-03'].map((date,day)=>({id:`${i}-${day}`,modelId:String(i),model:`Model ${i}`,brandId:brand.id,brand,date,score:day===0?count-i:i+1})));
+  const history=buildAiBrandHistory(rows,{brandIds:brands.map(b=>b.id)});
+  const config={title:'Test',duration:12,ai:{rows,history,brands,mode:'records',groupBy:'brand',showBrandLogos:false,showLeaderNames:false,benchmark:{id:'test',name:'Test',unit:'pts',source:'Test',retrievedAt:'2026-09-29'}}};
+  const positions=p=>{const drawn=[];const ctx=new Proxy({measureText:t=>({width:String(t).length*10}),fillText:(text,x,y)=>drawn.push({text,x,y}),globalAlpha:1},{get:(o,k)=>k in o?o[k]:()=>{}});drawAiReel({width:1080,height:1920,getContext:()=>ctx},config,p,p===1?12:p*10.8);return brands.map(b=>drawn.find(t=>t.text===b.name));};
+  const start=positions(0),mid=positions(.53),end=positions(1);
+  const order=points=>points.toSorted((a,b)=>a.y-b.y||a.x-b.x).map(p=>p.text);
+  assert.deepEqual(order(start),brands.map(b=>b.name));assert.deepEqual(order(end),brands.map(b=>b.name).reverse());
+  assert.ok(mid[0].y>start[0].y&&mid[0].y<end[0].y);assert.deepEqual(positions(.53),mid);
+ }
+});
 test('shipped attribution audit matches data and local logos are safe self-contained SVGs',()=>{
  const audit=JSON.parse(fs.readFileSync('public/ai/brand-audit.json')),manifest=JSON.parse(fs.readFileSync('public/ai/manifest.json'));
  assert.equal(audit.benchmarks.length,manifest.benchmarks.length);
