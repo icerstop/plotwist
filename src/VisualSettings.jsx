@@ -1,11 +1,12 @@
+import {normalizeLogo,restoreLogo,reelLogoOptions} from './reel-logo.js';
 import React,{createContext,useContext,useEffect,useMemo,useRef,useState} from 'react';
 import {ImagePlus,Trash2,ChevronUp,ChevronDown,RotateCcw} from 'lucide-react';
-import {decodeMedia,loadVisualDraft,saveVisualDraft,mediaAsset,releaseMedia,releaseAllMedia} from './reel-media.js';
+import {decodeMedia,loadVisualDraft,saveVisualDraft,mediaAsset,releaseMedia} from './reel-media.js';
 import './visual-settings.css';
 import {normalizeDesign,reelThemes,reelLayouts,textRoles} from './reel-design.js';
 
 const defaultBackground={type:'theme',color:'#142a35',color2:'#453375',angle:115,pattern:'none',animate:false,veil:0,assetId:null,fit:'cover',opacity:1,speed:1};
-const emptyVisuals=()=>({background:{...defaultBackground},stickers:[],design:normalizeDesign()});
+const emptyVisuals=()=>({logo:normalizeLogo(),background:{...defaultBackground},stickers:[],design:normalizeDesign()});
 const VisualContext=createContext(null);
 export function VisualProvider({children}){
  const [visuals,setVisuals]=useState(emptyVisuals),[files,setFiles]=useState({}),[ready,setReady]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(''),[storage,setStorage]=useState('Wczytywanie dodatków…');
@@ -15,10 +16,11 @@ export function VisualProvider({children}){
   if(draft?.version===1){
    const restored={};let failed=false;
    for(const [id,file] of Object.entries(draft.files||{})){try{await decodeMedia(file,id);restored[id]=file;}catch{failed=true;}}
-   if(active){const v=draft.visuals;setFiles(restored);setVisuals({design:normalizeDesign(v.design),background:{...defaultBackground,...v.background,...(v.background?.assetId&&!restored[v.background.assetId]?{type:'theme',assetId:null}:{})},stickers:(v.stickers||[]).filter(s=>restored[s.assetId]).slice(0,3)});if(failed)setError('Nie udało się przywrócić jednego z plików. Wgraj go ponownie.');}
+   if(active){const v=draft.visuals;setFiles(restored);setVisuals({logo:restoreLogo(v.logo,restored),design:normalizeDesign(v.design),background:{...defaultBackground,...v.background,...(v.background?.assetId&&!restored[v.background.assetId]?{type:'theme',assetId:null}:{})},stickers:(v.stickers||[]).filter(s=>restored[s.assetId]).slice(0,3)});if(failed)setError('Nie udało się przywrócić jednego z plików. Wgraj go ponownie.');}
   }
  }catch{if(active)setStorage('Zapis lokalny niedostępny. Dodatki działają w tej sesji.');}finally{if(active)setReady(true);}})();return()=>{active=false;};},[]);
  useEffect(()=>{if(!ready)return;let active=true;setStorage('Zapisywanie w przeglądarce…');const timer=setTimeout(()=>{saveVisualDraft({version:1,visuals,files}).then(()=>{if(active)setStorage('Zapisano w tej przeglądarce');}).catch(()=>{if(active)setStorage('Brak miejsca na zapis. Dodatki działają w tej sesji.');});},450);return()=>{active=false;clearTimeout(timer);};},[visuals,files,ready]);
+ function logo(patch){setVisuals(v=>({...v,logo:normalizeLogo({...v.logo,...patch})}));}
  function background(patch){setVisuals(v=>({...v,background:{...v.background,...patch}}));}
  function sticker(id,patch){setVisuals(v=>({...v,stickers:v.stickers.map(s=>s.id===id?{...s,...patch}:s)}));}
  function forget(id){if(!id)return;releaseMedia(id);setFiles(f=>{const next={...f};delete next[id];return next;});}
@@ -30,17 +32,18 @@ export function VisualProvider({children}){
   try{
    const id=await decodeMedia(file);setFiles(f=>({...f,[id]:file}));
    if(target==='background'){const old=visuals.background.assetId;background({type:'image',assetId:id,veil:.55,opacity:1});forget(old);}
+   else if(target==='logo'){const old=visuals.logo.assetId;logo({type:'custom',assetId:id,name:file.name});forget(old);}
    else setVisuals(v=>({...v,stickers:[...v.stickers,{id,assetId:id,name:file.name,x:83,y:10,size:18,rotation:0,opacity:1,motion:'none',speed:1,layer:'front',visible:true,shadow:false}]}));
   }catch(e){setError(e.message);}finally{operation.current=false;setBusy(false);}
  }
  function reorder(id,direction){setVisuals(v=>{const list=[...v.stickers],i=list.findIndex(s=>s.id===id),j=i+direction;if(j<0||j>=list.length)return v;[list[i],list[j]]=[list[j],list[i]];return {...v,stickers:list};});}
- function reset(){releaseAllMedia();setFiles({});setVisuals(v=>({...emptyVisuals(),design:v.design}));setError('');}
+ function reset(){const keep=visuals.logo.assetId;for(const id of Object.keys(files))if(id!==keep)releaseMedia(id);setFiles(f=>keep&&f[keep]?{[keep]:f[keep]}:{});setVisuals(v=>({...emptyVisuals(),logo:v.logo,design:v.design}));setError('');}
  function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch})}));}
  function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
  function element(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,elements:{...v.design.elements,[id]:{...v.design.elements[id],...patch}}})}));}
  function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
  function restoreComposition(saved){setVisuals(v=>({...v,design:normalizeDesign(saved.design),stickers:v.stickers.map(s=>({...s,...saved.stickers.find(old=>old.id===s.id)}))}));}
- const context={element,textStyle,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
+ const context={logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,visuals,duration}),[config,visuals,duration]);}
@@ -48,14 +51,29 @@ export const useVisualStatus=()=>useContext(VisualContext);
 function Range({label,value,min=0,max=100,step=1,onChange,suffix='%'}){return <label className="visual-range"><span>{label}<output>{value}{suffix}</output></span><input type="range" aria-label={label} min={min} max={max} step={step} value={value} onInput={e=>onChange(Number(e.target.value))} onChange={e=>onChange(Number(e.target.value))}/></label>;}
 function Color({label,value,onChange}){const [draft,setDraft]=useState(value);useEffect(()=>setDraft(value),[value]);return <label className="visual-color"><span>{label}</span><span><input aria-label={label} type="color" value={value} onInput={e=>onChange(e.target.value)} onChange={e=>onChange(e.target.value)}/><input aria-label={`${label} HEX`} maxLength={7} value={draft} onChange={e=>{setDraft(e.target.value);if(/^#[0-9a-f]{6}$/i.test(e.target.value))onChange(e.target.value);}} onBlur={()=>setDraft(value)}/></span></label>;}
 const presets=[['noc','Atrament','#11232f','#373255'],['aurora','Zorza','#10352e','#343576'],['wine','Bordo','#471e35','#1a263d'],['paper','Papier','#e8eee4','#d6e5e9']];
+function LogoEditor(){
+ const v=useVisualStatus(),logo=v.visuals.logo,input=useRef();
+ return <div className="reel-logo-settings"><label className="visual-field">Logo rolki<select aria-label="Logo rolki" value={logo.type} disabled={v.busy} onChange={e=>v.logo({type:e.target.value})}>{reelLogoOptions.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>
+  {logo.type==='custom'&&<><button type="button" className="secondary full" disabled={v.busy} onClick={()=>input.current.click()}><ImagePlus size={16}/>{logo.assetId?'Zmień plik logo':'Wgraj własne logo'}</button>
+   {logo.assetId&&<div className="visual-asset-summary"><img src={mediaAsset(logo.assetId)?.thumbnail} alt="Podgląd logo"/><span translate="no">{logo.name}</span><button type="button" className="icon-btn" aria-label="Usuń plik logo" onClick={v.removeLogo}><Trash2 size={16}/></button></div>}
+   <p className="visual-hint">PNG, JPG, WebP lub GIF do 12 MB. Przezroczyste tło PNG jest zachowane. Logo nie zajmuje miejsca na dodatki.</p>
+   {v.busy&&<p role="status" className="helper">Przygotowywanie logo…</p>}{v.error&&<p role="alert" className="error">{v.error}</p>}
+  </>}
+  <input ref={input} hidden type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-label="Plik logo" onChange={e=>{v.upload(e.target.files?.[0],'logo');e.target.value='';}}/>
+  {!['none','custom'].includes(logo.type)&&<Color label="Kolor logo" value={logo.color||themeOfLogo(v.visuals.design.theme)} onChange={color=>v.logo({color})}/>}
+  <p className="visual-hint">Domyślnie bez logo. Wybrane logo możesz przesuwać, obracać i skalować bezpośrednio na podglądzie.</p>
+ </div>;
+}
+const themeOfLogo=id=>(reelThemes.find(t=>t.id===id)||reelThemes[0]).colors[0];
 function DesignEditor(){
  const v=useVisualStatus(),d=v.visuals.design,[role,setRole]=useState('title'),[section,setSection]=useState('header');
  const t=reelThemes.find(t=>t.id===d.theme),r=textRoles.find(t=>t.id===role),value=d.text[role],p=d.positions[section];
  const updateText=patch=>v.design({text:{...d.text,[role]:{...value,...patch}}});
  const updatePosition=patch=>v.design({positions:{...d.positions,[section]:{...p,...patch}}});
  const defaultColor=['subtitle','labels','source'].includes(role)?t.muted:t.fg;
- return <details className="visual-editor design-editor" open><summary>Styl i układ rolki <span>Motywy · typografia · kompozycja</span></summary><div className="visual-editor-body"><fieldset disabled={!v.ready}>
+ return <details className="visual-editor design-editor" open><summary>Styl i układ rolki <span>Motywy · typografia · kompozycja</span></summary><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
   <p className="visual-intro">Ustawienia wspólne dla wszystkich rolek, podglądu i eksportu.</p>
+  <LogoEditor/>
   <div className="reel-theme-grid" role="group" aria-label="Motyw rolki">{reelThemes.map(t=><button type="button" key={t.id} className={d.theme===t.id?'selected':''} aria-pressed={d.theme===t.id} onClick={()=>v.theme(t.id)}><span className="reel-theme-swatch" style={{background:t.bg,color:t.fg}} aria-hidden="true"><b>Aa</b><i style={{background:t.colors[0]}}/><i style={{background:t.colors[1]}}/></span><span>{t.name}</span></button>)}</div>
   <p className="visual-hint">Motyw ustawia tło i kolory tekstu. Rozmiary, układ oraz kolory wybranych serii pozostają bez zmian.</p>
   <div className="visual-section-title"><h3>Typografia</h3></div>
@@ -77,7 +95,7 @@ function DesignEditor(){
    <button type="button" className="text-btn" onClick={()=>updatePosition({x:50,y:0,scale:100})}>Przywróć pozycję elementu</button>
   </details>
   <label className="visual-field">Wyrównanie podpisu<select aria-label="Wyrównanie podpisu" value={d.signatureAlign} onChange={e=>v.design({signatureAlign:e.target.value})}><option value="left">Do lewej</option><option value="center">Na środku</option><option value="right">Do prawej</option></select></label>
-  <button type="button" className="text-btn visual-reset" onClick={()=>{v.theme('dark');v.design(normalizeDesign());}}><RotateCcw size={14}/>Przywróć domyślny styl i układ</button>
+  <button type="button" className="text-btn visual-reset" onClick={()=>{v.theme('dark');v.design(normalizeDesign());v.logo({type:'none'});}}><RotateCcw size={14}/>Przywróć domyślny styl i układ</button>
  </fieldset></div></details>;
 }
 export function VisualEditor(){

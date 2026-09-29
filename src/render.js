@@ -1,3 +1,4 @@
+import {drawReelLogo} from './reel-logo.js';
 import {resetElements,beginElement,textRect} from './reel-elements.js';
 import { timelineDate } from './observation-date.js';
 import { drawAiReel } from './ai-render.js';
@@ -31,8 +32,7 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  // Only a crowded small frame needs a more compact header; the height slider
  // itself never scales text, logos, the legend or the attribution footer.
  if(hasPlot){ctx.translate(50,50);ctx.scale(plot.headerScale,plot.headerScale);ctx.translate(-50,-50);}
- const endMark=beginElement(ctx,config,'mark',{x:78,y:62,w:46,h:56});
- ctx.fillStyle=colors[0];[20,36,56].forEach((h,i)=>ctx.fillRect(78+i*18,118-h,10,h));endMark();
+ drawReelLogo(ctx,config,timeSeconds);
  ctx.fillStyle=textColor(config,'title',fg);ctx.font=`bold ${titleSize}px ${titleFont}`;wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines,true,config,'title');
  setReelText(ctx,config,'subtitle',29,font,muted);wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2,true,config,'subtitle');
  endHeader();const endContent=beginReelSection(ctx,config,'content',width,height,{x:70,y:hasPlot?plot.top-40:(height<1400?height*.48:730)-50,w:940,h:(hasPlot?plot.bottom+125+(series.length-1)*plot.legendStep:height-210)-(hasPlot?plot.top-40:(height<1400?height*.48:730)-50)});

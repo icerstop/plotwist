@@ -1,3 +1,4 @@
+import {drawReelLogo} from './reel-logo.js';
 import {beginElement,textRect} from './reel-elements.js';
 import {translate} from './translations.js';
 import {drawAiBrandComparison} from './ai-brand-render.js';
@@ -32,8 +33,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
  drawVisualBackground(ctx,1080,1920,config,timeSeconds);
  const endHeader=beginReelSection(ctx,config,'header',1080,1920);
- const endMark=beginElement(ctx,config,'mark',{x:76,y:73,w:49,h:50});
- ctx.fillStyle=accent;[18,32,50].forEach((h,i)=>ctx.fillRect(76+i*19,123-h,11,h));endMark();
+ drawReelLogo(ctx,config,timeSeconds,{x:76,y:73,h:50});
  wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270),3,fg,true,'title');
  const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:528,w:928,h:132});
  wrap(ctx,b.name,76,565,928,33,1,accent,false,'subtitle');

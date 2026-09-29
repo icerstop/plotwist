@@ -601,4 +601,19 @@ Edytor elementów rolki|Reel element editor
 Obróć element|Rotate element
 Zmień rozmiar elementu|Resize element
 Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Esc: odznacz.|Drag to move. Circle: rotate. Corner: resize. Arrows: 1 px, Shift: 10 px. Esc: deselect.
+Logo rolki|Reel logo
+Brak logo|No logo
+Słupki wykresu|Chart bars
+Linia trendu|Trend line
+Monogram JB|JB monogram
+Własne logo|Custom logo
+Zmień plik logo|Replace logo file
+Wgraj własne logo|Upload your logo
+Podgląd logo|Logo preview
+Usuń plik logo|Remove logo file
+Plik logo|Logo file
+Kolor logo|Logo color
+Przygotowywanie logo…|Preparing logo…
+PNG, JPG, WebP lub GIF do 12 MB. Przezroczyste tło PNG jest zachowane. Logo nie zajmuje miejsca na dodatki.|PNG, JPG, WebP or GIF up to 12 MB. PNG transparency is preserved. Logos do not use a sticker slot.
+Domyślnie bez logo. Wybrane logo możesz przesuwać, obracać i skalować bezpośrednio na podglądzie.|No logo by default. Move, rotate and resize your selected logo directly on the preview.
 `;

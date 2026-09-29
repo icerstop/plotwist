@@ -8,7 +8,7 @@ import {useLanguages} from './language-context.js';
 import {translate} from './translations.js';
 import './reel-editor.css';
 
-const names={mark:'Symbol wykresu',title:'Tytuł',subtitle:'Opis pod tytułem',content:'Wykres i legenda',date:'Data / rok',source:'Źródła i metodologia',signature:'Podpis autora'};
+const names={mark:'Logo rolki',title:'Tytuł',subtitle:'Opis pod tytułem',content:'Wykres i legenda',date:'Data / rok',source:'Źródła i metodologia',signature:'Podpis autora'};
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const angle=v=>((v+180)%360+360)%360-180;
 const snapshot=v=>({design:structuredClone(v.design),stickers:structuredClone(v.stickers)});
