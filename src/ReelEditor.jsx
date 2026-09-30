@@ -43,7 +43,7 @@ function AlignmentGuides({guides,width,height,scale,language}){
  </g>;
 }
 
-export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,valid,fontControls,playhead=1,onReplay,onSeek}){
+export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,valid,fontControls,playhead=1,onReplay,onSeek,onDurationChange}){
  const capabilities=reelCapabilities(config),names=Object.fromEntries(capabilities.elements.map(e=>[e.id,e.name]));
  const v=useVisualStatus(),{uiLanguage,reelLanguage}=useLanguages(),svg=useRef(),gesture=useRef(),history=useRef([]);
  const [selected,setSelected]=useState('title'),[panel,setPanel]=useState('style'),[regions,setRegions]=useState([]),[viewport,setViewport]=useState(null),[undoCount,setUndoCount]=useState(0),[chartRole,setChartRole]=useState('labels');
@@ -127,7 +127,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
     {panel==='style'&&<StyleEditor config={config} fontId={config.fontId}>{fontControls}</StyleEditor>}
     {panel==='layout'&&<LayoutEditor config={config}/>}
     {panel==='chart'&&<ChartEditor config={config}/>}
-    {panel==='motion'&&<MotionEditor config={config} playhead={playhead} onSeek={onSeek} onReplay={onReplay} target={motionTarget} setTarget={setMotionTarget} beforeChange={remember}/>}
+    {panel==='motion'&&<MotionEditor onDurationChange={onDurationChange} config={config} playhead={playhead} onSeek={onSeek} onReplay={onReplay} target={motionTarget} setTarget={setMotionTarget} beforeChange={remember}/>}
     {panel==='media'&&<MediaEditor onSelect={selectElement}/>}
     {panel==='elements'&&<fieldset className="reel-inspector" disabled={!v.ready||v.busy}>
     <section className="reel-add-elements"><h3>Dodaj element</h3><div>{overlayKinds.map(([kind,name])=><button type="button" className="secondary" key={kind} disabled={v.visuals.overlays.length>=overlayLimit} onClick={()=>addElement(kind)}><Plus size={15}/>{name}</button>)}<button type="button" className="secondary" onClick={()=>setPanel('media')}><Plus size={15}/>Obrazek / GIF</button></div><p>{v.visuals.overlays.length}/{overlayLimit} <span>własnych elementów</span></p></section>

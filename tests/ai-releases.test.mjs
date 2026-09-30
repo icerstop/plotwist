@@ -4,6 +4,12 @@ import {readFileSync} from 'node:fs';
 import {validateReleases,selectReleases,groupReleases,releaseCount,releaseFrame,releaseMonths,releaseDay,releaseDate,releaseCsv,releaseEventAge,releaseEndingState} from '../src/ai-releases.js';
 import {reelMotionFrame,motionPreset} from '../src/reel-motion.js';
 const data=JSON.parse(readFileSync(new URL('../public/ai/releases.json',import.meta.url))),rows=data.rows;
+test('historical coverage begins with GPT-1 and preserves staged releases and access dates',()=>{
+ assert.equal(data.coverage.start,'2018-06-11');
+ for(const [name,date] of [['GPT-1','2018-06-11'],['GPT-2 355M','2019-05-03'],['GPT-2 1.5B','2019-11-05'],['GPT-3','2020-06-11'],['Codex (2021)','2021-06-29'],['GPT-3.5 (ChatGPT)','2022-11-30'],['GPT-3.5 Turbo','2023-03-01'],['GPT-4','2023-03-14'],['GPT-4 Turbo','2023-11-06']])assert.equal(rows.find(r=>r.name===name)?.date,date);
+ assert.equal(rows.filter(r=>r.publisher==='openai'&&r.date<'2024-01-01').length,12);
+ assert.ok(!rows.some(r=>r.name==='InstructGPT'&&r.date==='2022-01-27'));
+});
 test('last-day release effects finish before the last exported frame, with and without an intro',()=>{
  for(const duration of [6,12,24,60])for(const preset of [null,'soft','typing-retro'])for(const start of ['2024-01-01','2026-09-29']){
   const config={duration,visuals:{design:{motion:preset?motionPreset(preset):undefined}}},end='2026-09-29';

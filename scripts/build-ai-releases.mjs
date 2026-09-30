@@ -8,6 +8,22 @@ const rows=[];
 function add(date,publisher,names,sourceUrl,category='general',notes='',availability='public'){
  for(const name of names.split('|'))rows.push({id:`${publisher}-${name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}-${date}`,date,publisher,name,category,availability,sourceUrl,notes,verifiedAt:'2026-09-30'});
 }
+add('2018-06-11','openai','GPT-1',post('language-unsupervised'),'open-weight','Research publication and downloadable model. Historically called GPT, now commonly GPT-1.','open-weights');
+add('2019-02-14','openai','GPT-2 124M',post('better-language-models'),'open-weight','First small checkpoint; originally described as 117M, corrected to 124M. The 1.5B model was not released on this date.','open-weights');
+add('2019-05-03','openai','GPT-2 355M','https://github.com/openai/gpt-2/commit/0503b1b24969ccbaf93a5d05f2c2588dabff1c46','open-weight','Official commit: updates for 345M model. Parameter count later corrected to 355M.','open-weights');
+add('2019-08-20','openai','GPT-2 774M',post('gpt-2-6-month-follow-up'),'open-weight','','open-weights');
+add('2019-11-05','openai','GPT-2 1.5B',post('gpt-2-1-5b-release'),'open-weight','Final staged release; do not use the February announcement date.','open-weights');
+add('2020-06-11','openai','GPT-3',post('openai-api'),'general','API private beta with applications for access. The research paper was published May 28; no claim of unrestricted availability.','limited-beta');
+add('2021-06-29','openai','Codex (2021)','https://github.blog/news-insights/product-news/introducing-github-copilot-ai-pair-programmer/','coding','First access through GitHub Copilot technical preview; the updated Codex API beta followed August 10.','limited-beta');
+add('2022-11-30','openai','GPT-3.5 (ChatGPT)',post('chatgpt'),'general','First public ChatGPT research preview based on GPT-3.5; this is not a claim that earlier GPT-3.5 API ancestors first appeared on this date.','public-preview');
+add('2023-03-01','openai','GPT-3.5 Turbo',post('introducing-chatgpt-and-whisper-apis'),'general','Original date confirmed by the OpenAI staff announcement: https://community.openai.com/t/introducing-chatgpt-and-whisper-apis/80485 . The blog header now shows an April 24, 2024 edit.');
+add('2023-03-14','openai','GPT-4',post('gpt-4-research'),'general','ChatGPT Plus access and API waitlist. GPT-4 32k is not counted separately without a separately verified first-availability day.');
+add('2023-06-13','openai','GPT-3.5 Turbo 16k',post('function-calling-and-other-api-updates'),'general','New named longer-context variant; routine 0613 snapshots are not separate entries.');
+add('2023-11-06','openai','GPT-4 Turbo',post('new-models-and-developer-products-announced-at-devday'),'general','Public API preview; later GA and routine snapshots are not additional entries.','public-preview');
+add('2023-03-14','anthropic','Claude 1|Claude Instant 1','https://www.anthropic.com/news/introducing-claude','general','Broader customer launch after closed partner alpha.');
+add('2023-07-11','anthropic','Claude 2','https://www.anthropic.com/news/claude-2');
+add('2023-08-09','anthropic','Claude Instant 1.2','https://www.anthropic.com/news/releasing-claude-instant-1-2');
+add('2023-11-21','anthropic','Claude 2.1','https://www.anthropic.com/news/claude-2-1');
 add('2024-03-04','anthropic','Claude 3 Opus|Claude 3 Sonnet','https://www.anthropic.com/news/claude-3-family');
 add('2024-03-13','anthropic','Claude 3 Haiku','https://www.anthropic.com/news/claude-3-haiku');
 add('2024-05-13','openai','GPT-4o',openai);
@@ -57,8 +73,8 @@ add('2026-09-22','anthropic','Claude Opus 5.5',anthropic);
 add('2026-09-28','anthropic','Claude Sonnet 5.5',anthropic);
 add('2026-09-29','openai','GPT-6.1 Sol',openai);
 rows.sort((a,b)=>a.date.localeCompare(b.date)||a.publisher.localeCompare(b.publisher)||a.name.localeCompare(b.name));
-const data={id:'ai-releases-v1',verifiedAt:'2026-09-30',coverage:{start:'2024-01-01',end:'2026-09-30',complete:false},publishers:['openai','anthropic'],
- methodology:{pl:'Kuratorski katalog nazwanych wersji modeli językowych OpenAI i Anthropic. Data oznacza pierwsze potwierdzone udostępnienie klientom (także płatny preview), a nie datę testu lub późniejszej premiery API. Mini/nano i nazwane modele Codex są oddzielnymi pozycjami; Instant/Thinking/Pro dla GPT-5.1/5.2 są grupowane. Nie jest to pełny rejestr wszystkich premier AI. Zero oznacza brak pozycji w tym katalogu.',en:'Curated catalogue of named OpenAI and Anthropic language-model versions. Dates mark first confirmed customer availability (including paid previews), not benchmark dates or later API launches. Mini/nano and named Codex models are separate entries; GPT-5.1/5.2 Instant/Thinking/Pro are grouped. This is not an exhaustive AI release registry. Zero means no entry in this catalogue.'},
+const data={id:'ai-releases-v1',verifiedAt:'2026-09-30',coverage:{start:'2018-06-11',end:'2026-09-30',complete:false},publishers:['openai','anthropic'],
+ methodology:{pl:'Kuratorski katalog nazwanych wersji modeli językowych OpenAI i Anthropic. Data oznacza pierwsze potwierdzone udostępnienie wag lub dostęp klientom (także ograniczona beta i płatny preview), a nie datę testu lub późniejszej premiery API. Mini/nano i nazwane modele Codex są oddzielnymi pozycjami; Instant/Thinking/Pro dla GPT-5.1/5.2 są grupowane. Nie jest to pełny rejestr wszystkich premier AI. Zero oznacza brak pozycji w tym katalogu.',en:'Curated catalogue of named OpenAI and Anthropic language-model versions. Dates mark first confirmed downloadable weights or customer access (including limited betas and paid previews), not benchmark dates or later API launches. Mini/nano and named Codex models are separate entries; GPT-5.1/5.2 Instant/Thinking/Pro are grouped. This is not an exhaustive AI release registry. Zero means no entry in this catalogue.'},
  exclusions:{pl:'Poza licznikiem: zapowiedzi bez dostępności, zamknięte programy Mythos/Glasswing, obrazy/audio/wideo, embeddingi, moderacja, warianty deep research, tryby Pro/Fast/Ultrafast i poziomy effort, rutynowe snapshoty oraz ponowne udostępnienia na innych platformach. Sonnet 3.5 v2 jest jawną opcjonalną aktualizacją.',en:'Excluded: announcements without availability, restricted Mythos/Glasswing programmes, image/audio/video, embeddings, moderation, deep-research variants, Pro/Fast/Ultrafast modes and effort levels, routine snapshots and later platform rollouts. Sonnet 3.5 v2 is an explicit optional revision.'},rows};
 validateReleases(data);
 await mkdir('public/ai',{recursive:true});

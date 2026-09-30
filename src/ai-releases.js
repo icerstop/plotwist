@@ -2,11 +2,11 @@ export const RELEASE_PUBLISHERS=[{id:'openai',name:'OpenAI',color:'#137b70',logo
 export const RELEASE_CATEGORIES=['general','coding','open-weight','revision'];
 const DAY=86400000;
 export const releaseDay=date=>Date.parse(`${date}T00:00:00Z`)/DAY;
-export const releaseDate=day=>new Date(Math.floor(day)*DAY).toISOString().slice(0,10);
+export const releaseDate=day=>new Date(Math.floor(day+1e-9)*DAY).toISOString().slice(0,10);
 export function validateReleases(data){
  const ids=new Set();let previous='';
  for(const r of data.rows){
-  if(ids.has(r.id)||!Number.isFinite(releaseDay(r.date))||releaseDate(releaseDay(r.date))!==r.date||r.date<previous||r.date<data.coverage.start||r.date>data.coverage.end||!RELEASE_PUBLISHERS.some(p=>p.id===r.publisher)||!RELEASE_CATEGORIES.includes(r.category)||!r.name||!/^https:\/\/(www\.)?(openai\.com|anthropic\.com|platform\.claude\.com|developers\.openai\.com)\//.test(r.sourceUrl))throw new Error(`Invalid release: ${r.id}`);
+  if(ids.has(r.id)||!Number.isFinite(releaseDay(r.date))||releaseDate(releaseDay(r.date))!==r.date||r.date<previous||r.date<data.coverage.start||r.date>data.coverage.end||!RELEASE_PUBLISHERS.some(p=>p.id===r.publisher)||!RELEASE_CATEGORIES.includes(r.category)||!r.name||!/^https:\/\/(?:(?:www\.)?(?:openai\.com|anthropic\.com|platform\.claude\.com|developers\.openai\.com)\/|github\.com\/openai\/gpt-2\/commit\/|github\.blog\/news-insights\/product-news\/introducing-github-copilot-ai-pair-programmer\/)/.test(r.sourceUrl))throw new Error(`Invalid release: ${r.id}`);
   ids.add(r.id);previous=r.date;
  }
  return true;

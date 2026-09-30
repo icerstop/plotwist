@@ -1,4 +1,4 @@
-import {RELEASE_PUBLISHERS,releaseDay,releaseDate,releaseFrame,releaseCount,groupReleases,releaseMonths,releaseEventAge,releaseEndingState} from './ai-releases.js';
+import {RELEASE_PUBLISHERS,releaseDay,releaseDate,releaseFrame,releaseCount,groupReleases,releaseMonths,releaseEndingState} from './ai-releases.js';
 import {aiFrameLayout} from './ai-layout.js';
 import {reelMotionFrame} from './reel-motion.js';
 import {themeOf,textSize,setReelText,beginReelSection,designOf} from './reel-design.js';
@@ -11,12 +11,15 @@ import {drawReelOverlays} from './overlay-render.js';
 import {getReelLogo} from './reel-assets.js';
 import {roundFill,seriesColor,chartAppearance,lineAppearance} from './chart-appearance.js';
 import {beginElement} from './reel-elements.js';
+import {datedEvents,eventPausePlan,eventPauseFrame} from './event-timing.js';
 const clamp=n=>Math.max(0,Math.min(1,n));
 export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  const motion=reelMotionFrame(initial,progress,timeSeconds),layout=aiFrameLayout(initial.format),{height,start,end,textScale}=layout;
- const config={...motion.config,_aiTextScale:textScale},r=config.releases,frame=releaseFrame(r.rows,r.start,r.end,motion.progress,r.count);
+ const config={...motion.config,_aiTextScale:textScale},r=config.releases;
+ const plan=eventPausePlan(config.timelineEvents||datedEvents(r.rows,r.start,r.end),(config.duration||24)*.9,config.visuals?.design?.motion?.eventPauses);
+ const playback=eventPauseFrame(plan,motion.dataTime),frame=releaseFrame(r.rows,r.start,r.end,playback.progress,r.count);
  const ending=releaseEndingState(timeSeconds,initial.duration||24);
- const eventAge=date=>config.editorPreview?Infinity:releaseEventAge(date,r.start,r.end,motion.progress,config.duration||24,motion.dataTime);
+ const eventAge=date=>config.editorPreview?Infinity:motion.dataTime-(plan.stops.find(e=>e.id===date)?.at??0);
  if(canvas.width!==1080||canvas.height!==height){canvas.width=1080;canvas.height=height;}
  const ctx=canvas.getContext('2d'),theme=themeOf(config),{fg,muted,grid,panel,bg,dark}=theme;
  const style=chartAppearance(config);let textElement='content';

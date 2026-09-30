@@ -1,4 +1,5 @@
 import {reelCapabilities} from './reel-capabilities.js';
+import EventPauseControls from './EventPauseControls.jsx';
 import React,{memo} from 'react';
 import {overlayName} from './reel-overlays.js';
 import {Play,RotateCcw} from 'lucide-react';
@@ -13,20 +14,21 @@ const PresetLibrary=memo(function PresetLibrary({selected,onSelect}){
   <strong>{p.name}</strong><small>{p.description}</small>
  </button>)}</div>;
 });
-export default function MotionEditor({config,playhead,onSeek,onReplay,target,setTarget,beforeChange}){
+export default function MotionEditor({config,playhead,onSeek,onReplay,target,setTarget,beforeChange,onDurationChange}){
  const v=useVisualStatus(),{uiLanguage}=useLanguages(),m=v.visuals.design.motion,duration=config.duration||12,mystery=m.mystery.enabled;
  const cap=reelCapabilities(config),available=id=>cap.motionElements.includes(id)&&!v.visuals.hidden[id];
  const choices=mystery?[['title','Tytuł']]:[...cap.elements.filter(e=>available(e.id)).map(e=>[e.id,e.name]),...v.visuals.stickers.map(s=>[`sticker:${s.id}`,s.name]),...v.visuals.overlays.map(o=>[`overlay:${o.id}`,overlayName(o,uiLanguage)])],id=choices.some(([id])=>id===target)?target:'title',t=m.tracks[id]||m.tracks.stickers;
  const seconds=n=>Math.round(n*duration*100)/100,format=n=>seconds(n).toLocaleString(uiLanguage==='en'?'en-GB':'pl-PL',{maximumFractionDigits:2})+' s';
  const update=patch=>v.design({motion:normalizeMotion({...m,...patch})});
  const track=patch=>update({preset:'custom',tracks:{...m.tracks,[id]:{...t,...patch}}});
- const handlers=React.useRef();handlers.current={beforeChange,design:v.design};
- const selectPreset=React.useCallback(id=>{handlers.current.beforeChange();handlers.current.design({motion:motionPreset(id)});},[]);
+ const handlers=React.useRef();handlers.current={beforeChange,design:v.design,eventPauses:m.eventPauses};
+ const selectPreset=React.useCallback(id=>{handlers.current.beforeChange();handlers.current.design({motion:{...motionPreset(id),eventPauses:handlers.current.eventPauses}});},[]);
  const sequential=m.typing.enabled,stages=typingStages(m.chartStart);
  const rows=mystery?[['title','Tytuł'],['content','Wykres bez opisów'],['data','Animacja danych'],['answer','Odsłonięcie odpowiedzi']]:sequential?[...typingRoles,['data','Animacja danych']]:[['title','Tytuł'],['subtitle','Opis'],['content','Wejście wykresu'],...cap.elements.filter(e=>e.textRole).map(e=>[e.id,e.name]),['data','Animacja danych'],['signature','Podpis autora']];
  return <div className="visual-editor motion-editor"><fieldset disabled={!v.ready||v.busy}>
   <label className="visual-check motion-enable"><input type="checkbox" checked={m.enabled} onChange={e=>{beforeChange();update({enabled:e.target.checked});}}/>Animacje elementów</label>
   <button type="button" className="secondary full motion-replay" onClick={onReplay}><Play size={15}/>Odtwórz od początku</button>
+  <EventPauseControls config={config} beforeChange={beforeChange} onDurationChange={onDurationChange}/>
   <div className={`motion-timeline ${m.enabled?'':'is-disabled'}`} aria-label="Oś czasu animacji">
    <div className="motion-time-header"><span>Przebieg rolki</span><output>{format(playhead)} / {duration} s</output></div>
    {rows.filter(([key])=>['data','answer'].includes(key)||key==='source'||available(key)).map(([key,label])=>{const tr=key==='answer'?{effect:'fade',start:m.mystery.answerAt,duration:m.mystery.fade}:sequential?stages[key]:m.tracks[key],start=key==='data'?(m.enabled?m.chartStart:0):m.enabled&&(sequential||tr.effect!=='none')?tr.start:0,length=key==='data'?.9-start:m.enabled&&(sequential||tr.effect!=='none')?tr.duration:0;
