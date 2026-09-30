@@ -1,3 +1,4 @@
+import MotionEditor from './MotionEditor.jsx';
 import {ChartEditor,TextEffects} from './AppearanceControls.jsx';
 import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';
@@ -36,9 +37,10 @@ function AlignmentGuides({guides,width,height,scale,language}){
  </g>;
 }
 
-export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,valid,fontControls}){
+export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,valid,fontControls,playhead=1,onReplay,onSeek}){
  const v=useVisualStatus(),{uiLanguage,reelLanguage}=useLanguages(),svg=useRef(),gesture=useRef(),history=useRef([]);
  const [selected,setSelected]=useState('title'),[panel,setPanel]=useState('style'),[regions,setRegions]=useState([]),[viewport,setViewport]=useState(null),[undoCount,setUndoCount]=useState(0),[chartRole,setChartRole]=useState('labels');
+ const [motionTarget,setMotionTarget]=useState('title');
  const [snapping,setSnapping]=useState(()=>{try{return localStorage.getItem(snapPreference)!=='off';}catch{return true;}}),[alignment,setAlignment]=useState(emptyGuides);
  useEffect(()=>{if(!enabled||!valid){gesture.current=null;setAlignment(emptyGuides);}},[enabled,valid]);
  useEffect(()=>{if(selected?.startsWith('sticker:')&&!v.visuals.stickers.some(s=>`sticker:${s.id}`===selected))setSelected(null);},[selected,v.visuals.stickers]);
@@ -56,8 +58,8 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
  function undo(){clearGesture();const previous=history.current.pop();if(previous)v.restoreComposition(previous);setUndoCount(history.current.length);}
  function changeTransform(patch){if(sticker)v.sticker(sticker.id,{...(patch.scale!==undefined?{size:patch.scale}:{}),...(patch.rotation!==undefined?{rotation:patch.rotation}:{})});else v.element(selected,patch);}
  function selectElement(id){setSelected(id||null);setPanel('elements');onPause();setEnabled(true);}
- const panels=[['style','Styl'],['layout','Układ'],['chart','Wykres'],['media','Tło i GIF-y'],['elements','Elementy']];
- function navigateTabs(e,index){const n=e.key==='ArrowRight'?(index+1)%panels.length:e.key==='ArrowLeft'?(index+panels.length-1)%panels.length:e.key==='Home'?0:e.key==='End'?panels.length-1:null;if(n===null)return;e.preventDefault();setPanel(panels[n][0]);e.currentTarget.parentElement.children[n].focus();if(panels[n][0]==='elements'){onPause();setEnabled(true);}}
+ const panels=[['style','Styl'],['layout','Układ'],['chart','Wykres'],['motion','Animacje'],['media','Tło i GIF-y'],['elements','Elementy']];
+ function navigateTabs(e,index){const n=e.key==='ArrowRight'?(index+1)%panels.length:e.key==='ArrowLeft'?(index+panels.length-1)%panels.length:e.key==='Home'?0:e.key==='End'?panels.length-1:null;if(n===null)return;e.preventDefault();setPanel(panels[n][0]);e.currentTarget.parentElement.children[n].focus();if(panels[n][0]==='motion')setEnabled(false);if(panels[n][0]==='elements'){onPause();setEnabled(true);}}
  function point(e){const box=svg.current.getBoundingClientRect();return {x:(e.clientX-box.left)/box.width*canvas.current.width,y:(e.clientY-box.top)/box.height*canvas.current.height};}
  function start(e,kind='move'){
   if(e.button!==0)return;const p=point(e),hit=kind==='move'?hitElement(regions,p):region;
@@ -103,17 +105,19 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   </svg>,canvas.current.parentElement)}
   <section className="reel-edit-controls reel-appearance" aria-label="Wygląd rolki">
    <header className="reel-appearance-heading"><h2>Wygląd rolki</h2><p>Wspólny styl zostaje przy zmianie danych.</p></header>
-   <div className="reel-edit-toolbar"><button type="button" className={`secondary ${enabled?'is-editing':''}`} aria-pressed={enabled} disabled={!valid} onClick={()=>{onPause();setEnabled(!enabled);if(!enabled)setPanel('elements');}}>{enabled?<Check size={15}/>:<MousePointer2 size={15}/>}<span>{enabled?'Zakończ edycję':'Edytuj na podglądzie'}</span></button>{enabled&&<button type="button" className="icon-btn" aria-label="Cofnij zmianę elementu" disabled={!undoCount} onClick={undo}><Undo2 size={18}/></button>}</div>
-   <div className="reel-appearance-tabs" role="tablist" aria-label="Ustawienia wyglądu">{panels.map(([id,name],i)=><button key={id} type="button" role="tab" id={`appearance-tab-${id}`} aria-selected={panel===id} aria-controls={`appearance-panel-${id}`} tabIndex={panel===id?0:-1} onKeyDown={e=>navigateTabs(e,i)} onClick={()=>{setPanel(id);if(id==='elements'){onPause();setEnabled(true);}}}>{name}</button>)}</div>
+   <div className="reel-edit-toolbar"><button type="button" className={`secondary ${enabled?'is-editing':''}`} aria-pressed={enabled} disabled={!valid} onClick={()=>{onPause();setEnabled(!enabled);if(!enabled)setPanel('elements');}}>{enabled?<Check size={15}/>:<MousePointer2 size={15}/>}<span>{enabled?'Zakończ edycję':'Edytuj na podglądzie'}</span></button>{(enabled||undoCount>0)&&<button type="button" className="icon-btn" aria-label="Cofnij zmianę elementu" disabled={!undoCount} onClick={undo}><Undo2 size={18}/></button>}</div>
+   <div className="reel-appearance-tabs" role="tablist" aria-label="Ustawienia wyglądu">{panels.map(([id,name],i)=><button key={id} type="button" role="tab" id={`appearance-tab-${id}`} aria-selected={panel===id} aria-controls={`appearance-panel-${id}`} tabIndex={panel===id?0:-1} onKeyDown={e=>navigateTabs(e,i)} onClick={()=>{setPanel(id);if(id==='motion')setEnabled(false);if(id==='elements'){onPause();setEnabled(true);}}}>{name}</button>)}</div>
    <div className="reel-appearance-content" role="tabpanel" id={`appearance-panel-${panel}`} aria-labelledby={`appearance-tab-${panel}`}>
     {panel==='style'&&<StyleEditor>{fontControls}</StyleEditor>}
     {panel==='layout'&&<LayoutEditor/>}
     {panel==='chart'&&<ChartEditor config={config}/>}
+    {panel==='motion'&&<MotionEditor config={config} playhead={playhead} onSeek={onSeek} onReplay={onReplay} target={motionTarget} setTarget={setMotionTarget} beforeChange={remember}/>}
     {panel==='media'&&<MediaEditor onSelect={selectElement}/>}
     {panel==='elements'&&<fieldset className="reel-inspector" disabled={!v.ready||v.busy}>
     <label className="reel-snap-toggle"><input type="checkbox" checked={snapping} onChange={e=>{const checked=e.target.checked;setSnapping(checked);setAlignment(emptyGuides);try{localStorage.setItem(snapPreference,checked?'on':'off');}catch{}}}/><span>Przyciąganie i prowadnice</span></label>
     <p>Środek, krawędzie, ¼ i ¾ rolki oraz wyrównanie do innych elementów. Przytrzymaj Alt, aby przesuwać swobodnie.</p>
     <label>Wybrany element<select aria-label="Wybrany element" value={selected||''} onChange={e=>selectElement(e.target.value)}><option value="">Kliknij element na rolce</option>{Object.entries(names).map(([id,name])=><option key={id} value={id}>{name}</option>)}{v.visuals.stickers.map(s=><option key={s.id} value={`sticker:${s.id}`}>{s.name}</option>)}</select></label>
+    {selected&&selected!=='source'&&<button type="button" className="secondary full" onClick={()=>{setMotionTarget(selected);setPanel('motion');setEnabled(false);}}>Ustaw animację tego elementu</button>}
     {selected&&!sticker?<>
      {selected==='metric'&&config.commonMetric&&<label>Własny podpis wskaźnika<input aria-label="Własny podpis wskaźnika" maxLength={160} value={v.visuals.design.metricLabels[config.commonMetric.key]?.[reelLanguage]||''} placeholder={config.commonMetric.labels[reelLanguage]} onFocus={remember} onChange={e=>v.metricLabel(config.commonMetric.key,reelLanguage,e.target.value)}/><small>Wpis dotyczy tego wskaźnika i języka rolki. Puste pole przywraca nazwę automatyczną.</small></label>}
      {selected==='content'&&<label>Tekst wykresu<select aria-label="Tekst wykresu" value={chartRole} onChange={e=>setChartRole(e.target.value)}><option value="labels">Etykiety i osie</option><option value="values">Wartości liczbowe</option></select></label>}

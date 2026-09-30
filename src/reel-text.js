@@ -1,3 +1,4 @@
+import {animateText} from './reel-motion.js';
 import {beginElement,textRect} from './reel-elements.js';
 import {roundFill} from './chart-appearance.js';
 
@@ -29,6 +30,7 @@ export function textLayout(ctx,text,x,y,width,step,maxLines,config,role){
 }
 // Effects live in a saved canvas state: shadows never leak into the chart.
 export function paintText(ctx,config,role,lines,x,y,step=0,maxWidth=1000){
+ animateText(ctx,config,role,lines,x,y,step,maxWidth,lineIndex=>{
  const s=textStyleOf(config,role);ctx.save();ctx.globalAlpha*=(s.opacity??100)/100;
  if(s.boxColor&&lines.length){
   const box=textRect(ctx,lines,x,y,step,maxWidth),p=s.padding??14;
@@ -36,9 +38,11 @@ export function paintText(ctx,config,role,lines,x,y,step=0,maxWidth=1000){
  }
  if(s.shadow&&s.shadow!=='none'){ctx.shadowColor=s.shadowColor||'#000000';ctx.shadowBlur=s.shadow==='hard'?0:s.shadowBlur??14;ctx.shadowOffsetX=s.shadow==='glow'?0:s.shadowX??0;ctx.shadowOffsetY=s.shadow==='glow'?0:s.shadowY??6;}
  lines.forEach((line,i)=>{
+  if(lineIndex!=null&&i!==lineIndex)return;
   if(s.strokeWidth){ctx.lineWidth=s.strokeWidth;ctx.strokeStyle=s.strokeColor;ctx.lineJoin='round';ctx.strokeText(line,x,y+i*step,maxWidth);}
   ctx.fillText(line,x,y+i*step,maxWidth);
  });ctx.restore();
+ });
 }
 export function drawTextBlock(ctx,text,x,y,width,step,maxLines=3,draw=true,config=null,role=null,register=true){
  const layout=textLayout(ctx,text,x,y,width,step,maxLines,config,role);

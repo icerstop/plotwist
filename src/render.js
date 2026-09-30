@@ -1,3 +1,4 @@
+import {reelMotionFrame} from './reel-motion.js';
 import {drawReelLogo} from './reel-logo.js';
 import {resetElements,beginElement,textRect} from './reel-elements.js';
 import { timelineDate } from './observation-date.js';
@@ -11,6 +12,7 @@ import {drawTextBlock as wrap,paintText,textStyleOf} from './reel-text.js';
 export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
  resetElements(canvas);
  if(config.ai){drawAiReel(canvas,config,progress,timeSeconds);return;}
+ const motionFrame=reelMotionFrame(config,progress,timeSeconds);config=motionFrame.config;progress=motionFrame.progress;
  const ctx=canvas.getContext('2d'); const {series=[],title,subtitle,source,theme='dark',format='9:16',chart='line',unit='',isCoffee=false,xType='year'}=config;
  const font=reelFont(config.fontId),titleFontId=designOf(config).text.title.fontId||config.fontId,titleFont=reelFont(titleFontId);
  const width=1080,height=format==='1:1'?1080:format==='4:5'?1350:1920;if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
@@ -44,7 +46,7 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  const endContent=beginReelSection(ctx,config,'content',width,height,{x:70,y:contentY,w:940,h:(hasPlot?plot.bottom+(designOf(config).chart?.legend!==false?125+(series.length-1)*plot.legendStep:65):height-210)-contentY});
  const {top,bottom,legendStep}=plot;
  if(config.metricCaption){setReelText(ctx,config,'metric',32,font,fg,'bold');wrap(ctx,config.metricCaption,hasPlot?135:78,(hasPlot?top:contentTop)-metricHeight-30,hasPlot?765:924,metricStep,2,true,config,'metric');}
- const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue:n=>formatValue(n,config.language),timeSeconds});
+ const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue:n=>formatValue(n,config.language),timeSeconds:motionFrame.dataTime});
  endContent();
  drawVisualOverlays(ctx,width,height,config,timeSeconds);
  setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';const date=config.dateLabel||(xType==='date'?timelineDate(current,config):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)));const endDate=beginElement(ctx,config,'date',textRect(ctx,[date],1000,height-175,0,924));paintText(ctx,config,'date',[date],1000,height-175,0,924);endDate();ctx.textAlign='left';

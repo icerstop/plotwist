@@ -13,5 +13,5 @@ export const reelPresets=[
 // Presets replace appearance only. Data, language, chart type and media stay intact.
 export function applyReelPreset(visuals,id){
  const p=reelPresets.find(p=>p.id===id);if(!p)return visuals;
- return {...visuals,fontId:p.font,design:normalizeDesign({theme:p.theme,layout:p.layout,chart:p.chart,text:p.text,preset:p.id,metricLabels:visuals.design.metricLabels,legendMode:visuals.design.legendMode}),background:{...visuals.background,type:'theme',veil:0,pattern:'none',animate:false}};
+ return {...visuals,fontId:p.font,design:normalizeDesign({theme:p.theme,layout:p.layout,chart:p.chart,text:p.text,preset:p.id,motion:visuals.design.motion,metricLabels:visuals.design.metricLabels,legendMode:visuals.design.legendMode}),background:{...visuals.background,type:'theme',veil:0,pattern:'none',animate:false}};
 }

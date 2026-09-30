@@ -80,6 +80,16 @@ MP4/H.264 jest wybierany, jeśli przeglądarka obsługuje kodowanie w danym rozm
 4. MP4/H.264: kolejka renderowania po stronie serwera lub lokalny FFmpeg. Deterministyczny renderer, muzyka/lektoring i bezpieczne marginesy platform.
 5. AI opcjonalnie: najpierw retrieval po katalogu metryk, potem propozycja relacji i scenariusza. Model nie generuje liczb. Przechowywać źródła i wymagać weryfikacji metryk. Alternatywa bez API: research w ChatGPT, import CSV, render w studiu.
 
+## Sekwencje animacji elementów
+
+W prawym panelu **Wygląd rolki → Animacje** jest 16 gotowych sekwencji: pisany tytuł, maszyna do pisania, przenikanie, wjazdy, zbliżenie i oddalenie, sprężyna, odbicie, kurtyny, odsłona od środka, słowa, wiersze, obrót kartki i historia z podpisem na końcu. „Rysowanie liter” to płynne odsłanianie wybranej czcionki, nie odtwarzanie rzeczywistych ruchów pióra.
+
+Każdy element ma osobny efekt wejścia, początek i długość; obrazki/GIF-y mogą mieć wspólne lub indywidualne wejścia. Można przejść do animacji po wybraniu elementu na podglądzie. Oś czasu pozwala podejrzeć środek etapu, a przycisk odtwarza całą sekwencję od początku. Animacje są domyślnie wyłączone w istniejących szkicach.
+
+Wykres zaczyna rozwijać dane po zakończeniu swojego wejścia. Ostatnie 10% filmu zostaje na końcowy wynik. Czasy dopasowują się proporcjonalnie do długości rolki. Źródła pozostają widoczne przez cały film. Edycja kursorem tymczasowo pokazuje elementy w ich docelowej pozycji. GIF-y zachowują własną liczbę klatek i globalny zegar filmu.
+
+Sekwencje są wspólne dla wszystkich modułów, niezależne od designu i danych oraz zapisywane lokalnie z wyglądem. Podgląd, przewijanie i eksport 30/60 fps korzystają z tego samego zegara, bez zależności od szybkości renderowania. PNG zachowuje końcowy widok. Logika: `src/reel-motion.js`, panel: `src/MotionEditor.jsx`.
+
 ## Pliki
 
 - `src/catalog.js` — zbiory, pomysły i źródła.

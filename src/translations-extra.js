@@ -809,4 +809,80 @@ Design: Esencja|Design: Essentials
 Design: Lawenda|Design: Lavender
 Design: Serwis|Design: Bulletin
 Wykres|Chart
+
+Animacje|Animation
+Animacje elementów|Element animation
+Gotowe sekwencje animacji|Animation sequences
+Odtwórz od początku|Play from the beginning
+Oś czasu animacji|Animation timeline
+Przebieg rolki|Reel sequence
+Opis|Subtitle
+Wejście wykresu|Chart entrance
+Animacja danych|Data animation
+Kliknij etap, aby zobaczyć jego środek. Suwak pod rolką przewija cały film.|Click a stage to preview its midpoint. The slider below the reel scrubs the full video.
+Biblioteka · 16 sekwencji|Library · 16 sequences
+Sekwencja zmienia tylko ruch i kolejność wejść. Wybrany design, czcionki i dane zostają.|The sequence changes only motion and entrance timing. Your design, fonts and data stay.
+Dopasuj animację elementu|Customize element animation
+Animowany element|Animated element
+Efekt wejścia|Entrance effect
+Początek wejścia|Entrance start
+Długość wejścia|Entrance duration
+Tempo wejścia|Entrance easing
+Zobacz środek tego wejścia|Preview this entrance halfway
+Użyj wspólnego wejścia dodatków|Use the shared overlay entrance
+Start animacji danych|Data animation start
+Dane ruszają po pełnym wejściu wykresu. Sekwencja mieści się w długości rolki; ostatnie 10% zostaje na wynik. Czasy dopasowują się przy zmianie długości filmu.|Data starts after the chart has fully entered. The sequence fits within the reel; the final 10% holds the result. Timings adapt when video duration changes.
+Przy edycji kursorem elementy są widoczne w pozycji docelowej. Źródła pozostają widoczne przez całą rolkę.|While editing with the cursor, elements are visible in their final position. Sources remain visible throughout the reel.
+Wyłącz i wyzeruj animacje|Disable and reset animation
+Ustaw animację tego elementu|Set animation for this element
+Bez wejścia|No entrance
+Przenikanie|Fade
+Wjazd od dołu|Slide up
+Wjazd od góry|Slide down
+Wjazd z lewej|Slide from left
+Wjazd z prawej|Slide from right
+Przybliżenie|Zoom in
+Oddalenie|Zoom out
+Sprężyste wejście|Spring entrance
+Odbicie|Bounce
+Obrót i wejście|Rotate in
+Obrót kartki|Page flip
+Odsłona od lewej|Wipe from left
+Odsłona od dołu|Wipe from bottom
+Otwarcie od środka|Reveal from center
+Maszyna do pisania|Typewriter
+Rysowanie liter|Ink reveal
+Słowo po słowie|Word by word
+Wiersz po wierszu|Line by line
+Łagodnie|Smooth
+Szybki start, łagodny koniec|Fast start, gentle finish
+Równomiernie|Linear
+Najpierw napis|Title first
+Rysowane litery, potem wykres|Drawn letters, then the chart
+Litery pojawiają się rytmicznie|Letters appear rhythmically
+Miękkie wejście|Soft entrance
+Spokojne przenikanie kolejnych elementów|Gentle fades between elements
+W górę|Rise
+Tytuł i wykres unoszą się do kadru|Title and chart rise into frame
+Z dwóch stron|Opposite sides
+Tytuł z lewej, wykres z prawej|Title from left, chart from right
+Zbliżenie|Close-up
+Tytuł rośnie, potem wchodzą dane|Title grows, then data enters
+Duży napis osiada w kompozycji|A large title settles into the layout
+Sprężyna|Spring
+Energiczne wejście z lekkim przeskokiem|A lively entrance with gentle overshoot
+Tytuł opada i delikatnie odbija|Title drops and gently bounces
+Kurtyna|Curtain
+Odsłona od lewej do prawej|Reveal from left to right
+Podniesienie kurtyny|Curtain rise
+Tekst i wykres odsłaniane od dołu|Text and chart revealed from below
+Z centrum|From the center
+Kompozycja otwiera się od środka|The composition opens from the center
+Rytm słów|Word rhythm
+Kolejne słowa wchodzą płynnie|Words enter one after another
+Rytm wierszy|Line rhythm
+Tekst pojawia się wiersz po wierszu|Text appears line by line
+Obrót tytułu, łagodne wejście wykresu|Title flips, chart enters gently
+Historia z finałem|Story with a finale
+Pisany tytuł, dane i podpis na końcu|Written title, data and a signature at the end
 `;

@@ -1,3 +1,4 @@
+import {reelMotionFrame} from './reel-motion.js';
 import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill,plotGrid} from './chart-appearance.js';
 import {drawTextBlock,textStyleOf} from './reel-text.js';
 import {drawReelLogo} from './reel-logo.js';
@@ -17,22 +18,23 @@ function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels')
  const title=role==='title';
  setReelText(ctx,config,role,title?size/textSize(config,role,1):size,font,color,title||size>=60?'bold':'');
  const actual=title?size:textSize(config,role,size);
- return drawTextBlock(ctx,text,x,y,width,actual*1.22,max,true,config,role,title);
+ return drawTextBlock(ctx,text,x,y,width,actual*1.22,max,true,config,role,title||role==='date');
 
 }
 function fit(ctx,text,width,size,min=26){const font=reelFont(designOf(config).text.values.fontId||config.fontId);size=textSize(config,'values',size);ctx.font=`bold ${size}px ${font}`;while(size>min&&ctx.measureText(text).width>width){size--;ctx.font=`bold ${size}px ${font}`;}ctx.fillStyle=textColor(config,'values',ctx.fillStyle);return size;}
 return {wrap,fit};
 }
 export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
+ const visualTime=timeSeconds,motionFrame=reelMotionFrame(config,progress,timeSeconds);config=motionFrame.config;progress=motionFrame.progress;timeSeconds=motionFrame.dataTime;
  const {wrap,fit}=typography(reelFont(config.fontId),config.language,config);
  const aiValue=value=>formatAiValue(value,config.language);
  const {ai:{rows,benchmark:b,basis,mode,comparison,scope},title,theme='dark'}=config;
  const ctx=canvas.getContext('2d');if(canvas.width!==1080||canvas.height!==1920){canvas.width=1080;canvas.height=1920;}
  const {dark,bg,fg,muted,panel,grid,colors}=themeOf(config),appearance=chartAppearance(config),[accent,purple]=colors.map((c,i)=>seriesColor(config,i,c));
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
- drawVisualBackground(ctx,1080,1920,config,timeSeconds);
+ drawVisualBackground(ctx,1080,1920,config,visualTime);
  const endHeader=beginReelSection(ctx,config,'header',1080,1920);
- drawReelLogo(ctx,config,timeSeconds,{x:76,y:73,h:50});
+ drawReelLogo(ctx,config,visualTime,{x:76,y:73,h:50});
  wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270,textStyleOf(config,'title')),3,fg,true,'title');
  const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:528,w:928,h:132});
  wrap(ctx,b.name,76,565,928,33,1,accent,false,'subtitle');
@@ -56,7 +58,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  } else if(mode==='timeline'){
    const scene=sceneAt(rows.length,progress,duration,transition);
    function card(index,opacity,dy){
-    if(opacity<=0)return;const r=rows[index];ctx.save();ctx.globalAlpha=opacity;ctx.translate(0,dy);
+    if(opacity<=0)return;const r=rows[index];ctx.save();ctx.globalAlpha*=opacity;ctx.translate(0,dy);
     wrap(ctx,r.date,76,735,920,39,1,muted,false,'date');
     wrap(ctx,r.model,76,825,920,62,3,fg);
     ctx.fillStyle=accent;fit(ctx,score(r),930,147,70);ctx.fillText(score(r),76,1190);
@@ -79,7 +81,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
     const ni=current.findIndex(r=>r.modelId===id),oi=before.findIndex(r=>r.modelId===id),r=current[ni]||before[oi],prev=before[oi]||r;
     const alpha=ni<0?1-mix:oi<0?mix:1;if(alpha<=0)continue;
     const y=805+lerp(oi<0?6:oi,ni<0?6:ni,mix)*136;
-    ctx.save();ctx.globalAlpha=alpha;
+    ctx.save();ctx.globalAlpha*=alpha;
     // The identity follows the row, while only its position and bar length tween.
     wrap(ctx,r.model,76,y,660,34,1,fg);ctx.textAlign='right';setReelText(ctx,config,'values',40,reelFont(config.fontId),ni===0?accent:fg,'bold');crossText(ctx,aiValue(prev.score),aiValue(r.score),1000,y,mix,260);ctx.textAlign='left';
     ctx.fillStyle=grid;roundFill(ctx,76,y+60,925,Math.max(3,appearance.barWidth*.2),appearance.radius);ctx.fillStyle=ni===0?accent:purple;const v=lerp(prev.score,r.score,mix);roundFill(ctx,Math.min(barX(0),barX(v)),y+60,Math.abs(barX(v)-barX(0)),Math.max(3,appearance.barWidth*.2),appearance.radius);
@@ -98,7 +100,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    for(const f of frames.slice(1)){ctx.lineTo(x(f.time),y(previous));ctx.lineTo(x(f.time),y(f.record.score));previous=f.record.score;}ctx.lineTo(right,y(previous));ctx.stroke();ctx.restore();
    if(appearance.axisLabels){wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';}
    function recordLabel(r,alpha){
-    if(alpha<=0)return;ctx.save();ctx.globalAlpha=alpha;
+    if(alpha<=0)return;ctx.save();ctx.globalAlpha*=alpha;
     setReelText(ctx,config,'values',43,reelFont(config.fontId),accent,'bold');ctx.fillText(score(r),76,1525);
     const uncertainty=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`SE: ±${aiValue(r.stderr)} p.p.`:'';
     if(uncertainty)wrap(ctx,uncertainty,76,1564,920,24,1,muted);
@@ -114,20 +116,20 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25));plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';wrap(ctx,formatAxisTick(value,config.language),left-20,y(value)+9,120,25,1,muted);ctx.textAlign='left';}
    wrap(ctx,b.unit,76,720,920,30,1,muted);
    if(b.baseline){const yy=y(b.baseline.score);ctx.strokeStyle=purple;ctx.setLineDash([10,10]);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(right,yy);ctx.stroke();ctx.setLineDash([]);wrap(ctx,`Punkt odniesienia: ${aiValue(b.baseline.score)}`,left,yy-15,800,26,1,purple);}
-   frame.visible.forEach(r=>{const age=(lerp(t0,t1,progress)-Date.parse(r.date))/(t1-t0||1)*duration*.9+Math.max(0,timeSeconds-duration*.9);const alpha=transition&&r.date!==first.date?ease(age/Math.min(transition,duration*.08)):1;ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=accent;ctx.globalAlpha*=.48;ctx.beginPath();ctx.arc(x(r.date),y(r.score),7,0,Math.PI*2);ctx.fill();ctx.globalAlpha=alpha;const lo=r.low??(r.stderr!=null?r.score-r.stderr:null),hi=r.high??(r.stderr!=null?r.score+r.stderr:null);if(lo!=null&&hi!=null){ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(x(r.date),y(Math.max(min,lo)));ctx.lineTo(x(r.date),y(Math.min(max,hi)));ctx.stroke();}ctx.restore();});
+   frame.visible.forEach(r=>{const age=(lerp(t0,t1,progress)-Date.parse(r.date))/(t1-t0||1)*duration*.9+Math.max(0,timeSeconds-duration*.9);const alpha=transition&&r.date!==first.date?ease(age/Math.min(transition,duration*.08)):1;ctx.save();ctx.globalAlpha*=alpha;ctx.fillStyle=accent;ctx.save();ctx.globalAlpha*=.48;ctx.beginPath();ctx.arc(x(r.date),y(r.score),7,0,Math.PI*2);ctx.fill();ctx.restore();const lo=r.low??(r.stderr!=null?r.score-r.stderr:null),hi=r.high??(r.stderr!=null?r.score+r.stderr:null);if(lo!=null&&hi!=null){ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(x(r.date),y(Math.max(min,lo)));ctx.lineTo(x(r.date),y(Math.min(max,hi)));ctx.stroke();}ctx.restore();});
    if(appearance.axisLabels){wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';}
    if(frame.current)wrap(ctx,`Ostatnio: ${frame.current.model} · ${aiValue(frame.current.score)}`,76,1555,920,27,1,accent,false,'values');
    wrap(ctx,frame.date,76,1630,900,45,1,fg,false,'date');wrap(ctx,`${frame.visible.length} pomiarów · ${b.id==='eci'?'wąsy: 90% CI':rows.some(r=>r.stderr!=null)?'wąsy: ±1 SE':'bez interpolacji'}`,76,1665,920,28,1,muted);
  } else {
    const r=rows.filter(r=>r.modelId===comparison).at(-1)||last,base=b.baseline;
    if(!base){endContent();return;}
-   [{name:r.model,value:score(r),color:accent},{name:base.name,value:`${aiValue(base.score)} ${b.unit}`,color:purple}].forEach((item,i)=>{const y=735+i*370;ctx.save();const enter=transition?ease((timeSeconds-i*.25)/transition):1;ctx.globalAlpha=enter;ctx.translate(0,24*(1-enter));ctx.fillStyle=panel;roundFill(ctx,76,y,928,320,appearance.radius);wrap(ctx,item.name,112,y+62,850,39,2,fg);ctx.fillStyle=item.color;fit(ctx,item.value,850,104,55);ctx.fillText(item.value,112,y+255);if(i===0&&r.stderr!=null)wrap(ctx,`SE: ±${aiValue(r.stderr)} p.p.`,112,y+296,850,23,1,muted);ctx.restore();});
+   [{name:r.model,value:score(r),color:accent},{name:base.name,value:`${aiValue(base.score)} ${b.unit}`,color:purple}].forEach((item,i)=>{const y=735+i*370;ctx.save();const enter=transition?ease((timeSeconds-i*.25)/transition):1;ctx.globalAlpha*=enter;ctx.translate(0,24*(1-enter));ctx.fillStyle=panel;roundFill(ctx,76,y,928,320,appearance.radius);wrap(ctx,item.name,112,y+62,850,39,2,fg);ctx.fillStyle=item.color;fit(ctx,item.value,850,104,55);ctx.fillText(item.value,112,y+255);if(i===0&&r.stderr!=null)wrap(ctx,`SE: ±${aiValue(r.stderr)} p.p.`,112,y+296,850,23,1,muted);ctx.restore();});
    wrap(ctx,`${r.date} · różnica ${aiValue(r.score-base.score)} ${b.unit==='%'?'p.p.':'punktów percentylowych'}`,76,1520,920,35,2,fg);
    wrap(ctx,base.note,76,1600,920,28,3,muted);
  }
  endContent();
  // Essential methodology is burned into every exported frame.
- drawVisualOverlays(ctx,1080,1920,config,timeSeconds);
+ drawVisualOverlays(ctx,1080,1920,config,visualTime);
  const dating=basis==='release'?'Wg premier · retrospektywa, pomiary mogły być późniejsze':'Wg dat testu / publikacji · bez interpolacji';
  const warning=b.id.startsWith('iq-')?'Quiz TrackingAI ≠ psychometryczne IQ człowieka':b.id==='eci'?'ECI ≠ IQ · aktualne przeliczenie historii':b.id==='codeforces2024'?'Percentyl wśród uczestników · 10 zgłoszeń':b.id.startsWith('swe-')?'Wynik systemu z narzędziami; wersje środowiska rozdzielone':b.id==='gpqa'&&mode==='duel'?'Eksperci dziedzinowi; różne protokoły ewaluacji':['frontiermath','frontiermath4'].includes(b.id)?'Od 13.11.2025 budżet tokenów 10× większy; porównanie orientacyjne':b.caveat;
  const endSource=beginElement(ctx,config,'source',{x:76,y:1673,w:928,h:158});

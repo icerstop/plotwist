@@ -46,7 +46,7 @@ export function drawSignature(ctx,width,height,fontId,dark,config={}){
  ctx.font=`${textSize(config,'signature',24)}px ${family}`;
  const w=Math.min(width-152,Math.max(ctx.measureText('X: @jakub_bilski  ·  IG: jakub__bilski').width,200));
  const end=beginElement(ctx,config,'signature',{x:x-(align==='left'?0:align==='right'?w:w/2),y:height-94,w,h:76});
- ctx.save();ctx.globalAlpha=1;ctx.textAlign=align;ctx.textBaseline='alphabetic';
+ ctx.save();ctx.textAlign=align;ctx.textBaseline='alphabetic';
  ctx.fillStyle=textColor(config,'signature',theme.fg);ctx.font=`bold ${textSize(config,'signature',28)}px ${family}`;
  paintText(ctx,config,'signature',['Jakub Bilski'],x,height-64,0,width-152);
  ctx.fillStyle=textColor(config,'signature',theme.muted);ctx.font=`${textSize(config,'signature',24)}px ${family}`;

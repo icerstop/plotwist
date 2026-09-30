@@ -1,3 +1,4 @@
+import {applyElementMotion} from './reel-motion.js';
 // The renderer publishes geometry, never editor chrome. Export uses identical transforms.
 const frames=new WeakMap();
 export const elementIds=['mark','title','subtitle','metric','content','date','source','signature'];
@@ -24,7 +25,7 @@ export function beginElement(ctx,config,id,rect){
  // Store translation as a percentage of the full reel, independent of nested layout scale.
  ctx.setTransform(m.a,m.b,m.c,m.d,m.e+t.x*ctx.canvas.width/100,m.f+t.y*ctx.canvas.height/100);
  ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);ctx.rotate(t.rotation*Math.PI/180);ctx.scale(t.scale/100,t.scale/100);ctx.translate(-rect.x-rect.w/2,-rect.y-rect.h/2);
- registerElement(ctx,id,rect);return ()=>ctx.restore();
+ applyElementMotion(ctx,config,id,rect);registerElement(ctx,id,rect);return ()=>ctx.restore();
 }
 export function textRect(ctx,lines,x,y,step,maxWidth=Infinity){
  const metrics=lines.map(s=>ctx.measureText(s)),width=Math.min(maxWidth,Math.max(1,...metrics.map(m=>m.width))),size=parseFloat(ctx.font.match(/([\d.]+)px/)?.[1]||30);

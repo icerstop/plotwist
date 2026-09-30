@@ -74,7 +74,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   ctx.save();ctx.beginPath();ctx.rect(65,813,950,812);ctx.clip();
   for(const id of ids){const ni=ranked.findIndex(l=>l.brand.id===id),oi=oldRank.findIndex(l=>l.brand.id===id),now=ranked[ni],old=oldRank[oi],brand=(now||old).brand;
    const y=858+lerp(oi<0?brands.length:oi,ni<0?brands.length:ni,mix)*129;
-   ctx.save();ctx.globalAlpha=ni<0?1-mix:oi<0?mix:1;
+   ctx.save();ctx.globalAlpha*=ni<0?1-mix:oi<0?mix:1;
    identity(brand,now?.winner,old?.winner,76,y,640,true);exactScore(now,old,762,y,240,34);
    const v=lerp(old?.score??0,now?.score??0,mix),zero=76+axis.position(0)*925,xx=76+axis.position(v)*925;
    ctx.fillStyle=grid;roundFill(ctx,76,y+68,925,Math.max(3,appearance.barWidth*.2),appearance.radius);ctx.fillStyle=color(brand);roundFill(ctx,Math.min(zero,xx),y+68,Math.abs(xx-zero),Math.max(3,appearance.barWidth*.2),appearance.radius);ctx.restore();
