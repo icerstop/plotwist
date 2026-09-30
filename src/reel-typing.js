@@ -78,6 +78,8 @@ export function renderTypingFrame(canvas,config,progress,time,render){
  const lookup=new Map();for(const entry of cached.plan.entries){const list=lookup.get(entry.key)||[];list.push(entry);lookup.set(entry.key,list);}
  const seen={fill:new Map(),stroke:new Map()},originals={fill:ctx.fillText,stroke:ctx.strokeText};
  function text(method,value,x,y,width){
+  // Live values change text and position while the surrounding copy is still typing.
+  if(motion.overlap&&['content','date'].includes(roles.get(this)||'content')){originals[method].call(this,value,x,y,...(width==null?[]:[width]));return;}
   const key=keyOf(this,value,x,y,width),index=seen[method].get(key)||0;seen[method].set(key,index+1);
   const entry=lookup.get(key)?.[index];if(!entry)return; // No future labels during the intro.
   const state=typingAt(entry,fraction);if(!state.started)return;

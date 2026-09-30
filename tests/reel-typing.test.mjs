@@ -46,6 +46,17 @@ function recorder(){
  return {canvas,ctx:proxy,log,stack};
 }
 
+test('overlapping typing keeps changing chart labels visible while the title is unfinished',()=>{
+ const {canvas,ctx,log}=recorder(),motion=normalizeMotion({...motionPreset('typewriter'),overlap:true,dataStart:0});
+ const config={duration:24,visuals:{design:{motion}}};
+ const render=(_canvas,c)=>{log.length=0;for(const [role,text] of [['title','A sufficiently long title'],['content',c._typingCapture?'2020: 1':'2026: 999'],['date',c._typingCapture?'2020':'2026']]){const end=typingRole(ctx,role);ctx.fillText(text,10,100);end();}};
+ assert.equal(renderTypingFrame(canvas,config,.1,1,render),true);
+ assert.ok(log.some(e=>e.type==='fill'&&e.args[0]==='2026: 999'));
+ assert.ok(log.some(e=>e.type==='fill'&&e.args[0]==='2026'));
+ assert.ok(!log.some(e=>e.type==='fill'&&e.args[0]==='A sufficiently long title'));
+ const first=JSON.stringify(log);renderTypingFrame(canvas,config,.1,1,render);assert.equal(JSON.stringify(log),first);
+});
+
 test('all raw Canvas text, wrapped lines, strokes and cursors share a deterministic sequence',()=>{
  const {canvas,ctx,log,stack}=recorder(),motion=motionPreset('typewriter');motion.typing.blink=false;
  const config={duration:20,visuals:{design:normalizeDesign({motion})}},original=ctx.fillText;

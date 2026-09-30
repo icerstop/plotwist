@@ -5,7 +5,7 @@ import React,{memo} from 'react';
 import {overlayName} from './reel-overlays.js';
 import {Play,RotateCcw} from 'lucide-react';
 import {useVisualStatus,Range} from './VisualSettings.jsx';
-import {motionPresets,motionRoles,motionEffects,motionEasings,motionPreset,normalizeMotion,textMotionRoles,textMotionEffects} from './reel-motion.js';
+import {dataStartOf,motionTrack,motionPresets,motionRoles,motionEffects,motionEasings,motionPreset,normalizeMotion,textMotionRoles,textMotionEffects} from './reel-motion.js';
 import {useLanguages} from './language-context.js';
 import {typingStyles,typingCursors,typingRoles,typingStages} from './reel-typing.js';
 
@@ -22,18 +22,25 @@ export default function MotionEditor({config,playhead,onSeek,onReplay,target,set
  const seconds=n=>Math.round(n*duration*100)/100,format=n=>seconds(n).toLocaleString(uiLanguage==='en'?'en-GB':'pl-PL',{maximumFractionDigits:2})+' s';
  const update=patch=>v.design({motion:normalizeMotion({...m,...patch})});
  const track=patch=>update({preset:'custom',tracks:{...m.tracks,[id]:{...t,...patch}}});
- const handlers=React.useRef();handlers.current={beforeChange,design:v.design,eventPauses:m.eventPauses,releaseSound:m.releaseSound};
- const selectPreset=React.useCallback(id=>{handlers.current.beforeChange();handlers.current.design({motion:{...motionPreset(id),eventPauses:handlers.current.eventPauses,releaseSound:handlers.current.releaseSound}});},[]);
- const sequential=m.typing.enabled,stages=typingStages(m.chartStart);
+ const handlers=React.useRef();handlers.current={beforeChange,design:v.design,eventPauses:m.eventPauses,releaseSound:m.releaseSound,overlap:m.overlap,dataStart:m.dataStart};
+ const selectPreset=React.useCallback(id=>{handlers.current.beforeChange();handlers.current.design({motion:{...motionPreset(id),eventPauses:handlers.current.eventPauses,releaseSound:handlers.current.releaseSound,overlap:handlers.current.overlap,dataStart:handlers.current.dataStart}});},[]);
+ const sequential=m.typing.enabled,overlap=m.overlap&&!mystery,stages=typingStages(m.chartStart),tr=(pl,en)=>uiLanguage==='en'?en:pl;
+ const earlyStart=n=>{beforeChange();update({enabled:true,overlap:true,dataStart:n/duration});};
  const rows=mystery?[['title','Tytuł'],['content','Wykres bez opisów'],['data','Animacja danych'],['answer','Odsłonięcie odpowiedzi']]:sequential?[...typingRoles,['data','Animacja danych']]:[['title','Tytuł'],['subtitle','Opis'],['content','Wejście wykresu'],...cap.elements.filter(e=>e.textRole).map(e=>[e.id,e.name]),['data','Animacja danych'],['signature','Podpis autora']];
  return <div className="visual-editor motion-editor"><fieldset disabled={!v.ready||v.busy}>
   <label className="visual-check motion-enable"><input type="checkbox" checked={m.enabled} onChange={e=>{beforeChange();update({enabled:e.target.checked});}}/>Animacje elementów</label>
   <button type="button" className="secondary full motion-replay" onClick={onReplay}><Play size={15}/>Odtwórz od początku</button>
+  {!mystery&&<div className="motion-overlap-controls">
+   <label className="visual-check"><input type="checkbox" checked={overlap} onChange={e=>{beforeChange();update({enabled:true,overlap:e.target.checked,...(e.target.checked?{dataStart:.5/duration}:{})});}}/>{tr('Równoległe animacje','Overlapping animations')}</label>
+   <div className="filters" role="group" aria-label={tr('Szybki start wykresu','Quick chart start')}>{[0,.5,1].map(n=><button type="button" key={n} className={overlap&&Math.abs(dataStartOf(m)*duration-n)<.005?'selected':''} aria-pressed={overlap&&Math.abs(dataStartOf(m)*duration-n)<.005} onClick={()=>earlyStart(n)}>{n===0?tr('Od razu','Immediately'):tr('Po ','After ')+n.toLocaleString(uiLanguage==='en'?'en-GB':'pl-PL')+' s'}</button>)}</div>
+   {overlap&&<Range label={tr('Start wykresu','Chart start')} min={0} max={seconds(.6)} step={.01} suffix=" s" value={seconds(m.dataStart)} onChange={earlyStart}/>}
+   <p className="visual-hint">{tr('Wykres może ruszyć podczas wejścia tytułu i pozostałych elementów. Przy pisaniu tekstów jego bieżące etykiety są widoczne i aktualizują się od razu.','The chart can start while the title and other elements are entering. While text is typing, live chart labels remain visible and update immediately.')}</p>
+  </div>}
   <ReleaseSoundControls config={config} beforeChange={beforeChange}/>
   <EventPauseControls config={config} beforeChange={beforeChange} onDurationChange={onDurationChange}/>
   <div className={`motion-timeline ${m.enabled?'':'is-disabled'}`} aria-label="Oś czasu animacji">
    <div className="motion-time-header"><span>Przebieg rolki</span><output>{format(playhead)} / {duration} s</output></div>
-   {rows.filter(([key])=>['data','answer'].includes(key)||key==='source'||available(key)).map(([key,label])=>{const tr=key==='answer'?{effect:'fade',start:m.mystery.answerAt,duration:m.mystery.fade}:sequential?stages[key]:m.tracks[key],start=key==='data'?(m.enabled?m.chartStart:0):m.enabled&&(sequential||tr.effect!=='none')?tr.start:0,length=key==='data'?.9-start:m.enabled&&(sequential||tr.effect!=='none')?tr.duration:0;
+   {rows.filter(([key])=>['data','answer'].includes(key)||key==='source'||available(key)).map(([key,label])=>{const tr=key==='answer'?{effect:'fade',start:m.mystery.answerAt,duration:m.mystery.fade}:overlap&&key==='content'?motionTrack(m,key):overlap&&sequential&&key==='date'?{effect:'none',start:0,duration:0}:sequential?stages[key]:motionTrack(m,key),start=key==='data'?dataStartOf(m):m.enabled&&tr&&(sequential||tr.effect!=='none')?tr.start:0,length=key==='data'?.9-start:m.enabled&&tr&&(sequential||tr.effect!=='none')?tr.duration:0;
     return <button type="button" key={key} className={`motion-time-row ${key==='data'?'is-data':''}`} onClick={()=>onSeek(start+length*.5)} aria-label={`Podgląd etapu: ${label}`}><span>{label}</span><span className="motion-time-track"><i style={{left:`${start*100}%`,width:`${Math.max(length*100,.6)}%`}}/><b style={{left:`${playhead*100}%`}}/></span></button>;
    })}
    <p className="visual-hint">Kliknij etap, aby zobaczyć jego środek. Suwak pod rolką przewija cały film.</p>
@@ -55,8 +62,8 @@ export default function MotionEditor({config,playhead,onSeek,onReplay,target,set
    <label className="visual-field">Rytm pisania<select aria-label="Rytm pisania" value={m.typing.style} onChange={e=>update({preset:'custom',typing:{...m.typing,style:e.target.value}})}>{typingStyles.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
    <label className="visual-field">Kursor pisania<select aria-label="Kursor pisania" value={m.typing.cursor} onChange={e=>update({preset:'custom',typing:{...m.typing,cursor:e.target.value}})}>{typingCursors.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
    <label className="visual-check"><input type="checkbox" disabled={m.typing.cursor==='none'} checked={m.typing.blink} onChange={e=>update({preset:'custom',typing:{...m.typing,blink:e.target.checked}})}/>Miganie kursora w pauzach</label>
-   <Range label="Czas na pisanie przed wykresem" min={seconds(.2)} max={seconds(.6)} step={.01} suffix=" s" value={seconds(m.chartStart)} onChange={n=>update({preset:'custom',chartStart:n/duration})}/>
-   <p className="visual-hint">Jeden kursor: tytuł → opis → wskaźnik → etykiety → data → źródło → podpis. Potem ruszają dane. Dłuższa rolka daje spokojniejsze tempo pisania.</p>
+   <Range label={overlap?tr("Czas pisania tekstów","Text typing time"):"Czas na pisanie przed wykresem"} min={seconds(.2)} max={seconds(.6)} step={.01} suffix=" s" value={seconds(m.chartStart)} onChange={n=>update({preset:'custom',chartStart:n/duration})}/>
+   <p className="visual-hint">{overlap?tr("Teksty piszą się kolejno, a wykres działa równolegle. Czas pisania nie opóźnia startu danych.","Text types sequentially while the chart runs alongside it. Typing time does not delay the data."):"Jeden kursor: tytuł → opis → wskaźnik → etykiety → data → źródło → podpis. Potem ruszają dane. Dłuższa rolka daje spokojniejsze tempo pisania."}</p>
   </fieldset>}
   {!sequential&&<><details className="appearance-group" open><summary>Dopasuj animację elementu</summary>
    <label className="visual-field">Animowany element<select aria-label="Animowany element" value={id} onChange={e=>setTarget(e.target.value)}>{choices.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
@@ -71,12 +78,12 @@ export default function MotionEditor({config,playhead,onSeek,onReplay,target,set
     {id.startsWith('sticker:')&&m.tracks[id]&&<button type="button" className="text-btn" onClick={()=>{const tracks={...m.tracks};delete tracks[id];update({preset:'custom',tracks});}}>Użyj wspólnego wejścia dodatków</button>}
    </fieldset>
   </details>
-  {!mystery&&<fieldset disabled={!m.enabled} onFocusCapture={beforeChange} onPointerDownCapture={beforeChange}>
+  {!mystery&&!overlap&&<fieldset disabled={!m.enabled} onFocusCapture={beforeChange} onPointerDownCapture={beforeChange}>
    <Range label="Start animacji danych" min={seconds(m.tracks.content.effect==='none'?0:m.tracks.content.start+m.tracks.content.duration)} max={seconds(.6)} step={.01} suffix=" s" value={seconds(m.chartStart)} onChange={n=>update({preset:'custom',chartStart:n/duration})}/>
   </fieldset>}
   </>}
-  <p className="visual-hint">Dane ruszają po pełnym wejściu wykresu. Sekwencja mieści się w długości rolki; ostatnie 10% zostaje na wynik. Czasy dopasowują się przy zmianie długości filmu.</p>
-  <p className="visual-hint">{mystery?'Przy edycji kursorem wszystkie elementy są widoczne. W trybie zagadki źródła i metodologia pojawiają się z odpowiedzią i pozostają do końca.':sequential?'Przy edycji kursorem wszystkie teksty są widoczne. Źródło wpisuje się przed uruchomieniem danych i pozostaje do końca.':'Przy edycji kursorem elementy są widoczne w pozycji docelowej. Źródła pozostają widoczne przez całą rolkę.'}</p>
+  <p className="visual-hint">{overlap?tr("Start danych jest niezależny od końca animacji tekstów. Wejście wykresu dopasowuje się do wcześniejszego startu. Ostatnie 10% filmu pozostaje na wynik.","Data starts independently of text animation endings. The chart entrance adapts to the earlier start. The final 10% of the video holds the result."):"Dane ruszają po pełnym wejściu wykresu. Sekwencja mieści się w długości rolki; ostatnie 10% zostaje na wynik. Czasy dopasowują się przy zmianie długości filmu."}</p>
+  <p className="visual-hint">{overlap?tr('Przy edycji kursorem wszystkie elementy są widoczne w pozycji docelowej.','When editing on the canvas, all elements appear in their final positions.'):mystery?'Przy edycji kursorem wszystkie elementy są widoczne. W trybie zagadki źródła i metodologia pojawiają się z odpowiedzią i pozostają do końca.':sequential&&!overlap?'Przy edycji kursorem wszystkie teksty są widoczne. Źródło wpisuje się przed uruchomieniem danych i pozostaje do końca.':'Przy edycji kursorem elementy są widoczne w pozycji docelowej. Źródła pozostają widoczne przez całą rolkę.'}</p>
   <button type="button" className="text-btn visual-reset" onClick={()=>{beforeChange();update(normalizeMotion());}}><RotateCcw size={14}/>Wyłącz i wyzeruj animacje</button>
  </fieldset></div>;
 }

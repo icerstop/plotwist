@@ -53,14 +53,24 @@ export function normalizeMotion(raw={}){
  const chartStart=mystery.enabled?mystery.chartAt+mystery.fade:typing.enabled?number(!raw.typing&&preset?.typing?preset.chartStart:raw.chartStart,.56,.2,.6):number(raw.chartStart,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,.6);
  if(mystery.enabled)tracks.content=track('fade',mystery.chartAt,mystery.fade);
  if(typing.enabled){const stages=typingStages(chartStart);for(const id of ['title','subtitle','metric','date','signature'])tracks[id]=track('none',stages[id].start,stages[id].duration,'linear');tracks.content=track('fade',Math.max(0,stages.content.start-.025),.025);}
- return {enabled:raw.enabled===true,preset:preset?.id||'custom',chartStart,tracks,typing,mystery,eventPauses:normalizeEventPauses(raw.eventPauses),releaseSound:normalizeReleaseSound(raw.releaseSound)};
+ return {enabled:raw.enabled===true,preset:preset?.id||'custom',chartStart,overlap:raw.overlap===true,dataStart:number(raw.dataStart,.025,0,.6),tracks,typing,mystery,eventPauses:normalizeEventPauses(raw.eventPauses),releaseSound:normalizeReleaseSound(raw.releaseSound)};
+}
+// One start fraction for drawing, event pauses, audio and the editor timeline.
+export const dataStartOf=m=>!m?.enabled?0:m.overlap&&!m.mystery?.enabled?m.dataStart??.025:m.chartStart;
+export function motionTrack(m,id){
+ const t=m.tracks[id]||((id.startsWith('sticker:')||id.startsWith('overlay:'))?m.tracks.stickers:null);
+ if(id!=='content'||!m.overlap||m.mystery?.enabled||!t||t.effect==='none')return t;
+ const end=dataStartOf(m);
+ if(end===0)return {...t,effect:'none',start:0};
+ const duration=Math.min(t.duration,end);
+ return {...t,start:Math.min(t.start,Math.max(0,end-duration)),duration};
 }
 export const motionOf=config=>config.visuals?.design?.motion;
 export const motionPreset=id=>{const p=motionPresets.find(p=>p.id===id);return normalizeMotion(p?{enabled:true,preset:p.id,chartStart:p.chartStart,tracks:p.tracks,typing:p.typing,mystery:p.mystery}:{});};
 export function reelMotionFrame(config,progress,time){
  const motion=motionOf(config),duration=config.duration||12;
  if(!motion?.enabled||config.editorPreview)return {config,progress,dataTime:time};
- const start=duration*motion.chartStart,dataDuration=(duration*.9-start)/.9,dataTime=Math.max(0,time-start);
+ const start=duration*dataStartOf(motion),dataDuration=(duration*.9-start)/.9,dataTime=Math.max(0,time-start);
  return {config:{...config,duration:dataDuration,_motionFrame:{time,duration}},progress:time>=duration*.9?1:clamp(dataTime/(dataDuration*.9)),dataTime};
 }
 export function motionState(config,id){
@@ -68,7 +78,7 @@ export function motionState(config,id){
  const mystery=mysteryFrame(config);
  if(mystery&&id!=='title')return id==='content'?mystery.chart:mystery.answer;
  if(!m?.enabled||!frame||config.editorPreview||config._typingCapture||id==='source'||isSequentialTyping(config)&&id!=='content'&&id!=='mark'&&!id.startsWith('sticker'))return {effect:'none',p:1,eased:1};
- const t=m.tracks[id]||((id.startsWith('sticker:')||id.startsWith('overlay:'))?m.tracks.stickers:null);
+ const t=motionTrack(m,id);
  if(!t||t.effect==='none')return {effect:'none',p:1,eased:1};
  const p=clamp((frame.time/frame.duration-t.start)/t.duration);
  const eased=t.easing==='linear'?p:t.easing==='out'?1-(1-p)**3:p*p*(3-2*p);
@@ -109,7 +119,7 @@ function textUnits(ctx,lines,x,y,step,width,kind){
 // "write" is a stylized ink reveal, not a reconstruction of a font's pen strokes.
 export function animateText(ctx,config,role,lines,x,y,step,width,paint){
  if(config?._typingCapture){paint();return;}
- if(isSequentialTyping(config)){const stage=typingStages(motionOf(config).chartStart)[role];if(stage&&config._motionFrame.time/config._motionFrame.duration<stage.start)return;paint();return;}
+ if(isSequentialTyping(config)){if(motionOf(config).overlap&&['content','date','labels','values'].includes(role)){paint();return;}const stage=typingStages(motionOf(config).chartStart)[role];if(stage&&config._motionFrame.time/config._motionFrame.duration<stage.start)return;paint();return;}
  const {effect,p}=motionState(config,role);
  if(!textMotionEffects.has(effect)||p===1){paint();return;}
  if(!p)return;

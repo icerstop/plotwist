@@ -16,8 +16,8 @@ test('every sound is distinct, deterministic, bounded and fades to silence',()=>
  const signatures=new Set();for(const sound of releaseSounds){const pcm=synthesizeReleaseSound(sound.id);assert.deepEqual(pcm,synthesizeReleaseSound(sound.id));assert.ok(pcm[0]===0);assert.ok(Math.abs(pcm.at(-1))<.001);assert.ok(pcm.every(v=>Number.isFinite(v)&&Math.abs(v)<1));assert.ok(pcm.some(v=>Math.abs(v)>.1));signatures.add(Array.from(pcm.slice(10,100)).join());}assert.equal(signatures.size,8);
 });
 test('sound onset matches rendered events, intros and compressed/custom pauses in every mode',()=>{
- for(const enabled of [false,true])for(const mode of ['pulse','calendar','cards','heatmap','gaps'])for(const duration of [6,24,600]){
-  const c=config({enabled,chartStart:.3,eventPauses:{seconds:10,overrides:{'2020-06-01':2}}});c.duration=duration;c.releases.mode=mode;
+ for(const overlap of [false,true])for(const enabled of [false,true])for(const mode of ['pulse','calendar','cards','heatmap','gaps'])for(const duration of [6,24,600]){
+  const c=config({enabled,overlap,dataStart:.5/duration,chartStart:.3,eventPauses:{seconds:10,overrides:{'2020-06-01':2}}});c.duration=duration;c.releases.mode=mode;
   const sound=releaseSoundPlan(c);assert.equal(sound.events.length,3);
   for(const event of sound.events){const motion=reelMotionFrame(c,0,event.at+1e-6),plan=eventPausePlan(datedEvents(rows,c.releases.start,c.releases.end),motion.config.duration*.9,c.visuals.design.motion.eventPauses);assert.equal(eventPauseFrame(plan,motion.dataTime).event,event.id);}
  }

@@ -1,3 +1,4 @@
+import {dataStartOf} from './reel-motion.js';
 import React,{useState} from 'react';
 import {useVisualStatus,Range} from './VisualSettings.jsx';
 import {useLanguages} from './language-context.js';
@@ -5,7 +6,7 @@ import {eventPausePlan,normalizeEventPauses} from './event-timing.js';
 
 export default function EventPauseControls({config,beforeChange,onDurationChange}){
  const v=useVisualStatus(),{uiLanguage}=useLanguages(),t=(pl,en)=>uiLanguage==='en'?en:pl,[selected,setSelected]=useState('');
- const events=config.timelineEvents||[],m=v.visuals.design.motion,s=normalizeEventPauses(m.eventPauses),fraction=.9-(m.enabled?m.chartStart:0),plan=eventPausePlan(events,(config.duration||12)*fraction,s);
+ const events=config.timelineEvents||[],m=v.visuals.design.motion,s=normalizeEventPauses(m.eventPauses),fraction=.9-dataStartOf(m),plan=eventPausePlan(events,(config.duration||12)*fraction,s);
  const event=events.find(e=>e.id===selected)||events[0],own=event&&Object.hasOwn(s.overrides,event.id),actual=plan.stops.find(e=>e.id===event?.id);
  const patch=p=>{beforeChange();v.design({motion:{...m,eventPauses:normalizeEventPauses({...s,...p})}});};
  const fit=Math.max(6,Math.ceil(plan.totalRequested/(.75*fraction)));

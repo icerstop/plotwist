@@ -1,11 +1,11 @@
 import {datedEvents,eventPausePlan} from './event-timing.js';
-import {normalizeMotion} from './reel-motion.js';
+import {normalizeMotion,dataStartOf} from './reel-motion.js';
 import {normalizeReleaseSound,synthesizeReleaseSound,mixReleaseAudio} from './reel-sounds.js';
 
 export function releaseSoundPlan(config,duration=config.duration||24){
  const m=normalizeMotion(config.visuals?.design?.motion),sound=normalizeReleaseSound(m.releaseSound);
  if(!config.releases||!sound.enabled||!sound.volume)return {...sound,events:[]};
- const start=m.enabled?duration*m.chartStart:0;
+ const start=duration*dataStartOf(m);
  const events=config.timelineEvents||datedEvents(config.releases.rows,config.releases.start,config.releases.end);
  const plan=eventPausePlan(events,duration*.9-start,m.eventPauses);
  return {...sound,events:plan.stops.map(s=>({id:s.id,at:start+s.at})),duration};

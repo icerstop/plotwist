@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeMotion,motionPresets,motionPreset,reelMotionFrame,motionState,applyElementMotion,animateText} from '../src/reel-motion.js';
+import {normalizeMotion,motionPresets,motionPreset,reelMotionFrame,motionState,applyElementMotion,animateText,dataStartOf,motionTrack} from '../src/reel-motion.js';
 import {normalizeDesign} from '../src/reel-design.js';
 import {applyReelPreset} from '../src/reel-presets.js';
 import {drawReel} from '../src/render.js';
@@ -9,6 +9,20 @@ import {annotateAiBrands,aiBrands} from '../src/ai-brands.js';
 import {buildAiBrandHistory} from '../src/ai-brand-history.js';
 
 const configFor=(id,duration=12)=>({duration,visuals:{design:normalizeDesign({motion:motionPreset(id)})}});
+test('overlapping sequences start visible data independently of the title and typing',()=>{
+ for(const id of ['typewriter','typing-retro','write-story','soft'])for(const duration of [6,24,60])for(const delay of [0,.5,1]){
+  const m=normalizeMotion({...motionPreset(id),overlap:true,dataStart:delay/duration}),config={duration,visuals:{design:{motion:m}}};
+  assert.equal(dataStartOf(m)*duration,delay);
+  assert.equal(reelMotionFrame(config,1,delay).progress,0);
+  const frame=reelMotionFrame(config,0,delay+.1);assert.ok(frame.progress>0);
+  assert.equal(motionState(frame.config,'content').p,1,'chart must already be visible');
+  assert.equal(reelMotionFrame(config,0,duration*.9).progress,1);
+  assert.deepEqual(normalizeMotion(JSON.parse(JSON.stringify(m))),m);
+  assert.ok(m.chartStart>m.dataStart,'the original text duration is preserved');
+ }
+ const mystery=normalizeMotion({...motionPreset('mystery'),overlap:true,dataStart:0});assert.equal(dataStartOf(mystery),mystery.chartStart);
+ assert.deepEqual(motionTrack(mystery,'content'),mystery.tracks.content);
+});
 test('all sequences keep the first observation until entrance finishes and reserve the final hold',()=>{
  assert.equal(motionPresets.length,20);assert.equal(new Set(motionPresets.map(p=>p.id)).size,motionPresets.length);
  for(const preset of motionPresets)for(const duration of [6,12,20,30]){
