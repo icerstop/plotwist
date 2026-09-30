@@ -1,3 +1,4 @@
+import {releaseSoundPlan} from './reel-audio.js';
 import {copyText,resetReelCopy} from './reel-copy.js';
 import {drawReelOverlays} from './overlay-render.js';
 import {reelMotionFrame} from './reel-motion.js';
@@ -71,5 +72,5 @@ export async function recordReel(config,duration,onProgress,signal,{fps=60}={}){
  await preloadReelAssets(config);if(signal?.aborted)throw new Error('Eksport anulowany.');
  const {encodeReel}=await import('./video-export.js');
  const canvas=document.createElement('canvas');drawReel(canvas,config,0,0);
- return encodeReel({canvas,draw:(progress,time)=>drawReel(canvas,config,progress,time),duration,fps,onProgress,signal});
+ return encodeReel({audio:releaseSoundPlan(config,duration),canvas,draw:(progress,time)=>drawReel(canvas,config,progress,time),duration,fps,onProgress,signal});
 }

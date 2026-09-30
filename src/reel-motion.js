@@ -1,3 +1,4 @@
+import {normalizeReleaseSound} from './reel-sounds.js';
 // A single deterministic clock drives both Canvas previews and exported frames.
 import {typingStyles,typingCursors,typingStages,isSequentialTyping} from './reel-typing.js';
 import {normalizeMystery,mysteryFrame} from './reel-mystery.js';
@@ -52,7 +53,7 @@ export function normalizeMotion(raw={}){
  const chartStart=mystery.enabled?mystery.chartAt+mystery.fade:typing.enabled?number(!raw.typing&&preset?.typing?preset.chartStart:raw.chartStart,.56,.2,.6):number(raw.chartStart,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,.6);
  if(mystery.enabled)tracks.content=track('fade',mystery.chartAt,mystery.fade);
  if(typing.enabled){const stages=typingStages(chartStart);for(const id of ['title','subtitle','metric','date','signature'])tracks[id]=track('none',stages[id].start,stages[id].duration,'linear');tracks.content=track('fade',Math.max(0,stages.content.start-.025),.025);}
- return {enabled:raw.enabled===true,preset:preset?.id||'custom',chartStart,tracks,typing,mystery,eventPauses:normalizeEventPauses(raw.eventPauses)};
+ return {enabled:raw.enabled===true,preset:preset?.id||'custom',chartStart,tracks,typing,mystery,eventPauses:normalizeEventPauses(raw.eventPauses),releaseSound:normalizeReleaseSound(raw.releaseSound)};
 }
 export const motionOf=config=>config.visuals?.design?.motion;
 export const motionPreset=id=>{const p=motionPresets.find(p=>p.id===id);return normalizeMotion(p?{enabled:true,preset:p.id,chartStart:p.chartStart,tracks:p.tracks,typing:p.typing,mystery:p.mystery}:{});};

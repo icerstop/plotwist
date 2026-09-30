@@ -5,3 +5,11 @@
 .reel-theme-grid button{display:block;width:100%}.reel-theme-grid button>span:last-child{min-height:36px}.design-editor .reel-layout-grid button{display:grid}
 
 .reel-copy-editor .reel-copy-visibility{display:flex;align-items:center;gap:10px;margin:14px 0;font-size:13px;cursor:pointer}.reel-copy-editor .reel-copy-visibility input{width:17px;height:17px;flex-shrink:0;accent-color:#6a9131;margin:0}
+.release-sound-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0}
+.release-sound-grid>div{display:flex;border:1px solid var(--border,#dce2d5);border-radius:9px;overflow:hidden}
+.release-sound-grid>div.selected{border-color:#6b8f37;background:#edf4e3}
+.release-sound-grid button{border:0;background:transparent;padding:12px 9px;color:inherit;cursor:pointer;font:inherit;text-align:left}
+.release-sound-grid button:first-child{flex:1;min-width:0}
+.release-sound-grid button:last-child{display:flex;align-items:center;border-left:1px solid #dce2d5;min-width:40px;justify-content:center}
+.release-sound-grid button:hover{background:#dfeacd}
+.release-sound-grid button:focus-visible{outline:2px solid #648c26;outline-offset:-3px}
