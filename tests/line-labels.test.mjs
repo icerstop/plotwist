@@ -6,7 +6,7 @@ import {normalizeChart} from '../src/chart-appearance.js';
 import {normalizeDesign} from '../src/reel-design.js';
 import {seriesBadge} from '../src/series-identity.js';
 import {captureTheme,applySavedTheme,exportTheme,importTheme} from '../src/custom-themes.js';
-import {reelAssetPaths,preloadReelAssets} from '../src/reel-assets.js';
+import {reelAssetPaths,preloadReelAssets,isReelLogoReady} from '../src/reel-assets.js';
 import {drawReel} from '../src/render.js';
 import {aiBrands} from '../src/ai-brands.js';
 import {buildAiBrandHistory} from '../src/ai-brand-history.js';
@@ -47,13 +47,44 @@ test('badges come from stable metadata; unknown names and regional aggregates ne
  assert.equal(seriesBadge({countryCode:'POL',name:'My renamed line'}).path,'/logos/flags/pl.svg');
  assert.equal(seriesBadge({entity:'United States'}).path,'/logos/flags/us.svg');
  assert.equal(seriesBadge({entity:'South Korea'}).path,'/logos/flags/kr.svg');
- assert.equal(seriesBadge({name:'Polska'}),null);assert.equal(seriesBadge({entity:'World'}),null);assert.equal(seriesBadge({entity:'Europe'}),null);
+ assert.equal(seriesBadge({name:'Polska'}),null);assert.equal(seriesBadge({entity:'Europe'}),null);
  assert.equal(seriesBadge({symbol:'NVDA'}).path,'/logos/companies/nvda.svg');
  assert.equal(seriesBadge({symbol:'NVDA',logo:undefined}),null);
  assert.equal(seriesBadge({topicId:'cloud',entity:'amazon'}).path,'/logos/companies/amzn.svg');
  const flags=JSON.parse(readFileSync(new URL('../src/series-flags.json',import.meta.url)));
  for(const id of new Set(Object.values(flags))){const file=new URL(`../public/logos/flags/${id}.svg`,import.meta.url);assert.ok(existsSync(file));const svg=readFileSync(file,'utf8');assert.match(svg,/<svg/);assert.doesNotMatch(svg,/<script|<foreignObject|(?:href|src)=["'](?:https?:|\/\/|data:)|\son\w+\s*=/i);}
  assert.ok(existsSync(new URL('../public/logos/flags/LICENSE',import.meta.url)));
+});
+
+test('world and EU badges use stable metadata, local assets and keep explicit visibility overrides',()=>{
+ for(const entity of ['WLD','World','Świat'])assert.deepEqual(seriesBadge({entity,name:'My own caption'}),{kind:'logo',path:'/logos/regions/world.svg'});
+ for(const countryCode of ['EUU','EU','European Union','Unia Europejska'])assert.deepEqual(seriesBadge({countryCode}),{kind:'flag',path:'/logos/flags/eu.svg'});
+ assert.equal(seriesBadge({name:'World'}),null);assert.equal(seriesBadge({entity:'WLD',logo:null}),null);assert.equal(seriesBadge({entity:'Europe'}),null);
+ const c={...config(),series:[{countryCode:'WLD'},{countryCode:'EUU'}]};assert.deepEqual(reelAssetPaths(c),['/logos/regions/world.svg','/logos/flags/eu.svg']);
+ for(const asset of reelAssetPaths(c)){const svg=readFileSync(new URL(`../public${asset}`,import.meta.url),'utf8');assert.match(svg,/<svg/);assert.doesNotMatch(svg,/<script|<foreignObject|(?:href|src)=["'](?:https?:|\/\/|data:)|\son\w+\s*=/i);}
+});
+
+test('trailing missing years keep the final real endpoint and date without filling internal gaps or inventing observations',()=>{
+ const series={points:[{x:2020,y:null},{x:2021,y:3},{x:2022,y:null},{x:2023,y:0,date:'2023-12-31',datePrecision:'year'},{x:2024,y:null},{x:2025,y:null}]},original=structuredClone(series);
+ assert.equal(lineEndpoint(series,2020),null);assert.equal(lineEndpoint(series,2022.5),null);
+ for(const current of [2023,2023.01,2024,2024.99,2025,2030]){
+  const tip=lineEndpoint(series,current);assert.equal(tip.x,2023);assert.equal(tip.y,0);assert.equal(tip.estimated,false);assert.equal(tip.ended,current>2023);
+  assert.equal(endpointLabelText(tip,config(),String).date,current>2023?'2023':'');
+ }
+ assert.equal(lineEndpoint({points:[{x:2020,y:null},{x:2025,y:null}]},2025),null);assert.equal(lineEndpoint({points:[]},2025),null);assert.deepEqual(series,original);
+});
+
+test('final preview and export frames retain country, company, world and EU icons with end dates',async()=>{
+ const series=[{countryCode:'POL'},{symbol:'NVDA'},{countryCode:'WLD'},{countryCode:'EUU'}].map((s,i)=>({...s,name:`Series ${i}`,points:[{x:2020,y:i+1},{x:2024,y:i+5},{x:2025,y:i===2?10:null}]})),original=structuredClone(series);
+ const c={...config({legend:false,endLabelNames:false,endLabelValues:false,endLabelDates:true,axisLabels:false}),title:'Chart',series};
+ const Image=globalThis.Image;globalThis.Image=class{set src(path){this.path=path;this.naturalWidth=40;this.naturalHeight=30;queueMicrotask(()=>this.onload());}};
+ try{await preloadReelAssets(c);}finally{globalThis.Image=Image;}
+ for(const chart of ['line','area'])for(const independentAxes of [false,true])for(const progress of [.8,.9,.99,1]){
+  const {canvas,log,stack}=canvasRecorder();drawReel(canvas,{...c,chart,independentAxes},progress,progress*12);
+  assert.equal(log.filter(e=>e.op==='drawImage').length,4,JSON.stringify({chart,independentAxes,progress}));assert.equal(stack.length,0);
+  if(progress===1)assert.equal(log.filter(e=>e.op==='fillText'&&e.args[0]==='2024').length,3,'last dates remain available even with padded trailing nulls');
+ }
+ assert.deepEqual(series,original);
 });
 
 test('appearance keeps the feature opt-in and persists settings; icons are loaded for preview and export',async()=>{
@@ -64,7 +95,7 @@ test('appearance keeps the feature opt-in and persists settings; icons are loade
  assert.deepEqual(reelAssetPaths({...c,visuals:{design:normalizeDesign()}}),[]);
  const original=globalThis.Image,loaded=[];
  globalThis.Image=class{set src(value){loaded.push(value);this.naturalWidth=40;this.naturalHeight=30;queueMicrotask(()=>this.onload());}};
- try{await preloadReelAssets(c);assert.deepEqual(loaded,reelAssetPaths(c));}finally{globalThis.Image=original;}
+ try{const missing=reelAssetPaths(c).filter(path=>!isReelLogoReady(path));await preloadReelAssets(c);assert.deepEqual(loaded,missing);assert.ok(reelAssetPaths(c).every(isReelLogoReady));}finally{globalThis.Image=original;}
 });
 
 function canvasRecorder(){

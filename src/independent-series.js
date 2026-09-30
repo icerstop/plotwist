@@ -5,7 +5,7 @@ import {setReelText,textSize} from './reel-design.js';
 import {copyText} from './reel-copy.js';
 import {timelineDate,observationPeriod} from './observation-date.js';
 import {lerp} from './presentation.js';
-import {lineEndpoint,lineLabelGeometry,endpointLabelText,drawLineLabels} from './line-labels.js';
+import {lineEndpoint,lastLineObservation,lineLabelGeometry,endpointLabelText,drawLineLabels} from './line-labels.js';
 import {seriesBadge} from './series-identity.js';
 import {mysteryRole} from './reel-mystery.js';
 
@@ -46,7 +46,7 @@ export function drawIndependentSeries(ctx,config,progress,state,layout){
   const axis=createAxis(range,{log:scale.log,dynamic:scale.dynamic});
   const ticks=axisTicks(config,axis,scale.log,pBottom-pTop,24),numbers=axisNumberFormat({...config,unit},full,ticks);
   const margin=columns===1?84:68,inset=(width-margin)*(1-appearance.width/100)/2,left=x+margin+inset,baseRight=x+width-inset;
-  let geometry=appearance.endLabels&&['line','area'].includes(chart)?lineLabelGeometry(config,{left,right:baseRight-104,top:pTop,bottom:pBottom,count:1,hasIcons:!!seriesBadge(s),hasDates:s.points.at(-1)?.x<maxX}):null;
+  let geometry=appearance.endLabels&&['line','area'].includes(chart)?lineLabelGeometry(config,{left,right:baseRight-104,top:pTop,bottom:pBottom,count:1,hasIcons:!!seriesBadge(s),hasDates:lastLineObservation(s)?.x<maxX}):null;
   const right=geometry?.right??baseRight,px=v=>left+(v-minX)/(maxX-minX||1)*(right-left),py=v=>pBottom-axis.position(v)*(pBottom-pTop);
   plotGrid(ctx,config,{left,right,top:pTop,bottom:pBottom,ys:ticks.map(py),color:grid,panel});
   const endAxes=mysteryRole(ctx,'labels');

@@ -5,7 +5,7 @@ import {seriesFrame,lerp,rankMotion} from './presentation.js';
 import {resolveScale,bounds,visibleSeriesBounds,createAxis,scaleCaption} from './chart-scale.js';
 import {axisNumberFormat,drawAxisNumber,drawAxisCaption} from './axis-numbers.js';
 import {textSize,textColor,setReelText,reelTextFont} from './reel-design.js';
-import {lineEndpoint,lineLabelGeometry,endpointLabelText,drawLineLabels} from './line-labels.js';
+import {lineEndpoint,lastLineObservation,lineLabelGeometry,endpointLabelText,drawLineLabels} from './line-labels.js';
 import {seriesBadge} from './series-identity.js';
 import {mysteryRole} from './reel-mystery.js';
 import {copyText} from './reel-copy.js';
@@ -48,7 +48,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
  const rowText=row=>(row.value!==null&&row.point?.valueQualifier?(row.point.valueQualifier==='approximately'?'≈ ':row.point.valueQualifier+' '):'')+text(row.value,config.independentAxes?row.series.unit:unit)+(config.showObservationDates&&row.value!==null&&row.point?.date?` · ${observationPeriod(row.point,config.language)}`:'');
  const moving=i=>values[i].value===null?null:lerp(before[i].value??values[i].value,values[i].value,mix);
  const [left,baseRight]=plotSides(config,135,900),labelsEnabled=appearance.endLabels&&['line','area'].includes(chart);
- const labelGeometry=labelsEnabled?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:series.length,hasIcons:series.some(s=>seriesBadge(s)),hasDates:series.some(s=>s.points.at(-1)?.x<maxX)}):null;
+ const labelGeometry=labelsEnabled?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:series.length,hasIcons:series.some(s=>seriesBadge(s)),hasDates:series.some(s=>lastLineObservation(s)?.x<maxX)}):null;
  const right=labelGeometry?.right??baseRight,px=x=>left+(x-minX)/(maxX-minX||1)*(right-left),py=y=>bottom-axis.position(y)*(bottom-top);
  if(chart==='cards'||chart==='ranking'){
   const yStart=contentTop,yEnd=height-(height<1400?205:290),count=series.length;

@@ -9,7 +9,16 @@ import {copyText} from './reel-copy.js';
 
 // The tip follows the actual drawn segment, including log geometry and steps.
 // Never bridge a null or show a series before its first observation.
+const lastObservations=new WeakMap();
+export function lastLineObservation(series){
+ if(!lastObservations.has(series.points))lastObservations.set(series.points,series.points.findLast(p=>Number.isFinite(p.y)));
+ return lastObservations.get(series.points);
+}
 export function lineEndpoint(series,current,log=false){
+ // Padded missing years after the final measurement must not erase its label.
+ // Keep its original position and date; the line and source data stay unchanged.
+ const last=lastLineObservation(series);
+ if(last&&current>=last.x)return {x:last.x,y:last.y,point:last,estimated:false,ended:current>last.x};
  const i=upperBound(series.points,current,p=>p.x)-1,a=series.points[i],b=series.points[i+1];
  if(!Number.isFinite(a?.y))return null;
  if(b&&!Number.isFinite(b.y)&&current>a.x)return null;
