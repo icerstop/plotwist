@@ -1,4 +1,5 @@
 import {reelMotionFrame} from './reel-motion.js';
+import {renderTypingFrame} from './reel-typing.js';
 import {drawReelLogo} from './reel-logo.js';
 import {resetElements,beginElement,textRect} from './reel-elements.js';
 import { timelineDate } from './observation-date.js';
@@ -10,6 +11,10 @@ import {drawSeriesContent} from './series-render.js';
 import {themeOf,textSize,textColor,setReelText,beginReelSection,seriesPlotLayout,designOf} from './reel-design.js';
 import {drawTextBlock as wrap,paintText,textStyleOf} from './reel-text.js';
 export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
+ if(renderTypingFrame(canvas,config,progress,timeSeconds,drawReelFrame))return;
+ drawReelFrame(canvas,config,progress,timeSeconds);
+}
+function drawReelFrame(canvas,config,progress,timeSeconds){
  resetElements(canvas);
  if(config.ai){drawAiReel(canvas,config,progress,timeSeconds);return;}
  const motionFrame=reelMotionFrame(config,progress,timeSeconds);config=motionFrame.config;progress=motionFrame.progress;
@@ -26,10 +31,10 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  const headingY=baseHeadingY+(height<1400?40:64);
  const titleSize=reelTitleSize(ctx,title||'Twoja historia.',titleFontId,preferred,920,maxLines,headerBottom-baseHeadingY-100,textStyleOf(config,'title'));
  ctx.font=`${textStyleOf(config,'title').italic?'italic ':''}${textStyleOf(config,'title').weight==='normal'?'normal':'bold'} ${titleSize}px ${titleFont}`;
- const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines,false,config,'title'),subtitleY=headingY+headingHeight+16,subtitleStep=textSize(config,'subtitle',35);
- setReelText(ctx,config,'subtitle',29,font,muted);
+ const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines,false,config,'title'),subtitleY=headingY+headingHeight+16,subtitleStep=textSize(config,'subtitle',46);
+ setReelText(ctx,config,'subtitle',38,font,muted);
  const subtitleHeight=wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2,false,config,'subtitle');
- const headerEnd=subtitleHeight?subtitleY+subtitleHeight-subtitleStep+textSize(config,'subtitle',29)*.3:headingY+headingHeight-titleSize*1.08+titleSize*.3;
+ const headerEnd=subtitleHeight?subtitleY+subtitleHeight-subtitleStep+textSize(config,'subtitle',38)*.3:headingY+headingHeight-titleSize*1.08+titleSize*.3;
  const hasPlot=['line','area','bar'].includes(chart),metricStep=textSize(config,'metric',38);
  setReelText(ctx,config,'metric',32,font,fg,'bold');
  const metricHeight=config.metricCaption?wrap(ctx,config.metricCaption,hasPlot?135:78,0,hasPlot?765:924,metricStep,2,false,config,'metric'):0;
@@ -39,7 +44,7 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  if(hasPlot){ctx.translate(50,50);ctx.scale(plot.headerScale,plot.headerScale);ctx.translate(-50,-50);}
  drawReelLogo(ctx,config,timeSeconds);
  ctx.fillStyle=textColor(config,'title',fg);ctx.font=`${textStyleOf(config,'title').italic?'italic ':''}${textStyleOf(config,'title').weight==='normal'?'normal':'bold'} ${titleSize}px ${titleFont}`;wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines,true,config,'title');
- setReelText(ctx,config,'subtitle',29,font,muted);wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2,true,config,'subtitle');
+ setReelText(ctx,config,'subtitle',38,font,muted);wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2,true,config,'subtitle');
  endHeader();
  const contentTop=(height<1400?height*.48:730)+(config.metricCaption?metricHeight+26:0);
  const contentY=(hasPlot?plot.top:contentTop)-(config.metricCaption?metricHeight+76:hasPlot?40:50);

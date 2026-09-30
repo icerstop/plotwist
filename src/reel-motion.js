@@ -1,4 +1,5 @@
 // A single deterministic clock drives both Canvas previews and exported frames.
+import {typingStyles,typingCursors,typingStages,isSequentialTyping} from './reel-typing.js';
 // Timings are fractions of reel duration, so a sequence also works at 6 or 30 s.
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const number=(v,f,a,b)=>v!=null&&Number.isFinite(Number(v))?clamp(Number(v),a,b):f;
@@ -15,7 +16,10 @@ function sequence(id,name,description,title,content,chartStart,extra={}){
 }
 export const motionPresets=[
  sequence('write-story','Najpierw napis','Rysowane litery, potem wykres',track('write',.01,.19),track('fade',.235,.07),.27),
- sequence('typewriter','Maszyna do pisania','Litery pojawiają się rytmicznie',track('typewriter',.015,.19,'linear'),track('rise',.24,.08),.29),
+ {...sequence('typewriter','Maszyna do pisania','Cały tekst po kolei, kursor kreskowy',track('typewriter',.01,.16,'linear'),track('fade',.3,.03),.56),typing:{enabled:true,style:'classic',cursor:'bar',blink:true}},
+ {...sequence('typing-natural','Naturalne pisanie','Zmienne tempo i pauzy przy interpunkcji',track('typewriter',.01,.16,'linear'),track('fade',.3,.03),.58),typing:{enabled:true,style:'natural',cursor:'bar',blink:true}},
+ {...sequence('typing-terminal','Pisanie terminalowe','Krótkie serie znaków i blokowy kursor',track('typewriter',.01,.16,'linear'),track('fade',.3,.03),.46),typing:{enabled:true,style:'terminal',cursor:'block',blink:true}},
+ {...sequence('typing-retro','Maszyna retro','Spokojny rytm, pauzy i kursor podkreślenia',track('typewriter',.01,.16,'linear'),track('fade',.3,.03),.6),typing:{enabled:true,style:'retro',cursor:'underline',blink:true}},
  sequence('soft','Miękkie wejście','Spokojne przenikanie kolejnych elementów',track('fade',0,.13),track('fade',.18,.13),.23),
  sequence('rise','W górę','Tytuł i wykres unoszą się do kadru',track('rise',.02,.1),track('rise',.19,.1),.25),
  sequence('sides','Z dwóch stron','Tytuł z lewej, wykres z prawej',track('left',.01,.11),track('right',.18,.11),.24),
@@ -40,19 +44,22 @@ export function normalizeMotion(raw={}){
  raw=raw&&typeof raw==='object'?raw:{};
  const tracks=Object.fromEntries(motionRoles.map(([id])=>[id,normalizeTrack(raw.tracks?.[id]||{},id)]));
  for(const [id,value] of Object.entries(raw.tracks||{}).filter(([id,value])=>id.startsWith('sticker:')&&id.length<180&&value&&typeof value==='object').slice(0,3))tracks[id]=normalizeTrack(value,id);
- return {enabled:raw.enabled===true,preset:motionPresets.some(p=>p.id===raw.preset)?raw.preset:'custom',chartStart:number(raw.chartStart,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,.6),tracks};
+ const preset=motionPresets.find(p=>p.id===raw.preset),typingRaw=raw.typing||preset?.typing||{},typing={enabled:typingRaw.enabled===true,style:typingStyles.some(([id])=>id===typingRaw.style)?typingRaw.style:'classic',cursor:typingCursors.some(([id])=>id===typingRaw.cursor)?typingRaw.cursor:'bar',blink:typingRaw.blink!==false};
+ const chartStart=typing.enabled?number(!raw.typing&&preset?.typing?preset.chartStart:raw.chartStart,.56,.2,.6):number(raw.chartStart,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,.6);
+ if(typing.enabled){const stages=typingStages(chartStart);for(const id of ['title','subtitle','metric','date','signature'])tracks[id]=track('none',stages[id].start,stages[id].duration,'linear');tracks.content=track('fade',Math.max(0,stages.content.start-.025),.025);}
+ return {enabled:raw.enabled===true,preset:preset?.id||'custom',chartStart,tracks,typing};
 }
 export const motionOf=config=>config.visuals?.design?.motion;
-export const motionPreset=id=>{const p=motionPresets.find(p=>p.id===id);return normalizeMotion(p?{enabled:true,preset:p.id,chartStart:p.chartStart,tracks:p.tracks}:{});};
+export const motionPreset=id=>{const p=motionPresets.find(p=>p.id===id);return normalizeMotion(p?{enabled:true,preset:p.id,chartStart:p.chartStart,tracks:p.tracks,typing:p.typing}:{});};
 export function reelMotionFrame(config,progress,time){
  const motion=motionOf(config),duration=config.duration||12;
  if(!motion?.enabled||config.editorPreview)return {config,progress,dataTime:time};
  const start=duration*motion.chartStart,dataDuration=(duration*.9-start)/.9,dataTime=Math.max(0,time-start);
- return {config:{...config,duration:dataDuration,_motionFrame:{time,duration}},progress:clamp(dataTime/(dataDuration*.9)),dataTime};
+ return {config:{...config,duration:dataDuration,_motionFrame:{time,duration}},progress:time>=duration*.9?1:clamp(dataTime/(dataDuration*.9)),dataTime};
 }
 export function motionState(config,id){
  const m=motionOf(config),frame=config._motionFrame;
- if(!m?.enabled||!frame||config.editorPreview||id==='source')return {effect:'none',p:1,eased:1};
+ if(!m?.enabled||!frame||config.editorPreview||config._typingCapture||id==='source'||isSequentialTyping(config)&&id!=='content'&&id!=='mark'&&!id.startsWith('sticker'))return {effect:'none',p:1,eased:1};
  const t=m.tracks[id]||(id.startsWith('sticker:')?m.tracks.stickers:null);
  if(!t||t.effect==='none')return {effect:'none',p:1,eased:1};
  const p=clamp((frame.time/frame.duration-t.start)/t.duration);
@@ -93,6 +100,8 @@ function textUnits(ctx,lines,x,y,step,width,kind){
 // Keep full text metrics and line breaks throughout the reveal. Only masks move.
 // "write" is a stylized ink reveal, not a reconstruction of a font's pen strokes.
 export function animateText(ctx,config,role,lines,x,y,step,width,paint){
+ if(config?._typingCapture){paint();return;}
+ if(isSequentialTyping(config)){const stage=typingStages(motionOf(config).chartStart)[role];if(stage&&config._motionFrame.time/config._motionFrame.duration<stage.start)return;paint();return;}
  const {effect,p}=motionState(config,role);
  if(!textMotionEffects.has(effect)||p===1){paint();return;}
  if(!p)return;

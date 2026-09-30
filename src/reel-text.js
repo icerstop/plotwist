@@ -1,4 +1,5 @@
 import {animateText} from './reel-motion.js';
+import {typingRole} from './reel-typing.js';
 import {beginElement,textRect} from './reel-elements.js';
 import {roundFill} from './chart-appearance.js';
 
@@ -30,6 +31,7 @@ export function textLayout(ctx,text,x,y,width,step,maxLines,config,role){
 }
 // Effects live in a saved canvas state: shadows never leak into the chart.
 export function paintText(ctx,config,role,lines,x,y,step=0,maxWidth=1000){
+ const endRole=typingRole(ctx,role);
  animateText(ctx,config,role,lines,x,y,step,maxWidth,lineIndex=>{
  const s=textStyleOf(config,role);ctx.save();ctx.globalAlpha*=(s.opacity??100)/100;
  if(s.boxColor&&lines.length){
@@ -43,6 +45,7 @@ export function paintText(ctx,config,role,lines,x,y,step=0,maxWidth=1000){
   ctx.fillText(line,x,y+i*step,maxWidth);
  });ctx.restore();
  });
+ endRole();
 }
 export function drawTextBlock(ctx,text,x,y,width,step,maxLines=3,draw=true,config=null,role=null,register=true){
  const layout=textLayout(ctx,text,x,y,width,step,maxLines,config,role);

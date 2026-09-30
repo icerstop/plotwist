@@ -79,6 +79,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   const generatedTitle = mode === 'dca' ? `${investment || '0'} zł ${frequencyPhrase(investmentFrequency)} w ${stock?.name || symbol}.` : `${stock?.name || symbol}. Dzień po dniu.`;
   const config = useMemo(() => ({
     series: chartSeries, title: customTitle ? title : generatedTitle,titleIsCustom:customTitle,
+    subtitleParts:mode==='prices'?[{text:basis==='split'?'Cena zamknięcia · korekta o splity':'Cena nominalna · odtworzona z korekt splitowych'},{text:quoteData.currency,unit:true},{text:quoteData.converted?'przeliczenie walutowe':''}]:undefined,
     subtitle: mode === 'dca' ? `${stock?.name || symbol}: ${periodAmount(investment||0,investmentFrequency)} vs ${expenseName || 'napój'}: ${periodAmount(expense||0,expenseFrequency)}` : `${basis === 'split' ? 'Cena zamknięcia · korekta o splity' : 'Cena nominalna · odtworzona z korekt splitowych'} · ${quoteData.currency}${quoteData.converted?' · przeliczenie walutowe':''}`,
     source: mode === 'dca' ? 'Yahoo Finance + NBP · bez dywidend, opłat i podatków' : quoteData.converted?'Yahoo Finance + NBP · kurs z tabeli sprzed sesji':'Yahoo Finance · historia dzienna · bez bieżącej sesji',
     format: '9:16', theme, fontId, chart, unit: mode === 'dca' ? 'zł' : quoteData.currency, xType: 'date'

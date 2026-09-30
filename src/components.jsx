@@ -30,7 +30,7 @@ export function ReelPreview({config:baseConfig,duration,valid}){
  const config=useReelLanguage(usePresentationConfig(useVisualConfig(baseConfig,duration))),visualStatus=useVisualStatus(),fontStatus=useReelFontStatus(config);valid=valid&&visualStatus.ready&&fontStatus.ready;
  const [editing,setEditing]=useState(false),[revision,setRevision]=useState(0);
  const ref=useRef(),frame=useRef(),elapsed=useRef(0);const [progress,setProgress]=useState(1),[playing,setPlaying]=useState(false);
- useEffect(()=>{if(valid){drawReel(ref.current,{...config,editorPreview:editing},Math.min(progress/.9,1),progress*duration);if(editing)setRevision(r=>r+1);}},[config,progress,valid,editing]);
+ useEffect(()=>{if(valid){drawReel(ref.current,{...config,_motionCacheKey:config,editorPreview:editing},Math.min(progress/.9,1),progress*duration);if(editing)setRevision(r=>r+1);}},[config,progress,valid,editing]);
  useEffect(()=>{setPlaying(false);if(!editing)setProgress(1);},[config,duration]);
  useEffect(()=>{if(!playing)return;let prev=null;const step=now=>{if(prev!==null)elapsed.current+=(now-prev)/(duration*1000);prev=now;const p=Math.min(elapsed.current,1);setProgress(p);if(p<1)frame.current=requestAnimationFrame(step);else setPlaying(false);};frame.current=requestAnimationFrame(step);return ()=>cancelAnimationFrame(frame.current);},[playing,duration]);
  function replay(){setEditing(false);elapsed.current=0;setProgress(0);setPlaying(true);}

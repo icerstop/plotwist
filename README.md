@@ -82,11 +82,17 @@ MP4/H.264 jest wybierany, jeśli przeglądarka obsługuje kodowanie w danym rozm
 
 ## Sekwencje animacji elementów
 
-W prawym panelu **Wygląd rolki → Animacje** jest 16 gotowych sekwencji: pisany tytuł, maszyna do pisania, przenikanie, wjazdy, zbliżenie i oddalenie, sprężyna, odbicie, kurtyny, odsłona od środka, słowa, wiersze, obrót kartki i historia z podpisem na końcu. „Rysowanie liter” to płynne odsłanianie wybranej czcionki, nie odtwarzanie rzeczywistych ruchów pióra.
+W prawym panelu **Wygląd rolki → Animacje** jest 19 gotowych sekwencji: pisany tytuł, cztery warianty maszyny do pisania, przenikanie, wjazdy, zbliżenie i oddalenie, sprężyna, odbicie, kurtyny, odsłona od środka, słowa, wiersze, obrót kartki i historia z podpisem na końcu. „Rysowanie liter” to płynne odsłanianie wybranej czcionki, nie odtwarzanie rzeczywistych ruchów pióra.
+
+Maszyna do pisania ma wariant klasyczny, naturalny z pauzami, terminalowy i retro. Opcja **Cały tekst po kolei** wpisuje tytuł, opis, wspólny wskaźnik, etykiety i wartości początkowe wykresu, datę, źródło oraz podpis — jedną kolejką, także między wierszami. Kursor może być kreską, blokiem, podkreśleniem albo wyłączony; opcjonalnie miga w pauzach. Suwak reguluje czas pisania przed wykresem (20–60% filmu). Dane ruszają po wpisaniu wszystkich tekstów; późniejsze zmiany liczb i modeli korzystają ze zwykłych przejść i nie uruchamiają pisania od nowa. Źródło jest kompletne przed startem danych. Edycja kursorem oraz końcowy PNG pokazują całość.
+
+`src/reel-typing.js` mierzy rzeczywiste wywołania tekstowe pierwszej klatki danych, a kolejność odtwarza według czasu filmu. Dotyczy także osi, legend i kart AI rysowanych bez pomocnika tekstowego. Zachowuje pełne szerokości i zawijanie, rozróżnia grafemy (polskie znaki, emoji, znaki łączone), nie używa losowości ani czasu zegarowego. Cache jest unieważniany przy zmianie danych, języka i wyglądu. Włączenie innego presetu zachowuje dotychczasowy mechanizm animacji poszczególnych elementów.
+
+Domyślny rozmiar podtytułu wzrósł z 29 do 38 px na płótnie 1080 px (AI: 33 → 40 px). Rozmiar i zawijanie nadal podlegają edytorowi. Podtytuły z metadanymi zapisują jednostkę w nawiasach, np. „Osoby korzystające z internetu (% populacji)”; własne teksty i jednostki nie są zgadywane ani przepisywane na podstawie kropek.
 
 Każdy element ma osobny efekt wejścia, początek i długość; obrazki/GIF-y mogą mieć wspólne lub indywidualne wejścia. Można przejść do animacji po wybraniu elementu na podglądzie. Oś czasu pozwala podejrzeć środek etapu, a przycisk odtwarza całą sekwencję od początku. Animacje są domyślnie wyłączone w istniejących szkicach.
 
-Wykres zaczyna rozwijać dane po zakończeniu swojego wejścia. Ostatnie 10% filmu zostaje na końcowy wynik. Czasy dopasowują się proporcjonalnie do długości rolki. Źródła pozostają widoczne przez cały film. Edycja kursorem tymczasowo pokazuje elementy w ich docelowej pozycji. GIF-y zachowują własną liczbę klatek i globalny zegar filmu.
+Wykres zaczyna rozwijać dane po zakończeniu swojego wejścia. Ostatnie 10% filmu zostaje na końcowy wynik. Czasy dopasowują się proporcjonalnie do długości rolki. Poza sekwencyjnym pisaniem źródła pozostają widoczne przez cały film. Edycja kursorem tymczasowo pokazuje elementy w ich docelowej pozycji. GIF-y zachowują własną liczbę klatek i globalny zegar filmu.
 
 Sekwencje są wspólne dla wszystkich modułów, niezależne od designu i danych oraz zapisywane lokalnie z wyglądem. Podgląd, przewijanie i eksport 30/60 fps korzystają z tego samego zegara, bez zależności od szybkości renderowania. PNG zachowuje końcowy widok. Logika: `src/reel-motion.js`, panel: `src/MotionEditor.jsx`.
 

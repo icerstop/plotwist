@@ -1,5 +1,30 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Cały tekst po kolei|Type all text in sequence
+Klasyczne|Classic
+Naturalne z pauzami|Natural with pauses
+Terminalowe|Terminal
+Retro|Retro
+Pionowa kreska|Vertical bar
+Blok|Block
+Podkreślenie|Underline
+Bez kursora|No cursor
+Rytm pisania|Typing rhythm
+Kursor pisania|Typing cursor
+Miganie kursora w pauzach|Blink cursor during pauses
+Czas na pisanie przed wykresem|Typing time before the chart
+Etykiety wykresu|Chart labels
+Cały tekst po kolei, kursor kreskowy|All text in sequence, with a bar cursor
+Naturalne pisanie|Natural typing
+Zmienne tempo i pauzy przy interpunkcji|Variable rhythm with punctuation pauses
+Pisanie terminalowe|Terminal typing
+Krótkie serie znaków i blokowy kursor|Short bursts of characters and a block cursor
+Maszyna retro|Retro typewriter
+Spokojny rytm, pauzy i kursor podkreślenia|Steady rhythm, pauses and an underline cursor
+sekwencji|sequences
+Biblioteka ·|Library ·
+Jeden kursor: tytuł → opis → wskaźnik → etykiety → data → źródło → podpis. Potem ruszają dane. Dłuższa rolka daje spokojniejsze tempo pisania.|One cursor: title → description → metric → labels → date → source → signature. Then the data starts moving. A longer reel gives the typing more time.
+Przy edycji kursorem wszystkie teksty są widoczne. Źródło wpisuje się przed uruchomieniem danych i pozostaje do końca.|All text is visible while editing with the pointer. The source is typed before the data starts and stays visible until the end.
 Nowe wyniki:|New results:
 Data pobrania rankingu|Ranking capture date
 Stan rankingu na dzień pobrania|Ranking as captured on download date

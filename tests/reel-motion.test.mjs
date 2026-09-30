@@ -9,8 +9,8 @@ import {annotateAiBrands,aiBrands} from '../src/ai-brands.js';
 import {buildAiBrandHistory} from '../src/ai-brand-history.js';
 
 const configFor=(id,duration=12)=>({duration,visuals:{design:normalizeDesign({motion:motionPreset(id)})}});
-test('all 16 sequences keep the first observation until entrance finishes and reserve the final hold',()=>{
- assert.equal(motionPresets.length,16);assert.equal(new Set(motionPresets.map(p=>p.id)).size,16);
+test('all sequences keep the first observation until entrance finishes and reserve the final hold',()=>{
+ assert.equal(motionPresets.length,19);assert.equal(new Set(motionPresets.map(p=>p.id)).size,19);
  for(const preset of motionPresets)for(const duration of [6,12,20,30]){
   const config=configFor(preset.id,duration),m=config.visuals.design.motion,start=m.chartStart*duration;
   assert.ok(m.chartStart>=m.tracks.content.start+m.tracks.content.duration-1e-12);
@@ -61,7 +61,8 @@ test('animated AI and regular reels hide data during the intro without losing so
  for(const mode of ['timeline','ranking','records'])variants.push({...base,ai:{rows,benchmark,mode,basis:'observed',brands,history,groupBy:'brand',showBrandLogos:false}});
  for(const variant of variants)for(const preset of motionPresets){
   const cfg={...variant,...configFor(preset.id)},original=JSON.stringify(cfg),{canvas,ctx,log,stack}=recorder();
-  drawReel(canvas,cfg,0,0);const visible=log.filter(e=>e.op==='fillText'&&e.alpha>0).map(e=>String(e.args[0]));assert.ok(visible.some(s=>s.includes('Source receipt')),`${preset.id} source`);assert.ok(!visible.some(s=>/Data series|GPT first|Claude last|Human baseline/.test(s)),`${preset.id} ${variant.ai?.mode||variant.chart} leaked data`);
+  drawReel(canvas,cfg,0,0);const visible=log.filter(e=>e.op==='fillText'&&e.alpha>0).map(e=>String(e.args[0]));assert.equal(visible.some(s=>s.includes('Source receipt')),!cfg.visuals.design.motion.typing.enabled,`${preset.id} source`);assert.ok(!visible.some(s=>/Data series|GPT first|Claude last|Human baseline/.test(s)),`${preset.id} ${variant.ai?.mode||variant.chart} leaked data`);
+  log.length=0;drawReel(canvas,cfg,0,cfg.visuals.design.motion.chartStart*cfg.duration);assert.ok(log.some(e=>e.op==='fillText'&&e.alpha>0&&String(e.args[0]).includes('Source receipt')),`${preset.id} source before data`);
   for(const time of [1,3,6,12,1])drawReel(canvas,cfg,Math.min(time/10.8,1),time);
   assert.equal(stack.length,0);assert.equal(ctx.globalAlpha,1);assert.equal(JSON.stringify(cfg),original);
  }

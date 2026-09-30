@@ -36,9 +36,9 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  const endHeader=beginReelSection(ctx,config,'header',1080,1920);
  drawReelLogo(ctx,config,visualTime,{x:76,y:73,h:50});
  wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270,textStyleOf(config,'title')),3,fg,true,'title');
- const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:528,w:928,h:132});
- wrap(ctx,b.name,76,565,928,33,1,accent,false,'subtitle');
- if(scope)wrap(ctx,scope,76,628,928,23,2,muted,false,'subtitle');
+ const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:508,w:928,h:168});
+ const subtitleHeight=wrap(ctx,`${b.name}${b.unit?` (${b.unit})`:''}`,76,548,928,40,2,accent,false,'subtitle');
+ if(scope)wrap(ctx,scope,76,548+subtitleHeight+18,928,28,1,muted,false,'subtitle');
  endSubtitle();endHeader();
  const first=rows[0],last=rows.at(-1),transition=config.transition??.65,duration=config.duration||20;
  const frame=mode==='scatter'?frameAt(rows,progress):null;
