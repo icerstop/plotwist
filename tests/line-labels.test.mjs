@@ -4,7 +4,8 @@ import {readFileSync,existsSync} from 'node:fs';
 import {lineEndpoint,lineLabelGeometry,arrangeLineLabels,endpointLabelText,drawLineLabels} from '../src/line-labels.js';
 import {normalizeChart} from '../src/chart-appearance.js';
 import {normalizeDesign} from '../src/reel-design.js';
-import {seriesBadge,lineLabelsNeedNames} from '../src/series-identity.js';
+import {seriesBadge} from '../src/series-identity.js';
+import {captureTheme,applySavedTheme,exportTheme,importTheme} from '../src/custom-themes.js';
 import {reelAssetPaths,preloadReelAssets} from '../src/reel-assets.js';
 import {drawReel} from '../src/render.js';
 import {aiBrands} from '../src/ai-brands.js';
@@ -29,9 +30,9 @@ test('line tips match linear, log and step geometry; gaps, delayed starts, zero 
 });
 
 test('six crowded or crossing labels fit inside the plot and never overlap in any supported geometry',()=>{
- for(const height of [50,100,180,400,1000])for(const size of [75,100,140])for(const needsNames of [false,true])for(const width of [460,765]){
-  const c=config({endLabelSize:size}),bounds={left:135,right:135+width,top:400,bottom:400+height};
-  const geometry=lineLabelGeometry(c,{...bounds,count:6,needsNames});
+ for(const height of [50,100,180,400,1000])for(const size of [75,100,140])for(const names of [false,true])for(const values of [false,true])for(const dates of [false,true])for(const width of [460,765]){
+  const c=config({endLabelSize:size,endLabelNames:names,endLabelValues:values,endLabelDates:dates}),bounds={left:135,right:135+width,top:400,bottom:400+height};
+  const geometry=lineLabelGeometry(c,{...bounds,count:6,hasDates:true});
   assert.ok(geometry.right>bounds.left);assert.ok(geometry.height>0);assert.ok(geometry.size>0);
   for(const anchors of [[0,0,0,0,0,0],[height,height,height,height,height,height],[height/2,height/2+1,height/2-1,height/2,height/2,height/2],[0,height/4,height/2,height/2,height*.75,height]]){
    const items=anchors.map((y,index)=>({index,anchorY:bounds.top+y})),x=geometry.right+20,layout=arrangeLineLabels(items,geometry,{...bounds,x});
@@ -50,10 +51,6 @@ test('badges come from stable metadata; unknown names and regional aggregates ne
  assert.equal(seriesBadge({symbol:'NVDA'}).path,'/logos/companies/nvda.svg');
  assert.equal(seriesBadge({symbol:'NVDA',logo:undefined}),null);
  assert.equal(seriesBadge({topicId:'cloud',entity:'amazon'}).path,'/logos/companies/amzn.svg');
- assert.equal(lineLabelsNeedNames([{entity:'Poland'},{entity:'Germany'}]),false);
- assert.equal(lineLabelsNeedNames([{entity:'Poland'},{entity:'Poland'}]),true);
- assert.equal(lineLabelsNeedNames([{entity:'Poland'},{name:'World'}]),true);
- assert.equal(lineLabelsNeedNames([{entity:'Poland'}],false),true);
  const flags=JSON.parse(readFileSync(new URL('../src/series-flags.json',import.meta.url)));
  for(const id of new Set(Object.values(flags))){const file=new URL(`../public/logos/flags/${id}.svg`,import.meta.url);assert.ok(existsSync(file));const svg=readFileSync(file,'utf8');assert.match(svg,/<svg/);assert.doesNotMatch(svg,/<script|<foreignObject|(?:href|src)=["'](?:https?:|\/\/|data:)|\son\w+\s*=/i);}
  assert.ok(existsSync(new URL('../public/logos/flags/LICENSE',import.meta.url)));
@@ -78,7 +75,7 @@ function canvasRecorder(){
 test('AI endpoint labels show exact historical scores, including zero, without future brands or interpolated results',()=>{
  const brands=aiBrands.slice(0,2),row=(i,date,score)=>({id:`${i}-${date}`,modelId:`model-${i}`,model:`Test ${i}`,brandId:brands[i].id,brand:brands[i],date,score});
  const rows=[row(0,'2024-01-01',0),row(0,'2024-01-11',99),row(1,'2024-01-11',98)];
- const c={...config({legend:false}),title:'Test',duration:12,language:'en',ai:{rows,history:buildAiBrandHistory(rows,{brandIds:brands.map(b=>b.id)}),brands,mode:'records',groupBy:'brand',showBrandLogos:false,showLeaderNames:false,benchmark:{id:'test',name:'Test',unit:'pts',source:'Test',retrievedAt:'2026-09-30'}}};
+ const c={...config({legend:false,endLabelNames:true}),title:'Test',duration:12,language:'en',ai:{rows,history:buildAiBrandHistory(rows,{brandIds:brands.map(b=>b.id)}),brands,mode:'records',groupBy:'brand',showBrandLogos:false,showLeaderNames:false,benchmark:{id:'test',name:'Test',unit:'pts',source:'Test',retrievedAt:'2026-09-30'}}};
  for(const progress of [0,.25,.5,.99,1]){
   const {canvas,log,stack}=canvasRecorder();drawAiReel(canvas,c,progress,progress*12);
   const text=log.filter(e=>e.op==='fillText').map(e=>String(e.args[0]));
@@ -90,11 +87,55 @@ test('AI endpoint labels show exact historical scores, including zero, without f
 test('renderer places labels in transformed chart content, independently of legends, at every animation frame',()=>{
  const series=Array.from({length:6},(_,i)=>({id:String(i),name:`Series ${i}`,points:[{x:2000,y:i},{x:2010,y:10-i}]}));
  for(const format of ['9:16','4:5','1:1'])for(const chart of ['line','area'])for(const legend of [false,true])for(const progress of [0,.25,.5,.51,1]){
-  const {canvas,ctx,stack,log}=canvasRecorder();drawReel(canvas,{...config({legend,endLabelSize:140}),title:'History',series,format,chart},progress,12*progress);
+  const {canvas,ctx,stack,log}=canvasRecorder();drawReel(canvas,{...config({legend,endLabelSize:140,endLabelNames:true}),title:'History',series,format,chart},progress,12*progress);
   assert.equal(stack.length,0);assert.equal(ctx.textBaseline,'alphabetic');assert.ok(log.filter(l=>l.op==='fillText').some(l=>l.args[0].includes('Series')));
  }
  const {ctx}=canvasRecorder(),g=lineLabelGeometry(config(),{left:135,right:900,top:200,bottom:600,count:1});
  const items=[{index:0,anchorX:500,anchorY:250,series:{name:'A'},value:'100',color:'#00ff00'}];
  const first=drawLineLabels(ctx,config(),items,g,{top:200,bottom:600,x:520,fg:'#000'});
  assert.equal(first[0].y,250);assert.equal(ctx.textBaseline,'alphabetic');
+});
+
+test('all label content switches are independent, including duplicate flags, ended series and missing badges',async()=>{
+ const original=globalThis.Image;
+ globalThis.Image=class{set src(_value){this.naturalWidth=40;this.naturalHeight=30;queueMicrotask(()=>this.onload());}};
+ try{await preloadReelAssets({...config(),series:[{countryCode:'POL'}]});}finally{globalThis.Image=original;}
+ const items=[0,1,2].map(index=>({index,anchorX:500,anchorY:300,series:{name:`Unique ${index}`,countryCode:index<2?'POL':undefined},value:`42.${index}75`,date:'1989',color:'#123456'}));
+ const bounds={left:135,right:900,top:200,bottom:600,count:3,hasDates:true};
+ for(const icons of [false,true])for(const names of [false,true])for(const values of [false,true])for(const dates of [false,true]){
+  const c=config({endLabelIcons:icons,endLabelNames:names,endLabelValues:values,endLabelDates:dates}),g=lineLabelGeometry(c,bounds),{ctx,log,stack}=canvasRecorder();
+  const layout=drawLineLabels(ctx,c,items,g,{...bounds,x:(g?.right??900)+20,fg:'#000'}),texts=log.filter(e=>e.op==='fillText').map(e=>e.args[0]);
+  assert.equal(!!g,icons||names||values||dates);
+  assert.equal(layout.length,names||values||dates?3:icons?2:0);
+  for(const item of items){assert.equal(texts.includes(item.series.name),names);assert.equal(texts.includes(item.value),values);}
+  assert.equal(texts.filter(t=>t==='1989').length,dates?3:0);
+  assert.equal(log.filter(e=>e.op==='drawImage').length,icons?2:0);assert.equal(stack.length,0);
+ }
+ const onlyIcons=config({endLabelNames:false,endLabelValues:false,endLabelDates:false}),g=lineLabelGeometry(onlyIcons,bounds);
+ assert.ok(g.right>lineLabelGeometry(config(),bounds).right,'icon-only labels give space back to the plot');
+ assert.equal(lineLabelGeometry(config({endLabelIcons:false,endLabelNames:false,endLabelValues:false,endLabelDates:true}),{...bounds,hasDates:false}),null);
+ const missing={...items[0],series:{name:'Never force this name',logo:'/logos/missing.svg'}};
+ const {ctx,log}=canvasRecorder();assert.deepEqual(drawLineLabels(ctx,onlyIcons,[missing],g,{...bounds,x:800,fg:'#000'}),[]);assert.equal(log.filter(e=>e.op==='fillText').length,0);
+ // Full renderer used to turn names on for duplicate/missing icons and earlier endings.
+ const series=items.map((item,index)=>({...item.series,id:String(index),points:[{x:1980,y:10+index},{x:index?1990:1989,y:20+index}]}));
+ for(const chart of ['line','area'])for(const names of [false,true]){
+  const {canvas,log}=canvasRecorder();drawReel(canvas,{...config({legend:false,endLabelNames:names}),title:'Chart',series,chart},1,12);
+  const text=log.filter(e=>e.op==='fillText').map(e=>e.args[0]);for(const item of items)assert.equal(text.some(t=>String(t).includes(item.series.name)),names);
+ }
+});
+
+test('label settings survive saved themes and AI endpoint logos are independent from legend logos',async()=>{
+ assert.equal(normalizeChart().endLabelValues,true);assert.equal(normalizeChart().endLabelDates,true);
+ const source=config({endLabelNames:false,endLabelValues:false,endLabelDates:false,endLabelIcons:true});
+ const saved=captureTheme({name:'Icons only',visuals:source.visuals,fontId:'arial'}),restored=await importTheme(new File([await exportTheme(saved)],'theme.json'));
+ const applied=applySavedTheme(config().visuals,restored);assert.deepEqual(applied.design.chart,source.visuals.design.chart);
+ const brands=aiBrands.slice(0,1),row={id:'result',modelId:'model',model:'Model',brandId:brands[0].id,brand:brands[0],date:'2024-01-01',score:87};
+ const c={...source,title:'Benchmark',duration:12,language:'en',ai:{rows:[row],history:buildAiBrandHistory([row],{brandIds:brands.map(b=>b.id)}),brands,mode:'records',groupBy:'brand',showBrandLogos:false,showLeaderNames:false,benchmark:{id:'test',name:'Test',unit:'pts',source:'Test'}}};
+ c.visuals.design.chart.legend=false;c.visuals.design.chart.axisLabels=false;
+ assert.deepEqual(reelAssetPaths(c),brands.map(b=>b.logo));
+ const original=globalThis.Image;globalThis.Image=class{set src(_value){this.naturalWidth=40;this.naturalHeight=30;queueMicrotask(()=>this.onload());}};
+ try{await preloadReelAssets(c);}finally{globalThis.Image=original;}
+ const {canvas,log}=canvasRecorder();drawAiReel(canvas,c,1,12);
+ assert.equal(log.filter(e=>e.op==='drawImage').length,1);
+ assert.ok(!log.filter(e=>e.op==='fillText').some(e=>[brands[0].name,'87'].includes(e.args[0])));
 });

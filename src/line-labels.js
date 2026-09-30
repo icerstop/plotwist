@@ -31,17 +31,31 @@ export function spreadLineLabels(items,top,bottom,height,gap=8){
  return result;
 }
 
-export function lineLabelGeometry(config,{left,right,top,bottom,count,needsNames=false}){
- const s=chartAppearance(config),names=s.endLabelNames||needsNames,scale=(s.endLabelSize??100)/100;
+export const lineLabelPresets=[
+ {id:'icon',name:'Sama flaga / logo',options:{endLabelIcons:true,endLabelNames:false,endLabelValues:false,endLabelDates:false}},
+ {id:'icon-name',name:'Flaga / logo + nazwa',options:{endLabelIcons:true,endLabelNames:true,endLabelValues:false,endLabelDates:false}},
+ {id:'icon-value',name:'Flaga / logo + wartość',options:{endLabelIcons:true,endLabelNames:false,endLabelValues:true,endLabelDates:false}},
+ {id:'name-value',name:'Nazwa + wartość',options:{endLabelIcons:false,endLabelNames:true,endLabelValues:true,endLabelDates:false}},
+ {id:'value',name:'Sama wartość',options:{endLabelIcons:false,endLabelNames:false,endLabelValues:true,endLabelDates:false}},
+ {id:'all',name:'Wszystkie elementy',options:{endLabelIcons:true,endLabelNames:true,endLabelValues:true,endLabelDates:true}},
+];
+
+export function lineLabelGeometry(config,{left,right,top,bottom,count,hasDates=false,hasIcons=true}){
+ const s=chartAppearance(config),names=s.endLabelNames===true,values=s.endLabelValues!==false,dates=s.endLabelDates!==false&&hasDates,icons=s.endLabelIcons!==false&&hasIcons,scale=(s.endLabelSize??100)/100;
+ if(!count||!names&&!values&&!dates&&!icons)return null;
  const size=Math.max(20,Math.min(52,textSize(config,'values',32)*scale)),gap=8;
- const wantedHeight=size+18+(names?22*scale:0),height=Math.max(1,bottom-top);
- const capacity=Math.max(1,Math.floor((height+gap)/((names?44:34)+gap)));
+ const nameSize=Math.max(14,Math.min(42,textSize(config,'labels',values?22:30)*scale)),dateSize=Math.min(20,nameSize*.85),rowsOfText=Number(names)+Number(values)+Number(dates);
+ const textHeight=(names?nameSize:0)+(values?size:0)+(dates?dateSize:0)+Math.max(0,rowsOfText-1)*4;
+ const contentHeight=Math.max(textHeight,icons?38*scale:0),wantedHeight=contentHeight+16,height=Math.max(1,bottom-top);
+ const minimumHeight=Math.max(icons?34:0,rowsOfText*12+Math.max(0,rowsOfText-1)*3+12);
+ const capacity=Math.max(1,Math.floor((height+gap)/(minimumHeight+gap)));
  const columns=Math.max(1,Math.ceil(count/capacity)),rows=Math.max(1,Math.ceil(count/columns));
  const rowHeight=Math.min(wantedHeight,(height-(rows-1)*gap)/rows);
  const outerRight=Math.min(1004,right+104),available=outerRight-left;
- const columnWidth=Math.min((names?230:195)*scale,Math.max(40,(available*.64-20)/columns));
+ const columnWidth=Math.min((names?230:values||dates?(icons?195:160):72)*scale,Math.max(40,(available*.64-20)/columns));
  const reserve=columnWidth*columns+20,plotRight=Math.max(left+1,outerRight-reserve);
- return {right:plotRight,outerRight,columns,columnWidth,height:rowHeight,gap,names,size:Math.min(size,names?(rowHeight-14)/1.7:rowHeight-12)};
+ const fit=Math.min(1,Math.max(1,rowHeight-12)/contentHeight);
+ return {right:plotRight,outerRight,columns,columnWidth,height:rowHeight,gap,names,values,dates,icons,size:size*fit,nameSize:nameSize*fit,dateSize:dateSize*fit,iconSize:38*scale*fit,textGap:4*fit};
 }
 
 export function arrangeLineLabels(items,geometry,{top,bottom,x}){
@@ -63,25 +77,32 @@ export function endpointLabelText(tip,config,formatValue){
 }
 
 export function drawLineLabels(ctx,config,items,geometry,{top,bottom,x,fg,background}){
- if(!items.length)return [];
- const s=chartAppearance(config),layout=arrangeLineLabels(items,geometry,{top,bottom,x});
+ if(!items.length||!geometry)return [];
+ // Explicit switches always win, even with duplicate flags or a missing image.
+ const visible=items.flatMap(item=>{
+  const badge=geometry.icons?(item.badge||seriesBadge(item.series)):null,logo=badge&&getReelLogo(badge.path);
+  const name=geometry.names?item.series.name:'',value=geometry.values?item.value:'',date=geometry.dates?item.date:'';
+  return logo||name||value||date?[{...item,badge,logo,name,value,date}]:[];
+ }),layout=arrangeLineLabels(visible,geometry,{top,bottom,x});
  ctx.save();ctx.shadowBlur=0;ctx.shadowOffsetX=ctx.shadowOffsetY=0;ctx.setLineDash([]);ctx.lineWidth=2;ctx.textAlign='left';ctx.textBaseline='middle';
  // Paint connectors first, then all opaque cards; no connector crosses a label.
  for(const item of layout){ctx.strokeStyle=item.color;ctx.beginPath();ctx.moveTo(item.anchorX,item.anchorY);ctx.lineTo(item.x-10,item.y);ctx.lineTo(item.x,item.y);ctx.stroke();}
  for(const item of layout){
-  const y=item.y-item.height/2,pad=8,name=geometry.names||item.date;
+  const y=item.y-item.height/2,pad=8;
   ctx.fillStyle=background||themeOf(config).bg;roundFill(ctx,item.x,y,item.width,item.height,7);
   ctx.fillStyle=item.color;ctx.fillRect(item.x,y+5,3,item.height-10);
-  const badge=s.endLabelIcons!==false?(item.badge||seriesBadge(item.series)):null,logo=badge&&getReelLogo(badge.path);
-  const badgeSize=Math.min(38,item.height-12),badgeWidth=badge?.kind==='flag'?badgeSize*4/3:badgeSize;
+  const {badge,logo}=item,badgeSize=Math.min(geometry.iconSize,item.height-12,(item.width-pad*2)/(badge?.kind==='flag'?4/3:1)),badgeWidth=badge?.kind==='flag'?badgeSize*4/3:badgeSize;
   let indent=pad;
-  if(logo){const lx=item.x+pad,ly=item.y-badgeSize/2;ctx.fillStyle='#ffffff';roundFill(ctx,lx-2,ly-2,badgeWidth+4,badgeSize+4,3);const ratio=Math.min(badgeWidth/logo.naturalWidth,badgeSize/logo.naturalHeight);ctx.drawImage(logo,lx+(badgeWidth-logo.naturalWidth*ratio)/2,ly+(badgeSize-logo.naturalHeight*ratio)/2,logo.naturalWidth*ratio,logo.naturalHeight*ratio);indent+=badgeWidth+9;}
+  if(logo){const lx=item.x+(!item.name&&!item.value&&!item.date?(item.width-badgeWidth)/2:pad),ly=item.y-badgeSize/2;ctx.fillStyle='#ffffff';roundFill(ctx,lx-2,ly-2,badgeWidth+4,badgeSize+4,3);const ratio=Math.min(badgeWidth/logo.naturalWidth,badgeSize/logo.naturalHeight);ctx.drawImage(logo,lx+(badgeWidth-logo.naturalWidth*ratio)/2,ly+(badgeSize-logo.naturalHeight*ratio)/2,logo.naturalWidth*ratio,logo.naturalHeight*ratio);indent+=badgeWidth+9;}
   const width=Math.max(8,item.width-indent-pad),tx=item.x+indent;
-  let size=geometry.size;
-  ctx.font=reelTextFont(config,'values',size,600);
-  while(size>12&&ctx.measureText(item.value).width>width){size--;ctx.font=reelTextFont(config,'values',size,600);}
-  ctx.fillStyle=textColor(config,'values',fg);ctx.fillText(item.value,tx,item.y+(name?8:0),width);
-  if(name){ctx.font=reelTextFont(config,'labels',Math.min(20,geometry.size*.68),400);ctx.fillStyle=textColor(config,'labels',fg);const text=[geometry.names?item.series.name:'',item.date].filter(Boolean).join(' · ');ctx.fillText(ellipsis(ctx,text,width),tx,y+Math.min(14,item.height*.25),width);}
+  const rows=[{text:item.name,size:geometry.nameSize,role:'labels'},{text:item.value,size:geometry.size,role:'values'},{text:item.date,size:geometry.dateSize,role:'labels'}].filter(r=>r.text!==undefined&&r.text!=='');
+  const textHeight=rows.reduce((sum,r)=>sum+r.size,0)+Math.max(0,rows.length-1)*geometry.textGap;
+  let ty=item.y-textHeight/2;
+  for(const row of rows){
+   let size=row.size;ctx.font=reelTextFont(config,row.role,size,row.role==='values'?600:400);
+   if(row.role==='values')while(size>12&&ctx.measureText(row.text).width>width){size--;ctx.font=reelTextFont(config,row.role,size,600);}
+   ctx.fillStyle=textColor(config,row.role,fg);ctx.fillText(row.role==='values'?row.text:ellipsis(ctx,row.text,width),tx,ty+row.size/2,width);ty+=row.size+geometry.textGap;
+  }
  }
  ctx.restore();return layout;
 }

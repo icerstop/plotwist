@@ -10,9 +10,3 @@ export function seriesBadge(series){
  const path=companies[symbol]||(series.topicId==='cloud'?{amazon:companies.AMZN,alphabet:companies.GOOGL,microsoft:companies.MSFT}[series.entity?.toLowerCase()]:null);
  return path?{kind:'logo',path}:null;
 }
-
-// Shared or missing badges need text to distinguish different metrics of a country/company.
-export function lineLabelsNeedNames(series,icons=true){
- const paths=series.map(s=>seriesBadge(s)?.path);
- return !icons||paths.some(path=>!path)||new Set(paths).size!==paths.length;
-}

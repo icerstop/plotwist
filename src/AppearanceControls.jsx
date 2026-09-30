@@ -2,6 +2,7 @@ import React from 'react';
 import {useVisualStatus,Range,Color} from './VisualSettings.jsx';
 import {chartPalettes,normalizeChart} from './chart-appearance.js';
 import {themeOf} from './reel-design.js';
+import {lineLabelPresets} from './line-labels.js';
 
 function Select({label,value,options,onChange}){return <label className="visual-field">{label}<select aria-label={label} value={value} onChange={e=>onChange(e.target.value)}>{options.map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label>;}
 export function ChartEditor({config}){
@@ -41,15 +42,19 @@ export function ChartEditor({config}){
    <p className="visual-hint">Skala uwzględnia jednostkę danych: 16 000 mln USD to 16 mld USD. Automatyczny skrót pozostaje stały przez całą rolkę. Legenda i etykiety przy liniach zachowują jednostkę danych.</p>
   </details>
   {(!config.ai||config.ai.groupBy==='brand'&&mode==='records')&&<label className="visual-check"><input type="checkbox" checked={s.legend} onChange={e=>patch({legend:e.target.checked})}/>Pokaż legendę pod wykresem</label>}
-  {(!config.ai&&['line','area'].includes(mode)||config.ai?.groupBy==='brand'&&mode==='records')&&<details className="appearance-group" open><summary>Wartości przy liniach</summary>
+  {(!config.ai&&['line','area'].includes(mode)||config.ai?.groupBy==='brand'&&mode==='records')&&<details className="appearance-group" open><summary>Etykiety przy liniach</summary>
    <label className="visual-check"><input type="checkbox" checked={s.endLabels} onChange={e=>patch({endLabels:e.target.checked})}/>Pokaż etykiety przy końcach linii</label>
    {s.endLabels&&<>
-    <label className="visual-check"><input type="checkbox" checked={s.endLabelIcons} onChange={e=>patch({endLabelIcons:e.target.checked})}/>Flagi i logotypy przy wartościach</label>
-    <label className="visual-check"><input type="checkbox" checked={s.endLabelNames} onChange={e=>patch({endLabelNames:e.target.checked})}/>Nazwy serii przy wartościach</label>
+    <Select label="Zawartość etykiety" value={lineLabelPresets.find(p=>Object.entries(p.options).every(([key,value])=>s[key]===value))?.id||'custom'} options={[["custom","Własna kombinacja"],...lineLabelPresets.map(p=>[p.id,p.name])]} onChange={id=>{const preset=lineLabelPresets.find(p=>p.id===id);if(preset)patch(preset.options);}}/>
+    <label className="visual-check"><input type="checkbox" checked={s.endLabelIcons} onChange={e=>patch({endLabelIcons:e.target.checked})}/>Flagi i logotypy</label>
+    <label className="visual-check"><input type="checkbox" checked={s.endLabelNames} onChange={e=>patch({endLabelNames:e.target.checked})}/>Nazwy serii</label>
+    <label className="visual-check"><input type="checkbox" checked={s.endLabelValues} onChange={e=>patch({endLabelValues:e.target.checked})}/>Wartości liczbowe</label>
+    {!config.ai&&<label className="visual-check"><input type="checkbox" checked={s.endLabelDates} onChange={e=>patch({endLabelDates:e.target.checked})}/>Data ostatniego pomiaru zakończonej serii</label>}
     {range('endLabelSize','Rozmiar etykiet przy liniach',75,140,'%')}
-    {!config.ai&&<Select label="Wartość na etykiecie" value={s.endLabelValue} options={[["interpolated","W punkcie animacji · interpolowana ≈"],["observed","Ostatni pomiar ze źródła"]]} onChange={endLabelValue=>patch({endLabelValue})}/>}
-    <p className="visual-hint">Etykiety mają zarezerwowane miejsce i łączniki w kolorach serii. Przy ścisku rozsuwają się, a w niskim wykresie przechodzą do kolumn. Bez flagi lub logo pojawia się nazwa.</p>
-    {!config.ai&&<p className="visual-hint">≈ oznacza wartość pomiędzy pomiarami. Luki nie są uzupełniane. Przy zakończonej serii pokazujemy datę ostatniej wartości.</p>}
+    {!config.ai&&s.endLabelValues&&<Select label="Wartość na etykiecie" value={s.endLabelValue} options={[["interpolated","W punkcie animacji · interpolowana ≈"],["observed","Ostatni pomiar ze źródła"]]} onChange={endLabelValue=>patch({endLabelValue})}/>}
+    <p className="visual-hint">Każdy element włączasz osobno. Nazwy nie pojawią się automatycznie przy braku logo ani powtarzających się flagach. Wariant z samą ikoną pomija serie bez dostępnej flagi lub logo.</p>
+    <p className="visual-hint">Etykiety rozsuwają się, aby nie nachodziły na siebie. Wyłączenie wszystkich elementów usuwa etykiety i oddaje miejsce wykresowi.</p>
+    {!config.ai&&s.endLabelValues&&<p className="visual-hint">≈ oznacza wartość pomiędzy pomiarami. Luki nie są uzupełniane. Datę ostatniej wartości zakończonej serii możesz włączyć osobno.</p>}
    </>}
   </details>}
   <p className="visual-hint">Wymiary wykresu zmienisz w zakładce Układ.</p></>}

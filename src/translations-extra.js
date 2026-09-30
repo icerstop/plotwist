@@ -44,6 +44,22 @@ Automatyczny opis jednostki|Automatic unit caption
 Oddzielaj grupy tysięcy|Use thousands separators
 Skala uwzględnia jednostkę danych: 16 000 mln USD to 16 mld USD. Automatyczny skrót pozostaje stały przez całą rolkę. Legenda i etykiety przy liniach zachowują jednostkę danych.|The scale accounts for the source unit: USD 16,000 million is USD 16 billion. The automatic abbreviation stays fixed throughout the reel. Legends and line labels keep the source unit.
 Wartości przy liniach|Values beside lines
+Etykiety przy liniach|Labels beside lines
+Zawartość etykiety|Label contents
+Własna kombinacja|Custom combination
+Sama flaga / logo|Flag / logo only
+Flaga / logo + nazwa|Flag / logo + name
+Flaga / logo + wartość|Flag / logo + value
+Nazwa + wartość|Name + value
+Sama wartość|Value only
+Wszystkie elementy|All elements
+Flagi i logotypy|Flags and logos
+Nazwy serii|Series names
+Wartości liczbowe|Numeric values
+Data ostatniego pomiaru zakończonej serii|Last observation date of an ended series
+Każdy element włączasz osobno. Nazwy nie pojawią się automatycznie przy braku logo ani powtarzających się flagach. Wariant z samą ikoną pomija serie bez dostępnej flagi lub logo.|Switch each element independently. Names never appear automatically for missing logos or repeated flags. The icon-only preset skips series without an available flag or logo.
+Etykiety rozsuwają się, aby nie nachodziły na siebie. Wyłączenie wszystkich elementów usuwa etykiety i oddaje miejsce wykresowi.|Labels spread apart to avoid overlaps. Switching off every element removes the labels and gives the space back to the chart.
+≈ oznacza wartość pomiędzy pomiarami. Luki nie są uzupełniane. Datę ostatniej wartości zakończonej serii możesz włączyć osobno.|≈ marks a value between observations. Gaps are preserved. The last date of an ended series can be enabled separately.
 Pokaż etykiety przy końcach linii|Show labels at line ends
 Flagi i logotypy przy wartościach|Flags and logos beside values
 Nazwy serii przy wartościach|Series names beside values

@@ -61,7 +61,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   const legendStride=Math.max(singleColumn?62:84,nameHeight+(singleColumn?62:101));
   const legendHeight=(singleColumn?brands.length:Math.ceil(brands.length/2))*legendStride-40;
   const legendTop=1615-legendHeight,bottom=appearance.legend?legendTop-97:1575,top=chartTop(config,840,bottom);const [left,baseRight]=plotSides(config,144,962);
-  const labelGeometry=appearance.endLabels?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:brands.length,needsNames:!showBrandLogos||appearance.endLabelIcons===false||brands.some(b=>!b.logo)}):null,right=labelGeometry?.right??baseRight;
+  const labelGeometry=appearance.endLabels?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:brands.length,hasIcons:brands.some(b=>b.logo)}):null,right=labelGeometry?.right??baseRight;
   const first=history.times[0],last=history.times.at(-1),x=t=>left+(t-first)/(last-first||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top),currentX=x(current);
   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',24)),numbers=axisNumberFormat(config,bounds(raw.map(r=>r.score)),ticks);
   ctx.font=reelTextFont(config,'labels',textSize(config,'labels',28));ctx.fillStyle=textColor(config,'labels',muted);
@@ -75,7 +75,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
    ctx.lineTo(currentX,y(previous.score));ctx.stroke();ctx.restore();
   }ctx.restore();
   if(labelGeometry){
-   const items=brands.flatMap((brand,index)=>{const leader=byId(frame,brand.id);return leader?[{index,series:{name:brand.name,logo:showBrandLogos?brand.logo:null},anchorX:currentX,anchorY:y(leader.score),color:color(brand),value:aiValue(leader.score,config.language,b.scoreDecimals??1)}]:[];});
+   const items=brands.flatMap((brand,index)=>{const leader=byId(frame,brand.id);return leader?[{index,series:{name:brand.name,logo:brand.logo},anchorX:currentX,anchorY:y(leader.score),color:color(brand),value:aiValue(leader.score,config.language,b.scoreDecimals??1)}]:[];});
    drawLineLabels(ctx,config,items,labelGeometry,{top,bottom,x:currentX+20,fg});
   }
   if(appearance.axisLabels){text(history.start,left,bottom+39,390,24,muted);ctx.textAlign='right';text(history.end,right,bottom+39,390,24,muted);ctx.textAlign='left';}

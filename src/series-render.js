@@ -6,7 +6,7 @@ import {resolveScale,bounds,visibleSeriesBounds,createAxis,scaleCaption} from '.
 import {axisNumberFormat,drawAxisNumber,drawAxisCaption} from './axis-numbers.js';
 import {textSize,textColor,setReelText,reelTextFont} from './reel-design.js';
 import {lineEndpoint,lineLabelGeometry,endpointLabelText,drawLineLabels} from './line-labels.js';
-import {lineLabelsNeedNames} from './series-identity.js';
+import {seriesBadge} from './series-identity.js';
 export function crossText(ctx,previous,current,x,y,mix=1,maxWidth=1000){
  if(previous===current||mix>=1){ctx.fillText(current,x,y,maxWidth);return;}
  ctx.save();ctx.globalAlpha*=Math.max(0,1-mix*2);ctx.fillText(previous,x,y-8*mix,maxWidth);ctx.restore();
@@ -43,7 +43,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
  const rowText=row=>(row.value!==null&&row.point?.valueQualifier?(row.point.valueQualifier==='approximately'?'≈ ':row.point.valueQualifier+' '):'')+text(row.value)+(config.showObservationDates&&row.value!==null&&row.point?.date?` · ${observationPeriod(row.point,config.language)}`:'');
  const moving=i=>values[i].value===null?null:lerp(before[i].value??values[i].value,values[i].value,mix);
  const [left,baseRight]=plotSides(config,135,900),labelsEnabled=appearance.endLabels&&['line','area'].includes(chart);
- const labelGeometry=labelsEnabled?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:series.length,needsNames:lineLabelsNeedNames(series,appearance.endLabelIcons)||series.some(s=>s.points.at(-1)?.x<maxX)}):null;
+ const labelGeometry=labelsEnabled?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:series.length,hasIcons:series.some(s=>seriesBadge(s)),hasDates:series.some(s=>s.points.at(-1)?.x<maxX)}):null;
  const right=labelGeometry?.right??baseRight,px=x=>left+(x-minX)/(maxX-minX||1)*(right-left),py=y=>bottom-axis.position(y)*(bottom-top);
  if(chart==='cards'||chart==='ranking'){
   const yStart=contentTop,yEnd=height-(height<1400?205:290),count=series.length;
@@ -88,7 +88,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
   }
   ctx.restore();if(!appearance.legend)return;ctx.setLineDash([]);const y=bottom+100+legend[i].position*legendStep;ctx.fillStyle=color(i);ctx.fillRect(80,y-21,6,24);logoLabel(ctx,s,108,y,font,fg,505,config);setReelText(ctx,config,'values',27,font,fg);ctx.textAlign='right';crossText(ctx,rowText(before[i]),rowText(values[i]),1000,y,mix,350);ctx.textAlign='left';
  });
- if(labelsEnabled){
+ if(labelGeometry){
   const items=series.flatMap((s,index)=>{const tip=lineEndpoint(s,current,scale.log);return tip?[{index,series:s,anchorX:px(tip.x),anchorY:py(tip.y),color:color(index),...endpointLabelText(tip,config,formatValue)}]:[];});
   drawLineLabels(ctx,config,items,labelGeometry,{top,bottom,x:px(current)+20,fg});
  }
