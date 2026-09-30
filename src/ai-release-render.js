@@ -32,8 +32,8 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  const headerEnd=beginReelSection(ctx,config,'header',1080,height);
  drawReelLogo(ctx,config,timeSeconds,{x:76,y:layout.compact?40:73,h:layout.compact?34:50});
  const title=copyText(ctx,config,'title',config.title),size=reelTitleSize(ctx,title,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,layout.titleHeight,textStyleOf(config,'title'));
- // text() applies the global compact-frame scale; the fitted title is already scaled.
- const titleHeight=text(title,76,layout.titleY,928,size/textScale,'title',fg,3,true);
+ // Fitting already includes both the user's size and the compact-frame scale.
+ const titleHeight=text(title,76,layout.titleY,928,size/textSize(config,'title',1),'title',fg,3,true);
  text(publishers.map(p=>p.name).join(' × '),76,layout.compact?layout.titleY+titleHeight+20:548,928,38,'subtitle',muted,2,true);headerEnd();
  const stop=beginReelSection(ctx,config,'content',1080,height),h=end-start,y=f=>start+h*f;
  const countLabel=r.count==='launches'?t('premiery producentów','publisher launches'):t('wersje modeli','model versions');
