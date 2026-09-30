@@ -1,5 +1,6 @@
 // A single deterministic clock drives both Canvas previews and exported frames.
 import {typingStyles,typingCursors,typingStages,isSequentialTyping} from './reel-typing.js';
+import {normalizeMystery,mysteryFrame} from './reel-mystery.js';
 // Timings are fractions of reel duration, so a sequence also works at 6 or 30 s.
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const number=(v,f,a,b)=>v!=null&&Number.isFinite(Number(v))?clamp(Number(v),a,b):f;
@@ -15,6 +16,7 @@ function sequence(id,name,description,title,content,chartStart,extra={}){
  return {id,name,description,chartStart,tracks:{title,subtitle:track('fade',Math.min(title.start+title.duration,.28),.07),content,date:track('fade',content.start,.06),mark:track('fade',.01,.05),signature:track('fade',.03,.08),stickers:track('pop',content.start+.025,.09),...extra}};
 }
 export const motionPresets=[
+ {...sequence('mystery','Zagadka','Sam tytuł → wykres bez opisów → odpowiedź',track('none',0,.1),track('fade',.16,.08),.24),mystery:{enabled:true,chartAt:.16,answerAt:.7,fade:.08}},
  sequence('write-story','Najpierw napis','Rysowane litery, potem wykres',track('write',.01,.19),track('fade',.235,.07),.27),
  {...sequence('typewriter','Maszyna do pisania','Cały tekst po kolei, kursor kreskowy',track('typewriter',.01,.16,'linear'),track('fade',.3,.03),.56),typing:{enabled:true,style:'classic',cursor:'bar',blink:true}},
  {...sequence('typing-natural','Naturalne pisanie','Zmienne tempo i pauzy przy interpunkcji',track('typewriter',.01,.16,'linear'),track('fade',.3,.03),.58),typing:{enabled:true,style:'natural',cursor:'bar',blink:true}},
@@ -44,13 +46,14 @@ export function normalizeMotion(raw={}){
  raw=raw&&typeof raw==='object'?raw:{};
  const tracks=Object.fromEntries(motionRoles.map(([id])=>[id,normalizeTrack(raw.tracks?.[id]||{},id)]));
  for(const [id,value] of Object.entries(raw.tracks||{}).filter(([id,value])=>id.startsWith('sticker:')&&id.length<180&&value&&typeof value==='object').slice(0,3))tracks[id]=normalizeTrack(value,id);
- const preset=motionPresets.find(p=>p.id===raw.preset),typingRaw=raw.typing||preset?.typing||{},typing={enabled:typingRaw.enabled===true,style:typingStyles.some(([id])=>id===typingRaw.style)?typingRaw.style:'classic',cursor:typingCursors.some(([id])=>id===typingRaw.cursor)?typingRaw.cursor:'bar',blink:typingRaw.blink!==false};
- const chartStart=typing.enabled?number(!raw.typing&&preset?.typing?preset.chartStart:raw.chartStart,.56,.2,.6):number(raw.chartStart,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,.6);
+ const preset=motionPresets.find(p=>p.id===raw.preset),mystery=normalizeMystery(raw.mystery||preset?.mystery),typingRaw=raw.typing||preset?.typing||{},typing={enabled:typingRaw.enabled===true&&!mystery.enabled,style:typingStyles.some(([id])=>id===typingRaw.style)?typingRaw.style:'classic',cursor:typingCursors.some(([id])=>id===typingRaw.cursor)?typingRaw.cursor:'bar',blink:typingRaw.blink!==false};
+ const chartStart=mystery.enabled?mystery.chartAt+mystery.fade:typing.enabled?number(!raw.typing&&preset?.typing?preset.chartStart:raw.chartStart,.56,.2,.6):number(raw.chartStart,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,.6);
+ if(mystery.enabled)tracks.content=track('fade',mystery.chartAt,mystery.fade);
  if(typing.enabled){const stages=typingStages(chartStart);for(const id of ['title','subtitle','metric','date','signature'])tracks[id]=track('none',stages[id].start,stages[id].duration,'linear');tracks.content=track('fade',Math.max(0,stages.content.start-.025),.025);}
- return {enabled:raw.enabled===true,preset:preset?.id||'custom',chartStart,tracks,typing};
+ return {enabled:raw.enabled===true,preset:preset?.id||'custom',chartStart,tracks,typing,mystery};
 }
 export const motionOf=config=>config.visuals?.design?.motion;
-export const motionPreset=id=>{const p=motionPresets.find(p=>p.id===id);return normalizeMotion(p?{enabled:true,preset:p.id,chartStart:p.chartStart,tracks:p.tracks,typing:p.typing}:{});};
+export const motionPreset=id=>{const p=motionPresets.find(p=>p.id===id);return normalizeMotion(p?{enabled:true,preset:p.id,chartStart:p.chartStart,tracks:p.tracks,typing:p.typing,mystery:p.mystery}:{});};
 export function reelMotionFrame(config,progress,time){
  const motion=motionOf(config),duration=config.duration||12;
  if(!motion?.enabled||config.editorPreview)return {config,progress,dataTime:time};
@@ -59,6 +62,8 @@ export function reelMotionFrame(config,progress,time){
 }
 export function motionState(config,id){
  const m=motionOf(config),frame=config._motionFrame;
+ const mystery=mysteryFrame(config);
+ if(mystery&&id!=='title')return id==='content'?mystery.chart:mystery.answer;
  if(!m?.enabled||!frame||config.editorPreview||config._typingCapture||id==='source'||isSequentialTyping(config)&&id!=='content'&&id!=='mark'&&!id.startsWith('sticker'))return {effect:'none',p:1,eased:1};
  const t=m.tracks[id]||(id.startsWith('sticker:')?m.tracks.stickers:null);
  if(!t||t.effect==='none')return {effect:'none',p:1,eased:1};

@@ -76,7 +76,7 @@ Skala danych|Data scale
 Oryginalne wartości|Original values
 Indeks 100 od pierwszej obserwacji|Index 100 from the first observation
 Indeks 100 porównuje tempo zmian, a nie wielkość. Każda seria zaczyna od swojej pierwszej niepustej obserwacji.|Index 100 compares growth rates, not size. Each series starts at its first non-missing observation.
-Źródło danych pozostaje na każdej klatce. Luki w danych przerywają linię; animacja nie tworzy nowych obserwacji.|The data source stays on every frame. Missing data breaks the line; the animation creates no new observations.
+Źródło danych jest dołączone do rolki. Luki w danych przerywają linię; animacja nie tworzy nowych obserwacji.|The data source is included in the reel. Missing data breaks the line; the animation creates no new observations.
 Wklej dane z arkusza lub researchu w ChatGPT.|Paste data from a spreadsheet or your research in ChatGPT.
 Dane CSV|CSV data
 Kolumna rok + 1–3 serie. Separator: średnik lub przecinek. Pusta komórka = brak danych.|Year column + 1–3 series. Separator: semicolon or comma. Empty cell = missing data.

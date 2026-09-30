@@ -10,7 +10,7 @@ import {buildAiBrandHistory} from '../src/ai-brand-history.js';
 
 const configFor=(id,duration=12)=>({duration,visuals:{design:normalizeDesign({motion:motionPreset(id)})}});
 test('all sequences keep the first observation until entrance finishes and reserve the final hold',()=>{
- assert.equal(motionPresets.length,19);assert.equal(new Set(motionPresets.map(p=>p.id)).size,19);
+ assert.equal(motionPresets.length,20);assert.equal(new Set(motionPresets.map(p=>p.id)).size,motionPresets.length);
  for(const preset of motionPresets)for(const duration of [6,12,20,30]){
   const config=configFor(preset.id,duration),m=config.visuals.design.motion,start=m.chartStart*duration;
   assert.ok(m.chartStart>=m.tracks.content.start+m.tracks.content.duration-1e-12);
@@ -35,9 +35,9 @@ test('invalid tracks are bounded, text-only effects cannot mask charts, and stic
 function recorder(){const log=[],stack=[],keys=['font','globalAlpha','fillStyle','textAlign','shadowBlur','lineWidth'];
  const ctx=new Proxy({font:'30px Arial',globalAlpha:1,textAlign:'left',fillStyle:'#000',shadowBlur:0,lineWidth:1,getTransform:()=>({a:1,b:0,c:0,d:1,e:0,f:0}),measureText:s=>({width:Array.from(String(s)).length*16}),save(){stack.push(Object.fromEntries(keys.map(k=>[k,this[k]])));},restore(){assert.ok(stack.length);Object.assign(this,stack.pop());}}, {get:(o,k)=>k in o?o[k]:(...args)=>{args.forEach(n=>{if(typeof n==='number')assert.ok(Number.isFinite(n),`${String(k)} ${args}`);});log.push({op:k,args,alpha:o.globalAlpha});}});
  const canvas={width:1080,height:1920,getContext:()=>ctx};ctx.canvas=canvas;return {ctx,canvas,log,stack};}
-test('generic entrance effects finish at identity, and sources never disappear',()=>{
+test('generic entrance effects finish at identity; only mystery can delay source attribution',()=>{
  for(const preset of motionPresets){const config=configFor(preset.id),start=reelMotionFrame(config,0,0).config,end=reelMotionFrame(config,1,12).config;
-  assert.equal(motionState(start,'source').p,1);assert.equal(motionState(start,'content').p,0);assert.equal(motionState(end,'content').p,1);
+  assert.equal(motionState(start,'source').p,preset.id==='mystery'?0:1);assert.equal(motionState(end,'source').p,1);assert.equal(motionState(start,'content').p,0);assert.equal(motionState(end,'content').p,1);
   const {ctx,log}=recorder();applyElementMotion(ctx,end,'content',{x:0,y:0,w:900,h:900});assert.equal(log.length,0);assert.equal(ctx.globalAlpha,1);
  }
 });
@@ -59,7 +59,7 @@ test('animated AI and regular reels hide data during the intro without losing so
  const variants=['line','area','bar','ranking','cards'].map(chart=>({...base,chart}));
  for(const mode of ['timeline','ranking','records','scatter','duel'])variants.push({...base,ai:{rows,benchmark,mode,basis:'observed'}});
  for(const mode of ['timeline','ranking','records'])variants.push({...base,ai:{rows,benchmark,mode,basis:'observed',brands,history,groupBy:'brand',showBrandLogos:false}});
- for(const variant of variants)for(const preset of motionPresets){
+ for(const variant of variants)for(const preset of motionPresets.filter(p=>p.id!=='mystery')){
   const cfg={...variant,...configFor(preset.id)},original=JSON.stringify(cfg),{canvas,ctx,log,stack}=recorder();
   drawReel(canvas,cfg,0,0);const visible=log.filter(e=>e.op==='fillText'&&e.alpha>0).map(e=>String(e.args[0]));assert.equal(visible.some(s=>s.includes('Source receipt')),!cfg.visuals.design.motion.typing.enabled,`${preset.id} source`);assert.ok(!visible.some(s=>/Data series|GPT first|Claude last|Human baseline/.test(s)),`${preset.id} ${variant.ai?.mode||variant.chart} leaked data`);
   log.length=0;drawReel(canvas,cfg,0,cfg.visuals.design.motion.chartStart*cfg.duration);assert.ok(log.some(e=>e.op==='fillText'&&e.alpha>0&&String(e.args[0]).includes('Source receipt')),`${preset.id} source before data`);

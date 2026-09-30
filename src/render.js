@@ -1,5 +1,6 @@
 import {reelMotionFrame} from './reel-motion.js';
 import {renderTypingFrame} from './reel-typing.js';
+import {renderMysteryFrame} from './reel-mystery.js';
 import {drawReelLogo} from './reel-logo.js';
 import {resetElements,beginElement,textRect} from './reel-elements.js';
 import { timelineDate } from './observation-date.js';
@@ -11,6 +12,7 @@ import {drawSeriesContent} from './series-render.js';
 import {themeOf,textSize,textColor,setReelText,reelTextFont,textWeight,beginReelSection,seriesPlotLayout,designOf} from './reel-design.js';
 import {drawTextBlock as wrap,paintText,textStyleOf} from './reel-text.js';
 export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
+ if(renderMysteryFrame(canvas,config,progress,timeSeconds,drawReelFrame))return;
  if(renderTypingFrame(canvas,config,progress,timeSeconds,drawReelFrame))return;
  drawReelFrame(canvas,config,progress,timeSeconds);
 }

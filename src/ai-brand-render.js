@@ -8,6 +8,7 @@ import {clamp,lerp,rankMotion} from './presentation.js';
 import {aiValue} from './ai.js';
 import {themeOf,textSize,textColor,reelTextFont,chartTop} from './reel-design.js';
 import {lineLabelGeometry,drawLineLabels} from './line-labels.js';
+import {mysteryRole} from './reel-mystery.js';
 
 function ellipsis(ctx,text,width){let value=String(text||'');if(ctx.measureText(value).width<=width)return value;while(value.length&&ctx.measureText(value+'…').width>width)value=value.slice(0,-1);return value+'…';}
 export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,grid,panel,wrap}){
@@ -35,7 +36,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   if(role==='values'||fit){while(px>16&&ctx.measureText(String(value)).width>width){px--;ctx.font=reelTextFont(config,role,px,bold?'bold':'normal');}ctx.fillText(String(value),x,y,width);}
   else ctx.fillText(ellipsis(ctx,value,width),x,y);
  }
- function badge(brand,x,y,size=40){if(!showBrandLogos)return 0;const logo=getReelLogo(brand.logo);if(!logo)return 0;ctx.fillStyle='#fff';ctx.fillRect(x,y,size,size);const pad=5,fit=Math.min((size-2*pad)/logo.width,(size-2*pad)/logo.height);ctx.drawImage(logo,x+(size-logo.width*fit)/2,y+(size-logo.height*fit)/2,logo.width*fit,logo.height*fit);return size+12;}
+ function badge(brand,x,y,size=40){if(!showBrandLogos)return 0;const logo=getReelLogo(brand.logo);if(!logo)return 0;const endMystery=mysteryRole(ctx,'labels');ctx.fillStyle='#fff';ctx.fillRect(x,y,size,size);const pad=5,fit=Math.min((size-2*pad)/logo.width,(size-2*pad)/logo.height);ctx.drawImage(logo,x+(size-logo.width*fit)/2,y+(size-logo.height*fit)/2,logo.width*fit,logo.height*fit);endMystery();return size+12;}
  function identity(brand,winner,previous,x,y,width,compact=false){
   const indent=badge(brand,x,y-29,compact?34:40);
   text(brand.name,x+indent,y,width-indent,compact?28:34,color(brand),true,'labels',true);

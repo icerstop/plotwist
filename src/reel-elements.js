@@ -1,5 +1,6 @@
 import {applyElementMotion} from './reel-motion.js';
 import {typingRole} from './reel-typing.js';
+import {mysteryRole} from './reel-mystery.js';
 // The renderer publishes geometry, never editor chrome. Export uses identical transforms.
 const frames=new WeakMap();
 export const elementIds=['mark','title','subtitle','metric','content','date','source','signature'];
@@ -22,12 +23,12 @@ export function registerElement(ctx,id,rect,extra){
  const list=frames.get(ctx.canvas);if(list)list.push(regionFromMatrix(id,rect,ctx.getTransform(),extra));
 }
 export function beginElement(ctx,config,id,rect){
- const endRole=typingRole(ctx,id);
+ const endRole=typingRole(ctx,id),endMystery=mysteryRole(ctx,id);
  const t=config.visuals?.design?.elements?.[id]||identityElement(),m=ctx.getTransform();ctx.save();
  // Store translation as a percentage of the full reel, independent of nested layout scale.
  ctx.setTransform(m.a,m.b,m.c,m.d,m.e+t.x*ctx.canvas.width/100,m.f+t.y*ctx.canvas.height/100);
  ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);ctx.rotate(t.rotation*Math.PI/180);ctx.scale(t.scale/100,t.scale/100);ctx.translate(-rect.x-rect.w/2,-rect.y-rect.h/2);
- applyElementMotion(ctx,config,id,rect);registerElement(ctx,id,rect);return ()=>{ctx.restore();endRole();};
+ applyElementMotion(ctx,config,id,rect);registerElement(ctx,id,rect);return ()=>{ctx.restore();endMystery();endRole();};
 }
 export function textRect(ctx,lines,x,y,step,maxWidth=Infinity){
  const metrics=lines.map(s=>ctx.measureText(s)),width=Math.min(maxWidth,Math.max(1,...metrics.map(m=>m.width))),size=parseFloat(ctx.font.match(/([\d.]+)px/)?.[1]||30);

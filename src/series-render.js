@@ -7,6 +7,7 @@ import {axisNumberFormat,drawAxisNumber,drawAxisCaption} from './axis-numbers.js
 import {textSize,textColor,setReelText,reelTextFont} from './reel-design.js';
 import {lineEndpoint,lineLabelGeometry,endpointLabelText,drawLineLabels} from './line-labels.js';
 import {seriesBadge} from './series-identity.js';
+import {mysteryRole} from './reel-mystery.js';
 export function crossText(ctx,previous,current,x,y,mix=1,maxWidth=1000){
  if(previous===current||mix>=1){ctx.fillText(current,x,y,maxWidth);return;}
  ctx.save();ctx.globalAlpha*=Math.max(0,1-mix*2);ctx.fillText(previous,x,y-8*mix,maxWidth);ctx.restore();
@@ -14,10 +15,11 @@ export function crossText(ctx,previous,current,x,y,mix=1,maxWidth=1000){
 }
 export function fittedText(ctx,text,x,y,width){let label=String(text);while(ctx.measureText(label).width>width&&label.length>1)label=label.slice(0,-1);if(label!==String(text))label=label.slice(0,-1)+'…';ctx.fillText(label,x,y);}
 function logoLabel(ctx,series,x,y,font,fg,maxWidth,config,fontLimit=Infinity){
+ const endMystery=mysteryRole(ctx,'labels');
  const logo=getReelLogo(series.logo);let offset=0;
  if(logo){ctx.fillStyle='#fff';ctx.fillRect(x,y-29,38,38);const ratio=Math.min(30/logo.naturalWidth,30/logo.naturalHeight);ctx.drawImage(logo,x+19-logo.naturalWidth*ratio/2,y-10-logo.naturalHeight*ratio/2,logo.naturalWidth*ratio,logo.naturalHeight*ratio);offset=51;}
  setReelText(ctx,config,'labels',Math.min(27,fontLimit/textSize(config,'labels',1)),font,fg);const suffix=series.scheduleText?` · ${series.scheduleText}`:'',suffixWidth=ctx.measureText(suffix).width;
- fittedText(ctx,series.name,x+offset,y,Math.max(40,maxWidth-offset-suffixWidth));if(suffix)ctx.fillText(suffix,x+maxWidth-suffixWidth,y);
+ fittedText(ctx,series.name,x+offset,y,Math.max(40,maxWidth-offset-suffixWidth));if(suffix)ctx.fillText(suffix,x+maxWidth-suffixWidth,y);endMystery();
 }
 const extentCache=new WeakMap();
 export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue,timeSeconds}){
@@ -86,7 +88,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
    }
    ctx.beginPath();let previous=null;for(const p of s.points){if(!Number.isFinite(p.y)){previous=null;continue;}if(previous){if(s.interpolation==='step')ctx.lineTo(px(p.x),py(previous.y));ctx.lineTo(px(p.x),py(p.y));}else ctx.moveTo(px(p.x),py(p.y));previous=p;}ctx.stroke();ctx.restore();
   }
-  ctx.restore();if(!appearance.legend)return;ctx.setLineDash([]);const y=bottom+100+legend[i].position*legendStep;ctx.fillStyle=color(i);ctx.fillRect(80,y-21,6,24);logoLabel(ctx,s,108,y,font,fg,505,config);setReelText(ctx,config,'values',27,font,fg);ctx.textAlign='right';crossText(ctx,rowText(before[i]),rowText(values[i]),1000,y,mix,350);ctx.textAlign='left';
+  ctx.restore();if(!appearance.legend)return;const endLegend=mysteryRole(ctx,'labels');ctx.setLineDash([]);const y=bottom+100+legend[i].position*legendStep;ctx.fillStyle=color(i);ctx.fillRect(80,y-21,6,24);logoLabel(ctx,s,108,y,font,fg,505,config);setReelText(ctx,config,'values',27,font,fg);ctx.textAlign='right';crossText(ctx,rowText(before[i]),rowText(values[i]),1000,y,mix,350);ctx.textAlign='left';endLegend();
  });
  if(labelGeometry){
   const items=series.flatMap((s,index)=>{const tip=lineEndpoint(s,current,scale.log);return tip?[{index,series:s,anchorX:px(tip.x),anchorY:py(tip.y),color:color(index),...endpointLabelText(tip,config,formatValue)}]:[];});

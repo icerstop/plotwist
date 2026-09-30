@@ -1,4 +1,5 @@
 import {reelMotionFrame} from './reel-motion.js';
+import {renderMysteryFrame} from './reel-mystery.js';
 import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill,plotGrid} from './chart-appearance.js';
 import {drawTextBlock,textStyleOf} from './reel-text.js';
 import {drawReelLogo} from './reel-logo.js';
@@ -27,6 +28,10 @@ function fit(ctx,text,width,size,min=26){size=textSize(config,'values',size);ctx
 return {wrap,fit};
 }
 export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
+ if(renderMysteryFrame(canvas,config,progress,timeSeconds,drawAiReelFrame))return;
+ drawAiReelFrame(canvas,config,progress,timeSeconds);
+}
+function drawAiReelFrame(canvas,config,progress,timeSeconds){
  const visualTime=timeSeconds,motionFrame=reelMotionFrame(config,progress,timeSeconds);config=motionFrame.config;progress=motionFrame.progress;timeSeconds=motionFrame.dataTime;
  const {wrap,fit}=typography(reelFont(config.fontId),config.language,config);
  const aiValue=value=>formatAiValue(value,config.language,config.ai.benchmark.scoreDecimals??1);
@@ -145,7 +150,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    wrap(ctx,base.note,76,1600,920,28,3,muted);
  }
  endContent();
- // Essential methodology is burned into every exported frame.
+ // Methodology stays in the reel; the mystery sequence reveals it with the answer.
  drawVisualOverlays(ctx,1080,1920,config,visualTime);
  const dating=basis==='release'?'Wg premier · retrospektywa, pomiary mogły być późniejsze':b.dateKind==='snapshot'?'Stan rankingu na dzień pobrania':'Wg dat testu / publikacji · bez interpolacji';
  const warning=trackingAverage?b.caveat:b.id.startsWith('iq-')?'Quiz TrackingAI ≠ psychometryczne IQ człowieka':b.id==='eci'?'ECI ≠ IQ · aktualne przeliczenie historii':b.id==='codeforces2024'?'Percentyl wśród uczestników · 10 zgłoszeń':b.id.startsWith('swe-')?'Wynik systemu z narzędziami; wersje środowiska rozdzielone':b.id==='gpqa'&&mode==='duel'?'Eksperci dziedzinowi; różne protokoły ewaluacji':['frontiermath','frontiermath4'].includes(b.id)?'Od 13.11.2025 budżet tokenów 10× większy; porównanie orientacyjne':b.caveat;

@@ -4,6 +4,7 @@ import {reelTextFont,textSize,textColor,themeOf} from './reel-design.js';
 import {seriesBadge} from './series-identity.js';
 import {getReelLogo} from './reel-assets.js';
 import {observationPeriod,timelineDate} from './observation-date.js';
+import {mysteryRole} from './reel-mystery.js';
 
 // The tip follows the actual drawn segment, including log geometry and steps.
 // Never bridge a null or show a series before its first observation.
@@ -78,6 +79,7 @@ export function endpointLabelText(tip,config,formatValue){
 
 export function drawLineLabels(ctx,config,items,geometry,{top,bottom,x,fg,background}){
  if(!items.length||!geometry)return [];
+ const endMystery=mysteryRole(ctx,'labels');
  // Explicit switches always win, even with duplicate flags or a missing image.
  const visible=items.flatMap(item=>{
   const badge=geometry.icons?(item.badge||seriesBadge(item.series)):null,logo=badge&&getReelLogo(badge.path);
@@ -104,5 +106,5 @@ export function drawLineLabels(ctx,config,items,geometry,{top,bottom,x,fg,backgr
    ctx.fillStyle=textColor(config,row.role,fg);ctx.fillText(row.role==='values'?row.text:ellipsis(ctx,row.text,width),tx,ty+row.size/2,width);ty+=row.size+geometry.textGap;
   }
  }
- ctx.restore();return layout;
+ ctx.restore();endMystery();return layout;
 }

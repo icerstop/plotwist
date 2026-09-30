@@ -1,5 +1,18 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Zagadka|Mystery
+Sam tytuł → wykres bez opisów → odpowiedź|Title only → unlabelled chart → answer
+Tryb zagadki · ukryj odpowiedź|Mystery mode · hide the answer
+Wykres bez opisów|Unlabelled chart
+Odsłonięcie odpowiedzi|Answer reveal
+Odsłoń kształt wykresu|Reveal the chart shape
+Odsłoń odpowiedź i opisy|Reveal the answer and labels
+Czas odsłaniania|Reveal duration
+Zobacz sam tytuł|Preview title only
+Zobacz wykres bez odpowiedzi|Preview chart without the answer
+Zobacz odsłoniętą odpowiedź|Preview the revealed answer
+Najpierw tylko tytuł, potem kształt danych. Nazwy, wartości, opisy osi, flagi, logotypy, daty, źródła i dodatki odsłaniają się z odpowiedzią. Wyłączone elementy pozostają wyłączone. Wpisz tytuł w formie pytania, które nie zdradza rozwiązania.|First the title, then the shape of the data. Names, values, axis labels, flags, logos, dates, sources and media appear with the answer. Disabled elements stay disabled. Write a question title that does not give away the answer.
+Przy edycji kursorem wszystkie elementy są widoczne. W trybie zagadki źródła i metodologia pojawiają się z odpowiedzią i pozostają do końca.|All elements are visible while editing with the pointer. In mystery mode, sources and methodology appear with the answer and stay until the end.
 Średnia z ostatnich maks. 7 prób|Average of latest up to 7 runs
 Mensa Norway · ranking TrackingAI|Mensa Norway · TrackingAI ranking
 Offline Test · ranking TrackingAI|Offline Test · TrackingAI ranking
@@ -561,7 +574,7 @@ Przychody i marże segmentów. Microsoft nie publikuje wszystkich danych Azure w
 Czas pobrania tego samego pliku przy historycznych przepustowościach. Prędkości reklamowane nie są pomiarami.|Time to download the same file at historical bandwidths. Advertised speeds are not measurements.
 Wpisz kod dowolnego wskaźnika. Pobierz całą dostępną historię dla 12 krajów i agregatów, do najnowszych opublikowanych wartości.|Enter any indicator code. Fetch all available history for 12 countries and aggregates, through the latest published values.
 Indeks 100 porównuje tempo zmian, a nie wielkość. Każda seria zaczyna od swojej pierwszej niepustej obserwacji.|An index starting at 100 compares rates of change, not size. Each series starts at its first non-empty observation.
-Źródło danych pozostaje na każdej klatce. Luki w danych przerywają linię; animacja nie tworzy nowych obserwacji.|The data source remains on every frame. Gaps break the line; animation creates no new observations.
+Źródło danych jest dołączone do rolki. Luki w danych przerywają linię; animacja nie tworzy nowych obserwacji.|The data source is included in the reel. Gaps break the line; animation creates no new observations.
 Różne budżety? Wykres pokazuje także sumę wpłat. Wydatki na kawę nie są wartością aktywa.|Different budgets? The chart also shows total contributions. Coffee spending is not an asset value.
 Fundusze GLD i SLV odwzorowują metale z uwzględnieniem kosztów. USO korzysta z kontraktów na ropę; jego wynik może różnić się od ceny ropy spot.|GLD and SLV track metals after costs. USO uses oil futures; its performance may differ from spot oil prices.
 Wybierz serie i wspólny zakres dat.|Choose series and a shared date range.
