@@ -64,11 +64,11 @@ export function ChartEditor({config}){
 }
 
 export function TextEffects({role,config,beforeChange=()=>{}}){
- const v=useVisualStatus(),s=v.visuals.design.text[role],patch=p=>v.textStyle(role,p),paragraph=['title','subtitle','metric'].includes(role),range=(key,label,min,max,suffix='',step=1)=><Range label={label} value={s[key]} min={min} max={max} suffix={suffix} step={step} onChange={n=>patch({[key]:n})}/>;
+ const v=useVisualStatus(),s=v.visuals.design.text[role],patch=p=>v.textStyle(role,p),paragraph=['title','subtitle','metric','source'].includes(role),range=(key,label,min,max,suffix='',step=1)=><Range label={label} value={s[key]} min={min} max={max} suffix={suffix} step={step} onChange={n=>patch({[key]:n})}/>;
  return <div className="text-effects" onFocusCapture={beforeChange} onPointerDownCapture={beforeChange}>
   {paragraph&&<details className="appearance-group" open><summary>Skład tekstu</summary>
    <Select label="Zawijanie tekstu" value={s.wrap} options={[["auto","Automatycznie + ręczne podziały"],["manual","Tylko ręczne podziały"]]} onChange={wrap=>patch({wrap})}/>
-   <p className="visual-hint">Enter w polu tytułu zaczyna nowy wiersz. Rozmiar tytułu dopasowuje się do dostępnego miejsca.</p>
+   <p className="visual-hint">Enter w polu tekstu zaczyna nowy wiersz. Dłuższe opisy dopasujesz limitem wierszy, szerokością i rozmiarem tekstu.</p>
    <Select label="Wyrównanie tekstu" value={s.align} options={[["auto","Z układu"],["left","Do lewej"],["center","Na środku"],["right","Do prawej"]]} onChange={align=>patch({align})}/>
    {range('width','Szerokość tekstu',45,100,'%')}{range('lineHeight','Interlinia',.85,1.65,'×',.05)}
    <Select label="Limit wierszy" value={s.maxLines} options={[[0,'Automatycznie'],...[1,2,3,4,5,6].map(n=>[n,String(n)])]} onChange={maxLines=>patch({maxLines:Number(maxLines)})}/>

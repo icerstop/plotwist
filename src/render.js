@@ -1,3 +1,4 @@
+import {copyText,resetReelCopy} from './reel-copy.js';
 import {reelMotionFrame} from './reel-motion.js';
 import {renderTypingFrame} from './reel-typing.js';
 import {renderMysteryFrame} from './reel-mystery.js';
@@ -17,10 +18,11 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
  drawReelFrame(canvas,config,progress,timeSeconds);
 }
 function drawReelFrame(canvas,config,progress,timeSeconds){
- resetElements(canvas);
+ resetElements(canvas);resetReelCopy(canvas);
  if(config.ai){drawAiReel(canvas,config,progress,timeSeconds);return;}
  const motionFrame=reelMotionFrame(config,progress,timeSeconds);config=motionFrame.config;progress=motionFrame.progress;
- const ctx=canvas.getContext('2d'); const {series=[],title,subtitle,source,theme='dark',format='9:16',chart='line',unit='',isCoffee=false,xType='year'}=config;
+ const ctx=canvas.getContext('2d'); const {series=[],theme='dark',format='9:16',chart='line',unit='',isCoffee=false,xType='year'}=config;
+ const title=copyText(ctx,config,'title',config.title||'Twoja historia.'),subtitle=copyText(ctx,config,'subtitle',config.subtitle),source=copyText(ctx,config,'source',config.source),metric=copyText(ctx,config,'metric',config.metricCaption);
  const font=reelFont(config.fontId),titleFontId=designOf(config).text.title.fontId||config.fontId;
  const width=1080,height=format==='1:1'?1080:format==='4:5'?1350:1920;if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}
  const {dark,bg,fg,muted,colors,panel,grid}=themeOf(config);
@@ -31,32 +33,32 @@ function drawReelFrame(canvas,config,progress,timeSeconds){
  const headerBottom=height<1400?height*.46-28:670,baseHeadingY=height<1400?200:240;
  // Lower the heading without changing its font fit or the chart's position.
  const headingY=baseHeadingY+(height<1400?40:64);
- const titleSize=reelTitleSize(ctx,title||'Twoja historia.',titleFontId,preferred,920,maxLines,headerBottom-baseHeadingY-100,{...textStyleOf(config,'title'),weight:textWeight(config,'title','bold')});
+ const titleSize=reelTitleSize(ctx,title,titleFontId,preferred,920,maxLines,headerBottom-baseHeadingY-100,{...textStyleOf(config,'title'),weight:textWeight(config,'title','bold')});
  ctx.font=reelTextFont(config,'title',titleSize,'bold');
- const headingHeight=wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines,false,config,'title'),subtitleY=headingY+headingHeight+16,subtitleStep=textSize(config,'subtitle',46);
+ const headingHeight=wrap(ctx,title,78,headingY,920,titleSize*1.08,maxLines,false,config,'title'),subtitleY=headingY+headingHeight+16,subtitleStep=textSize(config,'subtitle',46);
  setReelText(ctx,config,'subtitle',38,font,muted);
  const subtitleHeight=wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2,false,config,'subtitle');
  const headerEnd=subtitleHeight?subtitleY+subtitleHeight-subtitleStep+textSize(config,'subtitle',38)*.3:headingY+headingHeight-titleSize*1.08+titleSize*.3;
  const hasPlot=['line','area','bar'].includes(chart),metricStep=textSize(config,'metric',38);
  setReelText(ctx,config,'metric',32,font,fg,'bold');
- const metricHeight=config.metricCaption?wrap(ctx,config.metricCaption,hasPlot?135:78,0,hasPlot?765:924,metricStep,2,false,config,'metric'):0;
- const plot=seriesPlotLayout(config,width,height,headerEnd,metricHeight);
+ const metricHeight=metric?wrap(ctx,metric,hasPlot?135:78,0,hasPlot?765:924,metricStep,2,false,config,'metric'):0;
+ const plot=seriesPlotLayout({...config,metricCaption:metric},width,height,headerEnd,metricHeight);
  // Only a crowded small frame needs a more compact header; the height slider
  // itself never scales text, logos, the legend or the attribution footer.
  if(hasPlot){ctx.translate(50,50);ctx.scale(plot.headerScale,plot.headerScale);ctx.translate(-50,-50);}
  drawReelLogo(ctx,config,timeSeconds);
- ctx.fillStyle=textColor(config,'title',fg);ctx.font=reelTextFont(config,'title',titleSize,'bold');wrap(ctx,title||'Twoja historia.',78,headingY,920,titleSize*1.08,maxLines,true,config,'title');
+ ctx.fillStyle=textColor(config,'title',fg);ctx.font=reelTextFont(config,'title',titleSize,'bold');wrap(ctx,title,78,headingY,920,titleSize*1.08,maxLines,true,config,'title');
  setReelText(ctx,config,'subtitle',38,font,muted);wrap(ctx,subtitle||'',78,subtitleY,910,subtitleStep,2,true,config,'subtitle');
  endHeader();
- const contentTop=(height<1400?height*.48:730)+(config.metricCaption?metricHeight+26:0);
- const contentY=(hasPlot?plot.top:contentTop)-(config.metricCaption?metricHeight+76:hasPlot?40:50);
+ const contentTop=(height<1400?height*.48:730)+(metric?metricHeight+26:0);
+ const contentY=(hasPlot?plot.top:contentTop)-(metric?metricHeight+76:hasPlot?40:50);
  const endContent=beginReelSection(ctx,config,'content',width,height,{x:70,y:contentY,w:940,h:(hasPlot?plot.bottom+(designOf(config).chart?.legend!==false?125+(series.length-1)*plot.legendStep:65):height-210)-contentY});
  const {top,bottom,legendStep}=plot;
- if(config.metricCaption){setReelText(ctx,config,'metric',32,font,fg,'bold');wrap(ctx,config.metricCaption,hasPlot?135:78,(hasPlot?top:contentTop)-metricHeight-30,hasPlot?765:924,metricStep,2,true,config,'metric');}
+ if(metric){setReelText(ctx,config,'metric',32,font,fg,'bold');wrap(ctx,metric,hasPlot?135:78,(hasPlot?top:contentTop)-metricHeight-30,hasPlot?765:924,metricStep,2,true,config,'metric');}
  const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue:n=>formatValue(n,config.language),timeSeconds:motionFrame.dataTime});
  endContent();
  drawVisualOverlays(ctx,width,height,config,timeSeconds);
- setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';const date=config.dateLabel||(xType==='date'?timelineDate(current,config):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)));const endDate=beginElement(ctx,config,'date',textRect(ctx,[date],1000,height-175,0,924));paintText(ctx,config,'date',[date],1000,height-175,0,924);endDate();ctx.textAlign='left';
+ setReelText(ctx,config,'date',height<1400?44:xType==='date'?58:64,font,fg,'bold');ctx.textAlign='right';const autoDate=config.dateLabel||(xType==='date'?timelineDate(current,config):isCoffee?`${config.language==='en'?'YEAR':'ROK'} ${Math.floor(current)}`:String(Math.floor(current)));const date=copyText(ctx,config,'date',autoDate,{dynamic:true,multiline:false});const endDate=beginElement(ctx,config,'date',textRect(ctx,[date],1000,height-175,0,924));paintText(ctx,config,'date',[date],1000,height-175,0,924);endDate();ctx.textAlign='left';
  setReelText(ctx,config,'source',24,font,muted);wrap(ctx,source||'',80,height-132,920,textSize(config,'source',27),2,true,config,'source');
  drawSignature(ctx,width,height,config.fontId,dark,config);
 }

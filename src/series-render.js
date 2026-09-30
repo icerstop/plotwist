@@ -8,6 +8,7 @@ import {textSize,textColor,setReelText,reelTextFont} from './reel-design.js';
 import {lineEndpoint,lineLabelGeometry,endpointLabelText,drawLineLabels} from './line-labels.js';
 import {seriesBadge} from './series-identity.js';
 import {mysteryRole} from './reel-mystery.js';
+import {copyText} from './reel-copy.js';
 export function crossText(ctx,previous,current,x,y,mix=1,maxWidth=1000){
  if(previous===current||mix>=1){ctx.fillText(current,x,y,maxWidth);return;}
  ctx.save();ctx.globalAlpha*=Math.max(0,1-mix*2);ctx.fillText(previous,x,y-8*mix,maxWidth);ctx.restore();
@@ -19,7 +20,7 @@ function logoLabel(ctx,series,x,y,font,fg,maxWidth,config,fontLimit=Infinity){
  const logo=getReelLogo(series.logo);let offset=0;
  if(logo){ctx.fillStyle='#fff';ctx.fillRect(x,y-29,38,38);const ratio=Math.min(30/logo.naturalWidth,30/logo.naturalHeight);ctx.drawImage(logo,x+19-logo.naturalWidth*ratio/2,y-10-logo.naturalHeight*ratio/2,logo.naturalWidth*ratio,logo.naturalHeight*ratio);offset=51;}
  setReelText(ctx,config,'labels',Math.min(27,fontLimit/textSize(config,'labels',1)),font,fg);const suffix=series.scheduleText?` · ${series.scheduleText}`:'',suffixWidth=ctx.measureText(suffix).width;
- fittedText(ctx,series.name,x+offset,y,Math.max(40,maxWidth-offset-suffixWidth));if(suffix)ctx.fillText(suffix,x+maxWidth-suffixWidth,y);endMystery();
+ fittedText(ctx,copyText(ctx,config,'series.name',series.name,{element:'content',label:'Nazwa serii',multiline:false}),x+offset,y,Math.max(40,maxWidth-offset-suffixWidth));if(suffix)ctx.fillText(suffix,x+maxWidth-suffixWidth,y);endMystery();
 }
 const extentCache=new WeakMap();
 export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue,timeSeconds}){
@@ -38,7 +39,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
  if(scale.dynamic&&['bar','ranking'].includes(chart))for(const row of before)if(Number.isFinite(row.value)){extent.min=Math.min(extent.min,row.value);extent.max=Math.max(extent.max,row.value);}
  const axis=createAxis(extent,{log:scale.log,dynamic:scale.dynamic,fixedDomain:[minY,maxY]});
  const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25)),numbers=axisNumberFormat(config,all.range,ticks);
- const unitCaption=chartAppearance(config).axisLabels&&['line','area','bar'].includes(chart)?numbers.caption:'',caption=scaleCaption(config,scale);
+ const unitCaption=chartAppearance(config).axisLabels&&['line','area','bar'].includes(chart)?copyText(ctx,config,'axis.unit',numbers.caption,{element:'content',label:'Opis jednostki osi',multiline:false}):'',autoCaption=scaleCaption(config,scale),caption=autoCaption?copyText(ctx,config,'axis.scale',autoCaption,{element:'content',label:'Podpis zakresu i skali',multiline:false}):'';
  if(unitCaption||caption){setReelText(ctx,config,'labels',unitCaption?28:23,font,muted);drawAxisCaption(ctx,unitCaption,caption,chart==='ranking'?78:135,chart==='ranking'?contentTop-22:top-22,860);}
  const appearance=chartAppearance(config),color=i=>seriesColor(config,i,series[i].customColor?series[i].color:colors[i%colors.length]);
  const text=v=>v===null?(config.language==='en'?'no data':'brak danych'):`${formatValue(v)} ${unit}`;

@@ -5,6 +5,7 @@ import {seriesBadge} from './series-identity.js';
 import {getReelLogo} from './reel-assets.js';
 import {observationPeriod,timelineDate} from './observation-date.js';
 import {mysteryRole} from './reel-mystery.js';
+import {copyText} from './reel-copy.js';
 
 // The tip follows the actual drawn segment, including log geometry and steps.
 // Never bridge a null or show a series before its first observation.
@@ -83,7 +84,7 @@ export function drawLineLabels(ctx,config,items,geometry,{top,bottom,x,fg,backgr
  // Explicit switches always win, even with duplicate flags or a missing image.
  const visible=items.flatMap(item=>{
   const badge=geometry.icons?(item.badge||seriesBadge(item.series)):null,logo=badge&&getReelLogo(badge.path);
-  const name=geometry.names?item.series.name:'',value=geometry.values?item.value:'',date=geometry.dates?item.date:'';
+  const name=geometry.names?copyText(ctx,config,'series.name',item.series.name,{element:'content',label:'Nazwa serii',multiline:false}):'',value=geometry.values?item.value:'',date=geometry.dates?item.date:'';
   return logo||name||value||date?[{...item,badge,logo,name,value,date}]:[];
  }),layout=arrangeLineLabels(visible,geometry,{top,bottom,x});
  ctx.save();ctx.shadowBlur=0;ctx.shadowOffsetX=ctx.shadowOffsetY=0;ctx.setLineDash([]);ctx.lineWidth=2;ctx.textAlign='left';ctx.textBaseline='middle';

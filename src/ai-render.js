@@ -1,4 +1,5 @@
 import {reelMotionFrame} from './reel-motion.js';
+import {copyText,resetReelCopy} from './reel-copy.js';
 import {renderMysteryFrame} from './reel-mystery.js';
 import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill,plotGrid} from './chart-appearance.js';
 import {drawTextBlock,textStyleOf} from './reel-text.js';
@@ -18,6 +19,7 @@ import {themeOf,textSize,textColor,setReelText,reelTextFont,textWeight,beginReel
 function typography(font,language,config){
 function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels'){
  if(!custom)text=translate(text,language);
+ if(role!=='values')text=copyText(ctx,config,role==='labels'?'ai.note':role,text,{element:role==='labels'?'content':role,dynamic:role==='date',multiline:role!=='date'});
  const title=role==='title';
  setReelText(ctx,config,role,title?size/textSize(config,role,1):size,font,color,title||size>=60?'bold':'');
  const actual=title?size:textSize(config,role,size);
@@ -28,6 +30,7 @@ function fit(ctx,text,width,size,min=26){size=textSize(config,'values',size);ctx
 return {wrap,fit};
 }
 export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
+ resetReelCopy(canvas);
  if(renderMysteryFrame(canvas,config,progress,timeSeconds,drawAiReelFrame))return;
  drawAiReelFrame(canvas,config,progress,timeSeconds);
 }
@@ -43,7 +46,7 @@ function drawAiReelFrame(canvas,config,progress,timeSeconds){
  drawVisualBackground(ctx,1080,1920,config,visualTime);
  const endHeader=beginReelSection(ctx,config,'header',1080,1920);
  drawReelLogo(ctx,config,visualTime,{x:76,y:73,h:50});
- wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270,{...textStyleOf(config,'title'),weight:textWeight(config,'title','bold')}),3,fg,true,'title');
+ wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,copyText(ctx,config,'title',title||b.name),designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270,{...textStyleOf(config,'title'),weight:textWeight(config,'title','bold')}),3,fg,true,'title');
  const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:508,w:928,h:168});
  const subtitleHeight=wrap(ctx,`${b.name}${b.unit?` (${b.unit})`:''}`,76,548,928,40,2,accent,false,'subtitle');
  if(scope||trackingAverage)wrap(ctx,trackingAverage?'Średnia z ostatnich maks. 7 prób':scope,76,548+subtitleHeight+18,928,28,1,muted,false,'subtitle');
@@ -111,7 +114,7 @@ function drawAiReelFrame(canvas,config,progress,timeSeconds){
    const start=frames[0].time,end=frames.at(-1).time,x=t=>left+(t-start)/(end-start||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
    const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25)),numbers=axisNumberFormat(config,bounds(rows.map(r=>r.score)),ticks);
    setReelText(ctx,config,'labels',28,reelFont(config.fontId),muted);
-   drawAxisCaption(ctx,appearance.axisLabels?numbers.caption:'',caption,left,top-22,850);
+   drawAxisCaption(ctx,appearance.axisLabels?copyText(ctx,config,'axis.unit',numbers.caption,{element:'content',label:'Opis jednostki osi',multiline:false}):'',caption?copyText(ctx,config,'axis.scale',caption,{element:'content',label:'Podpis zakresu i skali',multiline:false}):'',left,top-22,850);
    wrap(ctx,`${b.unit} · najwyższy dotąd wynik w filtrze`,76,727,920,30,2,muted);
    plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';setReelText(ctx,config,'labels',25,reelFont(config.fontId),muted);drawAxisNumber(ctx,numbers.format(value),left-20,y(value)+9,left-30);ctx.textAlign='left';}
    ctx.save();ctx.beginPath();ctx.rect(left-5,top-5,(right-left)*progress+5,bottom-top+10);ctx.clip();lineAppearance(ctx,config,accent);ctx.beginPath();let previous=frames[0].record.score;ctx.moveTo(left,y(previous));
@@ -134,7 +137,7 @@ function drawAiReelFrame(canvas,config,progress,timeSeconds){
    const t0=Date.parse(first.date),t1=Date.parse(last.date);const x=d=>left+(Date.parse(d)-t0)/(t1-t0||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
    const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25)),numbers=axisNumberFormat(config,bounds(rows.map(r=>r.score)),ticks);
    setReelText(ctx,config,'labels',28,reelFont(config.fontId),muted);
-   drawAxisCaption(ctx,appearance.axisLabels?numbers.caption:'',caption,left,top-22,850);
+   drawAxisCaption(ctx,appearance.axisLabels?copyText(ctx,config,'axis.unit',numbers.caption,{element:'content',label:'Opis jednostki osi',multiline:false}):'',caption?copyText(ctx,config,'axis.scale',caption,{element:'content',label:'Podpis zakresu i skali',multiline:false}):'',left,top-22,850);
    plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';setReelText(ctx,config,'labels',25,reelFont(config.fontId),muted);drawAxisNumber(ctx,numbers.format(value),left-20,y(value)+9,left-30);ctx.textAlign='left';}
    wrap(ctx,b.unit,76,720,920,30,1,muted);
    if(b.baseline){const yy=y(b.baseline.score);ctx.strokeStyle=purple;ctx.setLineDash([10,10]);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(right,yy);ctx.stroke();ctx.setLineDash([]);wrap(ctx,`Punkt odniesienia: ${aiValue(b.baseline.score)}`,left,yy-15,800,26,1,purple);}

@@ -1,3 +1,4 @@
+import {copyText} from './reel-copy.js';
 import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill,plotGrid} from './chart-appearance.js';
 import {aiBrandMotion} from './ai-brand-history.js';
 import {aiIdentityLayouts,drawAiIdentity} from './ai-labels.js';
@@ -29,6 +30,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  }
  const nameHeight=showLeaderNames?names.height:0;
  function text(value,x,y,width,size,fill=fg,bold=false,role='labels',fit=false){
+  if(role!=='values'&&!fit)value=copyText(ctx,config,'ai.note',value,{element:'content',label:'Podpis wykresu',multiline:false});
   ctx.fillStyle=textColor(config,role,fill);let px=textSize(config,role,size);
   // Dense brand rows have a fixed vertical rhythm; fit names and keep scores whole.
   if(role==='labels')px=Math.min(px,size+4);
@@ -39,7 +41,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  function badge(brand,x,y,size=40){if(!showBrandLogos)return 0;const logo=getReelLogo(brand.logo);if(!logo)return 0;const endMystery=mysteryRole(ctx,'labels');ctx.fillStyle='#fff';ctx.fillRect(x,y,size,size);const pad=5,fit=Math.min((size-2*pad)/logo.width,(size-2*pad)/logo.height);ctx.drawImage(logo,x+(size-logo.width*fit)/2,y+(size-logo.height*fit)/2,logo.width*fit,logo.height*fit);endMystery();return size+12;}
  function identity(brand,winner,previous,x,y,width,compact=false){
   const indent=badge(brand,x,y-29,compact?34:40);
-  text(brand.name,x+indent,y,width-indent,compact?28:34,color(brand),true,'labels',true);
+  text(copyText(ctx,config,'series.name',brand.name,{element:'content',label:'Nazwa serii',multiline:false}),x+indent,y,width-indent,compact?28:34,color(brand),true,'labels',true);
   if(showLeaderNames){
    // Whole model/configuration labels fade together; no future model is shown.
    const changed=previous?.id!==winner?.id,fade=changed?mix:1;
@@ -66,7 +68,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   const first=history.times[0],last=history.times.at(-1),x=t=>left+(t-first)/(last-first||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top),currentX=x(current);
   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',24)),numbers=axisNumberFormat(config,bounds(raw.map(r=>r.score)),ticks);
   ctx.font=reelTextFont(config,'labels',textSize(config,'labels',28));ctx.fillStyle=textColor(config,'labels',muted);
-  drawAxisCaption(ctx,appearance.axisLabels?numbers.caption:'',caption,left,top-25,840);
+  drawAxisCaption(ctx,appearance.axisLabels?copyText(ctx,config,'axis.unit',numbers.caption,{element:'content',label:'Opis jednostki osi',multiline:false}):'',caption?copyText(ctx,config,'axis.scale',caption,{element:'content',label:'Podpis zakresu i skali',multiline:false}):'',left,top-25,840);
   plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const tick of ticks){ctx.textAlign='right';ctx.font=reelTextFont(config,'labels',Math.min(textSize(config,'labels',24),28));ctx.fillStyle=textColor(config,'labels',muted);drawAxisNumber(ctx,numbers.format(tick),left-20,y(tick)+8,left-30);ctx.textAlign='left';}
   // A step appears at its measurement date. Lines never interpolate future scores.
   ctx.save();ctx.beginPath();ctx.rect(left-4,top-5,right-left+8,bottom-top+10);ctx.clip();

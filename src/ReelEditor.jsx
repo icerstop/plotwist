@@ -1,3 +1,5 @@
+import CopyEditor from './CopyEditor.jsx';
+import {reelCopyFields} from './reel-copy.js';
 import MotionEditor from './MotionEditor.jsx';
 import FontWeightPicker from './FontWeightPicker.jsx';
 import {ChartEditor,TextEffects} from './AppearanceControls.jsx';
@@ -16,7 +18,7 @@ import './reel-editor.css';
 const names={mark:'Logo rolki',title:'Tytuł',subtitle:'Opis pod tytułem',metric:'Wspólny wskaźnik',content:'Wykres i legenda',date:'Data / rok',source:'Źródła i metodologia',signature:'Podpis autora'};
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const angle=v=>((v+180)%360+360)%360-180;
-const snapshot=v=>({design:structuredClone(v.design),stickers:structuredClone(v.stickers)});
+const snapshot=v=>({copy:structuredClone(v.copy||{}),design:structuredClone(v.design),stickers:structuredClone(v.stickers)});
 const snapPreference='plotwist-editor-snapping-v1';
 const emptyGuides={active:false,guides:[]};
 
@@ -41,11 +43,11 @@ function AlignmentGuides({guides,width,height,scale,language}){
 export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,valid,fontControls,playhead=1,onReplay,onSeek}){
  const v=useVisualStatus(),{uiLanguage,reelLanguage}=useLanguages(),svg=useRef(),gesture=useRef(),history=useRef([]);
  const [selected,setSelected]=useState('title'),[panel,setPanel]=useState('style'),[regions,setRegions]=useState([]),[viewport,setViewport]=useState(null),[undoCount,setUndoCount]=useState(0),[chartRole,setChartRole]=useState('labels');
- const [motionTarget,setMotionTarget]=useState('title');
+ const [motionTarget,setMotionTarget]=useState('title'),[copyFields,setCopyFields]=useState([]),[textFocus,setTextFocus]=useState(0);
  const [snapping,setSnapping]=useState(()=>{try{return localStorage.getItem(snapPreference)!=='off';}catch{return true;}}),[alignment,setAlignment]=useState(emptyGuides);
  useEffect(()=>{if(!enabled||!valid){gesture.current=null;setAlignment(emptyGuides);}},[enabled,valid]);
  useEffect(()=>{if(selected?.startsWith('sticker:')&&!v.visuals.stickers.some(s=>`sticker:${s.id}`===selected))setSelected(null);},[selected,v.visuals.stickers]);
- useLayoutEffect(()=>{if(enabled&&valid)setRegions(reelElements(canvas.current));},[config,revision,enabled,valid,canvas]);
+ useLayoutEffect(()=>{if(enabled&&valid){setRegions(reelElements(canvas.current));setCopyFields(reelCopyFields(canvas.current));}},[config,revision,enabled,valid,canvas]);
  useEffect(()=>{
   const el=canvas.current;if(!el)return;
   const update=()=>{const box=el.getBoundingClientRect(),parent=el.parentElement.getBoundingClientRect(),r=canvasViewport(box,el.width,el.height);setViewport({...r,left:r.left-parent.left,top:r.top-parent.top});};
@@ -90,6 +92,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   if(altKey(e))return;
   if(e.key==='Escape'){if(gesture.current)v.restoreComposition(gesture.current.before);clearGesture();setSelected(null);e.preventDefault();return;}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo();return;}
+  if(e.key==='Enter'){e.preventDefault();setTextFocus(n=>n+1);return;}
   if(!region||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
   e.preventDefault();remember();const step=e.shiftKey?10:1,dx=e.key==='ArrowLeft'?-step:e.key==='ArrowRight'?step:0,dy=e.key==='ArrowUp'?-step:e.key==='ArrowDown'?step:0;
   const o=sticker||v.visuals.design.elements[selected];const patch={x:clamp(o.x+dx/canvas.current.width*100,sticker?0:-100,100),y:clamp(o.y+dy/(canvas.current.height-(sticker?(config.ai?260:195):0))*100,sticker?0:-100,100)};
@@ -99,7 +102,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
  const unit=viewport?.scale||1,handle=top?{x:top.x+(top.x-region.center.x)/Math.max(1,Math.hypot(top.x-region.center.x,top.y-region.center.y))*26/unit,y:top.y+(top.y-region.center.y)/Math.max(1,Math.hypot(top.x-region.center.x,top.y-region.center.y))*26/unit}:null;
  const color=t?.color||(['labels','subtitle','source'].includes(role)?themeOf(config).muted:themeOf(config).fg);
  return <>
-  {enabled&&valid&&viewport&&canvas.current&&createPortal(<svg ref={svg} className="reel-edit-overlay" style={{left:viewport.left,top:viewport.top,width:viewport.width,height:viewport.height}} viewBox={`0 0 ${canvas.current.width} ${canvas.current.height}`} tabIndex="0" role="application" aria-label="Edytor elementów rolki" onPointerDown={start} onPointerMove={move} onPointerUp={finish} onPointerCancel={e=>finish(e,true)} onLostPointerCapture={e=>finish(e,true)} onKeyDown={keys} onKeyUp={altKey}>
+  {enabled&&valid&&viewport&&canvas.current&&createPortal(<svg ref={svg} className="reel-edit-overlay" style={{left:viewport.left,top:viewport.top,width:viewport.width,height:viewport.height}} viewBox={`0 0 ${canvas.current.width} ${canvas.current.height}`} tabIndex="0" role="application" aria-label="Edytor elementów rolki" onPointerDown={start} onPointerMove={move} onPointerUp={finish} onPointerCancel={e=>finish(e,true)} onLostPointerCapture={e=>finish(e,true)} onKeyDown={keys} onKeyUp={altKey} onDoubleClick={e=>{const hit=hitElement(regions,point(e));if(hit){selectElement(hit.id);setTextFocus(n=>n+1);}}}>
    {regions.map(r=><polygon key={r.id} className="reel-hit-region" points={r.corners.map(p=>`${p.x},${p.y}`).join(' ')}><title>{translate(label(r),uiLanguage)}</title></polygon>)}
    {alignment.active&&<AlignmentGuides guides={alignment.guides} width={canvas.current.width} height={canvas.current.height} scale={unit} language={uiLanguage}/>}
    {region&&<g className="reel-selection"><polygon points={corners.map(p=>`${p.x},${p.y}`).join(' ')}/><line x1={top.x} y1={top.y} x2={handle.x} y2={handle.y}/><circle className="reel-rotate-handle" data-handle="rotate" cx={handle.x} cy={handle.y} r={7/unit} onPointerDown={e=>{e.stopPropagation();start(e,'rotate');}}><title>Obróć element</title></circle><rect className="reel-scale-handle" data-handle="scale" x={corners[2].x-6/unit} y={corners[2].y-6/unit} width={12/unit} height={12/unit} onPointerDown={e=>{e.stopPropagation();start(e,'scale');}}><title>Zmień rozmiar elementu</title></rect></g>}
@@ -120,13 +123,13 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
     <label>Wybrany element<select aria-label="Wybrany element" value={selected||''} onChange={e=>selectElement(e.target.value)}><option value="">Kliknij element na rolce</option>{Object.entries(names).map(([id,name])=><option key={id} value={id}>{name}</option>)}{v.visuals.stickers.map(s=><option key={s.id} value={`sticker:${s.id}`}>{s.name}</option>)}</select></label>
     {selected&&selected!=='source'&&<button type="button" className="secondary full" onClick={()=>{setMotionTarget(selected);setPanel('motion');setEnabled(false);}}>Ustaw animację tego elementu</button>}
     {selected&&!sticker?<>
-     {selected==='metric'&&config.commonMetric&&<label>Własny podpis wskaźnika<input aria-label="Własny podpis wskaźnika" maxLength={160} value={v.visuals.design.metricLabels[config.commonMetric.key]?.[reelLanguage]||''} placeholder={config.commonMetric.labels[reelLanguage]} onFocus={remember} onChange={e=>v.metricLabel(config.commonMetric.key,reelLanguage,e.target.value)}/><small>Wpis dotyczy tego wskaźnika i języka rolki. Puste pole przywraca nazwę automatyczną.</small></label>}
+     <CopyEditor fields={copyFields.filter(f=>f.element===selected)} beforeChange={remember} focusRequest={textFocus}/>
      {selected==='content'&&<label>Tekst wykresu<select aria-label="Tekst wykresu" value={chartRole} onChange={e=>setChartRole(e.target.value)}><option value="labels">Etykiety i osie</option><option value="values">Wartości liczbowe</option></select></label>}
      {t&&<><FontPicker label="Czcionka elementu" value={t.fontId||''} inheritFontId={config.fontId} onChange={fontId=>{remember();v.textStyle(role,{fontId:fontId||null});}}/><FontWeightPicker label="Grubość czcionki elementu" fontId={t.fontId||config.fontId} value={t.weight} element onChange={weight=>{remember();v.textStyle(role,{weight});}}/><div onFocusCapture={remember} onPointerDownCapture={remember}><Range label="Rozmiar tekstu" value={t.size} min={textRoles.find(r=>r.id===role).min} max={textRoles.find(r=>r.id===role).max} onChange={size=>v.textStyle(role,{size})}/><Color label="Kolor elementu" value={color} onChange={color=>v.textStyle(role,{color})}/></div><button type="button" className="text-btn" onClick={()=>{remember();v.textStyle(role,normalizeDesign().text[role]);}}>Przywróć styl tego tekstu</button>{!['labels','values'].includes(role)&&<TextEffects role={role} config={config} beforeChange={remember}/>}<p>100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p></>}
      <div className="reel-inspector-pair"><label>Skala elementu<input aria-label="Skala elementu" type="number" min={sticker?5:25} max={sticker?100:200} step="1" value={Math.round(transform.scale)} onFocus={remember} onChange={e=>changeTransform({scale:clamp(Number(e.target.value),sticker?5:25,sticker?100:200)})}/></label><label>Obrót elementu<input aria-label="Obrót elementu" type="number" min="-180" max="180" step="1" value={Math.round(transform.rotation)} onFocus={remember} onChange={e=>changeTransform({rotation:clamp(Number(e.target.value),-180,180)})}/></label></div>
-     <button type="button" className="text-btn" onClick={()=>{remember();if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
+     <button type="button" className="text-btn" onClick={()=>{remember();for(const f of copyFields.filter(f=>f.element===selected))v.copy(f.key,null);if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
     </>:sticker?<StickerControls sticker={sticker} index={v.visuals.stickers.indexOf(sticker)} beforeChange={remember}/>:null}
-    <p>Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Esc: odznacz.</p>
+    <p>Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Esc: odznacz.</p>
    </fieldset>}
    </div>
   </section>

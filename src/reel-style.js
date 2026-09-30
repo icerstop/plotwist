@@ -1,4 +1,5 @@
 import {textLines,paintText} from './reel-text.js';
+import {copyText} from './reel-copy.js';
 import {reelFonts,reelFont,normalizeFontWeight,fontWeights} from './reel-fonts.js';
 export {reelFonts,reelFont,reelFontGroups} from './reel-fonts.js';
 import {beginElement} from './reel-elements.js';
@@ -42,16 +43,18 @@ export function preloadReelFont(id){
 
 // Shared by the preview, PNG cover and video frames in all three studios.
 export function drawSignature(ctx,width,height,fontId,dark,config={}){
+ const name=copyText(ctx,config,'signature.name','Jakub Bilski',{element:'signature',label:'Imię i nazwisko / autor',shared:true,multiline:false});
+ const links=copyText(ctx,config,'signature.links','X: @jakub_bilski  ·  IG: jakub__bilski',{element:'signature',label:'Profile i kontakt',shared:true,multiline:false});
  const family=reelFont(designOf(config).text?.signature?.fontId||fontId);
  const align=designOf(config).signatureAlign,x=align==='left'?76:align==='right'?width-76:width/2,theme=themeOf(config);
  setReelText(ctx,config,'signature',24,family);
- const w=Math.min(width-152,Math.max(ctx.measureText('X: @jakub_bilski  ·  IG: jakub__bilski').width,200));
+ const w=Math.min(width-152,Math.max(ctx.measureText(links).width,ctx.measureText(name).width*1.2,200));
  const end=beginElement(ctx,config,'signature',{x:x-(align==='left'?0:align==='right'?w:w/2),y:height-94,w,h:76});
  ctx.save();ctx.textAlign=align;ctx.textBaseline='alphabetic';
  setReelText(ctx,config,'signature',28,family,theme.fg,'bold');
- paintText(ctx,config,'signature',['Jakub Bilski'],x,height-64,0,width-152);
+ paintText(ctx,config,'signature',[name],x,height-64,0,width-152);
  setReelText(ctx,config,'signature',24,family,theme.muted);
- paintText(ctx,config,'signature',['X: @jakub_bilski  ·  IG: jakub__bilski'],x,height-25,0,width-152);
+ paintText(ctx,config,'signature',[links],x,height-25,0,width-152);
  ctx.restore();end();
 }
 

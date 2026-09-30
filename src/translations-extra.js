@@ -910,6 +910,23 @@ Liczba opisów osi X|X-axis label count
 W małym wykresie liczba opisów osi Y może być mniejsza, aby zachować czytelność.|Small charts may show fewer Y-axis labels to keep them readable.
 Pokaż opisy osi|Show axis labels
 Pokaż podpis zakresu i skali|Show range and scale caption
+Treść tekstu|Text content
+Treść tekstu na rolce|Reel text content
+Edycja treści tekstu|Edit text content
+Tekst do edycji|Text to edit
+Przywróć tekst automatyczny|Restore automatic text
+Tekst automatyczny|Automatic text
+Imię i nazwisko / autor|Name / author
+Profile i kontakt|Social profiles and contact
+Podpis wykresu|Chart caption
+Podpis zakresu i skali|Range and scale caption
+Nazwa modelu|Model name
+Ustawienia modelu|Model settings
+Podpis autora jest wspólny dla rolek w tym języku.|The author signature is shared across reels in this language.
+Tekst zapisuje się dla tych danych i języka rolki.|Text is saved for this data and reel language.
+Puste pole ukrywa tekst.|An empty field hides the text.
+Własny tekst zastępuje zmieniającą się datę na całej rolce.|Custom text replaces the changing date throughout the reel.
+Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Esc: odznacz.|Double-click or press Enter to edit text. Drag to move. The circle rotates, the corner resizes. Arrows: 1 px, Shift: 10 px. Esc: deselect.
 Ustawienia skali są wspólne dla modułów i eksportu. Podpis zakresu i skali możesz wyłączyć w panelu Wygląd rolki → Wykres.|Scale settings are shared across modules and exports. You can hide the range and scale caption in Reel appearance → Chart.
 Kontrastowe tło pola wykresu|Contrasting plot background
 Pokaż legendę pod wykresem|Show legend below chart
@@ -919,7 +936,7 @@ Skład tekstu|Text layout
 Zawijanie tekstu|Text wrapping
 Automatycznie + ręczne podziały|Automatic + manual breaks
 Tylko ręczne podziały|Manual breaks only
-Enter w polu tytułu zaczyna nowy wiersz. Rozmiar tytułu dopasowuje się do dostępnego miejsca.|Enter in the title field starts a new line. Title size adapts to the available space.
+Enter w polu tekstu zaczyna nowy wiersz. Dłuższe opisy dopasujesz limitem wierszy, szerokością i rozmiarem tekstu.|Enter in the text field starts a new line. Fit longer captions using the line limit, width and text size.
 Wyrównanie tekstu|Text alignment
 Z układu|From layout
 Szerokość tekstu|Text width
