@@ -1,3 +1,5 @@
+import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill,plotGrid} from './chart-appearance.js';
+import {drawTextBlock,textStyleOf} from './reel-text.js';
 import {drawReelLogo} from './reel-logo.js';
 import {beginElement,textRect} from './reel-elements.js';
 import {translate} from './translations.js';
@@ -12,14 +14,11 @@ import {themeOf,textSize,textColor,setReelText,beginReelSection,chartTop,designO
 function typography(font,language,config){
 function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels'){
  if(!custom)text=translate(text,language);
- const originalSize=size;size=role==='title'?size:textSize(config,role,size);
- ctx.font=`${originalSize>=60?'bold ':''}${size}px ${reelFont(designOf(config).text[role]?.fontId||config.fontId)}`;if(color)ctx.fillStyle=textColor(config,role,color);
- const words=String(text||'').split(/\s+/);let lines=[],line='';
- for(const word of words){if(ctx.measureText(`${line} ${word}`).width>width&&line){lines.push(line);line=word;}else line=line?`${line} ${word}`:word;}if(line)lines.push(line);
- const shown=lines.slice(0,max).map((s,i)=>i===max-1&&lines.length>max?`${s.slice(0,-2)}…`:s);
- const end=role==='title'?beginElement(ctx,config,'title',textRect(ctx,shown,x,y,size*1.22,width)):()=>{};
- shown.forEach((s,i)=>ctx.fillText(s,x,y+i*size*1.22,width));end();
- return Math.min(lines.length,max)*size*1.22;
+ const title=role==='title';
+ setReelText(ctx,config,role,title?size/textSize(config,role,1):size,font,color,title||size>=60?'bold':'');
+ const actual=title?size:textSize(config,role,size);
+ return drawTextBlock(ctx,text,x,y,width,actual*1.22,max,true,config,role,title);
+
 }
 function fit(ctx,text,width,size,min=26){const font=reelFont(designOf(config).text.values.fontId||config.fontId);size=textSize(config,'values',size);ctx.font=`bold ${size}px ${font}`;while(size>min&&ctx.measureText(text).width>width){size--;ctx.font=`bold ${size}px ${font}`;}ctx.fillStyle=textColor(config,'values',ctx.fillStyle);return size;}
 return {wrap,fit};
@@ -29,12 +28,12 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  const aiValue=value=>formatAiValue(value,config.language);
  const {ai:{rows,benchmark:b,basis,mode,comparison,scope},title,theme='dark'}=config;
  const ctx=canvas.getContext('2d');if(canvas.width!==1080||canvas.height!==1920){canvas.width=1080;canvas.height=1920;}
- const {dark,bg,fg,muted,panel,grid,colors}=themeOf(config),[accent,purple]=colors;
+ const {dark,bg,fg,muted,panel,grid,colors}=themeOf(config),appearance=chartAppearance(config),[accent,purple]=colors.map((c,i)=>seriesColor(config,i,c));
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
  drawVisualBackground(ctx,1080,1920,config,timeSeconds);
  const endHeader=beginReelSection(ctx,config,'header',1080,1920);
  drawReelLogo(ctx,config,timeSeconds,{x:76,y:73,h:50});
- wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270),3,fg,true,'title');
+ wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270,textStyleOf(config,'title')),3,fg,true,'title');
  const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:528,w:928,h:132});
  wrap(ctx,b.name,76,565,928,33,1,accent,false,'subtitle');
  if(scope)wrap(ctx,scope,76,628,928,23,2,muted,false,'subtitle');
@@ -83,21 +82,21 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
     ctx.save();ctx.globalAlpha=alpha;
     // The identity follows the row, while only its position and bar length tween.
     wrap(ctx,r.model,76,y,660,34,1,fg);ctx.textAlign='right';setReelText(ctx,config,'values',40,reelFont(config.fontId),ni===0?accent:fg,'bold');crossText(ctx,aiValue(prev.score),aiValue(r.score),1000,y,mix,260);ctx.textAlign='left';
-    ctx.fillStyle=grid;ctx.fillRect(76,y+60,925,8);ctx.fillStyle=ni===0?accent:purple;const v=lerp(prev.score,r.score,mix);ctx.fillRect(Math.min(barX(0),barX(v)),y+60,Math.abs(barX(v)-barX(0)),8);
+    ctx.fillStyle=grid;roundFill(ctx,76,y+60,925,Math.max(3,appearance.barWidth*.2),appearance.radius);ctx.fillStyle=ni===0?accent:purple;const v=lerp(prev.score,r.score,mix);roundFill(ctx,Math.min(barX(0),barX(v)),y+60,Math.abs(barX(v)-barX(0)),Math.max(3,appearance.barWidth*.2),appearance.radius);
     const uncertainty=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`SE: ±${aiValue(r.stderr)} p.p.`:'';
     wrap(ctx,`${r.date}${uncertainty?' · '+uncertainty:''}`,76,y+94,920,23,1,muted);ctx.restore();
    }
    ctx.restore();wrap(ctx,`${b.unit} · ostatni dostępny pomiar każdego wariantu`,76,1625,920,28,2,muted);
  } else if(mode==='records'){
    const motion=aiMotionFrame(rows,progress,duration,transition,timeSeconds),{frames,frame:now,before:old,mix,current}=motion;
-   const bottom=1410,top=chartTop(config,815,bottom),left=130,right=960,axis=aiAxis();
+   const bottom=1410,top=chartTop(config,815,bottom),axis=aiAxis();const [left,right]=plotSides(config,130,960);
    const start=frames[0].time,end=frames.at(-1).time,x=t=>left+(t-start)/(end-start||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
    if(caption)wrap(ctx,caption,left,top-22,850,23,1,muted);
    wrap(ctx,`${b.unit} · najwyższy dotąd wynik w filtrze`,76,727,920,30,2,muted);
-   for(const value of axis.ticks){ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(value));ctx.lineTo(right,y(value));ctx.stroke();ctx.textAlign='right';wrap(ctx,formatAxisTick(value,config.language),left-20,y(value)+9,120,25,1,muted);ctx.textAlign='left';}
-   ctx.save();ctx.beginPath();ctx.rect(left-5,top-5,(right-left)*progress+5,bottom-top+10);ctx.clip();ctx.strokeStyle=accent;ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();let previous=frames[0].record.score;ctx.moveTo(left,y(previous));
+   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25));plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';wrap(ctx,formatAxisTick(value,config.language),left-20,y(value)+9,120,25,1,muted);ctx.textAlign='left';}
+   ctx.save();ctx.beginPath();ctx.rect(left-5,top-5,(right-left)*progress+5,bottom-top+10);ctx.clip();lineAppearance(ctx,config,accent);ctx.beginPath();let previous=frames[0].record.score;ctx.moveTo(left,y(previous));
    for(const f of frames.slice(1)){ctx.lineTo(x(f.time),y(previous));ctx.lineTo(x(f.time),y(f.record.score));previous=f.record.score;}ctx.lineTo(right,y(previous));ctx.stroke();ctx.restore();
-   wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';
+   if(appearance.axisLabels){wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';}
    function recordLabel(r,alpha){
     if(alpha<=0)return;ctx.save();ctx.globalAlpha=alpha;
     setReelText(ctx,config,'values',43,reelFont(config.fontId),accent,'bold');ctx.fillText(score(r),76,1525);
@@ -108,21 +107,21 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    if(now.record.id!==old.record.id&&mix<1){recordLabel(old.record,clamp(1-mix*2));recordLabel(now.record,clamp(mix*2-1));}else recordLabel(now.record,1);
    wrap(ctx,new Date(current).toISOString().slice(0,10),76,1669,920,27,1,muted,false,'date');
  } else if(mode==='scatter'){
-   const bottom=1450,top=chartTop(config,775,bottom),left=130,right=960;
+   const bottom=1450,top=chartTop(config,775,bottom);const [left,right]=plotSides(config,130,960);
    const axis=aiAxis(),min=axis.min,max=axis.max;
    const t0=Date.parse(first.date),t1=Date.parse(last.date);const x=d=>left+(Date.parse(d)-t0)/(t1-t0||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
    if(caption)wrap(ctx,caption,left,top-22,850,23,1,muted);
-   for(const v of axis.ticks){ctx.strokeStyle=grid;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,y(v));ctx.lineTo(right,y(v));ctx.stroke();ctx.textAlign='right';wrap(ctx,formatAxisTick(v,config.language),left-20,y(v)+9,120,25,1,muted);ctx.textAlign='left';}
+   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25));plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';wrap(ctx,formatAxisTick(value,config.language),left-20,y(value)+9,120,25,1,muted);ctx.textAlign='left';}
    wrap(ctx,b.unit,76,720,920,30,1,muted);
    if(b.baseline){const yy=y(b.baseline.score);ctx.strokeStyle=purple;ctx.setLineDash([10,10]);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(right,yy);ctx.stroke();ctx.setLineDash([]);wrap(ctx,`Punkt odniesienia: ${aiValue(b.baseline.score)}`,left,yy-15,800,26,1,purple);}
    frame.visible.forEach(r=>{const age=(lerp(t0,t1,progress)-Date.parse(r.date))/(t1-t0||1)*duration*.9+Math.max(0,timeSeconds-duration*.9);const alpha=transition&&r.date!==first.date?ease(age/Math.min(transition,duration*.08)):1;ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=accent;ctx.globalAlpha*=.48;ctx.beginPath();ctx.arc(x(r.date),y(r.score),7,0,Math.PI*2);ctx.fill();ctx.globalAlpha=alpha;const lo=r.low??(r.stderr!=null?r.score-r.stderr:null),hi=r.high??(r.stderr!=null?r.score+r.stderr:null);if(lo!=null&&hi!=null){ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(x(r.date),y(Math.max(min,lo)));ctx.lineTo(x(r.date),y(Math.min(max,hi)));ctx.stroke();}ctx.restore();});
-   wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';
+   if(appearance.axisLabels){wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';}
    if(frame.current)wrap(ctx,`Ostatnio: ${frame.current.model} · ${aiValue(frame.current.score)}`,76,1555,920,27,1,accent,false,'values');
    wrap(ctx,frame.date,76,1630,900,45,1,fg,false,'date');wrap(ctx,`${frame.visible.length} pomiarów · ${b.id==='eci'?'wąsy: 90% CI':rows.some(r=>r.stderr!=null)?'wąsy: ±1 SE':'bez interpolacji'}`,76,1665,920,28,1,muted);
  } else {
    const r=rows.filter(r=>r.modelId===comparison).at(-1)||last,base=b.baseline;
    if(!base){endContent();return;}
-   [{name:r.model,value:score(r),color:accent},{name:base.name,value:`${aiValue(base.score)} ${b.unit}`,color:purple}].forEach((item,i)=>{const y=735+i*370;ctx.save();const enter=transition?ease((timeSeconds-i*.25)/transition):1;ctx.globalAlpha=enter;ctx.translate(0,24*(1-enter));ctx.fillStyle=panel;ctx.fillRect(76,y,928,320);wrap(ctx,item.name,112,y+62,850,39,2,fg);ctx.fillStyle=item.color;fit(ctx,item.value,850,104,55);ctx.fillText(item.value,112,y+255);if(i===0&&r.stderr!=null)wrap(ctx,`SE: ±${aiValue(r.stderr)} p.p.`,112,y+296,850,23,1,muted);ctx.restore();});
+   [{name:r.model,value:score(r),color:accent},{name:base.name,value:`${aiValue(base.score)} ${b.unit}`,color:purple}].forEach((item,i)=>{const y=735+i*370;ctx.save();const enter=transition?ease((timeSeconds-i*.25)/transition):1;ctx.globalAlpha=enter;ctx.translate(0,24*(1-enter));ctx.fillStyle=panel;roundFill(ctx,76,y,928,320,appearance.radius);wrap(ctx,item.name,112,y+62,850,39,2,fg);ctx.fillStyle=item.color;fit(ctx,item.value,850,104,55);ctx.fillText(item.value,112,y+255);if(i===0&&r.stderr!=null)wrap(ctx,`SE: ±${aiValue(r.stderr)} p.p.`,112,y+296,850,23,1,muted);ctx.restore();});
    wrap(ctx,`${r.date} · różnica ${aiValue(r.score-base.score)} ${b.unit==='%'?'p.p.':'punktów percentylowych'}`,76,1520,920,35,2,fg);
    wrap(ctx,base.note,76,1600,920,28,3,muted);
  }

@@ -1,3 +1,5 @@
+import {seriesColor} from './chart-appearance.js';
+import {reelPresets,applyReelPreset} from './reel-presets.js';
 import {normalizeLogo,restoreLogo,reelLogoOptions} from './reel-logo.js';
 import React,{createContext,useContext,useEffect,useMemo,useRef,useState} from 'react';
 import {ImagePlus,Trash2,ChevronUp,ChevronDown,RotateCcw} from 'lucide-react';
@@ -14,7 +16,7 @@ const emptyVisuals=()=>({fontId:null,logo:normalizeLogo(),background:{...default
 const VisualContext=createContext(null);
 export function VisualProvider({children}){
  const [visuals,setVisuals]=useState(emptyVisuals),[files,setFiles]=useState({}),[ready,setReady]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(''),[storage,setStorage]=useState('Wczytywanie dodatków…');
- const operation=useRef(false);
+ const operation=useRef(false),[presetUndo,setPresetUndo]=useState(null);
  useEffect(()=>{let active=true;(async()=>{try{
   const draft=await loadVisualDraft();
   if(draft?.version===1){
@@ -45,13 +47,15 @@ export function VisualProvider({children}){
  function importGif(item,target){return upload(()=>downloadGif(item),target,{provider:GIF_PROVIDER,id:item.id,title:item.title,url:item.url,providerUrl:GIF_DOCS});}
  function reorder(id,direction){setVisuals(v=>{const list=[...v.stickers],i=list.findIndex(s=>s.id===id),j=i+direction;if(j<0||j>=list.length)return v;[list[i],list[j]]=[list[j],list[i]];return {...v,stickers:list};});}
  function reset(){const keep=visuals.logo.assetId;for(const id of Object.keys(files))if(id!==keep)releaseMedia(id);setFiles(f=>keep&&f[keep]?{[keep]:f[keep]}:{});setVisuals(v=>({...emptyVisuals(),logo:v.logo,design:v.design,fontId:v.fontId}));setError('');}
- function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch})}));}
- function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
- function element(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,elements:{...v.design.elements,[id]:{...v.design.elements[id],...patch}}})}));}
- function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
+ function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch,preset:null})}));}
+ function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
+ function element(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,elements:{...v.design.elements,[id]:{...v.design.elements[id],...patch}}})}));}
+ function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
  function metricLabel(key,language,text){setVisuals(v=>({...v,design:normalizeDesign({...v.design,metricLabels:{...v.design.metricLabels,[key]:{...v.design.metricLabels[key],[language]:text}}})}));}
  function restoreComposition(saved){setVisuals(v=>({...v,design:normalizeDesign(saved.design),stickers:v.stickers.map(s=>({...s,...saved.stickers.find(old=>old.id===s.id)}))}));}
- const context={font:fontId=>setVisuals(v=>({...v,fontId:validFont(fontId)})),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
+ function applyPreset(id){setPresetUndo({design:visuals.design,fontId:visuals.fontId,background:visuals.background});setVisuals(v=>applyReelPreset(v,id));}
+ function undoPreset(){if(presetUndo)setVisuals(v=>({...v,...presetUndo}));setPresetUndo(null);}
+ const context={applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>({...v,fontId:validFont(fontId),design:{...v.design,preset:null}})),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,fontId:visuals.fontId||config.fontId,visuals,duration}),[config,visuals,duration]);}
@@ -77,9 +81,17 @@ const themeOfLogo=id=>(reelThemes.find(t=>t.id===id)||reelThemes[0]).colors[0];
 export function StyleEditor({children}){
  const v=useVisualStatus(),d=v.visuals.design;
  return <div className="visual-editor design-editor"><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
+  <div className="design-preset-heading"><strong>Gotowe designy</strong><span>8 zestawów</span></div>
+  <div className="design-preset-grid" role="group" aria-label="Gotowe designy">{reelPresets.map(p=>{const theme=reelThemes.find(t=>t.id===p.theme),colors=theme.colors.map((c,i)=>seriesColor({visuals:{design:{theme:p.theme,chart:p.chart}}},i,c));return <button type="button" key={p.id} aria-label={`Design: ${p.name}`} aria-pressed={d.preset===p.id} className={d.preset===p.id?'selected':''} onClick={()=>v.applyPreset(p.id)}>
+   <span className={`design-preset-mini ${p.layout}`} style={{background:theme.bg,color:theme.fg}} aria-hidden="true"><b style={{fontFamily:reelFonts.find(f=>f.id===p.font)?.family,textShadow:p.text.title.shadow?'2px 2px 5px '+colors[0]:undefined}}>Aa<span>01—26</span></b><svg viewBox="0 0 120 55"><path d="M4 46H116 M4 28H116 M4 10H116" stroke={theme.grid} strokeWidth="1" fill="none"/><path d="M5 43L28 34L51 39L74 17L96 24L115 5" stroke={colors[0]} strokeWidth={p.chart.lineWidth/2} fill="none" strokeLinejoin="round"/><path d="M5 30L28 39L51 25L74 29L96 13L115 22" stroke={colors[1]} strokeWidth="2" fill="none"/></svg><i style={{background:colors[0]}}/><i style={{background:colors[1]}}/></span><strong>{p.name}</strong><small>{p.description}</small>
+  </button>;})}</div>
+  <p className="visual-hint">Design ustawia czcionki, kolory, układ i wykres oraz zeruje ręczne pozycje elementów. Dane, treści i dodane obrazki zostają.</p>
+  {v.canUndoPreset&&<button type="button" className="secondary full" onClick={v.undoPreset}><RotateCcw size={14}/>Cofnij wybór designu</button>}
+  <details className="appearance-group"><summary>Sam motyw kolorystyczny</summary>
    <div className="reel-theme-grid" role="group" aria-label="Motyw rolki">{reelThemes.map(t=><button type="button" key={t.id} className={d.theme===t.id?'selected':''} aria-pressed={d.theme===t.id} onClick={()=>v.theme(t.id)}><span className="reel-theme-swatch" style={{background:t.bg,color:t.fg}} aria-hidden="true"><b>Aa</b><i style={{background:t.colors[0]}}/><i style={{background:t.colors[1]}}/></span><span>{t.name}</span></button>)}</div>
   <p className="visual-hint">Motyw ustawia tło i kolory tekstu. Rozmiary, układ oraz kolory wybranych serii pozostają bez zmian.</p>
 
+ </details>
  {children}
  <LegendOptions/>
    <button type="button" className="text-btn visual-reset" onClick={()=>{v.theme('dark');v.design(normalizeDesign());v.logo({type:'none'});}}><RotateCcw size={14}/>Przywróć domyślny styl i układ</button>
@@ -90,6 +102,7 @@ export function LayoutEditor(){
  const v=useVisualStatus(),d=v.visuals.design,[section,setSection]=useState('header'),p=d.positions[section];
  const updatePosition=patch=>v.design({positions:{...d.positions,[section]:{...p,...patch}}});
  return <div className="visual-editor design-editor"><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
+   <Range label="Szerokość wykresu" value={d.chart.width} min={60} max={100} onChange={width=>v.design({chart:{...d.chart,width}})}/>
    <Range label="Wysokość wykresu" value={d.chartHeight} min={50} max={100} onChange={chartHeight=>v.design({chartHeight})}/>
   <p className="visual-hint">100% wypełnia dostępne miejsce między nagłówkiem a legendą. Suwak zmienia wysokość obszaru osi, bez zmiany rozmiaru tekstu i skali wartości. Dotyczy linii, obszarów, kolumn i wykresów punktowych.</p>
   <button type="button" className="text-btn" onClick={()=>v.design({chartHeight:100})}>Dopasuj wysokość do wolnego miejsca</button>

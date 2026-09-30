@@ -1,9 +1,10 @@
+import {ChartEditor,TextEffects} from './AppearanceControls.jsx';
 import React,{useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {MousePointer2,RotateCcw,Undo2,Check} from 'lucide-react';
 import {useVisualStatus,StyleEditor,LayoutEditor,MediaEditor,StickerControls,Range,Color} from './VisualSettings.jsx';
 import {reelFonts,reelFontGroups} from './reel-fonts.js';
-import {themeOf,textRoles} from './reel-design.js';
+import {themeOf,textRoles,normalizeDesign} from './reel-design.js';
 import {reelElements,hitElement,canvasViewport,identityElement} from './reel-elements.js';
 import {alignmentTargets,elementBounds,movementLimits,snapTranslation} from './reel-snapping.js';
 import {useLanguages} from './language-context.js';
@@ -55,7 +56,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
  function undo(){clearGesture();const previous=history.current.pop();if(previous)v.restoreComposition(previous);setUndoCount(history.current.length);}
  function changeTransform(patch){if(sticker)v.sticker(sticker.id,{...(patch.scale!==undefined?{size:patch.scale}:{}),...(patch.rotation!==undefined?{rotation:patch.rotation}:{})});else v.element(selected,patch);}
  function selectElement(id){setSelected(id||null);setPanel('elements');onPause();setEnabled(true);}
- const panels=[['style','Styl'],['layout','Układ'],['media','Tło i GIF-y'],['elements','Elementy']];
+ const panels=[['style','Styl'],['layout','Układ'],['chart','Wykres'],['media','Tło i GIF-y'],['elements','Elementy']];
  function navigateTabs(e,index){const n=e.key==='ArrowRight'?(index+1)%panels.length:e.key==='ArrowLeft'?(index+panels.length-1)%panels.length:e.key==='Home'?0:e.key==='End'?panels.length-1:null;if(n===null)return;e.preventDefault();setPanel(panels[n][0]);e.currentTarget.parentElement.children[n].focus();if(panels[n][0]==='elements'){onPause();setEnabled(true);}}
  function point(e){const box=svg.current.getBoundingClientRect();return {x:(e.clientX-box.left)/box.width*canvas.current.width,y:(e.clientY-box.top)/box.height*canvas.current.height};}
  function start(e,kind='move'){
@@ -107,6 +108,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
    <div className="reel-appearance-content" role="tabpanel" id={`appearance-panel-${panel}`} aria-labelledby={`appearance-tab-${panel}`}>
     {panel==='style'&&<StyleEditor>{fontControls}</StyleEditor>}
     {panel==='layout'&&<LayoutEditor/>}
+    {panel==='chart'&&<ChartEditor config={config}/>}
     {panel==='media'&&<MediaEditor onSelect={selectElement}/>}
     {panel==='elements'&&<fieldset className="reel-inspector" disabled={!v.ready||v.busy}>
     <label className="reel-snap-toggle"><input type="checkbox" checked={snapping} onChange={e=>{const checked=e.target.checked;setSnapping(checked);setAlignment(emptyGuides);try{localStorage.setItem(snapPreference,checked?'on':'off');}catch{}}}/><span>Przyciąganie i prowadnice</span></label>
@@ -115,9 +117,9 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
     {selected&&!sticker?<>
      {selected==='metric'&&config.commonMetric&&<label>Własny podpis wskaźnika<input aria-label="Własny podpis wskaźnika" maxLength={160} value={v.visuals.design.metricLabels[config.commonMetric.key]?.[reelLanguage]||''} placeholder={config.commonMetric.labels[reelLanguage]} onFocus={remember} onChange={e=>v.metricLabel(config.commonMetric.key,reelLanguage,e.target.value)}/><small>Wpis dotyczy tego wskaźnika i języka rolki. Puste pole przywraca nazwę automatyczną.</small></label>}
      {selected==='content'&&<label>Tekst wykresu<select aria-label="Tekst wykresu" value={chartRole} onChange={e=>setChartRole(e.target.value)}><option value="labels">Etykiety i osie</option><option value="values">Wartości liczbowe</option></select></label>}
-     {t&&<><label>Czcionka elementu<select aria-label="Czcionka elementu" value={t.fontId||''} onChange={e=>{remember();v.textStyle(role,{fontId:e.target.value||null});}}><option value="">Czcionka całej rolki</option>{reelFontGroups.map(g=><optgroup key={g.id} label={g.name}>{reelFonts.filter(f=>f.group===g.id).map(f=><option key={f.id} value={f.id}>{f.name}</option>)}</optgroup>)}</select></label><div onFocusCapture={remember} onPointerDownCapture={remember}><Range label="Rozmiar tekstu" value={t.size} min={textRoles.find(r=>r.id===role).min} max={textRoles.find(r=>r.id===role).max} onChange={size=>v.textStyle(role,{size})}/><Color label="Kolor elementu" value={color} onChange={color=>v.textStyle(role,{color})}/></div><button type="button" className="text-btn" onClick={()=>{remember();v.textStyle(role,{size:100,color:null});}}>Przywróć styl tego tekstu</button><p>100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p></>}
+     {t&&<><label>Czcionka elementu<select aria-label="Czcionka elementu" value={t.fontId||''} onChange={e=>{remember();v.textStyle(role,{fontId:e.target.value||null});}}><option value="">Czcionka całej rolki</option>{reelFontGroups.map(g=><optgroup key={g.id} label={g.name}>{reelFonts.filter(f=>f.group===g.id).map(f=><option key={f.id} value={f.id}>{f.name}</option>)}</optgroup>)}</select></label><div onFocusCapture={remember} onPointerDownCapture={remember}><Range label="Rozmiar tekstu" value={t.size} min={textRoles.find(r=>r.id===role).min} max={textRoles.find(r=>r.id===role).max} onChange={size=>v.textStyle(role,{size})}/><Color label="Kolor elementu" value={color} onChange={color=>v.textStyle(role,{color})}/></div><button type="button" className="text-btn" onClick={()=>{remember();v.textStyle(role,normalizeDesign().text[role]);}}>Przywróć styl tego tekstu</button>{!['labels','values'].includes(role)&&<TextEffects role={role} config={config} beforeChange={remember}/>}<p>100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p></>}
      <div className="reel-inspector-pair"><label>Skala elementu<input aria-label="Skala elementu" type="number" min={sticker?5:25} max={sticker?100:200} step="1" value={Math.round(transform.scale)} onFocus={remember} onChange={e=>changeTransform({scale:clamp(Number(e.target.value),sticker?5:25,sticker?100:200)})}/></label><label>Obrót elementu<input aria-label="Obrót elementu" type="number" min="-180" max="180" step="1" value={Math.round(transform.rotation)} onFocus={remember} onChange={e=>changeTransform({rotation:clamp(Number(e.target.value),-180,180)})}/></label></div>
-     <button type="button" className="text-btn" onClick={()=>{remember();if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,{fontId:null,color:null,size:100});if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
+     <button type="button" className="text-btn" onClick={()=>{remember();if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
     </>:sticker?<StickerControls sticker={sticker} index={v.visuals.stickers.indexOf(sticker)} beforeChange={remember}/>:null}
     <p>Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Esc: odznacz.</p>
    </fieldset>}

@@ -694,4 +694,119 @@ Kolor logo|Logo color
 Przygotowywanie logo…|Preparing logo…
 PNG, JPG, WebP lub GIF do 12 MB. Przezroczyste tło PNG jest zachowane. Logo nie zajmuje miejsca na dodatki.|PNG, JPG, WebP or GIF up to 12 MB. PNG transparency is preserved. Logos do not use a sticker slot.
 Domyślnie bez logo. Wybrane logo możesz przesuwać, obracać i skalować bezpośrednio na podglądzie.|No logo by default. Move, rotate and resize your selected logo directly on the preview.
+
+Gotowe designy|Ready-made designs
+8 zestawów|8 collections
+Design ustawia czcionki, kolory, układ i wykres oraz zeruje ręczne pozycje elementów. Dane, treści i dodane obrazki zostają.|A design sets fonts, colors, layout and chart styling, and resets manual element positions. Your data, text and added images stay.
+Cofnij wybór designu|Undo design selection
+Sam motyw kolorystyczny|Color theme only
+Dziennik|Journal
+Notatnik|Notebook
+Po zmroku|After dark
+Plakat|Poster
+Esencja|Essentials
+Lawenda|Lavender
+Serwis|Bulletin
+Szeryfowy tytuł, biel i granat|Serif title, white and navy
+Zieleń, techniczny krój i kreski|Green, monospace and dashes
+Ciepły papier i ziemiste barwy|Warm paper and earthy colors
+Świetliste linie na granatowym tle|Glowing lines on a navy background
+Mocny tytuł, grube linie, bez siatki|Bold title, thick lines, no grid
+Dużo miejsca dla danych|More space for data
+Symetria, miękkie tło i kolory|Symmetry, soft background and colors
+Kontrastowa oprawa informacji|A high-contrast news design
+Mięta i grafit|Mint and graphite
+Lawendowy papier|Lavender paper
+Śliwka i morela|Plum and apricot
+Symetryczny|Symmetrical
+Wyśrodkowany nagłówek|Centered heading
+Dane na pierwszym planie|Data first
+Mały nagłówek, więcej miejsca na dane|Small heading, more space for data
+Z oddechem|Breathing room
+Szersze marginesy i lżejsza kompozycja|Wider margins and a lighter composition
+Szerokość wykresu|Chart width
+Paleta wykresu|Chart palette
+Kolory z danych i motywu|Data and theme colors
+Szlachetne|Jewel tones
+Elektryczne|Electric
+Ziemia|Earth
+Kontrastowe|High contrast
+Odcienie granatu|Navy shades
+Styl dopasowuje się do wybranego sposobu prezentacji danych. Typ wykresu wybierzesz w panelu danych.|Styling adapts to your data presentation. Choose the chart type in the data panel.
+Paleta zastępuje kolory serii. Wybierz „Kolory z danych i motywu”, aby wrócić do własnych kolorów i kolorów marek.|The palette overrides series colors. Choose “Data and theme colors” to restore custom and brand colors.
+Linie i wypełnienie|Lines and fill
+Grubość linii|Line width
+Styl linii|Line style
+Z danych|From data
+Ciągła|Solid
+Kreskowana|Dashed
+Kropkowana|Dotted
+Widoczność serii|Series opacity
+Poświata linii|Line glow
+Siła wypełnienia|Fill opacity
+Wypełnienie obszaru|Area fill
+Jednolity kolor|Solid color
+Zanikający gradient|Fading gradient
+Słupki i karty|Bars and cards
+Szerokość słupków|Bar width
+Grubość słupków|Bar thickness
+Zaokrąglenie narożników|Corner radius
+Siatka i podziałka|Grid and ticks
+Siatka wykresu|Chart grid
+Pozioma|Horizontal
+Pozioma i pionowa|Horizontal and vertical
+Bez siatki|No grid
+Styl siatki|Grid style
+Widoczność siatki|Grid opacity
+Grubość siatki|Grid width
+Liczba poziomów osi Y|Y-axis tick count
+Liczba opisów osi X|X-axis label count
+W małym wykresie liczba opisów osi Y może być mniejsza, aby zachować czytelność.|Small charts may show fewer Y-axis labels to keep them readable.
+Pokaż opisy osi|Show axis labels
+Kontrastowe tło pola wykresu|Contrasting plot background
+Pokaż legendę pod wykresem|Show legend below chart
+Wymiary wykresu zmienisz w zakładce Układ.|Change chart dimensions in the Layout tab.
+Przywróć wygląd wykresu|Reset chart appearance
+Skład tekstu|Text layout
+Zawijanie tekstu|Text wrapping
+Automatycznie + ręczne podziały|Automatic + manual breaks
+Tylko ręczne podziały|Manual breaks only
+Enter w polu tytułu zaczyna nowy wiersz. Rozmiar tytułu dopasowuje się do dostępnego miejsca.|Enter in the title field starts a new line. Title size adapts to the available space.
+Wyrównanie tekstu|Text alignment
+Z układu|From layout
+Szerokość tekstu|Text width
+Interlinia|Line spacing
+Limit wierszy|Line limit
+Automatycznie|Automatic
+Grubość tekstu|Font weight
+Z designu|From design
+Zwykła|Regular
+Pogrubiona|Bold
+Kursywa|Italic
+Cień, obrys i tło tekstu|Shadow, outline and text background
+Widoczność tekstu|Text opacity
+Efekt cienia|Shadow effect
+Bez cienia|No shadow
+Miękki cień|Soft shadow
+Twardy cień|Hard shadow
+Poświata|Glow
+Kolor cienia|Shadow color
+Rozmycie cienia|Shadow blur
+Cień w poziomie|Horizontal shadow offset
+Cień w pionie|Vertical shadow offset
+Grubość obrysu tekstu|Text outline width
+Kolor obrysu|Outline color
+Tło pod tekstem|Text background
+Kolor tła tekstu|Text background color
+Widoczność tła tekstu|Text background opacity
+Odstęp od tła|Text padding
+Zaokrąglenie tła|Background corner radius
+Design: Dziennik|Design: Journal
+Design: Notatnik|Design: Notebook
+Design: Po zmroku|Design: After dark
+Design: Plakat|Design: Poster
+Design: Esencja|Design: Essentials
+Design: Lawenda|Design: Lavender
+Design: Serwis|Design: Bulletin
+Wykres|Chart
 `;

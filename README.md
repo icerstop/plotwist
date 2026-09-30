@@ -13,13 +13,21 @@ Produkcja: `npm run build` (katalog `dist`). Weryfikacja obliczeń i CSV: `npm t
 
 ## Wspólny panel wyglądu
 
-Pod podglądem i odtwarzaczem jest jeden panel **Wygląd rolki**: **Styl** (motyw, czcionka całej rolki, opisy legendy), **Układ** (wysokość wykresu, kompozycja, pozycje sekcji, wyrównanie podpisu), **Tło i GIF-y** (logo, tło, media) oraz **Elementy** (czcionka, kolor i rozmiar tekstu, transformacje i ustawienia pojedynczego dodatku). Kliknięcie elementu podczas edycji podglądu wybiera go w tym samym panelu. Kontrolki wyglądu usunięto z lewych paneli danych; matematyczna normalizacja pozostaje przy danych.
+Na desktopie dane są po lewej, podgląd pośrodku, a **Wygląd rolki** po prawej. Na małych ekranach panele układają się pionowo. Zakładki wyglądu:
+
+- **Styl:** 8 kompletnych designów z miniaturami (Dziennik, Terminal, Notatnik, Po zmroku, Plakat, Esencja, Lawenda, Serwis), 10 motywów, czcionka i opisy legendy. Można cofnąć ostatni wybór designu. Design resetuje ręczne transformacje elementów; nie podmienia danych, treści ani dodanych plików.
+- **Układ:** 6 kompozycji, niezależna szerokość i wysokość pola osi, pozycje sekcji i wyrównanie podpisu.
+- **Wykres:** 7 palet z wariantami dla jasnego i ciemnego tła; grubość, kreskowanie, widoczność i poświata linii; wypełnienie obszarów; szerokość i zaokrąglenia słupków/kart; siatka, podziałka, opisy osi, tło pola wykresu i legenda. Kontrolki zależą od typu prezentacji. Paleta „Kolory z danych i motywu” przywraca kolory własne i kolory marek. Typ wykresu i skala wartości zostają w panelu danych.
+- **Tło i GIF-y:** logo, tło i media.
+- **Elementy:** edycja na podglądzie, transformacje, czcionki, kolor, rozmiar, zawijanie, ręczne podziały wierszy, wyrównanie, szerokość tekstu, interlinia, cień, obrys i tło tekstu. Rozszerzone efekty dotyczą tytułu, opisu, wspólnego wskaźnika, daty, źródeł i podpisu; etykiety i wartości zachowują własne ustawienia czcionki, koloru i rozmiaru.
+
+Podgląd, PNG i wszystkie klatki filmu korzystają z tego samego renderera. Efekty nie zmieniają pomiarów, braków danych ani skokowego przebiegu rekordów AI. Ustawienia starych projektów dostają zgodne wartości domyślne.
 
 Wygląd i pliki mają wspólny szkic IndexedDB, niezależny od wybranego zbioru oraz modułu. Czcionka całej rolki również zapisuje się w tym szkicu; stare projekty zachowują dotychczasową czcionkę jako wartość początkową. Zapis głównego projektu nadal zawiera aktualną czcionkę. Zmiany danych i wariantów nie resetują wyglądu. Wyrównanie i skalowanie całych sekcji zachowuje wcześniejsze zakresy i jest odrębne od transformacji pojedynczych elementów.
 
 ## GIF-y z wyszukiwarki
 
-**Wygląd rolki (pod podglądem) → Tło i GIF-y → Wyszukaj GIF-y online** korzysta z publicznego [API GifSnap](https://gifsnap.com/docs), bez konta, klucza i opłat za zapytania. Wyniki można wstawiać jako dodatek (maks. 3) lub tło. Wyszukiwanie ma paginację, anulowanie poprzednich zapytań i krótką pamięć podręczną. Dostępność wyników zależy od zewnętrznej usługi; ręczny upload nadal działa.
+**Wygląd rolki → Tło i GIF-y → Wyszukaj GIF-y online** korzysta z publicznego [API GifSnap](https://gifsnap.com/docs), bez konta, klucza i opłat za zapytania. Wyniki można wstawiać jako dodatek (maks. 3) lub tło. Wyszukiwanie ma paginację, anulowanie poprzednich zapytań i krótką pamięć podręczną. Dostępność wyników zależy od zewnętrznej usługi; ręczny upload nadal działa.
 
 Adapter `src/gif-search.js` używa proxy mediów GifSnap z CORS, ponieważ bezpośredni CDN nie udostępniał CORS podczas weryfikacji 2026-09-29. Przyjmujemy pliki GIF, sprawdzamy sygnaturę i limit 12 MB także podczas pobierania. Wyniki WebP/wideo są pomijane, aby nie wstawiać nieruchomej klatki zamiast animacji. Dotychczasowy dekoder ogranicza liczbę klatek i pamięć obrazu.
 
