@@ -8,6 +8,8 @@ import './visual-settings.css';
 import {normalizeDesign,reelThemes,reelLayouts} from './reel-design.js';
 import GifSearch from './GifSearch.jsx';
 import {reelFonts} from './reel-fonts.js';
+import CustomThemes from './CustomThemes.jsx';
+import {captureTheme,applySavedTheme,normalizeSavedTheme,remapThemeAssets} from './custom-themes.js';
 import {downloadGif,gifError,GIF_PROVIDER,GIF_DOCS} from './gif-search.js';
 
 const defaultBackground={type:'theme',color:'#142a35',color2:'#453375',angle:115,pattern:'none',animate:false,veil:0,assetId:null,fit:'cover',opacity:1,speed:1};
@@ -55,7 +57,21 @@ export function VisualProvider({children}){
  function restoreComposition(saved){setVisuals(v=>({...v,design:normalizeDesign(saved.design),stickers:v.stickers.map(s=>({...s,...saved.stickers.find(old=>old.id===s.id)}))}));}
  function applyPreset(id){setPresetUndo({design:visuals.design,fontId:visuals.fontId,background:visuals.background});setVisuals(v=>applyReelPreset(v,id));}
  function undoPreset(){if(presetUndo)setVisuals(v=>({...v,...presetUndo}));setPresetUndo(null);}
- const context={applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>({...v,fontId:validFont(fontId),design:{...v.design,preset:null}})),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
+ async function applyTheme(raw){
+  if(operation.current||!ready)throw new Error('Poczekaj na zakończenie wczytywania dodatków.');
+  const saved=remapThemeAssets(normalizeSavedTheme(raw)),decoded=[];
+  operation.current=true;setBusy(true);setError('');
+  try{
+   // Prepare every asset before replacing the current composition. A decode failure
+   // leaves the current visual state and its cached media intact.
+   for(const [id,file] of Object.entries(saved.files)){await decodeMedia(file,id);decoded.push(id);}
+   const retained=Object.fromEntries(visuals.stickers.map(s=>[s.assetId,files[s.assetId]]).filter(([,file])=>file));
+   setFiles({...retained,...saved.files});setVisuals(v=>applySavedTheme(v,saved));setPresetUndo(null);
+   for(const id of Object.keys(files))if(!retained[id])releaseMedia(id);
+  }catch(error){for(const id of decoded)releaseMedia(id);throw error;}
+  finally{operation.current=false;setBusy(false);}
+ }
+ const context={captureTheme:options=>captureTheme({...options,visuals,files}),applyTheme,applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>({...v,fontId:validFont(fontId),design:{...v.design,preset:null}})),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,fontId:visuals.fontId||config.fontId,visuals,duration}),[config,visuals,duration]);}
@@ -78,9 +94,10 @@ function LogoEditor(){
  </div>;
 }
 const themeOfLogo=id=>(reelThemes.find(t=>t.id===id)||reelThemes[0]).colors[0];
-export function StyleEditor({children}){
+export function StyleEditor({children,fontId}){
  const v=useVisualStatus(),d=v.visuals.design;
  return <div className="visual-editor design-editor"><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
+  <CustomThemes visual={v} fontId={fontId}/>
   <div className="design-preset-heading"><strong>Gotowe designy</strong><span>8 zestawów</span></div>
   <div className="design-preset-grid" role="group" aria-label="Gotowe designy">{reelPresets.map(p=>{const theme=reelThemes.find(t=>t.id===p.theme),colors=theme.colors.map((c,i)=>seriesColor({visuals:{design:{theme:p.theme,chart:p.chart}}},i,c));return <button type="button" key={p.id} aria-label={`Design: ${p.name}`} aria-pressed={d.preset===p.id} className={d.preset===p.id?'selected':''} onClick={()=>v.applyPreset(p.id)}>
    <span className={`design-preset-mini ${p.layout}`} style={{background:theme.bg,color:theme.fg}} aria-hidden="true"><b style={{fontFamily:reelFonts.find(f=>f.id===p.font)?.family,textShadow:p.text.title.shadow?'2px 2px 5px '+colors[0]:undefined}}>Aa<span>01—26</span></b><svg viewBox="0 0 120 55"><path d="M4 46H116 M4 28H116 M4 10H116" stroke={theme.grid} strokeWidth="1" fill="none"/><path d="M5 43L28 34L51 39L74 17L96 24L115 5" stroke={colors[0]} strokeWidth={p.chart.lineWidth/2} fill="none" strokeLinejoin="round"/><path d="M5 30L28 39L51 25L74 29L96 13L115 22" stroke={colors[1]} strokeWidth="2" fill="none"/></svg><i style={{background:colors[0]}}/><i style={{background:colors[1]}}/></span><strong>{p.name}</strong><small>{p.description}</small>

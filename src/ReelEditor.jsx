@@ -108,7 +108,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
    <div className="reel-edit-toolbar"><button type="button" className={`secondary ${enabled?'is-editing':''}`} aria-pressed={enabled} disabled={!valid} onClick={()=>{onPause();setEnabled(!enabled);if(!enabled)setPanel('elements');}}>{enabled?<Check size={15}/>:<MousePointer2 size={15}/>}<span>{enabled?'Zakończ edycję':'Edytuj na podglądzie'}</span></button>{(enabled||undoCount>0)&&<button type="button" className="icon-btn" aria-label="Cofnij zmianę elementu" disabled={!undoCount} onClick={undo}><Undo2 size={18}/></button>}</div>
    <div className="reel-appearance-tabs" role="tablist" aria-label="Ustawienia wyglądu">{panels.map(([id,name],i)=><button key={id} type="button" role="tab" id={`appearance-tab-${id}`} aria-selected={panel===id} aria-controls={`appearance-panel-${id}`} tabIndex={panel===id?0:-1} onKeyDown={e=>navigateTabs(e,i)} onClick={()=>{setPanel(id);if(id==='motion')setEnabled(false);if(id==='elements'){onPause();setEnabled(true);}}}>{name}</button>)}</div>
    <div className="reel-appearance-content" role="tabpanel" id={`appearance-panel-${panel}`} aria-labelledby={`appearance-tab-${panel}`}>
-    {panel==='style'&&<StyleEditor>{fontControls}</StyleEditor>}
+    {panel==='style'&&<StyleEditor fontId={config.fontId}>{fontControls}</StyleEditor>}
     {panel==='layout'&&<LayoutEditor/>}
     {panel==='chart'&&<ChartEditor config={config}/>}
     {panel==='motion'&&<MotionEditor config={config} playhead={playhead} onSeek={onSeek} onReplay={onReplay} target={motionTarget} setTarget={setMotionTarget} beforeChange={remember}/>}

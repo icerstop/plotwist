@@ -9,7 +9,19 @@ npm install
 npm run dev
 ```
 
-Produkcja: `npm run build` (katalog `dist`). Weryfikacja obliczeń i CSV: `npm test`.
+Produkcja: `npm run build` (frontend `dist/client`, Worker `dist/server/index.js`). Weryfikacja: `npm test`, w tym testy kont i plików w lokalnym środowisku D1/R2 (Miniflare).
+
+## Własne motywy na koncie
+
+**Wygląd rolki → Styl → Moje motywy** zapisuje nazwany wygląd na koncie zalogowanym przez ChatGPT na opublikowanej stronie. Lista wczytuje się przy wejściu do panelu i powrocie do karty; można ją też odświeżyć ręcznie. Można zastosować motyw, zaktualizować go z obecnego wyglądu, zmienić nazwę, usunąć albo wyeksportować/importować kopię JSON. Zapis i aktualizacja są jawne — suwaki nie nadpisują automatycznie zapisanych motywów.
+
+Motyw obejmuje globalną czcionkę, ustawienia tekstów i ich efekty, tło (także GIF), logo, ręczne transformacje, układ, paletę/wygląd wykresu i animacje. Zachowuje dane, tytuł, opis, źródła, podpis autora, własne podpisy wskaźników i dodatkowe obrazki rolki. Typ wykresu, skala, format, czas filmu i kolory pojedynczych serii pozostają ustawieniami konkretnej rolki. Tło i logo pobierane są przed zmianą wyglądu; błąd pobierania lub dekodowania pozostawia dotychczasową kompozycję.
+
+Ustawienia i metadane są w D1 (`DB`), pliki w R2 (`BUCKET`). Każde zapytanie filtruje po zaufanym identyfikatorze `oai-authenticated-user-id` dostarczonym przez Sites. Brak tożsamości daje 401; nie przyjmujemy konta z formularza. Zapisy korzystają z numeru rewizji, więc nie nadpisują zmian z innego urządzenia. Limit: 100 motywów na konto, do 12 MB na tło/logo. JSON kopii zawiera te pliki. Lokalny szkic rolki pozostaje w IndexedDB, niezależnie od motywów na koncie.
+
+`npm run dev` obsługuje edytor lokalnie; panel motywów pokazuje odnośnik do opublikowanej strony, ponieważ lokalny Vite nie ma sesji konta Sites. Nie podszywa się pod konto produkcyjne. Testy używają oddzielnych lokalnych kont i tymczasowej bazy, bez dostępu do zapisanych motywów użytkownika.
+
+Schemat jest w `db/schema.ts`; `npm run db:generate` generuje migracje w `drizzle`. Hosting stosuje migracje przed publikacją. Nie zmieniaj już opublikowanych migracji — dodawaj nowe. Logiczne powiązania przechowuje `.openai/hosting.json`; fizycznymi zasobami i uwierzytelnianiem zarządza Sites. Frontend, Canvas i eksport filmów pozostają w dotychczasowym stacku.
 
 ## Wspólny panel wyglądu
 

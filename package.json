@@ -5,14 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "build": "node scripts/build-site.mjs",
+    "db:generate": "drizzle-kit generate",
     "test": "node --test tests/*.test.mjs",
     "data:markets": "node scripts/fetch-market-data.mjs",
     "data:commodities": "node scripts/fetch-commodity-data.mjs",
     "data:ai": "node scripts/build-ai-data.mjs",
     "data:stories": "python scripts/build-story-data.py"
   },
+  "overrides": {
+    "@esbuild-kit/core-utils": {"esbuild": "$esbuild"},
+    "miniflare": {"undici": "7.29.1", "sharp": "0.35.4"}
+  },
   "dependencies": {
+    "drizzle-orm": "^0.45.2",
     "gifuct-js": "^2.1.2",
     "lucide-react": "^0.468.0",
     "mediabunny": "1.60.0",
@@ -20,6 +26,9 @@
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "drizzle-kit": "^0.31.10",
+    "esbuild": "^0.28.2",
+    "miniflare": "^4.20260730.0",
     "vite": "^7.1.7"
   }
 }

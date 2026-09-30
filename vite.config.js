@@ -1,2 +1,2 @@
 import {defineConfig} from 'vite';
-export default defineConfig({esbuild:{jsxFactory:'localizedJsx',jsxFragment:'React.Fragment',jsxInject:'import { localizedJsx } from "/src/locale-jsx.js";'}});
+export default defineConfig({build:{outDir:'dist/client'},plugins:[{name:'local-theme-account-notice',configureServer(server){server.middlewares.use('/api/themes',(_request,response)=>{response.writeHead(503,{'Content-Type':'application/json','Cache-Control':'no-store'});response.end(JSON.stringify({code:'local'}));});}}],esbuild:{jsxFactory:'localizedJsx',jsxFragment:'React.Fragment',jsxInject:'import { localizedJsx } from "/src/locale-jsx.js";'}});

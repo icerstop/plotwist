@@ -931,4 +931,56 @@ Tekst pojawia się wiersz po wierszu|Text appears line by line
 Obrót tytułu, łagodne wejście wykresu|Title flips, chart enters gently
 Historia z finałem|Story with a finale
 Pisany tytuł, dane i podpis na końcu|Written title, data and a signature at the end
+Moje motywy|My themes
+Usuń|Delete
+Odśwież motywy|Refresh themes
+Zapisz wygląd i korzystaj z niego na różnych urządzeniach po zalogowaniu na to samo konto.|Save your look and use it on different devices signed in to the same account.
+Nazwa nowego motywu|New theme name
+Np. Mój styl redakcyjny|E.g. My editorial style
+Zapisz obecny wygląd|Save current look
+Wczytywanie motywów z konta…|Loading account themes…
+Twój pierwszy motyw może powstać z obecnego wyglądu rolki.|Save your reel's current look as your first theme.
+Zapisane motywy|Saved themes
+Wybierz własny motyw|Choose a saved theme
+Zastosuj do rolki|Apply to reel
+Zaktualizuj z obecnego wyglądu|Update from current look
+Zmień nazwę|Rename
+Eksportuj|Export
+Nowa nazwa motywu|New theme name
+Zapisz nazwę|Save name
+Usunąć zapisany motyw? Obecny wygląd rolki zostanie zachowany.|Delete the saved theme? The reel's current look will be preserved.
+Usuń z konta|Delete from account
+Importuj motyw z pliku|Import theme file
+Plik własnego motywu|Custom theme file
+Motyw zawiera czcionki, kolory, tło, logo, układ, wykres i animacje. Dane, teksty i dodatkowe obrazki należą do rolki.|Themes include fonts, colours, background, logo, layout, chart styling and animations. Data, text and extra images belong to the reel.
+Zapisano motyw na koncie.|Theme saved to your account.
+Zaktualizowano motyw na koncie.|Account theme updated.
+Wczytano motyw. Dane i treść rolki zostały zachowane.|Theme applied. The reel's data and content have been preserved.
+Pobrano kopię motywu.|Theme backup downloaded.
+Zmieniono nazwę motywu.|Theme renamed.
+Usunięto motyw z konta.|Theme deleted from your account.
+Zaimportowano motyw na konto.|Theme imported to your account.
+Zapisywanie motywu…|Saving theme…
+Wczytywanie motywu…|Loading theme…
+Pobieranie motywu…|Downloading theme…
+Usuwanie motywu…|Deleting theme…
+Zaloguj się, aby korzystać z motywów na koncie.|Sign in to access your account themes.
+Zaloguj się przez ChatGPT|Sign in with ChatGPT
+Motywy na koncie są dostępne na opublikowanej stronie.|Account themes are available on the published site.
+Otwórz stronę z motywami na koncie|Open the site with account themes
+Nie udało się połączyć z kontem. Spróbuj ponownie. Wygląd rolki pozostał bez zmian.|Could not connect to your account. Try again. Your reel's appearance is unchanged.
+Motyw zmienił się na innym urządzeniu. Odśwież listę przed ponownym zapisem.|The theme changed on another device. Refresh the list before saving again.
+Masz już motyw o tej nazwie. Wybierz inną nazwę lub zaktualizuj istniejący motyw.|A theme with this name already exists. Choose another name or update the existing theme.
+Ten motyw został usunięty. Odśwież listę motywów.|This theme was deleted. Refresh the theme list.
+Na koncie można zapisać do 100 motywów. Usuń niepotrzebny motyw.|Your account can store up to 100 themes. Delete a theme you no longer need.
+Motyw jest zbyt duży. Tło i logo mogą mieć do 12 MB każde.|The theme is too large. Background and logo files can be up to 12 MB each.
+Nieprawidłowy motyw. Sprawdź nazwę, tło i logo.|Invalid theme. Check the name, background and logo.
+Nie udało się pobrać tła lub logo. Spróbuj wczytać motyw ponownie.|Could not download the background or logo. Try loading the theme again.
+Sesja konta wygasła lub żądanie zostało odrzucone. Odśwież stronę.|Your session expired or the request was rejected. Refresh the page.
+Odśwież listę|Refresh list
+Podaj nazwę motywu (1–60 znaków).|Enter a theme name (1–60 characters).
+Nieprawidłowy plik motywu.|Invalid theme file.
+Brakuje pliku tła lub logo w motywie.|The theme's background or logo file is missing.
+Wybierz plik motywu JSON do 34 MB.|Choose a theme JSON file up to 34 MB.
+Poczekaj na zakończenie wczytywania dodatków.|Wait for the media to finish loading.
 `;
