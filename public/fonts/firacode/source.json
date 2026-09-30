@@ -1,0 +1,18 @@
+{
+  "family": "Fira Code",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/firacode",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Fira Code\"\ndesigner: \"The Mozilla Foundation, Telefonica S.A., Nikita Prokopov\"\nlicense: \"OFL\"\ncategory: \"MONOSPACE\"\ndate_added: \"2019-03-25\"\nfonts {\n  name: \"Fira Code\"\n  style: \"normal\"\n  weight: 400\n  filename: \"FiraCode[wght].ttf\"\n  post_script_name: \"FiraCode-Light\"\n  full_name: \"Fira Code Light\"\n  copyright: \"Copyright 2014-2020 The Fira Code Project Authors (https://github.com/tonsky/FiraCode)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"greek\"\nsubsets: \"greek-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"symbols2\"\nsubsets: \"menu\"\naxes {\n  tag: \"wght\"\n  min_value: 300.0\n  max_value: 700.0\n}\nsource {\n  commit: \"8da49d55f8b5978c5f888dd85452b79aad16cca2\"\n  repository_url: \"https://github.com/tonsky/FiraCode\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/firacode/FiraCode-wght-.ttf",
+      "weight": "300 700",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/firacode/FiraCode%5Bwght%5D.ttf",
+      "bytes": 260364,
+      "sha256": "9335b082b3c7850d98a64b584f3417f65355f3471278bb5eeb8c6c0e8657aeeb"
+    }
+  ]
+}

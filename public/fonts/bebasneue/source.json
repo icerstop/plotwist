@@ -1,0 +1,18 @@
+{
+  "family": "Bebas Neue",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/bebasneue",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Bebas Neue\"\ndesigner: \"Ryoichi Tsunekawa\"\nlicense: \"OFL\"\ncategory: \"DISPLAY\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2019-10-16\"\nfonts {\n  name: \"Bebas Neue\"\n  style: \"normal\"\n  weight: 400\n  filename: \"BebasNeue-Regular.ttf\"\n  post_script_name: \"BebasNeue-Regular\"\n  full_name: \"Bebas Neue Regular\"\n  copyright: \"Copyright 2019 The Bebas Neue Project Authors (https://github.com/dharmatype/Bebas-Neue)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsource {\n  repository_url: \"https://github.com/dharmatype/Bebas-Neue\"\n  commit: \"686d14af640c17af3691c597778f121d840d9051\"\n}\nstroke: \"SANS_SERIF\"\nclassifications: \"DISPLAY\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/bebasneue/BebasNeue-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/bebasneue/BebasNeue-Regular.ttf",
+      "bytes": 61400,
+      "sha256": "08e4623805102d819f58601e46e345648846075e363b2ceb23313c2d1c83ec73"
+    }
+  ]
+}

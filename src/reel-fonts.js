@@ -1,5 +1,5 @@
 import {bundledFonts} from './font-catalog.js';
-export const reelFontGroups=[{id:'sans',name:'Proste · bezszeryfowe'},{id:'serif',name:'Szeryfowe · redakcyjne'},{id:'display',name:'Wąskie · do tytułów'},{id:'mono',name:'Maszynowe · techniczne'}];
+export const reelFontGroups=[{id:'sans',name:'Proste · bezszeryfowe'},{id:'serif',name:'Szeryfowe · redakcyjne'},{id:'display',name:'Tytułowe · wyraziste'},{id:'handwriting',name:'Odręczne · pisane'},{id:'mono',name:'Maszynowe · techniczne'}];
 export const reelFonts = [
  {id:'arial',name:'Arial · prosta',family:'Arial, Helvetica, sans-serif',group:'sans'},
  {id:'georgia',name:'Georgia · redakcyjna',family:'Georgia, "Times New Roman", serif',group:'serif'},

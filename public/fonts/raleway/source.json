@@ -1,0 +1,18 @@
+{
+  "family": "Raleway",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/raleway",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Raleway\"\ndesigner: \"Matt McInerney, Pablo Impallari, Rodrigo Fuenzalida\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2012-09-07\"\nfonts {\n  name: \"Raleway\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Raleway[wght].ttf\"\n  post_script_name: \"Raleway-Thin\"\n  full_name: \"Raleway Thin\"\n  copyright: \"Copyright 2010 The Raleway Project Authors (impallari@gmail.com), with Reserved Font Name \\\"Raleway\\\".\"\n}\nfonts {\n  name: \"Raleway\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Raleway-Italic[wght].ttf\"\n  post_script_name: \"Raleway-ThinItalic\"\n  full_name: \"Raleway Thin Italic\"\n  copyright: \"Copyright 2010 The Raleway Project Authors (impallari@gmail.com), with Reserved Font Name \\\"Raleway\\\".\"\n}\nsource {\n  repository_url: \"https://github.com/theleagueof/raleway\"\n  commit: \"938ac770222935d0d9d7b7b60e9373afd0cc5543\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/raleway/Raleway-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/raleway/Raleway%5Bwght%5D.ttf",
+      "bytes": 312352,
+      "sha256": "8bbcc3eb8275c388f4bcd998832f8a4b943eadbaf6a595205312774b5951aefb"
+    }
+  ]
+}

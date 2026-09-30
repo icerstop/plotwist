@@ -1,0 +1,18 @@
+{
+  "family": "Fraunces",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/fraunces",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Fraunces\"\ndesigner: \"Undercase Type, Phaedra Charles, Flavia Zimbardi\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2020-10-29\"\nfonts {\n  name: \"Fraunces\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Fraunces[SOFT,WONK,opsz,wght].ttf\"\n  post_script_name: \"Fraunces-9ptBlack\"\n  full_name: \"Fraunces 9pt Black\"\n  copyright: \"Copyright 2020 The Fraunces Project Authors (github.com/undercasetype/Fraunces)\"\n}\nfonts {\n  name: \"Fraunces\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Fraunces-Italic[SOFT,WONK,opsz,wght].ttf\"\n  post_script_name: \"Fraunces-9ptBlackItalic\"\n  full_name: \"Fraunces 9pt Black Italic\"\n  copyright: \"Copyright 2020 The Fraunces Project Authors (github.com/undercasetype/Fraunces)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"SOFT\"\n  min_value: 0.0\n  max_value: 100.0\n}\naxes {\n  tag: \"WONK\"\n  min_value: 0.0\n  max_value: 1.0\n}\naxes {\n  tag: \"opsz\"\n  min_value: 9.0\n  max_value: 144.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/undercasetype/Fraunces\"\n  commit: \"d6d385783609ceb11ac0f220f3abd9f1631c8a36\"\n}\nminisite_url: \"https://fraunces.undercase.xyz\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/fraunces/Fraunces-SOFT-WONK-opsz-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/fraunces/Fraunces%5BSOFT%2CWONK%2Copsz%2Cwght%5D.ttf",
+      "bytes": 360440,
+      "sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb"
+    }
+  ]
+}

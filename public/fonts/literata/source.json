@@ -1,0 +1,18 @@
+{
+  "family": "Literata",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/literata",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Literata\"\ndesigner: \"TypeTogether\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2018-12-06\"\nfonts {\n  name: \"Literata\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Literata[opsz,wght].ttf\"\n  post_script_name: \"Literata-Regular\"\n  full_name: \"Literata Regular\"\n  copyright: \"Copyright 2017 The Literata Project Authors (https://github.com/googlefonts/literata)\"\n}\nfonts {\n  name: \"Literata\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Literata-Italic[opsz,wght].ttf\"\n  post_script_name: \"Literata-Italic\"\n  full_name: \"Literata Italic\"\n  copyright: \"Copyright 2017 The Literata Project Authors (https://github.com/googlefonts/literata)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"greek\"\nsubsets: \"greek-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"opsz\"\n  min_value: 7.0\n  max_value: 72.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/googlefonts/literata\"\n  commit: \"0c2761b727a1b3a7cffd313c37f0f5163dfc7a63\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/Literata[opsz,wght].ttf\"\n    dest_file: \"Literata[opsz,wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/Literata-Italic[opsz,wght].ttf\"\n    dest_file: \"Literata-Italic[opsz,wght].ttf\"\n  }\n  branch: \"main\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/literata/Literata-opsz-wght-.ttf",
+      "weight": "200 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/literata/Literata%5Bopsz%2Cwght%5D.ttf",
+      "bytes": 955132,
+      "sha256": "b41138c9373112f32abb589cc22e8674b06ed4048b0c513be922bdd26f274440"
+    }
+  ]
+}

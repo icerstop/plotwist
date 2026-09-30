@@ -1,0 +1,18 @@
+{
+  "family": "Bricolage Grotesque",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/bricolagegrotesque",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Bricolage Grotesque\"\ndesigner: \"Mathieu Triay\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2023-06-15\"\nfonts {\n  name: \"Bricolage Grotesque\"\n  style: \"normal\"\n  weight: 400\n  filename: \"BricolageGrotesque[opsz,wdth,wght].ttf\"\n  post_script_name: \"BricolageGrotesque-96ptExtraBold\"\n  full_name: \"Bricolage Grotesque 96pt ExtraBold\"\n  copyright: \"Copyright 2022 The Bricolage Grotesque Project Authors (https://github.com/ateliertriay/bricolage)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"opsz\"\n  min_value: 12.0\n  max_value: 96.0\n}\naxes {\n  tag: \"wdth\"\n  min_value: 75.0\n  max_value: 100.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 800.0\n}\nsource {\n  repository_url: \"https://github.com/ateliertriay/bricolage\"\n  commit: \"84745e5b96261ae5f8c6c856e262fe78d1d6efdd\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/BricolageGrotesque[opsz,wdth,wght].ttf\"\n    dest_file: \"BricolageGrotesque[opsz,wdth,wght].ttf\"\n  }\n  branch: \"main\"\n  config_yaml: \"sources/config.yaml\"\n}\nminisite_url: \"https://ateliertriay.github.io/bricolage\"\nstroke: \"SANS_SERIF\"\nclassifications: \"DISPLAY\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/bricolagegrotesque/BricolageGrotesque-opsz-wdth-wght-.ttf",
+      "weight": "200 800",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/bricolagegrotesque/BricolageGrotesque%5Bopsz%2Cwdth%2Cwght%5D.ttf",
+      "bytes": 408496,
+      "sha256": "413e7357809ddd12fd80a96a8a396de0e401638d4acd3cb3e37532f0472ac682"
+    }
+  ]
+}

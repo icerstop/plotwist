@@ -1,0 +1,25 @@
+{
+  "family": "Mali",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/mali",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Mali\"\ndesigner: \"Cadson Demak\"\nlicense: \"OFL\"\ncategory: \"HANDWRITING\"\ndate_added: \"2018-08-22\"\nfonts {\n  name: \"Mali\"\n  style: \"normal\"\n  weight: 200\n  filename: \"Mali-ExtraLight.ttf\"\n  post_script_name: \"Mali-ExtraLight\"\n  full_name: \"Mali ExtraLight\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"italic\"\n  weight: 200\n  filename: \"Mali-ExtraLightItalic.ttf\"\n  post_script_name: \"Mali-ExtraLightItalic\"\n  full_name: \"Mali ExtraLight Italic\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"normal\"\n  weight: 300\n  filename: \"Mali-Light.ttf\"\n  post_script_name: \"Mali-Light\"\n  full_name: \"Mali Light\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"italic\"\n  weight: 300\n  filename: \"Mali-LightItalic.ttf\"\n  post_script_name: \"Mali-LightItalic\"\n  full_name: \"Mali Light Italic\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Mali-Regular.ttf\"\n  post_script_name: \"Mali-Regular\"\n  full_name: \"Mali Regular\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Mali-Italic.ttf\"\n  post_script_name: \"Mali-Italic\"\n  full_name: \"Mali Italic\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"normal\"\n  weight: 500\n  filename: \"Mali-Medium.ttf\"\n  post_script_name: \"Mali-Medium\"\n  full_name: \"Mali Medium\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"italic\"\n  weight: 500\n  filename: \"Mali-MediumItalic.ttf\"\n  post_script_name: \"Mali-MediumItalic\"\n  full_name: \"Mali Medium Italic\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"normal\"\n  weight: 600\n  filename: \"Mali-SemiBold.ttf\"\n  post_script_name: \"Mali-SemiBold\"\n  full_name: \"Mali SemiBold\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"italic\"\n  weight: 600\n  filename: \"Mali-SemiBoldItalic.ttf\"\n  post_script_name: \"Mali-SemiBoldItalic\"\n  full_name: \"Mali SemiBold Italic\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"normal\"\n  weight: 700\n  filename: \"Mali-Bold.ttf\"\n  post_script_name: \"Mali-Bold\"\n  full_name: \"Mali Bold\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nfonts {\n  name: \"Mali\"\n  style: \"italic\"\n  weight: 700\n  filename: \"Mali-BoldItalic.ttf\"\n  post_script_name: \"Mali-BoldItalic\"\n  full_name: \"Mali Bold Italic\"\n  copyright: \"Copyright 2018 The Mali Project Authors (https://github.com/cadsondemak/Mali)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"thai\"\nsubsets: \"vietnamese\"\nsource {\n  repository_url: \"https://github.com/cadsondemak/Mali\"\n  commit: \"4f4843c99ad83880f530b33a2ac1d69054c236bf\"\n}\nprimary_script: \"Thai\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/mali/Mali-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/mali/Mali-Regular.ttf",
+      "bytes": 112756,
+      "sha256": "e3212f0f9be130743d32a4f174b7d79628daa5db0d72ca4c63c799ae465597bb"
+    },
+    {
+      "path": "/fonts/mali/Mali-Bold.ttf",
+      "weight": "700",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/mali/Mali-Bold.ttf",
+      "bytes": 112176,
+      "sha256": "3e2f421036c3f91eb5ef34650a5cd2116c737a542147769437a9856a455d4462"
+    }
+  ]
+}

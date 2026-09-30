@@ -1,0 +1,25 @@
+{
+  "family": "Chakra Petch",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/chakrapetch",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Chakra Petch\"\ndesigner: \"Cadson Demak\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2018-08-22\"\nfonts {\n  name: \"Chakra Petch\"\n  style: \"normal\"\n  weight: 300\n  filename: \"ChakraPetch-Light.ttf\"\n  post_script_name: \"ChakraPetch-Light\"\n  full_name: \"Chakra Petch Light\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"italic\"\n  weight: 300\n  filename: \"ChakraPetch-LightItalic.ttf\"\n  post_script_name: \"ChakraPetch-LightItalic\"\n  full_name: \"Chakra Petch Light Italic\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"normal\"\n  weight: 400\n  filename: \"ChakraPetch-Regular.ttf\"\n  post_script_name: \"ChakraPetch-Regular\"\n  full_name: \"Chakra Petch Regular\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"italic\"\n  weight: 400\n  filename: \"ChakraPetch-Italic.ttf\"\n  post_script_name: \"ChakraPetch-Italic\"\n  full_name: \"Chakra Petch Italic\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"normal\"\n  weight: 500\n  filename: \"ChakraPetch-Medium.ttf\"\n  post_script_name: \"ChakraPetch-Medium\"\n  full_name: \"Chakra Petch Medium\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"italic\"\n  weight: 500\n  filename: \"ChakraPetch-MediumItalic.ttf\"\n  post_script_name: \"ChakraPetch-MediumItalic\"\n  full_name: \"Chakra Petch Medium Italic\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"normal\"\n  weight: 600\n  filename: \"ChakraPetch-SemiBold.ttf\"\n  post_script_name: \"ChakraPetch-SemiBold\"\n  full_name: \"Chakra Petch SemiBold\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"italic\"\n  weight: 600\n  filename: \"ChakraPetch-SemiBoldItalic.ttf\"\n  post_script_name: \"ChakraPetch-SemiBoldItalic\"\n  full_name: \"Chakra Petch SemiBold Italic\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"normal\"\n  weight: 700\n  filename: \"ChakraPetch-Bold.ttf\"\n  post_script_name: \"ChakraPetch-Bold\"\n  full_name: \"Chakra Petch Bold\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nfonts {\n  name: \"Chakra Petch\"\n  style: \"italic\"\n  weight: 700\n  filename: \"ChakraPetch-BoldItalic.ttf\"\n  post_script_name: \"ChakraPetch-BoldItalic\"\n  full_name: \"Chakra Petch Bold Italic\"\n  copyright: \"Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"thai\"\nsubsets: \"vietnamese\"\nsource {\n  repository_url: \"https://github.com/m4rc1e/Chakra-Petch\"\n  commit: \"6176529d05acf654f31e024daad77966319e499d\"\n}\nprimary_script: \"Thai\"\nstroke: \"SANS_SERIF\"\nclassifications: \"DISPLAY\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/chakrapetch/ChakraPetch-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/chakrapetch/ChakraPetch-Regular.ttf",
+      "bytes": 78488,
+      "sha256": "98fcd638baa5c81ff0316b7538ce330ee3b23b1302726de3526d5933a8ecf986"
+    },
+    {
+      "path": "/fonts/chakrapetch/ChakraPetch-Bold.ttf",
+      "weight": "700",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/chakrapetch/ChakraPetch-Bold.ttf",
+      "bytes": 78384,
+      "sha256": "65fbf76d95651697275e19db4d717c0e95a789ddd3476478b05292104db278a0"
+    }
+  ]
+}

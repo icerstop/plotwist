@@ -1,0 +1,18 @@
+{
+  "family": "Figtree",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/figtree",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Figtree\"\ndesigner: \"Erik Kennedy\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2022-07-21\"\nfonts {\n  name: \"Figtree\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Figtree[wght].ttf\"\n  post_script_name: \"Figtree-Light\"\n  full_name: \"Figtree Light\"\n  copyright: \"Copyright 2022 The Figtree Project Authors (https://github.com/erikdkennedy/figtree)\"\n}\nfonts {\n  name: \"Figtree\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Figtree-Italic[wght].ttf\"\n  post_script_name: \"Figtree-LightItalic\"\n  full_name: \"Figtree Light Italic\"\n  copyright: \"Copyright 2022 The Figtree Project Authors (https://github.com/erikdkennedy/figtree)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\naxes {\n  tag: \"wght\"\n  min_value: 300.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/erikdkennedy/figtree\"\n  commit: \"032dfa7fe219ef3a02890d6d3add84eacc9aebfe\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/Figtree[wght].ttf\"\n    dest_file: \"Figtree[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/Figtree-Italic[wght].ttf\"\n    dest_file: \"Figtree-Italic[wght].ttf\"\n  }\n  branch: \"master\"\n  config_yaml: \"sources/config.yaml\"\n}\nminisite_url: \"https://www.erikdkennedy.com/projects/figtree.html\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/figtree/Figtree-wght-.ttf",
+      "weight": "300 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/figtree/Figtree%5Bwght%5D.ttf",
+      "bytes": 62712,
+      "sha256": "26ad3db9b31ff7dde67a91ff515d022d2f495cd506590699cf264f0bfe6fb714"
+    }
+  ]
+}

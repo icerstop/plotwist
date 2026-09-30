@@ -1,0 +1,18 @@
+{
+  "family": "Public Sans",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/publicsans",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Public Sans\"\ndesigner: \"USWDS, Dan Williams, Pablo Impallari, Rodrigo Fuenzalida\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2019-06-07\"\nfonts {\n  name: \"Public Sans\"\n  style: \"normal\"\n  weight: 400\n  filename: \"PublicSans[wght].ttf\"\n  post_script_name: \"PublicSans-Thin\"\n  full_name: \"Public Sans Thin\"\n  copyright: \"Copyright 2015 The Public Sans Project Authors (https://github.com/uswds/public-sans)\"\n}\nfonts {\n  name: \"Public Sans\"\n  style: \"italic\"\n  weight: 400\n  filename: \"PublicSans-Italic[wght].ttf\"\n  post_script_name: \"PublicSans-ThinItalic\"\n  full_name: \"Public Sans Thin Italic\"\n  copyright: \"Copyright 2015 The Public Sans Project Authors (https://github.com/uswds/public-sans)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/uswds/public-sans\"\n  commit: \"c7923167a592d941646f99fb7b5fba17aa7d69e1\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/PublicSans[wght].ttf\"\n    dest_file: \"PublicSans[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/PublicSans-Italic[wght].ttf\"\n    dest_file: \"PublicSans-Italic[wght].ttf\"\n  }\n  branch: \"main\"\n}\nminisite_url: \"https://public-sans.digital.gov/\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/publicsans/PublicSans-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/publicsans/PublicSans%5Bwght%5D.ttf",
+      "bytes": 103316,
+      "sha256": "d75a7dc1a27eb9e336d5b33f55489d2ecb5621bf694d5c43b2415bce2ca830a8"
+    }
+  ]
+}

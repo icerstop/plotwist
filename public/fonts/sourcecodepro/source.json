@@ -1,0 +1,18 @@
+{
+  "family": "Source Code Pro",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/sourcecodepro",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Source Code Pro\"\ndesigner: \"Paul D. Hunt\"\nlicense: \"OFL\"\ncategory: \"MONOSPACE\"\ndate_added: \"2012-09-20\"\nfonts {\n  name: \"Source Code Pro\"\n  style: \"normal\"\n  weight: 400\n  filename: \"SourceCodePro[wght].ttf\"\n  post_script_name: \"SourceCodePro-ExtraLight\"\n  full_name: \"Source Code Pro ExtraLight Regular\"\n  copyright: \"© 2010 - 2020 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’.\"\n}\nfonts {\n  name: \"Source Code Pro\"\n  style: \"italic\"\n  weight: 400\n  filename: \"SourceCodePro-Italic[wght].ttf\"\n  post_script_name: \"SourceCodePro-ExtraLightItalic\"\n  full_name: \"Source Code Pro ExtraLight Italic\"\n  copyright: \"© 2010 - 2020 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’.\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"greek\"\nsubsets: \"greek-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 900.0\n}\n\nsource {\n  repository_url: \"https://github.com/adobe-fonts/source-code-pro\"\n  commit: \"803b7e23ec97ae58b6232ea76519a76d428ba268\"\n}",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/sourcecodepro/SourceCodePro-wght-.ttf",
+      "weight": "200 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/sourcecodepro/SourceCodePro%5Bwght%5D.ttf",
+      "bytes": 212340,
+      "sha256": "b400fc584e10aff25d0e775ce181b4fc1c5ea1b5dc37b81aeb2084375b945790"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "family": "Rajdhani",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/rajdhani",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Rajdhani\"\ndesigner: \"Indian Type Foundry\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2014-07-09\"\nfonts {\n  name: \"Rajdhani\"\n  style: \"normal\"\n  weight: 300\n  filename: \"Rajdhani-Light.ttf\"\n  post_script_name: \"Rajdhani-Light\"\n  full_name: \"Rajdhani Light\"\n  copyright: \"Copyright (c) 2014 Indian Type Foundry (info@indiantypefoundry.com)\"\n}\nfonts {\n  name: \"Rajdhani\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Rajdhani-Regular.ttf\"\n  post_script_name: \"Rajdhani-Regular\"\n  full_name: \"Rajdhani Regular\"\n  copyright: \"Copyright (c) 2014 Indian Type Foundry (info@indiantypefoundry.com)\"\n}\nfonts {\n  name: \"Rajdhani\"\n  style: \"normal\"\n  weight: 500\n  filename: \"Rajdhani-Medium.ttf\"\n  post_script_name: \"Rajdhani-Medium\"\n  full_name: \"Rajdhani Medium\"\n  copyright: \"Copyright (c) 2014 Indian Type Foundry (info@indiantypefoundry.com)\"\n}\nfonts {\n  name: \"Rajdhani\"\n  style: \"normal\"\n  weight: 600\n  filename: \"Rajdhani-SemiBold.ttf\"\n  post_script_name: \"Rajdhani-SemiBold\"\n  full_name: \"Rajdhani SemiBold\"\n  copyright: \"Copyright (c) 2014 Indian Type Foundry (info@indiantypefoundry.com)\"\n}\nfonts {\n  name: \"Rajdhani\"\n  style: \"normal\"\n  weight: 700\n  filename: \"Rajdhani-Bold.ttf\"\n  post_script_name: \"Rajdhani-Bold\"\n  full_name: \"Rajdhani Bold\"\n  copyright: \"Copyright (c) 2014 Indian Type Foundry (info@indiantypefoundry.com)\"\n}\nsubsets: \"devanagari\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nprimary_script: \"Deva\"\nsource {\n  repository_url: \"https://github.com/itfoundry/rajdhani\"\n  commit: \"86cae0e9a63279efa076915a470049dd76c044f0\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/rajdhani/Rajdhani-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/rajdhani/Rajdhani-Regular.ttf",
+      "bytes": 377860,
+      "sha256": "6e1fc228a8318251a6e569502ec57bac1e4656c582f92f59ccecc4688e039b98"
+    },
+    {
+      "path": "/fonts/rajdhani/Rajdhani-Bold.ttf",
+      "weight": "700",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/rajdhani/Rajdhani-Bold.ttf",
+      "bytes": 400680,
+      "sha256": "691470dd3286a14e9677940d0bf75796179841ba5215cbda1a2c8910a3226afd"
+    }
+  ]
+}

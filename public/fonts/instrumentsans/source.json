@@ -1,0 +1,18 @@
+{
+  "family": "Instrument Sans",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/instrumentsans",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Instrument Sans\"\ndesigner: \"Rodrigo Fuenzalida, Jordan Egstad\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2023-04-13\"\nfonts {\n  name: \"Instrument Sans\"\n  style: \"normal\"\n  weight: 400\n  filename: \"InstrumentSans[wdth,wght].ttf\"\n  post_script_name: \"InstrumentSans-Regular\"\n  full_name: \"Instrument Sans Regular\"\n  copyright: \"Copyright 2022 The Instrument Sans Project Authors (https://github.com/Instrument/instrument-sans)\"\n}\nfonts {\n  name: \"Instrument Sans\"\n  style: \"italic\"\n  weight: 400\n  filename: \"InstrumentSans-Italic[wdth,wght].ttf\"\n  post_script_name: \"InstrumentSans-Italic\"\n  full_name: \"Instrument Sans Italic\"\n  copyright: \"Copyright 2022 The Instrument Sans Project Authors (https://github.com/Instrument/instrument-sans)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\naxes {\n  tag: \"wdth\"\n  min_value: 75.0\n  max_value: 100.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 400.0\n  max_value: 700.0\n}\nsource {\n  repository_url: \"https://github.com/Instrument/instrument-sans\"\n  commit: \"7fa22308a3d0c94ee2b3cd537a1196b65db34a3e\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/InstrumentSans[wdth,wght].ttf\"\n    dest_file: \"InstrumentSans[wdth,wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/InstrumentSans-Italic[wdth,wght].ttf\"\n    dest_file: \"InstrumentSans-Italic[wdth,wght].ttf\"\n  }\n  branch: \"master\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/instrumentsans/InstrumentSans-wdth-wght-.ttf",
+      "weight": "400 700",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/instrumentsans/InstrumentSans%5Bwdth%2Cwght%5D.ttf",
+      "bytes": 194336,
+      "sha256": "b24f1812584816958afcf22e22d08e44318c5e51651e25d2438efdde389b33b1"
+    }
+  ]
+}

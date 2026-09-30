@@ -1,0 +1,18 @@
+{
+  "family": "Albert Sans",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/albertsans",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Albert Sans\"\ndesigner: \"Andreas Rasmussen\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2022-06-09\"\nfonts {\n  name: \"Albert Sans\"\n  style: \"normal\"\n  weight: 400\n  filename: \"AlbertSans[wght].ttf\"\n  post_script_name: \"AlbertSans-Regular\"\n  full_name: \"Albert Sans Regular\"\n  copyright: \"Copyright 2021 The Albert Sans Project Authors (https://github.com/usted/Albert-Sans)\"\n}\nfonts {\n  name: \"Albert Sans\"\n  style: \"italic\"\n  weight: 400\n  filename: \"AlbertSans-Italic[wght].ttf\"\n  post_script_name: \"AlbertSans-Italic\"\n  full_name: \"Albert Sans Italic\"\n  copyright: \"Copyright 2021 The Albert Sans Project Authors (https://github.com/usted/Albert-Sans)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/usted/Albert-Sans\"\n  commit: \"f7f46082233f5a29cb71d6ae1d8d0ef9c7962d6c\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/AlbertSans[wght].ttf\"\n    dest_file: \"AlbertSans[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/AlbertSans-Italic[wght].ttf\"\n    dest_file: \"AlbertSans-Italic[wght].ttf\"\n  }\n  branch: \"main\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/albertsans/AlbertSans-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/albertsans/AlbertSans%5Bwght%5D.ttf",
+      "bytes": 129000,
+      "sha256": "8fe5d4cf5822d7096d4d17ad781c90f97c745ac13a22be619db74966fba45fda"
+    }
+  ]
+}

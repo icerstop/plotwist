@@ -1,0 +1,18 @@
+{
+  "family": "Unbounded",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/unbounded",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Unbounded\"\ndesigner: \"NaN\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2022-11-07\"\nfonts {\n  name: \"Unbounded\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Unbounded[wght].ttf\"\n  post_script_name: \"Unbounded-Regular\"\n  full_name: \"Unbounded Regular\"\n  copyright: \"Copyright 2022 The Unbounded Project Authors (https://github.com/googlefonts/unbounded)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/googlefonts/unbounded\"\n  commit: \"f3ec43228a864a72487e41552e2140efab9884ea\"\n  config_yaml: \"Source/config.yaml\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"DESCRIPTION.en_us.html\"\n    dest_file: \"DESCRIPTION.en_us.html\"\n  }\n  files {\n    source_file: \"fonts/variable/Unbounded[wght].ttf\"\n    dest_file: \"Unbounded[wght].ttf\"\n  }\n  branch: \"main\"\n}\nminisite_url: \"https://unbounded.polkadot.network/\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/unbounded/Unbounded-wght-.ttf",
+      "weight": "200 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/unbounded/Unbounded%5Bwght%5D.ttf",
+      "bytes": 778272,
+      "sha256": "323b511be380c8d474ef030686b71aedde501f8d9cd46da558b7c40454372c3f"
+    }
+  ]
+}

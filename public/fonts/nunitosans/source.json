@@ -1,0 +1,18 @@
+{
+  "family": "Nunito Sans",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/nunitosans",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Nunito Sans\"\ndesigner: \"Vernon Adams, Jacques Le Bailly, Manvel Shmavonyan, Alexei Vanyashin\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2016-10-06\"\nfonts {\n  name: \"Nunito Sans\"\n  style: \"normal\"\n  weight: 400\n  filename: \"NunitoSans[YTLC,opsz,wdth,wght].ttf\"\n  post_script_name: \"NunitoSans-12ptExtraLight\"\n  full_name: \"Nunito Sans 12pt ExtraLight\"\n  copyright: \"Copyright 2016 The Nunito Sans Project Authors (https://github.com/Fonthausen/NunitoSans)\"\n}\nfonts {\n  name: \"Nunito Sans\"\n  style: \"italic\"\n  weight: 400\n  filename: \"NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf\"\n  post_script_name: \"NunitoSans-12ptExtraLightItalic\"\n  full_name: \"Nunito Sans 12pt ExtraLight Italic\"\n  copyright: \"Copyright 2016 The Nunito Sans Project Authors (https://github.com/Fonthausen/NunitoSans)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"YTLC\"\n  min_value: 440.0\n  max_value: 540.0\n}\naxes {\n  tag: \"opsz\"\n  min_value: 6.0\n  max_value: 12.0\n}\naxes {\n  tag: \"wdth\"\n  min_value: 75.0\n  max_value: 125.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 1000.0\n}\nregistry_default_overrides {\n  key: \"opsz\"\n  value: 12.0\n}\nsource {\n  repository_url: \"https://github.com/googlefonts/NunitoSans\"\n  commit: \"058bd7a2f33d6ad5ef1df985b3db403622016a8c\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/NunitoSans[YTLC,opsz,wdth,wght].ttf\"\n    dest_file: \"NunitoSans[YTLC,opsz,wdth,wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf\"\n    dest_file: \"NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf\"\n  }\n  branch: \"main\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/nunitosans/NunitoSans-YTLC-opsz-wdth-wght-.ttf",
+      "weight": "200 1000",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/nunitosans/NunitoSans%5BYTLC%2Copsz%2Cwdth%2Cwght%5D.ttf",
+      "bytes": 571240,
+      "sha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d"
+    }
+  ]
+}

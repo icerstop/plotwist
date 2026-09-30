@@ -1,0 +1,18 @@
+{
+  "family": "Lexend",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/lexend",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Lexend\"\ndesigner: \"Bonnie Shaver-Troup, Thomas Jockin, Santiago Orozco, Héctor Gómez, Superunion\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2021-03-09\"\nfonts {\n  name: \"Lexend\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Lexend[wght].ttf\"\n  post_script_name: \"Lexend-Regular\"\n  full_name: \"Lexend Regular\"\n  copyright: \"Copyright 2019 The Lexend Project Authors (https://github.com/googlefonts/lexend)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/googlefonts/lexend\"\n  commit: \"20491885ca2cf7ffc556432973e7bdbc701952b5\"\n  config_yaml: \"sources/lexend.yaml\"\n  files {\n    source_file: \"fonts/lexend/variable/Lexend[wght].ttf\"\n    dest_file: \"Lexend[wght].ttf\"\n  }\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  branch: \"main\"\n}\nminisite_url: \"https://www.lexend.com/\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/lexend/Lexend-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/lexend/Lexend%5Bwght%5D.ttf",
+      "bytes": 175756,
+      "sha256": "3add53e641fbc81da64da4bb254285e2831b52b029527bc0714e2b9610832ee6"
+    }
+  ]
+}

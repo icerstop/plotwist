@@ -1,0 +1,25 @@
+{
+  "family": "Space Mono",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/spacemono",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Space Mono\"\ndesigner: \"Colophon Foundry\"\nlicense: \"OFL\"\ncategory: \"MONOSPACE\"\ndate_added: \"2016-06-20\"\nfonts {\n  name: \"Space Mono\"\n  style: \"normal\"\n  weight: 400\n  filename: \"SpaceMono-Regular.ttf\"\n  post_script_name: \"SpaceMono-Regular\"\n  full_name: \"Space Mono Regular\"\n  copyright: \"Copyright 2016 The Space Mono Project Authors (https://github.com/googlefonts/spacemono)\"\n}\nfonts {\n  name: \"Space Mono\"\n  style: \"italic\"\n  weight: 400\n  filename: \"SpaceMono-Italic.ttf\"\n  post_script_name: \"SpaceMono-Italic\"\n  full_name: \"Space Mono Italic\"\n  copyright: \"Copyright 2016 The Space Mono Project Authors (https://github.com/googlefonts/spacemono)\"\n}\nfonts {\n  name: \"Space Mono\"\n  style: \"normal\"\n  weight: 700\n  filename: \"SpaceMono-Bold.ttf\"\n  post_script_name: \"SpaceMono-Bold\"\n  full_name: \"Space Mono Bold\"\n  copyright: \"Copyright 2016 The Space Mono Project Authors (https://github.com/googlefonts/spacemono)\"\n}\nfonts {\n  name: \"Space Mono\"\n  style: \"italic\"\n  weight: 700\n  filename: \"SpaceMono-BoldItalic.ttf\"\n  post_script_name: \"SpaceMono-BoldItalic\"\n  full_name: \"Space Mono Bold Italic\"\n  copyright: \"Copyright 2016 The Space Mono Project Authors (https://github.com/googlefonts/spacemono)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\nsource {\n  repository_url: \"https://github.com/googlefonts/spacemono\"\n  commit: \"329858c2c4dbd3476f972a4ae00624b018cf4b81\"\n  files {\n    source_file: \"fonts/ttf/SpaceMono-Regular.ttf\"\n    dest_file: \"SpaceMono-Regular.ttf\"\n  }\n  files {\n    source_file: \"fonts/ttf/SpaceMono-Italic.ttf\"\n    dest_file: \"SpaceMono-Italic.ttf\"\n  }\n  files {\n    source_file: \"fonts/ttf/SpaceMono-Bold.ttf\"\n    dest_file: \"SpaceMono-Bold.ttf\"\n  }\n  files {\n    source_file: \"fonts/ttf/SpaceMono-BoldItalic.ttf\"\n    dest_file: \"SpaceMono-BoldItalic.ttf\"\n  }\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  branch: \"main\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/spacemono/SpaceMono-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/spacemono/SpaceMono-Regular.ttf",
+      "bytes": 99356,
+      "sha256": "95837e182baeeada83368f7748db28357f0a1b75c6b84ff7065b5edf933c8e18"
+    },
+    {
+      "path": "/fonts/spacemono/SpaceMono-Bold.ttf",
+      "weight": "700",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/spacemono/SpaceMono-Bold.ttf",
+      "bytes": 98232,
+      "sha256": "405e73d41afb7e5906efce206a326af5c956f38e255f35421c260e861e599c59"
+    }
+  ]
+}

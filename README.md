@@ -149,7 +149,7 @@ Pobieranie akcji używa pierwszej daty handlu podanej przez Yahoo oraz jawnego `
 
 ## Czcionki i podpis rolek
 
-W panelu Wygląd rolki pod podglądem, w sekcji Styl, można wybrać Arial, Georgia, Verdana, Trebuchet MS, Impact lub Courier New. Są to czcionki systemowe z określonymi zamiennikami. Wybór jest wspólny dla trybów i zapisywany razem z projektem w przeglądarce. Ten sam renderer obsługuje podgląd, PNG i wideo. Pod każdą rolką znajduje się wyśrodkowany podpis Jakub Bilski oraz X: @jakub_bilski · IG: jakub__bilski. Źródła i metodologia mają osobne miejsce nad podpisem.
+W panelu Wygląd rolki, w sekcji Styl, dostępnych jest 61 czcionek: 55 dołączonych do aplikacji oraz 6 systemowych. Są pogrupowane na bezszeryfowe, redakcyjne, tytułowe, odręczne i techniczne. Tę samą listę udostępnia wybór czcionki pojedynczego elementu. Nowe kroje obejmują m.in. Fraunces, Bodoni Moda, DM Serif Display, Sora, Onest, Bebas Neue, Caveat i IBM Plex Mono. Pliki oraz licencje znajdują się w `public/fonts`; polskie znaki sprawdzono w mapach znaków fontów. Wczytują się tylko wybrane rodziny, przed podglądem i eksportem. Wybór jest wspólny dla trybów i zapisywany razem z projektem w przeglądarce. Ten sam renderer obsługuje podgląd, PNG i wideo. Pod każdą rolką znajduje się wyśrodkowany podpis Jakub Bilski oraz X: @jakub_bilski · IG: jakub__bilski. Źródła i metodologia mają osobne miejsce nad podpisem.
 
 ## Wiele serii, surowce i logotypy
 

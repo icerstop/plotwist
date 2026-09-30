@@ -1,0 +1,18 @@
+{
+  "family": "DM Serif Display",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/dmserifdisplay",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"DM Serif Display\"\ndesigner: \"Colophon Foundry\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2019-06-12\"\nfonts {\n  name: \"DM Serif Display\"\n  style: \"normal\"\n  weight: 400\n  filename: \"DMSerifDisplay-Regular.ttf\"\n  post_script_name: \"DMSerifDisplay-Regular\"\n  full_name: \"DM Serif Display Regular\"\n  copyright: \"Copyright 2014 - 2017 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name \\'Source\\'. Copyright 2019 Google LLC.\"\n}\nfonts {\n  name: \"DM Serif Display\"\n  style: \"italic\"\n  weight: 400\n  filename: \"DMSerifDisplay-Italic.ttf\"\n  post_script_name: \"DMSerifDisplay-Italic\"\n  full_name: \"DM Serif Display Italic\"\n  copyright: \"Copyright 2014 - 2017 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name \\'Source\\'. Copyright 2019 Google LLC.\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsource {\n  repository_url: \"https://github.com/googlefonts/dm-fonts\"\n  commit: \"027cea4e4f45827128860a4dec7b9a0852a295d7\"\n}\nstroke: \"SERIF\"\nclassifications: \"DISPLAY\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/dmserifdisplay/DMSerifDisplay-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/dmserifdisplay/DMSerifDisplay-Regular.ttf",
+      "bytes": 76580,
+      "sha256": "8cc3643535edf039aa5d95440a8542735e9197e4f4b8d9303e980fefbf5ab616"
+    }
+  ]
+}

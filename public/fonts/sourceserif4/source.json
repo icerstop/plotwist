@@ -1,0 +1,18 @@
+{
+  "family": "Source Serif 4",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/sourceserif4",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Source Serif 4\"\ndesigner: \"Frank Grießhammer\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2021-11-16\"\nfonts {\n  name: \"Source Serif 4\"\n  style: \"normal\"\n  weight: 400\n  filename: \"SourceSerif4[opsz,wght].ttf\"\n  post_script_name: \"SourceSerif4Roman-Regular\"\n  full_name: \"Source Serif 4 Regular\"\n  copyright: \"© 2014 - 2021 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’.\"\n}\nfonts {\n  name: \"Source Serif 4\"\n  style: \"italic\"\n  weight: 400\n  filename: \"SourceSerif4-Italic[opsz,wght].ttf\"\n  post_script_name: \"SourceSerif4Italic-Italic\"\n  full_name: \"Source Serif 4 Italic\"\n  copyright: \"© 2014 - 2021 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’.\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"greek\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"opsz\"\n  min_value: 8.0\n  max_value: 60.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/adobe-fonts/source-serif\"\n  commit: \"b3980ade53bb3d023a0006076d05349236b309b1\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/sourceserif4/SourceSerif4-opsz-wght-.ttf",
+      "weight": "200 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/sourceserif4/SourceSerif4%5Bopsz%2Cwght%5D.ttf",
+      "bytes": 1209508,
+      "sha256": "97b2d4da6e3cb494b5a1e66ae176914d852ccabef49e0c02c0df25f3e39aca0b"
+    }
+  ]
+}

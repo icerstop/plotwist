@@ -313,6 +313,8 @@ Dodaj przynajmniej jedną spółkę, ETF lub surowiec.|Add at least one stock, E
 Proste · bezszeryfowe|Clean · sans serif
 Szeryfowe · redakcyjne|Editorial · serif
 Wąskie · do tytułów|Condensed · headlines
+Tytułowe · wyraziste|Display · headlines
+Odręczne · pisane|Handwriting · script
 Maszynowe · techniczne|Monospace · technical
 Zażółć gęślą jaźń.|The quick brown fox.
 0123456789 · 1 234,56 zł · +12,5%|0123456789 · PLN 1,234.56 · +12.5%

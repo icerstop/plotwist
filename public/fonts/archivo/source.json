@@ -1,0 +1,18 @@
+{
+  "family": "Archivo",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/archivo",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Archivo\"\ndesigner: \"Omnibus-Type\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2016-12-03\"\nfonts {\n  name: \"Archivo\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Archivo[wdth,wght].ttf\"\n  post_script_name: \"Archivo-SemiBold\"\n  full_name: \"Archivo SemiBold\"\n  copyright: \"Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)\"\n}\nfonts {\n  name: \"Archivo\"\n  style: \"italic\"\n  weight: 400\n  filename: \"Archivo-Italic[wdth,wght].ttf\"\n  post_script_name: \"Archivo-SemiBoldItalic\"\n  full_name: \"Archivo SemiBold Italic\"\n  copyright: \"Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wdth\"\n  min_value: 62.0\n  max_value: 125.0\n}\naxes {\n  tag: \"wght\"\n  min_value: 100.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/Omnibus-Type/Archivo\"\n  commit: \"b5d63988ce19d044d3e10362de730af00526b672\"\n  files {\n    source_file: \"fonts/variable/Archivo[wdth,wght].ttf\"\n    dest_file: \"Archivo[wdth,wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/Archivo-Italic[wdth,wght].ttf\"\n    dest_file: \"Archivo-Italic[wdth,wght].ttf\"\n  }\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  branch: \"master\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/archivo/Archivo-wdth-wght-.ttf",
+      "weight": "100 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/archivo/Archivo%5Bwdth%2Cwght%5D.ttf",
+      "bytes": 658596,
+      "sha256": "0e094a7d3c7c4c25cf1310c4b30014f1dae9332220b1c2c88f4fa996f0b05053"
+    }
+  ]
+}

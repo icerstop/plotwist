@@ -1,0 +1,18 @@
+{
+  "family": "Patrick Hand",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/patrickhand",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Patrick Hand\"\ndesigner: \"Patrick Wagesreiter\"\nlicense: \"OFL\"\ncategory: \"HANDWRITING\"\ndate_added: \"2011-07-06\"\nfonts {\n  name: \"Patrick Hand\"\n  style: \"normal\"\n  weight: 400\n  filename: \"PatrickHand-Regular.ttf\"\n  post_script_name: \"PatrickHand-Regular\"\n  full_name: \"Patrick Hand\"\n  copyright: \"Copyright (c) 2010-2012 Patrick Wagesreiter (mail@patrickwagesreiter.at)\"\n}\nsubsets: \"menu\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"vietnamese\"\nstroke: \"SANS_SERIF\"\nclassifications: \"HANDWRITING\"\nsource {\n  repository_url: \"https://github.com/googlefonts/googlefontdirectory-hg\"\n  commit: \"52f780bc9d197280a9f430574e179a5f233c56b6\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/patrickhand/PatrickHand-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/patrickhand/PatrickHand-Regular.ttf",
+      "bytes": 214772,
+      "sha256": "0f173b3e6cb6d1af25babf7f0057c5ac4ee11f9992b0469bb817e967ef4ad0fc"
+    }
+  ]
+}

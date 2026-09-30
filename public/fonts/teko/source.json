@@ -1,0 +1,18 @@
+{
+  "family": "Teko",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/teko",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Teko\"\ndesigner: \"Indian Type Foundry\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2014-06-25\"\nfonts {\n  name: \"Teko\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Teko[wght].ttf\"\n  post_script_name: \"Teko-Light\"\n  full_name: \"Teko Light\"\n  copyright: \"Copyright 2023 The Teko Project Authors (https://www.github.com/googlefonts/teko)\"\n}\nsubsets: \"devanagari\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\naxes {\n  tag: \"wght\"\n  min_value: 300.0\n  max_value: 700.0\n}\nsource {\n  repository_url: \"https://www.github.com/googlefonts/teko\"\n  commit: \"6715caf853f342eef57ea367b6c2991cd3928398\"\n  config_yaml: \"sources/config.yaml\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/Teko[wght].ttf\"\n    dest_file: \"Teko[wght].ttf\"\n  }\n  branch: \"master\"\n}\nprimary_script: \"Deva\"\nstroke: \"SANS_SERIF\"\nclassifications: \"DISPLAY\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/teko/Teko-wght-.ttf",
+      "weight": "300 700",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/teko/Teko%5Bwght%5D.ttf",
+      "bytes": 292108,
+      "sha256": "d1321889f262bbbff632e7976349853399cd097b6f382d4b19790c915c13c1ae"
+    }
+  ]
+}

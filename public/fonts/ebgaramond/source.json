@@ -1,0 +1,18 @@
+{
+  "family": "EB Garamond",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/ebgaramond",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"EB Garamond\"\ndesigner: \"Georg Duffner, Octavio Pardo\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2011-03-23\"\nfonts {\n  name: \"EB Garamond\"\n  style: \"normal\"\n  weight: 400\n  filename: \"EBGaramond[wght].ttf\"\n  post_script_name: \"EBGaramond-Regular\"\n  full_name: \"EB Garamond Regular\"\n  copyright: \"Copyright 2017 The EB Garamond Project Authors (https://github.com/octaviopardo/EBGaramond12)\"\n}\nfonts {\n  name: \"EB Garamond\"\n  style: \"italic\"\n  weight: 400\n  filename: \"EBGaramond-Italic[wght].ttf\"\n  post_script_name: \"EBGaramond-Italic\"\n  full_name: \"EB Garamond Italic\"\n  copyright: \"Copyright 2017 The EB Garamond Project Authors (https://github.com/octaviopardo/EBGaramond12)\"\n}\nsubsets: \"cyrillic\"\nsubsets: \"cyrillic-ext\"\nsubsets: \"greek\"\nsubsets: \"greek-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 400.0\n  max_value: 800.0\n}\nsource {\n  repository_url: \"https://github.com/octaviopardo/EBGaramond12\"\n  commit: \"106a4a6d377987459ae5e68673a4570f13b957fb\"\n  files {\n    source_file: \"fonts/variable/EBGaramond[wght].ttf\"\n    dest_file: \"EBGaramond[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/EBGaramond-Italic[wght].ttf\"\n    dest_file: \"EBGaramond-Italic[wght].ttf\"\n  }\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  branch: \"master\"\n  config_yaml: \"sources/config.yaml\"\n}\nminisite_url: \"https://googlefonts.github.io/ebgaramond-specimen/\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/ebgaramond/EBGaramond-wght-.ttf",
+      "weight": "400 800",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/ebgaramond/EBGaramond%5Bwght%5D.ttf",
+      "bytes": 851176,
+      "sha256": "ef9512f92f6d579e5dc75af59a5a4b1b8b47d2eda89e00b954d44520e5369027"
+    }
+  ]
+}

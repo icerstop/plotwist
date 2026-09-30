@@ -1,0 +1,18 @@
+{
+  "family": "Crimson Pro",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/crimsonpro",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Crimson Pro\"\ndesigner: \"Jacques Le Bailly\"\nlicense: \"OFL\"\ncategory: \"SERIF\"\ndate_added: \"2018-12-05\"\nfonts {\n  name: \"Crimson Pro\"\n  style: \"normal\"\n  weight: 400\n  filename: \"CrimsonPro[wght].ttf\"\n  post_script_name: \"CrimsonPro-Regular\"\n  full_name: \"Crimson Pro Regular\"\n  copyright: \"Copyright 2018 The Crimson Pro Project Authors (https://github.com/Fonthausen/CrimsonPro)\"\n}\nfonts {\n  name: \"Crimson Pro\"\n  style: \"italic\"\n  weight: 400\n  filename: \"CrimsonPro-Italic[wght].ttf\"\n  post_script_name: \"CrimsonPro-Italic\"\n  full_name: \"Crimson Pro Italic\"\n  copyright: \"Copyright 2018 The Crimson Pro Project Authors (https://github.com/Fonthausen/CrimsonPro)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 900.0\n}\nsource {\n  repository_url: \"https://github.com/Fonthausen/CrimsonPro\"\n  commit: \"24e8f7bf59ec45d77c67879ad80d97e5f94c787b\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/crimsonpro/CrimsonPro-wght-.ttf",
+      "weight": "200 900",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/crimsonpro/CrimsonPro%5Bwght%5D.ttf",
+      "bytes": 246324,
+      "sha256": "16aa9fb7300a93637da51fac03a071b2ff08b6bbf65f99c794c25f040b58af6a"
+    }
+  ]
+}

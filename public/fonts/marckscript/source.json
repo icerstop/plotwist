@@ -1,0 +1,18 @@
+{
+  "family": "Marck Script",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/marckscript",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Marck Script\"\ndesigner: \"Denis Masharov\"\nlicense: \"OFL\"\ncategory: \"HANDWRITING\"\ndate_added: \"2011-10-12\"\nfonts {\n  name: \"Marck Script\"\n  style: \"normal\"\n  weight: 400\n  filename: \"MarckScript-Regular.ttf\"\n  post_script_name: \"MarckScript-Regular\"\n  full_name: \"Marck Script\"\n  copyright: \"Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com>, Marck Fogel, with Reserved Font Names \\\"Marck Script\\\".\"\n}\nsubsets: \"menu\"\nsubsets: \"cyrillic\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nclassifications: \"DISPLAY\"\nclassifications: \"HANDWRITING\"\nsource {\n  repository_url: \"https://github.com/googlefonts/marckscript\"\n  commit: \"f4e66d73d1cc7190be547d491b99a0979c60fb10\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/ttf/MarckScript-Regular.ttf\"\n    dest_file: \"MarckScript-Regular.ttf\"\n  }\n  branch: \"master\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/marckscript/MarckScript-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/marckscript/MarckScript-Regular.ttf",
+      "bytes": 83664,
+      "sha256": "504de8cc6f919163bc9afb67b9bc208d258230c5e8d00cb82ec52474f9fafc3b"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "family": "Archivo Black",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/archivoblack",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Archivo Black\"\ndesigner: \"Omnibus-Type\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2012-09-18\"\nfonts {\n  name: \"Archivo Black\"\n  style: \"normal\"\n  weight: 400\n  filename: \"ArchivoBlack-Regular.ttf\"\n  post_script_name: \"ArchivoBlack-Regular\"\n  full_name: \"Archivo Black Regular\"\n  copyright: \"Copyright 2017 The Archivo Black Project Authors (https://github.com/Omnibus-Type/ArchivoBlack)\"\n}\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsource {\n  repository_url: \"https://github.com/Omnibus-Type/ArchivoBlack\"\n  commit: \"95df3c54d818473a3e362f30ae3059bd85b80036\"\n}\nstroke: \"SANS_SERIF\"\nclassifications: \"DISPLAY\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/archivoblack/ArchivoBlack-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/archivoblack/ArchivoBlack-Regular.ttf",
+      "bytes": 90988,
+      "sha256": "dd9a89a019b4849f66ab75455fe7bdf931311042cbb0f0f97acc061539703180"
+    }
+  ]
+}

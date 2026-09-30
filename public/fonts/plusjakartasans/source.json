@@ -1,0 +1,18 @@
+{
+  "family": "Plus Jakarta Sans",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/plusjakartasans",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Plus Jakarta Sans\"\ndesigner: \"Tokotype\"\nlicense: \"OFL\"\ncategory: \"SANS_SERIF\"\ndate_added: \"2022-03-24\"\nfonts {\n  name: \"Plus Jakarta Sans\"\n  style: \"normal\"\n  weight: 400\n  filename: \"PlusJakartaSans[wght].ttf\"\n  post_script_name: \"PlusJakartaSans-Regular\"\n  full_name: \"Plus Jakarta Sans Regular\"\n  copyright: \"Copyright 2020 The Plus Jakarta Sans Project Authors (https://github.com/tokotype/PlusJakartaSans)\"\n}\nfonts {\n  name: \"Plus Jakarta Sans\"\n  style: \"italic\"\n  weight: 400\n  filename: \"PlusJakartaSans-Italic[wght].ttf\"\n  post_script_name: \"PlusJakartaSans-Italic\"\n  full_name: \"Plus Jakarta Sans Italic\"\n  copyright: \"Copyright 2020 The Plus Jakarta Sans Project Authors (https://github.com/tokotype/PlusJakartaSans)\"\n}\nsubsets: \"cyrillic-ext\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nsubsets: \"menu\"\nsubsets: \"vietnamese\"\naxes {\n  tag: \"wght\"\n  min_value: 200.0\n  max_value: 800.0\n}\nsource {\n  repository_url: \"https://github.com/tokotype/PlusJakartaSans\"\n  commit: \"18d1cd2f7ea10481919d2f05c1f7064b7307fc26\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/variable/PlusJakartaSans[wght].ttf\"\n    dest_file: \"PlusJakartaSans[wght].ttf\"\n  }\n  files {\n    source_file: \"fonts/variable/PlusJakartaSans-Italic[wght].ttf\"\n    dest_file: \"PlusJakartaSans-Italic[wght].ttf\"\n  }\n  branch: \"master\"\n  config_yaml: \"sources/config.yaml\"\n}\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/plusjakartasans/PlusJakartaSans-wght-.ttf",
+      "weight": "200 800",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/plusjakartasans/PlusJakartaSans%5Bwght%5D.ttf",
+      "bytes": 176288,
+      "sha256": "89b3fb38aa0d275d7a731d0d817a4f1622b316b4d7fbdedcf02ee9099ff68bc8"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "family": "Courgette",
+  "retrievedAt": "2026-09-30",
+  "source": "https://github.com/google/fonts/tree/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/courgette",
+  "revision": "24ecb0bbdc3a52d6fddef160b769c61463f455d9",
+  "metadata": "name: \"Courgette\"\ndesigner: \"Karolina Lach\"\nlicense: \"OFL\"\ncategory: \"HANDWRITING\"\ndate_added: \"2012-07-10\"\nsource {\n  repository_url: \"https://github.com/googlefonts/courgette\"\n  commit: \"c7884413c3ff6401df0abd685b20e7d419db2684\"\n  files {\n    source_file: \"OFL.txt\"\n    dest_file: \"OFL.txt\"\n  }\n  files {\n    source_file: \"fonts/ttf/Courgette-Regular.ttf\"\n    dest_file: \"Courgette-Regular.ttf\"\n  }\n  branch: \"master\"\n  config_yaml: \"sources/config.yaml\"\n}\n\nfonts {\n  name: \"Courgette\"\n  style: \"normal\"\n  weight: 400\n  filename: \"Courgette-Regular.ttf\"\n  post_script_name: \"Courgette-Regular\"\n  full_name: \"Courgette Regular\"\n  copyright: \"Copyright (c) 2012, Sorkin Type Co (www.sorkintype.com eben@eyebytes.com) with Reserved Font Name \\\"Courgette\\\".\"\n}\nsubsets: \"menu\"\nsubsets: \"latin\"\nsubsets: \"latin-ext\"\nclassifications: \"DISPLAY\"\nclassifications: \"HANDWRITING\"\n",
+  "license": "SIL Open Font License 1.1",
+  "verifiedGlyphs": "ĄĆĘŁŃÓŚŹŻąćęłńóśźż0123456789",
+  "files": [
+    {
+      "path": "/fonts/courgette/Courgette-Regular.ttf",
+      "weight": "400",
+      "source": "https://raw.githubusercontent.com/google/fonts/24ecb0bbdc3a52d6fddef160b769c61463f455d9/ofl/courgette/Courgette-Regular.ttf",
+      "bytes": 122072,
+      "sha256": "099739d22e66ee2b80656bba63847f9ed419ad7e3969ba2c1d3c437c0d08f3e3"
+    }
+  ]
+}
