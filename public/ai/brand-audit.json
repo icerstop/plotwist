@@ -1,6 +1,6 @@
 {
   "rulesVersion": "2026-09-30.1",
-  "generatedAt": "2026-09-30T10:54:54.708Z",
+  "generatedAt": "2026-09-30T14:58:04.429Z",
   "policy": "Source organizations take precedence. Explicit family aliases only fill missing organizations. Third-party fine-tunes and joint publishers remain separate. Unknown names remain unresolved. Brand attribution does not verify the version behind an API alias.",
   "references": [
     "https://github.com/deepseek-ai/DeepSeek-R1",
@@ -19631,7 +19631,7 @@
     },
     {
       "id": "iq-offline",
-      "observations": 1357,
+      "observations": 1377,
       "unassigned": 0,
       "models": [
         {
@@ -20004,6 +20004,24 @@
           "sourceUrl": "https://www.trackingai.org/home"
         },
         {
+          "modelId": "Meta-Think",
+          "model": "Meta-Think",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "meta",
+          "publisher": "Meta",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GLM",
+          "model": "GLM",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "zai",
+          "publisher": "Z.ai / Zhipu AI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
           "modelId": "MiMo",
           "model": "MiMo",
           "sourceOrganization": "TrackingAI · alias modelu",
@@ -20110,31 +20128,13 @@
           "publisher": "OpenAI",
           "method": "curated-family-alias",
           "sourceUrl": "https://www.trackingai.org/home"
-        },
-        {
-          "modelId": "GLM",
-          "model": "GLM",
-          "sourceOrganization": "TrackingAI · alias modelu",
-          "brandId": "zai",
-          "publisher": "Z.ai / Zhipu AI",
-          "method": "curated-family-alias",
-          "sourceUrl": "https://www.trackingai.org/home"
-        },
-        {
-          "modelId": "Meta-Think",
-          "model": "Meta-Think",
-          "sourceOrganization": "TrackingAI · alias modelu",
-          "brandId": "meta",
-          "publisher": "Meta",
-          "method": "curated-family-alias",
-          "sourceUrl": "https://www.trackingai.org/home"
         }
       ]
     },
     {
       "id": "iq-offline-vision",
-      "observations": 554,
-      "unassigned": 0,
+      "observations": 563,
+      "unassigned": 4,
       "models": [
         {
           "modelId": "GPT4 Omni (Vision)",
@@ -20317,6 +20317,24 @@
           "sourceUrl": "https://www.trackingai.org/home"
         },
         {
+          "modelId": "Meta-Vision",
+          "model": "Meta-Vision",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": null,
+          "publisher": null,
+          "method": "unresolved",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Meta-Think-Vision",
+          "model": "Meta-Think-Vision",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "meta",
+          "publisher": "Meta",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
           "modelId": "Claude-4-Opus-Extended-Vision",
           "model": "Claude-4-Opus-Extended-Vision",
           "sourceOrganization": "TrackingAI · alias modelu",
@@ -20428,7 +20446,7 @@
     },
     {
       "id": "iq-mensa",
-      "observations": 1351,
+      "observations": 1355,
       "unassigned": 0,
       "models": [
         {
@@ -21236,6 +21254,506 @@
           "publisher": "OpenAI",
           "method": "source-organization",
           "sourceUrl": "https://openai.com/index/learning-to-reason-with-llms/"
+        }
+      ]
+    },
+    {
+      "id": "tracking-mensa-ranking",
+      "observations": 25,
+      "unassigned": 1,
+      "models": [
+        {
+          "modelId": "Bing",
+          "model": "Bing Copilot",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "bing",
+          "publisher": "Microsoft Bing",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Opus",
+          "model": "Claude-5.5 Opus",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Opus-Max",
+          "model": "Claude-5.5 Opus MAX",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Opus-Vision",
+          "model": "Claude-5.5 Opus (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Sonnet",
+          "model": "Claude-5 Sonnet",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Sonnet-Vision",
+          "model": "Claude-5 Sonnet (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-Fable",
+          "model": "Claude-5.1 Fable",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-Fable-Vision",
+          "model": "Claude-5.1 Fable (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "deepseek-v3",
+          "model": "DeepSeek V4 Pro",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "deepseek",
+          "publisher": "DeepSeek",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Gemini Thinking",
+          "model": "Gemini 3.8 Flash",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Astra-Ultra",
+          "model": "GPT 6 Astra Ultra",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Astra-Ultra-Vision",
+          "model": "GPT 6 Astra Ultra (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Luna-Max",
+          "model": "GPT 6 Luna Max",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Luna-Max-Vision",
+          "model": "GPT 6 Luna Max (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Sol-Ultra",
+          "model": "GPT 6.1 Sol Ultra",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Sol-Ultra-Vision",
+          "model": "GPT 6.1 Sol Ultra (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Terra-Ultra",
+          "model": "GPT 5.6 Terra Ultra",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Terra-Ultra-Vision",
+          "model": "GPT 5.6 Terra Ultra (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Grok-4-5",
+          "model": "Grok 4.7 High",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Grok-4-5-Vision",
+          "model": "Grok 4.7 High (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Kimi-K3-Vision",
+          "model": "Kimi-K3-Vision",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "moonshot",
+          "publisher": "Moonshot AI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Manus",
+          "model": "Manus",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "manus",
+          "publisher": "Manus",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Meta-Think",
+          "model": "Muse Glimmer",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": null,
+          "publisher": null,
+          "method": "unresolved",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Perplexity",
+          "model": "Perplexity",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "perplexity",
+          "publisher": "Perplexity",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Qwen",
+          "model": "Qwen 3.8 Max",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "alibaba",
+          "publisher": "Alibaba",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        }
+      ]
+    },
+    {
+      "id": "tracking-offline-ranking",
+      "observations": 29,
+      "unassigned": 2,
+      "models": [
+        {
+          "modelId": "Bing",
+          "model": "Bing Copilot",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "bing",
+          "publisher": "Microsoft Bing",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Opus",
+          "model": "Claude-5.5 Opus",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Opus-Max",
+          "model": "Claude-5.5 Opus MAX",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Opus-Max-Vision",
+          "model": "Claude-5.5 Opus MAX (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Opus-Vision",
+          "model": "Claude-5.5 Opus (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Sonnet",
+          "model": "Claude-5 Sonnet",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-5-Sonnet-Vision",
+          "model": "Claude-5 Sonnet (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-Fable",
+          "model": "Claude-5.1 Fable",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Claude-Fable-Vision",
+          "model": "Claude-5.1 Fable (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "deepseek-v3",
+          "model": "DeepSeek V4 Pro",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "deepseek",
+          "publisher": "DeepSeek",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Gemini Thinking",
+          "model": "Gemini 3.8 Flash",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GLM",
+          "model": "GLM 5.2",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "zai",
+          "publisher": "Z.ai / Zhipu AI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Astra-Ultra",
+          "model": "GPT 6 Astra Ultra",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Astra-Ultra-Vision",
+          "model": "GPT 6 Astra Ultra (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Luna-Max",
+          "model": "GPT 6 Luna Max",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Luna-Max-Vision",
+          "model": "GPT 6 Luna Max (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Sol-Ultra",
+          "model": "GPT 6.1 Sol Ultra",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Sol-Ultra-Vision",
+          "model": "GPT 6.1 Sol Ultra (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Terra-Ultra",
+          "model": "GPT 5.6 Terra Ultra",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "GPT-Terra-Ultra-Vision",
+          "model": "GPT 5.6 Terra Ultra (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Grok-4-5",
+          "model": "Grok 4.7 High",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Grok-4-5-Vision",
+          "model": "Grok 4.7 High (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Kimi-K3",
+          "model": "Kimi K3",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "moonshot",
+          "publisher": "Moonshot AI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Kimi-K3-Vision",
+          "model": "Kimi-K3-Vision",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "moonshot",
+          "publisher": "Moonshot AI",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Manus",
+          "model": "Manus",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "manus",
+          "publisher": "Manus",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Meta-Think",
+          "model": "Muse Glimmer",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": null,
+          "publisher": null,
+          "method": "unresolved",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Meta-Think-Vision",
+          "model": "Muse Glimmer (Vision)",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": null,
+          "publisher": null,
+          "method": "unresolved",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Perplexity",
+          "model": "Perplexity",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "perplexity",
+          "publisher": "Perplexity",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
+        },
+        {
+          "modelId": "Qwen",
+          "model": "Qwen 3.8 Max",
+          "sourceOrganization": "TrackingAI · alias modelu",
+          "brandId": "alibaba",
+          "publisher": "Alibaba",
+          "method": "curated-family-alias",
+          "sourceUrl": "https://www.trackingai.org/home"
         }
       ]
     },

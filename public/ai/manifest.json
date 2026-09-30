@@ -1,7 +1,7 @@
 {
   "retrievedAt": "2026-09-30",
   "sourceArchive": "https://epoch.ai/data/benchmark_data.zip",
-  "totalObservations": 7943,
+  "totalObservations": 8030,
   "benchmarks": [
     {
       "id": "gpqa",
@@ -413,6 +413,9 @@
       "id": "iq-offline",
       "name": "„IQ” · Offline Test · tekst",
       "category": "IQ eksperymentalne",
+      "trackingTest": "offline",
+      "retrievedAt": "2026-09-30",
+      "checkedAt": "2026-09-30T14:57:34.099Z",
       "description": "Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.",
       "unit": "pkt „IQ”",
       "defaultBasis": "observed",
@@ -421,14 +424,13 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))",
-      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "tracking-iq.csv",
           "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
         }
       ],
-      "count": 1357,
+      "count": 1377,
       "models": 55,
       "firstDate": "2024-05-09",
       "lastDate": "2026-09-29"
@@ -437,6 +439,9 @@
       "id": "iq-offline-vision",
       "name": "„IQ” · Offline Test · Vision",
       "category": "IQ eksperymentalne",
+      "trackingTest": "offline",
+      "retrievedAt": "2026-09-30",
+      "checkedAt": "2026-09-30T14:57:34.099Z",
       "description": "Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.",
       "unit": "pkt „IQ”",
       "defaultBasis": "observed",
@@ -445,15 +450,14 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))",
-      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "tracking-iq.csv",
           "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
         }
       ],
-      "count": 554,
-      "models": 32,
+      "count": 563,
+      "models": 34,
       "firstDate": "2024-05-14",
       "lastDate": "2026-09-29"
     },
@@ -461,6 +465,9 @@
       "id": "iq-mensa",
       "name": "„IQ” · Mensa Norway · tekst",
       "category": "IQ eksperymentalne",
+      "trackingTest": "mensa",
+      "retrievedAt": "2026-09-30",
+      "checkedAt": "2026-09-30T14:57:34.099Z",
       "description": "Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.",
       "unit": "pkt „IQ”",
       "defaultBasis": "observed",
@@ -469,14 +476,13 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × (test_score − 5.833))",
-      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "tracking-iq.csv",
           "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
         }
       ],
-      "count": 1351,
+      "count": 1355,
       "models": 53,
       "firstDate": "2024-05-09",
       "lastDate": "2026-09-29"
@@ -485,6 +491,9 @@
       "id": "iq-mensa-vision",
       "name": "„IQ” · Mensa Norway · Vision",
       "category": "IQ eksperymentalne",
+      "trackingTest": "mensa",
+      "retrievedAt": "2026-09-30",
+      "checkedAt": "2026-09-30T14:57:34.099Z",
       "description": "Pojedyncze pomiary TrackingAI, przeliczone według formuły autora. Bez średniej kroczącej z 7 testów stosowanej w bieżącym rankingu.",
       "unit": "pkt „IQ”",
       "defaultBasis": "observed",
@@ -493,7 +502,6 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × (test_score − 5.833))",
-      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "tracking-iq.csv",
@@ -530,6 +538,72 @@
       "models": 4,
       "firstDate": "2024-09-12",
       "lastDate": "2024-09-12"
+    },
+    {
+      "id": "tracking-mensa-ranking",
+      "name": "Mensa Norway · ranking TrackingAI",
+      "category": "IQ eksperymentalne",
+      "description": "Ranking jak w TrackingAI: zaokrąglona średnia z ostatnich maks. 7 prób każdego aliasu. Tekst i Vision są osobnymi pozycjami. To stan na dzień pobrania, nie historia premier.",
+      "unit": "pkt „IQ”",
+      "defaultBasis": "observed",
+      "defaultMode": "ranking",
+      "dateKind": "snapshot",
+      "trackingTest": "mensa",
+      "aggregation": "tracking-last-n",
+      "source": "TrackingAI · Maxim Lott",
+      "sourceUrl": "https://www.trackingai.org/home",
+      "retrievedAt": "2026-09-30",
+      "checkedAt": "2026-09-30T14:57:34.099Z",
+      "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
+      "caveat": "Quiz TrackingAI nie mierzy psychometrycznego IQ. Średnia obejmuje do 7 prób, nie 7 dni. Aktualne nazwy aliasów mogą obejmować różne wersje modeli; nie są historią premier.",
+      "formula": "round(mean(last N rounded run scores per alias and test)); N = min(7, available runs), unless the source config sets an override",
+      "provenance": [
+        {
+          "file": "tracking-iq.csv",
+          "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
+        },
+        {
+          "file": "tracking-receipt.json",
+          "sha256": "99d7fb2db899045ccb284420ad97c856aa208dfb48a81422fc589420fa920d7b"
+        }
+      ],
+      "count": 25,
+      "models": 25,
+      "firstDate": "2026-09-30",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "tracking-offline-ranking",
+      "name": "Offline Test · ranking TrackingAI",
+      "category": "IQ eksperymentalne",
+      "description": "Ranking jak w TrackingAI: zaokrąglona średnia z ostatnich maks. 7 prób każdego aliasu. Tekst i Vision są osobnymi pozycjami. To stan na dzień pobrania, nie historia premier.",
+      "unit": "pkt „IQ”",
+      "defaultBasis": "observed",
+      "defaultMode": "ranking",
+      "dateKind": "snapshot",
+      "trackingTest": "offline",
+      "aggregation": "tracking-last-n",
+      "source": "TrackingAI · Maxim Lott",
+      "sourceUrl": "https://www.trackingai.org/home",
+      "retrievedAt": "2026-09-30",
+      "checkedAt": "2026-09-30T14:57:34.099Z",
+      "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
+      "caveat": "Quiz TrackingAI nie mierzy psychometrycznego IQ. Średnia obejmuje do 7 prób, nie 7 dni. Aktualne nazwy aliasów mogą obejmować różne wersje modeli; nie są historią premier.",
+      "formula": "round(mean(last N rounded run scores per alias and test)); N = min(7, available runs), unless the source config sets an override",
+      "provenance": [
+        {
+          "file": "tracking-iq.csv",
+          "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
+        },
+        {
+          "file": "tracking-receipt.json",
+          "sha256": "99d7fb2db899045ccb284420ad97c856aa208dfb48a81422fc589420fa920d7b"
+        }
+      ],
+      "count": 29,
+      "models": 29,
+      "firstDate": "2026-09-30",
+      "lastDate": "2026-09-30"
     },
     {
       "id": "arc3",

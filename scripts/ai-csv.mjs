@@ -14,10 +14,12 @@ export function parseCsv(text) {
 }
 export const numeric = value => value!==undefined&&String(value).trim()!==''&&Number.isFinite(Number(value))?Number(value):null;
 export function trackingDate(value) {
-  const m=/^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}:\d{2}:\d{2})$/.exec(value);
+  const m=/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2})$/.exec(String(value??'').trim());
   if(!m)return null;
-  const date=`${m[3]}-${m[1]}-${m[2]}`;
-  return new Date(date).toISOString().slice(0,10)===date?`${date}T${m[4]}`:null;
+  const date=`${m[3]}-${m[1].padStart(2,'0')}-${m[2].padStart(2,'0')}`,time=`${m[4].padStart(2,'0')}:${m[5]}:${m[6]}`;
+  if(Number(m[4])>23||Number(m[5])>59||Number(m[6])>59)return null;
+  const parsed=new Date(`${date}T${time}Z`);
+  return Number.isFinite(parsed.getTime())&&parsed.toISOString().slice(0,19)===`${date}T${time}`?`${date}T${time}`:null;
 }
 export function trackingIq(row) {
   if(row.test_source==='Mensa Norway'){const n=numeric(row.test_score);return n===null?null:Math.round(63.5+3*(n-5.833));}

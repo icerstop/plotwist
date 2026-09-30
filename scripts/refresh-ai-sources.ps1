@@ -4,8 +4,8 @@ $aiResearch = Join-Path $PWD 'research/ai'
 New-Item -ItemType Directory -Force $aiResearch | Out-Null
 # These are published data downloads; no API keys or benchmark questions are fetched.
 Invoke-WebRequest 'https://epoch.ai/data/benchmark_data.zip' -OutFile (Join-Path $aiResearch 'epoch-benchmarks.zip')
-Invoke-WebRequest 'https://www.trackingai.org/app/database/proj_IQ/score_logs/iq/daily_logs.csv' -OutFile (Join-Path $aiResearch 'tracking-iq.csv')
-Invoke-WebRequest 'https://www.trackingai.org/assets/js/charts/charts_IQ.js' -OutFile (Join-Path $aiResearch 'tracking-formula-latest.js')
+node scripts/refresh-tracking-iq.mjs
+if ($LASTEXITCODE -ne 0) { throw 'Kontrola źródeł TrackingAI nie powiodła się; nie publikuj danych.' }
 Expand-Archive -LiteralPath (Join-Path $aiResearch 'epoch-benchmarks.zip') -DestinationPath (Join-Path $aiResearch 'epoch') -Force
 $aiReceiptPath = Join-Path $aiResearch 'source-receipt.json'
 $aiReceipt = Get-Content -Raw -LiteralPath $aiReceiptPath | ConvertFrom-Json

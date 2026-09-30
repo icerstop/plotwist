@@ -31,6 +31,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  const {wrap,fit}=typography(reelFont(config.fontId),config.language,config);
  const aiValue=value=>formatAiValue(value,config.language,config.ai.benchmark.scoreDecimals??1);
  const {ai:{rows,benchmark:b,basis,mode,comparison,scope},title,theme='dark'}=config;
+ const trackingAverage=b.aggregation==='tracking-last-n';
  const ctx=canvas.getContext('2d');if(canvas.width!==1080||canvas.height!==1920){canvas.width=1080;canvas.height=1920;}
  const {dark,bg,fg,muted,panel,grid,colors}=themeOf(config),appearance=chartAppearance(config),[accent,purple]=colors.map((c,i)=>seriesColor(config,i,c));
  ctx.fillStyle=bg;ctx.fillRect(0,0,1080,1920);ctx.textAlign='left';
@@ -40,7 +41,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270,{...textStyleOf(config,'title'),weight:textWeight(config,'title','bold')}),3,fg,true,'title');
  const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:508,w:928,h:168});
  const subtitleHeight=wrap(ctx,`${b.name}${b.unit?` (${b.unit})`:''}`,76,548,928,40,2,accent,false,'subtitle');
- if(scope)wrap(ctx,scope,76,548+subtitleHeight+18,928,28,1,muted,false,'subtitle');
+ if(scope||trackingAverage)wrap(ctx,trackingAverage?'Średnia z ostatnich maks. 7 prób':scope,76,548+subtitleHeight+18,928,28,1,muted,false,'subtitle');
  endSubtitle();endHeader();
  const first=rows[0],last=rows.at(-1),transition=config.transition??.65,duration=config.duration||20;
  const frame=mode==='scatter'?frameAt(rows,progress):null;
@@ -94,9 +95,10 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
     const barY=y+labelHeight+14;
     ctx.fillStyle=grid;roundFill(ctx,76,barY,925,barHeight,appearance.radius);ctx.fillStyle=ni===0?accent:purple;const v=lerp(prev.score,r.score,mix);roundFill(ctx,Math.min(barX(0),barX(v)),barY,Math.abs(barX(v)-barX(0)),barHeight,appearance.radius);
     const uncertainty=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`SE: ±${aiValue(r.stderr)} p.p.`:'';
-    wrap(ctx,`${r.date}${uncertainty?' · '+uncertainty:''}`,76,barY+barHeight+12+dateSize,920,23,1,muted);ctx.restore();
+    const detail=trackingAverage?`Średnia z ${r.sampleCount} prób · ostatni test ${r.lastRunAt.slice(0,10)}`:`${r.date}${uncertainty?' · '+uncertainty:''}`;
+    wrap(ctx,detail,76,barY+barHeight+12+dateSize,920,23,1,muted);ctx.restore();
    }
-   ctx.restore();wrap(ctx,`${b.unit} · ostatni dostępny pomiar każdego wariantu`,76,1650,920,26,1,muted);
+   ctx.restore();wrap(ctx,trackingAverage?'TrackingAI · średnia z ostatnich maks. 7 prób':`${b.unit} · ostatni dostępny pomiar każdego wariantu`,76,1650,920,26,1,muted);
  } else if(mode==='records'){
    const motion=aiMotionFrame(rows,progress,duration,transition,timeSeconds),{frames,frame:now,before:old,mix,current}=motion;
    const names=aiIdentityLayouts(ctx,config,frames,()=>[...new Set(frames.map(f=>f.record))],{width:920,size:32,detailSize:26}),nameTop=1605-names.height,valueY=nameTop-56;
@@ -146,7 +148,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  // Essential methodology is burned into every exported frame.
  drawVisualOverlays(ctx,1080,1920,config,visualTime);
  const dating=basis==='release'?'Wg premier · retrospektywa, pomiary mogły być późniejsze':b.dateKind==='snapshot'?'Stan rankingu na dzień pobrania':'Wg dat testu / publikacji · bez interpolacji';
- const warning=b.id.startsWith('iq-')?'Quiz TrackingAI ≠ psychometryczne IQ człowieka':b.id==='eci'?'ECI ≠ IQ · aktualne przeliczenie historii':b.id==='codeforces2024'?'Percentyl wśród uczestników · 10 zgłoszeń':b.id.startsWith('swe-')?'Wynik systemu z narzędziami; wersje środowiska rozdzielone':b.id==='gpqa'&&mode==='duel'?'Eksperci dziedzinowi; różne protokoły ewaluacji':['frontiermath','frontiermath4'].includes(b.id)?'Od 13.11.2025 budżet tokenów 10× większy; porównanie orientacyjne':b.caveat;
+ const warning=trackingAverage?b.caveat:b.id.startsWith('iq-')?'Quiz TrackingAI ≠ psychometryczne IQ człowieka':b.id==='eci'?'ECI ≠ IQ · aktualne przeliczenie historii':b.id==='codeforces2024'?'Percentyl wśród uczestników · 10 zgłoszeń':b.id.startsWith('swe-')?'Wynik systemu z narzędziami; wersje środowiska rozdzielone':b.id==='gpqa'&&mode==='duel'?'Eksperci dziedzinowi; różne protokoły ewaluacji':['frontiermath','frontiermath4'].includes(b.id)?'Od 13.11.2025 budżet tokenów 10× większy; porównanie orientacyjne':b.caveat;
  const endSource=beginElement(ctx,config,'source',{x:76,y:1673,w:928,h:158});
  wrap(ctx,dating,76,1700,928,22,2,muted,false,'source');wrap(ctx,warning,76,1760,928,22,2,muted,false,'source');wrap(ctx,`${b.source} · dane ${b.retrievedAt}`,76,1821,928,23,1,muted,false,'source');
  endSource();

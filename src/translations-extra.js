@@ -1,5 +1,24 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Średnia z ostatnich maks. 7 prób|Average of latest up to 7 runs
+Mensa Norway · ranking TrackingAI|Mensa Norway · TrackingAI ranking
+Offline Test · ranking TrackingAI|Offline Test · TrackingAI ranking
+Ranking jak w TrackingAI: zaokrąglona średnia z ostatnich maks. 7 prób każdego aliasu. Tekst i Vision są osobnymi pozycjami. To stan na dzień pobrania, nie historia premier.|TrackingAI ranking: rounded average of each alias's latest up to 7 runs. Text and Vision are separate entries. A retrieval-date snapshot, not release history.
+Quiz TrackingAI nie mierzy psychometrycznego IQ. Średnia obejmuje do 7 prób, nie 7 dni. Aktualne nazwy aliasów mogą obejmować różne wersje modeli; nie są historią premier.|TrackingAI's quiz is not psychometric IQ. The average covers up to 7 runs, not 7 days. Current alias names may span different model versions; they are not release history.
+Średnia z prób · jak w TrackingAI|Average of runs · as on TrackingAI
+Pojedyncze próby · historia TrackingAI|Individual runs · TrackingAI history
+Średnia obejmuje ostatnie maks. 7 prób każdego aliasu, nie 7 dni. Jeśli prób jest mniej, używamy wszystkich dostępnych. Rekord i ostatnia próba mogą mieć inne wartości.|The average covers each alias's latest up to 7 runs, not 7 days. With fewer runs, all available runs are used. The record and latest run can differ.
+Tu każda obserwacja to jeden test. Wyścig rankingu pokazuje ostatnią próbę, a Schody rekordów — rekord. Wykres na stronie TrackingAI pokazuje średnią z ostatnich maks. 7 prób.|Each observation here is a single test. Ranking race shows the latest run; Record steps shows the record. TrackingAI's chart shows the average of the latest up to 7 runs.
+Aktualne nazwy pochodzą z konfiguracji TrackingAI. Ten sam alias mógł wcześniej wskazywać inną wersję modelu. Tego rankingu nie należy traktować jako wyników z dnia premiery.|Current names come from TrackingAI's configuration. The same alias may have referred to another model version earlier. This ranking is not a set of release-day results.
+Ostatnia kontrola źródła:|Source last checked:
+Pojedyncze próby · tekst|Individual runs · text
+Pojedyncze próby · Vision|Individual runs · Vision
+Otwórz ranking jak w TrackingAI|Open ranking as on TrackingAI
+Średnia TrackingAI|TrackingAI average
+Próby w średniej|Runs in this average
+najwyższe wyniki najpierw|highest scores first
+najnowsze daty najpierw|latest dates first
+TrackingAI · średnia z ostatnich maks. 7 prób|TrackingAI · average of latest up to 7 runs
 Nazwy modeli i ustawienia|Model names and settings
 Opis modelu|Model label
 Model + ustawienia w osobnym wierszu|Model + settings on a separate line
