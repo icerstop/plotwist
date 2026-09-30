@@ -5,6 +5,7 @@ import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTi
 import {clamp,lerp,rankMotion} from './presentation.js';
 import {aiValue} from './ai.js';
 import {themeOf,textSize,textColor,reelTextFont,chartTop} from './reel-design.js';
+import {lineLabelGeometry,drawLineLabels} from './line-labels.js';
 
 function ellipsis(ctx,text,width){let value=String(text||'');if(ctx.measureText(value).width<=width)return value;while(value.length&&ctx.measureText(value+'…').width>width)value=value.slice(0,-1);return value+'…';}
 export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,grid,panel,wrap}){
@@ -48,7 +49,8 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  if(mode==='records'){
   const singleColumn=brands.length<=4;
   const legendHeight=singleColumn?(brands.length-1)*82+(showLeaderNames?37:0):(Math.ceil(brands.length/2)-1)*119+(showLeaderNames?80:43);
-  const legendTop=1615-legendHeight,bottom=appearance.legend?legendTop-97:1575,top=chartTop(config,840,bottom);const [left,right]=plotSides(config,144,962);
+  const legendTop=1615-legendHeight,bottom=appearance.legend?legendTop-97:1575,top=chartTop(config,840,bottom);const [left,baseRight]=plotSides(config,144,962);
+  const labelGeometry=appearance.endLabels?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:brands.length,needsNames:!showBrandLogos||appearance.endLabelIcons===false||brands.some(b=>!b.logo)}):null,right=labelGeometry?.right??baseRight;
   const first=history.times[0],last=history.times.at(-1),x=t=>left+(t-first)/(last-first||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top),currentX=x(current);
   if(caption)wrap(ctx,caption,left,top-25,840,21,1,muted);
   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',24));plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const tick of ticks){ctx.textAlign='right';text(formatAxisTick(tick,config.language),left-20,y(tick)+8,118,24,muted);ctx.textAlign='left';}
@@ -59,6 +61,10 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
    let previous=visible[0];for(const point of visible.slice(1)){ctx.lineTo(x(point.time),y(previous.score));ctx.lineTo(x(point.time),y(point.score));previous=point;}
    ctx.lineTo(currentX,y(previous.score));ctx.stroke();ctx.restore();
   }ctx.restore();
+  if(labelGeometry){
+   const items=brands.flatMap((brand,index)=>{const leader=byId(frame,brand.id);return leader?[{index,series:{name:brand.name,logo:showBrandLogos?brand.logo:null},anchorX:currentX,anchorY:y(leader.score),color:color(brand),value:aiValue(leader.score,config.language,b.scoreDecimals??1)}]:[];});
+   drawLineLabels(ctx,config,items,labelGeometry,{top,bottom,x:currentX+20,fg});
+  }
   if(appearance.axisLabels){text(history.start,left,bottom+39,390,24,muted);ctx.textAlign='right';text(history.end,right,bottom+39,390,24,muted);ctx.textAlign='left';}
   const legend=rankMotion(brands.map(brand=>byId(before,brand.id)?.score),brands.map(brand=>byId(frame,brand.id)?.score),mix);
   if(appearance.legend)brands.forEach((brand,i)=>{const {from,to,position}=legend[i];

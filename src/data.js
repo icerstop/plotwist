@@ -1,6 +1,6 @@
 import {countries} from './catalog.js';
 export function buildSeries(snapshot,selected,start,end){
- return selected.map((country,index)=>({name:countries[country]||country,color:index===0?'#bcf34a':'#b18aff',points:Array.from({length:end-start+1},(_,i)=>{const year=start+i;const row=snapshot?.rows.find(r=>r.country===country&&r.year===year);return {x:year,y:row?.value??null};})}));
+ return selected.map((country,index)=>({countryCode:country,name:countries[country]||country,color:index===0?'#bcf34a':'#b18aff',points:Array.from({length:end-start+1},(_,i)=>{const year=start+i;const row=snapshot?.rows.find(r=>r.country===country&&r.year===year);return {x:year,y:row?.value??null};})}));
 }
 export function coffeeSeries(daily=5,coffee=10,rate=7,years=10){
  const dailyRate=(1+rate/100)**(1/365)-1;

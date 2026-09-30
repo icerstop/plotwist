@@ -39,7 +39,7 @@ export function buildStoryChart(series,settings){
    for(let y=Number(first.date.slice(0,4));y<=Number(last.date.slice(0,4));y++)trimmed.push(byYear.get(String(y))||{date:`${y}-12-31`,value:null,datePrecision:'year',period:String(y)});
   }
   const selection=settings.selected.find(item=>item.id===s.id)||{};
-  return {id:s.id,name:selection.label||s.name,nameIsCustom:!!selection.label,labelParts:storyLabelParts(s),color:selection.color||storyColors[i],customColor:true,interpolation:s.interpolation,unit:s.unit,
+  return {id:s.id,entity:s.entity,topicId:s.topicId,name:selection.label||s.name,nameIsCustom:!!selection.label,labelParts:storyLabelParts(s),color:selection.color||storyColors[i],customColor:true,interpolation:s.interpolation,unit:s.unit,
    points:trimmed.map(p=>({...p,x:toDay(p.date),y:p.value===null?null:settings.mode==='index'?p.value/base*100:p.value}))};
  });
  const precisions=new Set(series.flatMap(s=>s.datePrecisions));

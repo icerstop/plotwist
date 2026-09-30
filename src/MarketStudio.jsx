@@ -75,7 +75,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
   const filtered = useMemo(() => (manifest?.stocks || []).filter(s => (region === 'Wszystkie' || s.region === region) && `${s.name} ${s.symbol} ${s.country} ${translate(s.country,'en')}`.toLowerCase().includes(search.toLowerCase())), [manifest, region, search]);
   const quoteData=useMemo(()=>{if(!stock)return {rows:[],currency:'',converted:false};try{return priceQuotes(stock,fx,start,end,mode==='prices'?priceCurrency:'native');}catch(e){return {rows:[],currency:priceCurrency==='native'?stock.currency:priceCurrency,error:e.message};}},[stock,fx,start,end,mode,priceCurrency]);
   const quotes = useMemo(() => quoteData.rows.toReversed(), [quoteData]);
-  const chartSeries = useMemo(() => mode === 'dca' ? result.series : stock ? [{name:`${stock.symbol} · ${basis==='raw'?'cena odtworzona':'Close (splity)'}`,color:'#bcf34a',points:quoteData.rows.map(r=>({x:toDay(r.date),y:basis==='raw'?r.nominal:r.close}))}] : [], [mode, result.series, stock, quoteData, basis]);
+  const chartSeries = useMemo(() => mode === 'dca' ? result.series : stock ? [{symbol:stock.symbol,name:`${stock.symbol} · ${basis==='raw'?'cena odtworzona':'Close (splity)'}`,color:'#bcf34a',points:quoteData.rows.map(r=>({x:toDay(r.date),y:basis==='raw'?r.nominal:r.close}))}] : [], [mode, result.series, stock, quoteData, basis]);
   const generatedTitle = mode === 'dca' ? `${investment || '0'} zł ${frequencyPhrase(investmentFrequency)} w ${stock?.name || symbol}.` : `${stock?.name || symbol}. Dzień po dniu.`;
   const config = useMemo(() => ({
     series: chartSeries, title: customTitle ? title : generatedTitle,titleIsCustom:customTitle,

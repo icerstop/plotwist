@@ -28,6 +28,17 @@ export function ChartEditor({config}){
    <label className="visual-check"><input type="checkbox" checked={s.plotPanel} onChange={e=>patch({plotPanel:e.target.checked})}/>Kontrastowe tło pola wykresu</label>
   </details>
   {(!config.ai||config.ai.groupBy==='brand'&&mode==='records')&&<label className="visual-check"><input type="checkbox" checked={s.legend} onChange={e=>patch({legend:e.target.checked})}/>Pokaż legendę pod wykresem</label>}
+  {(!config.ai&&['line','area'].includes(mode)||config.ai?.groupBy==='brand'&&mode==='records')&&<details className="appearance-group" open><summary>Wartości przy liniach</summary>
+   <label className="visual-check"><input type="checkbox" checked={s.endLabels} onChange={e=>patch({endLabels:e.target.checked})}/>Pokaż etykiety przy końcach linii</label>
+   {s.endLabels&&<>
+    <label className="visual-check"><input type="checkbox" checked={s.endLabelIcons} onChange={e=>patch({endLabelIcons:e.target.checked})}/>Flagi i logotypy przy wartościach</label>
+    <label className="visual-check"><input type="checkbox" checked={s.endLabelNames} onChange={e=>patch({endLabelNames:e.target.checked})}/>Nazwy serii przy wartościach</label>
+    {range('endLabelSize','Rozmiar etykiet przy liniach',75,140,'%')}
+    {!config.ai&&<Select label="Wartość na etykiecie" value={s.endLabelValue} options={[["interpolated","W punkcie animacji · interpolowana ≈"],["observed","Ostatni pomiar ze źródła"]]} onChange={endLabelValue=>patch({endLabelValue})}/>}
+    <p className="visual-hint">Etykiety mają zarezerwowane miejsce i łączniki w kolorach serii. Przy ścisku rozsuwają się, a w niskim wykresie przechodzą do kolumn. Bez flagi lub logo pojawia się nazwa.</p>
+    {!config.ai&&<p className="visual-hint">≈ oznacza wartość pomiędzy pomiarami. Luki nie są uzupełniane. Przy zakończonej serii pokazujemy datę ostatniej wartości.</p>}
+   </>}
+  </details>}
   <p className="visual-hint">Wymiary wykresu zmienisz w zakładce Układ.</p></>}
   <button type="button" className="text-btn visual-reset" onClick={()=>v.design({chart:normalizeChart()})}>Przywróć wygląd wykresu</button>
  </fieldset></div>;

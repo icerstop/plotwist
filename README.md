@@ -169,6 +169,12 @@ W panelu Wygląd rolki, w sekcji Styl, dostępnych jest 61 czcionek: 55 dołącz
 
 ## Wiele serii, surowce i logotypy
 
+**Wygląd rolki → Wykres → Wartości przy liniach** włącza etykiety bieżącej wartości z flagą kraju lub lokalnym logotypem firmy. Działają dla linii, wypełnienia oraz porównania rekordów marek AI, niezależnie od legendy. Są domyślnie wyłączone; można zmienić rozmiar, włączyć nazwy i wyłączyć ikony. Brak lub powtórzona ikona automatycznie wymaga nazwy. Identyfikacja korzysta z metadanych serii, nie z tekstu edytowanej etykiety.
+
+Etykiety rezerwują miejsce po prawej, układają się według wysokości linii, mają odstępy i kolorowe łączniki. Niski wykres może użyć kilku kolumn. Wartości interpolowane w punkcie animacji są oznaczone `≈`; można przełączyć je na ostatni pomiar. Interpolacja uwzględnia skalę logarytmiczną i serie schodkowe. Luki nie otrzymują wartości, zakończona seria pokazuje datę ostatniego pomiaru. Wyniki AI pozostają dokładnymi wynikami źródłowymi. Podgląd, PNG i eksport klatka po klatce korzystają z tego samego układu. Ustawienia zapisują się również we własnych motywach.
+
+166 lokalnych flag z flag-icons 7.3.2 znajduje się w `public/logos/flags` razem z licencją MIT i informacją o pochodzeniu. Flagi identyfikują obecne kraje, nie odtwarzają historycznych wzorów. Zbiorcze regiony nie otrzymują flag krajów. Odświeżenie plików i map symboli firm: `node scripts/fetch-series-flags.mjs`.
+
 **Giełda → Wiele serii** porównuje do 6 linii. Każdą można dodać, usunąć, pokolorować pickerem lub kodem HEX i przywrócić jej kolor domyślny. W trybie inwestycji każda spółka/fundusz otrzymuje pełną wskazaną wpłatę dzienną — to osobne scenariusze, nie jeden dzielony portfel. Dodatkowe serie to narastający codzienny wydatek i stały cel kwotowy (linia przerywana). W trybie cen dostępne są indeks 100, zmiana procentowa lub ceny nominalne o zgodnych walutach i jednostkach. Wydatki i cele wymagają trybu PLN.
 
 Porównanie cen używa przecięcia rzeczywistych dni notowań wszystkich instrumentów i jednej wspólnej daty bazowej. Nie dopisuje cen z przyszłych sesji. Zakres jest ograniczony rzeczywistą wspólną historią; przycisk przywraca cały dostępny zakres. Ceny pozostają w walutach instrumentów i są korygowane o splity, nie dywidendy. CSV przechowuje wartości wykresu, jednostkę, symbol oraz źródłową cenę w trybie cen.

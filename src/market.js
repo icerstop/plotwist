@@ -62,7 +62,7 @@ export function simulateInvestment({ stock, fx, start, end, dailyInvestment, dai
   const final = ledger.at(-1);
   return {
     series: [
-      { name: `${stock.name} · portfel`, color: '#bcf34a', schedule:{amount:investmentAmount,frequency:investmentFrequency}, points: ledger.map(r => ({ x: toDay(r.date), y: r.portfolio,deposit:r.deposit })) },
+      { symbol:stock.symbol, name: `${stock.name} · portfel`, color: '#bcf34a', schedule:{amount:investmentAmount,frequency:investmentFrequency}, points: ledger.map(r => ({ x: toDay(r.date), y: r.portfolio,deposit:r.deposit })) },
       { name: `${expenseName || 'Napój'} · wydatki`, color: '#b18aff', schedule:{amount:expenseAmount,frequency:expenseFrequency}, points: ledger.map(r => ({ x: toDay(r.date), y: r.expenses })) },
       { name: 'Suma wpłat', color: '#8fabb6', points: ledger.map(r => ({ x: toDay(r.date), y: r.contributions })) }
     ],
@@ -77,7 +77,7 @@ export function simulateInvestment({ stock, fx, start, end, dailyInvestment, dai
 export const simulateDailyInvestment=simulateInvestment;
 
 export function priceSeries(stock, start, end, basis = 'split') {
-  return [{ name: `${stock.symbol} · ${basis === 'raw' ? 'cena odtworzona' : 'Close (splity)'}`, color: '#bcf34a', points: stock.rows.filter(r => r[0] >= start && r[0] <= end).map(r => ({ x: toDay(r[0]), y: r[basis === 'raw' ? 2 : 1] })) }];
+  return [{ symbol:stock.symbol, name: `${stock.symbol} · ${basis === 'raw' ? 'cena odtworzona' : 'Close (splity)'}`, color: '#bcf34a', points: stock.rows.filter(r => r[0] >= start && r[0] <= end).map(r => ({ x: toDay(r[0]), y: r[basis === 'raw' ? 2 : 1] })) }];
 }
 
 export function marketStartDate(stock, fx, mode='prices') {
