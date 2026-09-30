@@ -1,5 +1,6 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Zmiana czcionki rolki obejmuje wszystkie napisy, także legendę i osie. Osobny krój możesz potem ustawić w zakładce Elementy.|Changing the reel font updates all text, including the legend and axes. You can then assign a separate font in the Elements tab.
 Dodaj element|Add element
 Tekst|Text
 Prostokąt|Rectangle

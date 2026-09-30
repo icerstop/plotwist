@@ -7,7 +7,7 @@ import React,{createContext,useContext,useEffect,useMemo,useRef,useState} from '
 import {ImagePlus,Trash2,ChevronUp,ChevronDown,RotateCcw} from 'lucide-react';
 import {decodeMedia,loadVisualDraft,saveVisualDraft,mediaAsset,releaseMedia} from './reel-media.js';
 import './visual-settings.css';
-import {normalizeDesign,reelThemes,reelLayouts} from './reel-design.js';
+import {normalizeDesign,reelThemes,reelLayouts,applyReelFont} from './reel-design.js';
 import GifSearch from './GifSearch.jsx';
 import {reelFonts} from './reel-fonts.js';
 import CustomThemes from './CustomThemes.jsx';
@@ -88,7 +88,7 @@ export function VisualProvider({children}){
   }catch(error){for(const id of decoded)releaseMedia(id);throw error;}
   finally{operation.current=false;setBusy(false);}
  }
- const context={mediaFiles:files,hide,addOverlay,overlay,duplicateOverlay,removeOverlay,orderOverlay,captureTheme:options=>captureTheme({...options,visuals,files}),applyTheme,applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>({...v,fontId:validFont(fontId),design:{...v.design,preset:null}})),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,copy,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
+ const context={mediaFiles:files,hide,addOverlay,overlay,duplicateOverlay,removeOverlay,orderOverlay,captureTheme:options=>captureTheme({...options,visuals,files}),applyTheme,applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>applyReelFont(v,fontId)),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,copy,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,_copyScope:copyScope(config),fontId:visuals.fontId||config.fontId,visuals,duration}),[config,visuals,duration]);}
@@ -127,6 +127,7 @@ export function StyleEditor({children,fontId}){
 
  </details>
  {children}
+ <p className="visual-hint">Zmiana czcionki rolki obejmuje wszystkie napisy, także legendę i osie. Osobny krój możesz potem ustawić w zakładce Elementy.</p>
  <FontWeightPicker label="Grubość czcionki rolki" fontId={v.visuals.fontId||fontId} value={d.fontWeight} onChange={fontWeight=>v.design({fontWeight})}/>
  <p className="visual-hint">Ustawienie wspólne. Elementy z własną grubością mają pierwszeństwo.</p>
  <LegendOptions/>

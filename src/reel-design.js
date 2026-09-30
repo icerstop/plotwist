@@ -34,6 +34,13 @@ export function normalizeDesign(raw={}){
  return {fontWeight:normalizeFontWeight(raw.fontWeight),elements,motion:normalizeMotion(raw.motion),chart:normalizeChart(raw.chart),preset:typeof raw.preset==='string'?raw.preset.slice(0,60):null,legendMode:raw.legendMode==='full'?'full':'auto',metricLabels,theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',chartHeight:number(raw.chartHeight??100,100,50,100),text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
 }
 export const designOf=config=>config.visuals?.design||normalizeDesign({theme:config.theme});
+// Choosing the whole-reel font is an explicit typography reset. Per-element
+// fonts can be assigned again afterwards without affecting the other styles.
+export function applyReelFont(visuals,fontId){
+ if(!reelFonts.some(font=>font.id===fontId))return visuals;
+ const design=normalizeDesign(visuals.design);
+ return {...visuals,fontId,design:{...design,preset:null,text:Object.fromEntries(Object.entries(design.text).map(([role,style])=>[role,{...style,fontId:null}]))},overlays:(visuals.overlays||[]).map(o=>o.kind==='text'?{...o,fontId:null}:o)};
+}
 export const themeOf=config=>reelThemes.find(t=>t.id===designOf(config).theme)||reelThemes[0];
 export const textSize=(config,role,size)=>size*(designOf(config).text?.[role]?.size??100)/100;
 export const textColor=(config,role,fallback)=>designOf(config).text?.[role]?.color||fallback;
