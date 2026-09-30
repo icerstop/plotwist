@@ -21,4 +21,4 @@ node scripts/build-ai-data.mjs
 if ($LASTEXITCODE -ne 0) { throw 'Normalizacja nie powiodła się; nie publikuj danych.' }
 node scripts/audit-ai-brands.mjs
 if ($LASTEXITCODE -ne 0) { throw 'Audyt marek nie powiódł się; nie publikuj danych.' }
-Write-Output 'Pobrano źródła Epoch i TrackingAI. Raport premierowy Sonnet 5.5 pozostaje datowanym snapshotem; wymaga osobnej weryfikacji. Sprawdź zmiany metodologii i wzory TrackingAI, uruchom npm test i npm run build przed publikacją.'
+Write-Output 'Pobrano źródła Epoch i TrackingAI. Raport Sonnet 5.5 i snapshot AA z GPT-6.1 Sol zachowują własne daty; wymagają osobnej weryfikacji przed odświeżeniem. Sprawdź zmiany metodologii i wzory TrackingAI, uruchom npm test i npm run build przed publikacją.'

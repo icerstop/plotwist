@@ -1,7 +1,7 @@
 {
-  "retrievedAt": "2026-09-29",
+  "retrievedAt": "2026-09-30",
   "sourceArchive": "https://epoch.ai/data/benchmark_data.zip",
-  "totalObservations": 5939,
+  "totalObservations": 7874,
   "benchmarks": [
     {
       "id": "gpqa",
@@ -22,21 +22,21 @@
         "note": "Grupa ekspertów w ewaluacji OpenAI; nie przeciętny człowiek. Inny protokół niż pomiary Epoch.",
         "sourceUrl": "https://epoch.ai/benchmarks/gpqa-diamond"
       },
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/gpqa_diamond.csv",
-          "sha256": "c1dbde808f7d0dd9fbc42b3822e6439e7cf8a54b032d0f2e674d88fa94656ae5"
+          "sha256": "721c92c910e0bf978653acfc816553a293efa4bb2814cd7db40456c1d96f2ed4"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
-      "count": 314,
-      "models": 314,
+      "count": 315,
+      "models": 315,
       "firstDate": "2023-03-14",
-      "lastDate": "2026-09-22"
+      "lastDate": "2026-09-29"
     },
     {
       "id": "math5",
@@ -51,7 +51,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/math_level_5.csv",
@@ -59,7 +59,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 108,
@@ -80,21 +80,21 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/otis_mock_aime_2024_2025.csv",
-          "sha256": "80bc9caec8b059998a8146168785a64ce7eee855880c7c1474fae7e7f6857b93"
+          "sha256": "b75589c45283f0de66574b2874468cff4ea48240f91dc80db4f0d9aa214e4224"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
-      "count": 292,
-      "models": 292,
+      "count": 293,
+      "models": 293,
       "firstDate": "2023-03-14",
-      "lastDate": "2026-09-22"
+      "lastDate": "2026-09-29"
     },
     {
       "id": "swe-v2",
@@ -109,7 +109,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Wyniki zależą od środowiska i narzędzi. v1 i v2 są rozdzielone.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/swe_bench_verified.csv",
@@ -117,7 +117,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 24,
@@ -138,7 +138,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Wyniki zależą od środowiska i narzędzi. v1 i v2 są rozdzielone.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/swe_bench_verified.csv",
@@ -146,7 +146,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 11,
@@ -167,7 +167,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/frontiermath.csv",
@@ -175,7 +175,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 101,
@@ -196,21 +196,21 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/frontiermath_tiers_1_3_v2.csv",
-          "sha256": "b8bbd406c755816a18114a9a3bbbc2c9f88393ceb92b32030f59e18da31efa7f"
+          "sha256": "59f985025c43e843c367bf2e209c37287f9142c968890d8aeabe82ab29c40c97"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
-      "count": 109,
-      "models": 109,
+      "count": 110,
+      "models": 110,
       "firstDate": "2024-01-25",
-      "lastDate": "2026-09-22"
+      "lastDate": "2026-09-29"
     },
     {
       "id": "frontiermath4",
@@ -225,7 +225,7 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/frontiermath_tier_4.csv",
@@ -233,7 +233,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 72,
@@ -254,21 +254,21 @@
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Warianty modeli i budżety rozumowania są odrębnymi rekordami. Sprawdź log ewaluacji.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/frontiermath_tier_4_v2.csv",
-          "sha256": "becdfca412c42e2c9cdcf5a5246ae351fdd2847d39292ca93c3afe486668e0a9"
+          "sha256": "d7389cca4ba4127c529badbd6a026d72fb670705d00ed5256a47d3e74e1ad33e"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
-      "count": 65,
-      "models": 65,
+      "count": 66,
+      "models": 66,
       "firstDate": "2025-01-31",
-      "lastDate": "2026-09-22"
+      "lastDate": "2026-09-29"
     },
     {
       "id": "mmlu",
@@ -283,15 +283,15 @@
       "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
       "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/mmlu_external.csv",
-          "sha256": "dd1c6138a8fed2cef7ca25318a23c2f4fc216ada94c1aeb995aaa098dcf9b857"
+          "sha256": "e4752463b5520b42e95cac34cc94b1b6e69cb41d4833c4c677f0350f963802cb"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 211,
@@ -312,19 +312,19 @@
       "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
       "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/arc_agi_external.csv",
-          "sha256": "d9a63f0ab837014a928b17afa6451fbc6d518d5342bc77c9542a650880b1227f"
+          "sha256": "b07f05510796d413c0ff1de0b894cb6d857f40a1164cbcaedaa9ab744ed87664"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
-      "count": 253,
-      "models": 253,
+      "count": 249,
+      "models": 249,
       "firstDate": "2024-09-12",
       "lastDate": "2026-09-22"
     },
@@ -341,19 +341,19 @@
       "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
       "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/arc_agi_2_external.csv",
-          "sha256": "2c1f18b1f30db0a1940b433b825463f6f8962b0c94fcbb8dea3d37459602fb35"
+          "sha256": "0156febcb4befe95a7f1a5e3e82f5fbae8dcf06cbde3a80c7f494806b908d1a9"
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
-      "count": 233,
-      "models": 233,
+      "count": 229,
+      "models": 229,
       "firstDate": "2024-07-18",
       "lastDate": "2026-09-22"
     },
@@ -370,7 +370,7 @@
       "license": "Dane zewnętrzne: sprawdź licencję źródła; agregacja Epoch AI.",
       "caveat": "Różne konfiguracje i źródła; to zestawienie raportów, nie kontrolowany eksperyment.",
       "baseline": null,
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/hle_external.csv",
@@ -378,7 +378,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 54,
@@ -397,7 +397,7 @@
       "sourceUrl": "https://epoch.ai/eci",
       "license": "Epoch AI · CC BY 4.0",
       "caveat": "Retrospektywne przeliczenie całej historii w aktualnej wersji indeksu. Przedziały: bootstrap 90%. Brak ludzkiego punktu odniesienia.",
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "epoch/epoch_capabilities_index/eci_scores.csv",
@@ -421,17 +421,17 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))",
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "tracking-iq.csv",
-          "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
+          "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
         }
       ],
-      "count": 1355,
+      "count": 1357,
       "models": 55,
       "firstDate": "2024-05-09",
-      "lastDate": "2026-09-27"
+      "lastDate": "2026-09-29"
     },
     {
       "id": "iq-offline-vision",
@@ -445,17 +445,17 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × 0.8823 × ((valid_test_score − 3) × (35 / 14)))",
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "tracking-iq.csv",
-          "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
+          "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
         }
       ],
-      "count": 553,
+      "count": 554,
       "models": 32,
       "firstDate": "2024-05-14",
-      "lastDate": "2026-09-28"
+      "lastDate": "2026-09-29"
     },
     {
       "id": "iq-mensa",
@@ -469,17 +469,17 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × (test_score − 5.833))",
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "tracking-iq.csv",
-          "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
+          "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
         }
       ],
-      "count": 1350,
+      "count": 1351,
       "models": 53,
       "firstDate": "2024-05-09",
-      "lastDate": "2026-09-28"
+      "lastDate": "2026-09-29"
     },
     {
       "id": "iq-mensa-vision",
@@ -493,17 +493,17 @@
       "license": "Brak zadeklarowanej otwartej licencji w pobranym CSV; podawaj autora i sprawdź warunki wykorzystania.",
       "caveat": "To wynik quizu według TrackingAI, nie diagnoza IQ modelu. Test publiczny może być znany z treningu; tekst i Vision są rozdzielone. Alias API mógł zmieniać model. Strefa czasu źródła nie jest podana.",
       "formula": "round(63.5 + 3 × (test_score − 5.833))",
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [
         {
           "file": "tracking-iq.csv",
-          "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
+          "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a"
         }
       ],
-      "count": 528,
+      "count": 529,
       "models": 31,
       "firstDate": "2024-05-14",
-      "lastDate": "2026-09-28"
+      "lastDate": "2026-09-29"
     },
     {
       "id": "codeforces2024",
@@ -524,7 +524,7 @@
         "note": "50. percentyl z definicji skali; to uczestnicy konkursów, nie populacja ludzi.",
         "sourceUrl": "https://openai.com/index/learning-to-reason-with-llms/"
       },
-      "retrievedAt": "2026-09-29",
+      "retrievedAt": "2026-09-30",
       "provenance": [],
       "count": 4,
       "models": 4,
@@ -552,7 +552,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 3,
@@ -581,7 +581,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 5,
@@ -610,7 +610,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 3,
@@ -638,7 +638,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 4,
@@ -666,7 +666,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 4,
@@ -695,7 +695,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 3,
@@ -724,7 +724,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 3,
@@ -753,7 +753,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 4,
@@ -781,7 +781,7 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 2,
@@ -810,20 +810,303 @@
         },
         {
           "file": "epoch/model_metadata.csv",
-          "sha256": "9035be0c6bc9883ca98ec578eb2395f0f0ce3e599272abe6e4724a0317be5935"
+          "sha256": "41e29b446f072c56e0bc28446744081cf13f0d5f6ab887d73d2decf6afab8844"
         }
       ],
       "count": 3,
       "models": 3,
       "firstDate": "2026-09-03",
       "lastDate": "2026-09-28"
+    },
+    {
+      "id": "aa-index-v432",
+      "name": "Artificial Analysis · Intelligence Index v4.3.2",
+      "category": "Przekrojowe",
+      "description": "Indeks wielu testów w wersji 4.3.2. To nie IQ ani procent poprawnych odpowiedzi.",
+      "unit": "pkt indeksu",
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 191,
+      "models": 191,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-briefcase-v11",
+      "name": "AA-Briefcase v1.1 · AA",
+      "category": "Agenci",
+      "description": "Wynik pracy agentów: łączny rating Elo, bez przeliczania na procenty.",
+      "unit": "Elo",
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 189,
+      "models": 189,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-gdpval-v21",
+      "name": "GDPval-AA v2.1 · AA",
+      "category": "Agenci",
+      "description": "Praca profesjonalna oceniana porównawczo. Rating Elo wersji 2.1.",
+      "unit": "Elo",
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 189,
+      "models": 189,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-automation",
+      "name": "AutomationBench · AA partial reward",
+      "category": "Agenci",
+      "description": "Automatyzacja zadań: częściowa nagroda w protokole AA, nie odsetek całkowicie ukończonych zadań.",
+      "unit": "%",
+      "max": 100,
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 189,
+      "models": 189,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-terminal4",
+      "name": "Terminal-Bench 4.0 · AA",
+      "category": "Kod",
+      "description": "Zadania w terminalu: protokół Artificial Analysis, wersja 4.0.",
+      "unit": "%",
+      "max": 100,
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 189,
+      "models": 189,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-hle-no-tools",
+      "name": "Humanity’s Last Exam · AA no tools",
+      "category": "Wiedza",
+      "description": "HLE bez narzędzi w protokole AA. Nie łączymy z wynikami z dostępem do narzędzi.",
+      "unit": "%",
+      "max": 100,
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 189,
+      "models": 189,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-gdp-pdf",
+      "name": "GDP.pdf · AA all-pass",
+      "category": "Wiedza",
+      "description": "Pytania o złożone dokumenty PDF. Wynik all-pass wymaga powodzenia we wszystkich powtórzeniach.",
+      "unit": "%",
+      "max": 100,
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 189,
+      "models": 189,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-omniscience-accuracy",
+      "name": "AA-Omniscience · accuracy",
+      "category": "Wiedza",
+      "description": "Odsetek poprawnych odpowiedzi. Osobna metryka od indeksu Omniscience i częstości halucynacji.",
+      "unit": "%",
+      "max": 100,
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 191,
+      "models": 191,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-omniscience-nonhallucination",
+      "name": "AA-Omniscience · 1 − hallucination rate",
+      "category": "Wiedza",
+      "description": "100 × (1 − częstość halucynacji AA). Więcej oznacza lepiej; odmowa odpowiedzi nie oznacza poprawnej odpowiedzi.",
+      "unit": "%",
+      "max": 100,
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 191,
+      "models": 191,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-lcr-v11",
+      "name": "AA-LCR v1.1",
+      "category": "Rozumowanie",
+      "description": "Rozumowanie na długim kontekście w wersji 1.1 protokołu AA.",
+      "unit": "%",
+      "max": 100,
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 189,
+      "models": 189,
+      "firstDate": "2024-12-26",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "aa-terminal-science01",
+      "name": "Terminal-Bench Science 0.1 · AA",
+      "category": "Nauka",
+      "description": "Naukowe zadania w terminalu. Oddzielny benchmark i środowisko pomiaru Artificial Analysis.",
+      "unit": "%",
+      "max": 100,
+      "dateKind": "snapshot",
+      "defaultBasis": "release",
+      "defaultMode": "ranking",
+      "source": "Artificial Analysis",
+      "sourceUrl": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "retrievedAt": "2026-09-30",
+      "license": "Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.",
+      "caveat": "Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.",
+      "provenance": [
+        {
+          "file": "aa-2026-09-30.json",
+          "sha256": "244dca91210b5ee62b7c8ee73a6f0503ef25d06e8cbf031386457a4675305ae0"
+        }
+      ],
+      "count": 38,
+      "models": 38,
+      "firstDate": "2026-06-01",
+      "lastDate": "2026-09-30"
     }
   ],
   "audit": [
     {
       "id": "gpqa",
-      "input": 314,
-      "accepted": 314,
+      "input": 315,
+      "accepted": 315,
       "invalid": 0
     },
     {
@@ -834,8 +1117,8 @@
     },
     {
       "id": "mock-aime",
-      "input": 292,
-      "accepted": 292,
+      "input": 293,
+      "accepted": 293,
       "invalid": 0
     },
     {
@@ -858,8 +1141,8 @@
     },
     {
       "id": "frontiermath-v2",
-      "input": 109,
-      "accepted": 109,
+      "input": 110,
+      "accepted": 110,
       "invalid": 0
     },
     {
@@ -870,8 +1153,8 @@
     },
     {
       "id": "frontiermath4-v2",
-      "input": 65,
-      "accepted": 65,
+      "input": 66,
+      "accepted": 66,
       "invalid": 0
     },
     {
@@ -882,14 +1165,14 @@
     },
     {
       "id": "arc1",
-      "input": 253,
-      "accepted": 253,
+      "input": 249,
+      "accepted": 249,
       "invalid": 0
     },
     {
       "id": "arc2",
-      "input": 233,
-      "accepted": 233,
+      "input": 229,
+      "accepted": 229,
       "invalid": 0
     },
     {
@@ -897,24 +1180,34 @@
       "input": 54,
       "accepted": 54,
       "invalid": 0
+    },
+    {
+      "id": "aa-snapshot",
+      "acceptedModels": 191,
+      "excludedEstimatedOrUnmeasured": 495,
+      "excludedBenchmarks": {
+        "scicode": "Under review on source model page",
+        "critpt": "Under review on source model page"
+      }
     }
   ],
   "featuredRelease": {
-    "model": "Claude Sonnet 5.5",
-    "releaseDate": "2026-09-28",
-    "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
-    "benchmarkId": "terminal4-report",
+    "model": "GPT-6.1 Sol",
+    "releaseDate": "2026-09-29",
+    "sourceUrl": "https://openai.com/index/introducing-gpt-6-1-sol/",
+    "benchmarkId": "aa-index-v432",
     "benchmarkIds": [
-      "terminal4-report",
-      "frontiercode11-report",
-      "cursor4-report",
-      "gdpval21-report",
-      "briefcase11-report",
-      "hle-tools-report",
-      "osworld21-partial-report",
-      "chartography-report",
-      "aa-intelligence-sep26",
-      "terminal4-aa-sep26"
+      "aa-index-v432",
+      "aa-briefcase-v11",
+      "aa-gdpval-v21",
+      "aa-automation",
+      "aa-terminal4",
+      "aa-hle-no-tools",
+      "aa-gdp-pdf",
+      "aa-omniscience-accuracy",
+      "aa-omniscience-nonhallucination",
+      "aa-lcr-v11",
+      "aa-terminal-science01"
     ],
     "missingBenchmarks": [
       "eci",
@@ -922,6 +1215,67 @@
       "iq-offline-vision",
       "iq-mensa",
       "iq-mensa-vision"
-    ]
-  }
+    ],
+    "summary": {
+      "pl": "Premiera 29.09.2026. Pięć poziomów rozumowania w niezależnych pomiarach Artificial Analysis. Wybierz benchmark i porównaj z pozostałymi modelami.",
+      "en": "Released September 29, 2026. Five reasoning efforts in independent Artificial Analysis evaluations. Choose a benchmark and compare with other models."
+    }
+  },
+  "featuredReleases": [
+    {
+      "model": "GPT-6.1 Sol",
+      "releaseDate": "2026-09-29",
+      "sourceUrl": "https://openai.com/index/introducing-gpt-6-1-sol/",
+      "benchmarkId": "aa-index-v432",
+      "benchmarkIds": [
+        "aa-index-v432",
+        "aa-briefcase-v11",
+        "aa-gdpval-v21",
+        "aa-automation",
+        "aa-terminal4",
+        "aa-hle-no-tools",
+        "aa-gdp-pdf",
+        "aa-omniscience-accuracy",
+        "aa-omniscience-nonhallucination",
+        "aa-lcr-v11",
+        "aa-terminal-science01"
+      ],
+      "missingBenchmarks": [
+        "eci",
+        "iq-offline",
+        "iq-offline-vision",
+        "iq-mensa",
+        "iq-mensa-vision"
+      ],
+      "summary": {
+        "pl": "Premiera 29.09.2026. Pięć poziomów rozumowania w niezależnych pomiarach Artificial Analysis. Wybierz benchmark i porównaj z pozostałymi modelami.",
+        "en": "Released September 29, 2026. Five reasoning efforts in independent Artificial Analysis evaluations. Choose a benchmark and compare with other models."
+      }
+    },
+    {
+      "model": "Claude Sonnet 5.5",
+      "releaseDate": "2026-09-28",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
+      "benchmarkId": "terminal4-report",
+      "benchmarkIds": [
+        "terminal4-report",
+        "frontiercode11-report",
+        "cursor4-report",
+        "gdpval21-report",
+        "briefcase11-report",
+        "hle-tools-report",
+        "osworld21-partial-report",
+        "chartography-report",
+        "aa-intelligence-sep26",
+        "terminal4-aa-sep26"
+      ],
+      "missingBenchmarks": [
+        "eci",
+        "iq-offline",
+        "iq-offline-vision",
+        "iq-mensa",
+        "iq-mensa-vision"
+      ]
+    }
+  ]
 }

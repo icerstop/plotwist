@@ -39,7 +39,7 @@ test('Sonnet 5.5 release data keeps configurations, publication dates and indepe
  assert.equal(read('gdpval21-report').unit,'Elo');assert.equal(read('gdpval21-report').max,undefined);
  assert.equal(read('osworld21-partial-report').rows[0].protocol,'OSWorld 2.1 · partial score');
  assert.ok(read('hle-tools-report').rows.every(r=>r.protocol.includes('with tools')));
- const m=read('manifest');
+ const m={featuredRelease:read('manifest').featuredReleases.find(r=>r.model==='Claude Sonnet 5.5')};
  for(const id of ['eci','iq-offline','iq-offline-vision','iq-mensa','iq-mensa-vision'])assert.equal(m.featuredRelease.missingBenchmarks.includes(id),!read(id).rows.some(r=>/sonnet[\s_-]*5[.\s_-]*5/i.test(`${r.model} ${r.modelId}`)));
  for(const id of m.featuredRelease.benchmarkIds){const b=read(id);assert.ok(sonnet(b));assert.ok(b.rows.every(r=>r.dateKind==='publication'&&r.sourceUrl.startsWith('https://')));}
 });

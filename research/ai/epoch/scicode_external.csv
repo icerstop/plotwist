@@ -284,13 +284,9 @@ qwen3.8-max-0902_unknown,0.520833333333333,Alibaba,qwen3-8-max,2026-09-01,Alibab
 deepseek-v4.1-flash_max,0.518518518518518,DeepSeek,deepseek-v4-1-flash,2026-09-09,DeepSeek,China,4.32e+24,"(Pre-training) - 6 * 16e9 active parameters * 45e12 tokens = 4.32e+24 FLOP
 ","DeepSeek V4.1 Flash (Reasoning, Max Effort)",https://artificialanalysis.ai/evaluations/scicode,
 claude-opus-5-5_max,0.668981481481482,Anthropic,claude-opus-5-5,2026-09-22,Anthropic,United States of America,,,"Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",https://artificialanalysis.ai/evaluations/scicode,
-gpt-6-sol_max,0.576388888888889,OpenAI,gpt-6-sol,2026-09-22,OpenAI,United States of America,,,GPT-6 Sol (max),https://artificialanalysis.ai/evaluations/scicode,
-gpt-6-luna_max,0.546296296296296,OpenAI,gpt-6-luna,2026-09-22,OpenAI,United States of America,,,GPT-6 Luna (max),https://artificialanalysis.ai/evaluations/scicode,
 claude-opus-5-5_xhigh,0.650462962962963,Anthropic,claude-opus-5-5-xhigh,2026-09-22,Anthropic,United States of America,,,"Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",https://artificialanalysis.ai/evaluations/scicode,
 claude-sonnet-5-5_max,0.609953703703704,Anthropic,claude-sonnet-5-5,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",https://artificialanalysis.ai/evaluations/scicode,
 claude-sonnet-5-5_xhigh,0.572916666666667,,claude-sonnet-5-5-xhigh,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",https://artificialanalysis.ai/evaluations/scicode,
-gpt-6-sol_xhigh,0.550925925925926,,gpt-6-sol-xhigh,2026-09-22,OpenAI,United States of America,,,GPT-6 Sol (xhigh),https://artificialanalysis.ai/evaluations/scicode,
 claude-sonnet-5-5_high,0.537037037037037,,claude-sonnet-5-5-high,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",https://artificialanalysis.ai/evaluations/scicode,
 claude-sonnet-5-5_medium,0.528935185185185,,claude-sonnet-5-5-medium,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",https://artificialanalysis.ai/evaluations/scicode,
-gpt-6-luna_xhigh,0.517361111111111,,gpt-6-luna-xhigh,2026-09-22,OpenAI,United States of America,,,GPT-6 Luna (xhigh),https://artificialanalysis.ai/evaluations/scicode,
 claude-sonnet-5-5_low,0.490740740740741,,claude-sonnet-5-5-low,2026-09-28,Anthropic,United States of America,,,"Claude Sonnet 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",https://artificialanalysis.ai/evaluations/scicode,

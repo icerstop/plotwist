@@ -7,11 +7,11 @@ const definitions = [
  ['google','Google DeepMind','Gemini / Gemma','#77aaff','gemini-color',['Google','Google DeepMind','Google Research','DeepMind']],
  ['alibaba','Alibaba','Qwen / QwQ','#b394fa','qwen-color',['Alibaba','Alibaba Cloud','Qwen']],
  ['deepseek','DeepSeek','DeepSeek','#68a4ff','deepseek-color',['DeepSeek']],
- ['xai','xAI','Grok','#c7cedb','grok',['xAI']],
+ ['xai','xAI','Grok','#c7cedb','grok',['xAI','SpaceXAI']],
  ['meta','Meta','Meta AI','#72bcff','meta-color',['Meta','Meta AI']],
- ['mistral','Mistral AI','Mistral','#ffb45e','mistral-color',['Mistral AI']],
- ['moonshot','Moonshot AI','Kimi','#9b9dff','kimi-color',['Moonshot','Moonshot AI']],
- ['zai','Z.ai / Zhipu AI','GLM','#92aaff','zhipu-color',['Z.ai (Zhipu AI)','Zhipu AI','Z.ai']],
+ ['mistral','Mistral AI','Mistral','#ffb45e','mistral-color',['Mistral AI','Mistral']],
+ ['moonshot','Moonshot AI','Kimi','#9b9dff','kimi-color',['Moonshot','Moonshot AI','Kimi']],
+ ['zai','Z.ai / Zhipu AI','GLM','#92aaff','zhipu-color',['Z.ai (Zhipu AI)','Zhipu AI','Z.ai','Z AI']],
  ['microsoft','Microsoft','Microsoft','#a8cb72','microsoft-color',['Microsoft','Microsoft Research']],
  ['minimax','MiniMax','MiniMax','#fa91bf','minimax-color',['MiniMax']],
  ['nvidia','NVIDIA','Nemotron','#97ca4f','nvidia-color',['Nvidia','NVIDIA']],
@@ -77,7 +77,7 @@ const aliases=[
  ['baai',/^aquila(?:chat)?2(?:\b|[- ])/i],['xverse',/^xverse[- ]\d/i],
  ['bing',/^bing(?:$|[ (])/i],['perplexity',/^perplexity(?:$|[ (])/i],['manus',/^manus(?:$|[ (])/i],
 ];
-export const aiBrandRuleVersion='2026-09-28.1';
+export const aiBrandRuleVersion='2026-09-30.1';
 export function classifyAiBrand(row){
  const organization=norm(row.organization);
  if(organization&&!['nie podano','trackingai · alias modelu'].includes(organization)){

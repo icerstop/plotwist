@@ -1,0 +1,326 @@
+{
+  "retrievedAt": "2026-09-30",
+  "beforeObservations": 5939,
+  "afterObservations": 7874,
+  "newBenchmarks": [
+    "aa-index-v432",
+    "aa-briefcase-v11",
+    "aa-gdpval-v21",
+    "aa-automation",
+    "aa-terminal4",
+    "aa-hle-no-tools",
+    "aa-gdp-pdf",
+    "aa-omniscience-accuracy",
+    "aa-omniscience-nonhallucination",
+    "aa-lcr-v11",
+    "aa-terminal-science01"
+  ],
+  "upstreamChanges": [
+    {
+      "benchmark": "gpqa",
+      "added": [
+        {
+          "id": "QPk8jbJvo4986sbWtdte6J",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-29T15:15:14.000Z",
+          "score": 95.58080808080808,
+          "stderr": 1.3710320714521202,
+          "sourceUrl": "https://epoch.ai/benchmarks/gpqa-diamond",
+          "notes": "",
+          "protocol": "Prompt od 20.02.2026"
+        }
+      ],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "benchmark": "mock-aime",
+      "added": [
+        {
+          "id": "bSEaZLPehiNVDQL7HP9EJS",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-29T15:15:14.000Z",
+          "score": 100,
+          "stderr": 0,
+          "sourceUrl": "https://epoch.ai/benchmarks/otis-mock-aime-2024-2025",
+          "notes": "",
+          "protocol": "Wszystkie rekordy źródła"
+        }
+      ],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "benchmark": "frontiermath-v2",
+      "added": [
+        {
+          "id": "4tZWwV9tqEgsCaKeSuSoG4",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-29T15:15:14.000Z",
+          "score": 88.7719298245614,
+          "stderr": 1.8734030360524248,
+          "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tier-4-v2",
+          "notes": "",
+          "protocol": "Wszystkie rekordy źródła"
+        }
+      ],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "benchmark": "frontiermath4-v2",
+      "added": [
+        {
+          "id": "Xo7ecFEMqPJ4HicvJTvWZZ",
+          "modelId": "claude-sonnet-5-5_max",
+          "model": "Claude Sonnet 5.5 (max)",
+          "organization": "Anthropic",
+          "releaseDate": "2026-09-28",
+          "observedAt": "2026-09-29T15:15:14.000Z",
+          "score": 80.48780487804879,
+          "stderr": 6.265967111543964,
+          "sourceUrl": "https://epoch.ai/benchmarks/frontiermath-tier-4-v2",
+          "notes": "",
+          "protocol": "Wszystkie rekordy źródła"
+        }
+      ],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "benchmark": "arc1",
+      "added": [],
+      "removed": [
+        {
+          "id": "rec4dBo80VpXStHHy",
+          "modelId": "gpt-6-sol_max::rec4dBo80VpXStHHy",
+          "model": "GPT-6 Sol (max)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": null,
+          "score": 95.5,
+          "stderr": null,
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi",
+          "notes": "https://arcprize.org/leaderboard",
+          "protocol": "Wszystkie rekordy źródła"
+        },
+        {
+          "id": "rec91MbIWxiDlcmQ4",
+          "modelId": "gpt-6-sol_xhigh::rec91MbIWxiDlcmQ4",
+          "model": "GPT-6 Sol (xhigh)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": null,
+          "score": 92.66666666666666,
+          "stderr": null,
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi",
+          "notes": "https://arcprize.org/leaderboard",
+          "protocol": "Wszystkie rekordy źródła"
+        },
+        {
+          "id": "recHglCFl3xioSDrp",
+          "modelId": "gpt-6-luna_xhigh::recHglCFl3xioSDrp",
+          "model": "GPT-6 Luna (xhigh)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": null,
+          "score": 73,
+          "stderr": null,
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi",
+          "notes": "https://arcprize.org/leaderboard",
+          "protocol": "Wszystkie rekordy źródła"
+        },
+        {
+          "id": "rechAUouXDDP6RpVC",
+          "modelId": "gpt-6-luna_max::rechAUouXDDP6RpVC",
+          "model": "GPT-6 Luna (max)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": null,
+          "score": 86.66666666666667,
+          "stderr": null,
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi",
+          "notes": "https://arcprize.org/leaderboard",
+          "protocol": "Wszystkie rekordy źródła"
+        }
+      ],
+      "changed": []
+    },
+    {
+      "benchmark": "arc2",
+      "added": [],
+      "removed": [
+        {
+          "id": "recZ0B5ZSsbbYsh8s",
+          "modelId": "gpt-6-luna_max::recZ0B5ZSsbbYsh8s",
+          "model": "GPT-6 Luna (max)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": null,
+          "score": 59.30555555555556,
+          "stderr": null,
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2",
+          "notes": "",
+          "protocol": "Wszystkie rekordy źródła"
+        },
+        {
+          "id": "recZ0Sr94tS2G6Ud4",
+          "modelId": "gpt-6-sol_max::recZ0Sr94tS2G6Ud4",
+          "model": "GPT-6 Sol (max)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": null,
+          "score": 89.58333333333334,
+          "stderr": null,
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2",
+          "notes": "",
+          "protocol": "Wszystkie rekordy źródła"
+        },
+        {
+          "id": "recsVJik0zbPW04yN",
+          "modelId": "gpt-6-luna_xhigh::recsVJik0zbPW04yN",
+          "model": "GPT-6 Luna (xhigh)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": null,
+          "score": 41.94444444444444,
+          "stderr": null,
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2",
+          "notes": "",
+          "protocol": "Wszystkie rekordy źródła"
+        },
+        {
+          "id": "recw7reHorlfa9MLF",
+          "modelId": "gpt-6-sol_xhigh::recw7reHorlfa9MLF",
+          "model": "GPT-6 Sol (xhigh)",
+          "organization": "OpenAI",
+          "releaseDate": "2026-09-22",
+          "observedAt": null,
+          "score": 78.05555555555556,
+          "stderr": null,
+          "sourceUrl": "https://epoch.ai/benchmarks/arc-agi-2",
+          "notes": "",
+          "protocol": "Wszystkie rekordy źródła"
+        }
+      ],
+      "changed": []
+    },
+    {
+      "benchmark": "iq-offline",
+      "added": [
+        {
+          "id": "tracking-5697",
+          "modelId": "Kimi-K3",
+          "model": "Kimi-K3",
+          "organization": "TrackingAI · alias modelu",
+          "releaseDate": null,
+          "observedAt": "2026-09-29T16:33:38",
+          "score": 130,
+          "rawScore": 15,
+          "validScore": 13,
+          "total": 16,
+          "refusals": 16,
+          "protocol": "Opis tekstowy",
+          "sourceUrl": "https://www.trackingai.org/home",
+          "notes": ""
+        },
+        {
+          "id": "tracking-5699",
+          "modelId": "GPT-Sol-Ultra",
+          "model": "GPT-Sol-Ultra",
+          "organization": "TrackingAI · alias modelu",
+          "releaseDate": null,
+          "observedAt": "2026-09-29T21:39:04",
+          "score": 130,
+          "rawScore": 15,
+          "validScore": 13,
+          "total": 16,
+          "refusals": 0,
+          "protocol": "Opis tekstowy",
+          "sourceUrl": "https://www.trackingai.org/home",
+          "notes": ""
+        }
+      ],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "benchmark": "iq-offline-vision",
+      "added": [
+        {
+          "id": "tracking-5702",
+          "modelId": "GPT-Sol-Ultra-Vision",
+          "model": "GPT-Sol-Ultra-Vision",
+          "organization": "TrackingAI · alias modelu",
+          "releaseDate": null,
+          "observedAt": "2026-09-29T22:38:00",
+          "score": 130,
+          "rawScore": 15,
+          "validScore": 13,
+          "total": 16,
+          "refusals": 0,
+          "protocol": "Obraz",
+          "sourceUrl": "https://www.trackingai.org/home",
+          "notes": ""
+        }
+      ],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "benchmark": "iq-mensa",
+      "added": [
+        {
+          "id": "tracking-5700",
+          "modelId": "GPT-Sol-Ultra",
+          "model": "GPT-Sol-Ultra",
+          "organization": "TrackingAI · alias modelu",
+          "releaseDate": null,
+          "observedAt": "2026-09-29T22:13:49",
+          "score": 139,
+          "rawScore": 31,
+          "validScore": 31,
+          "total": 35,
+          "refusals": 0,
+          "protocol": "Opis tekstowy",
+          "sourceUrl": "https://www.trackingai.org/home",
+          "notes": ""
+        }
+      ],
+      "removed": [],
+      "changed": []
+    },
+    {
+      "benchmark": "iq-mensa-vision",
+      "added": [
+        {
+          "id": "tracking-5703",
+          "modelId": "GPT-Sol-Ultra-Vision",
+          "model": "GPT-Sol-Ultra-Vision",
+          "organization": "TrackingAI · alias modelu",
+          "releaseDate": null,
+          "observedAt": "2026-09-29T23:39:25",
+          "score": 145,
+          "rawScore": 33,
+          "validScore": 33,
+          "total": 35,
+          "refusals": 0,
+          "protocol": "Obraz",
+          "sourceUrl": "https://www.trackingai.org/home",
+          "notes": ""
+        }
+      ],
+      "removed": [],
+      "changed": []
+    }
+  ]
+}

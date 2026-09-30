@@ -1,5 +1,5 @@
 {
-  "retrievedAt": "2026-09-29",
+  "retrievedAt": "2026-09-30",
   "sources": [
     "https://epoch.ai/data/benchmark_data.zip",
     "https://www.trackingai.org/app/database/proj_IQ/score_logs/iq/daily_logs.csv",
@@ -12,26 +12,48 @@
     "https://epoch.ai/data/eci-documentation/methodology",
     "https://www.anthropic.com/claude-sonnet-5-5",
     "https://www.anthropic.com/claude-sonnet-5-5-system-card",
-    "https://artificialanalysis.ai/articles/claude-sonnet-5-5"
+    "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+    "https://openai.com/index/introducing-gpt-6-1-sol/",
+    "https://openai.com/index/devday-2026-recap/",
+    "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+    "https://artificialanalysis.ai/articles/gpt-6-1-sol-replaces-gpt-6-sol-after-just-7-days-with-near-astra-intelligence"
   ],
   "downloads": [
     {
+      "retrievedAt": "2026-09-30T08:49:25.0013509Z",
+      "sha256": "4e748768716dbb78c01c9212c0b8bf450ad94c23c5dd81085d7f5a60cb8510f6",
       "url": "https://epoch.ai/data/benchmark_data.zip",
-      "file": "epoch-benchmarks.zip",
-      "retrievedAt": "2026-09-29T13:07:48.922119+00:00",
-      "sha256": "8748d8b3eb6eb375ceff338666bf83d8e1b67a410031f6bfc70687e633318d3b"
+      "file": "epoch-benchmarks.zip"
     },
     {
+      "retrievedAt": "2026-09-30T08:49:25.0225240Z",
+      "sha256": "273594b522f71174ae88c7934a76d3974bc14432f573243a9723f2cbe262169a",
       "url": "https://www.trackingai.org/app/database/proj_IQ/score_logs/iq/daily_logs.csv",
-      "file": "tracking-iq.csv",
-      "retrievedAt": "2026-09-29T13:07:48.922119+00:00",
-      "sha256": "467521405e9d41631872884c93c3b03f6f8c3a0221659a58ae19bf98962e4d95"
+      "file": "tracking-iq.csv"
     },
     {
+      "retrievedAt": "2026-09-30T08:49:25.0240813Z",
+      "sha256": "fac35b8f5080d7ae64e480dd43ff4ec8e168b13027f9192383fe14736d90db65",
       "url": "https://www.trackingai.org/assets/js/charts/charts_IQ.js",
-      "file": "tracking-formula-latest.js",
-      "retrievedAt": "2026-09-29T13:07:48.922119+00:00",
-      "sha256": "fac35b8f5080d7ae64e480dd43ff4ec8e168b13027f9192383fe14736d90db65"
+      "file": "tracking-formula-latest.js"
+    },
+    {
+      "file": "gpt-6-1-sol-aa-model.html",
+      "url": "https://artificialanalysis.ai/models/gpt-6-1-sol",
+      "retrievedAt": "2026-09-30",
+      "sha256": "1eeefc63fe17a1d952491a3ac6732f06e117994d1ccc93458e13445cdcf5af1c"
+    },
+    {
+      "file": "gpt-6-1-sol-aa.html",
+      "url": "https://artificialanalysis.ai/articles/gpt-6-1-sol-replaces-gpt-6-sol-after-just-7-days-with-near-astra-intelligence",
+      "retrievedAt": "2026-09-30",
+      "sha256": "5002e947b93301b5cb582a65c8e21b7d19d21d2897ee06f944c61ce099a2e80e"
+    },
+    {
+      "file": "gpt-6-1-sol-aa-table.png",
+      "url": "https://cdn.sanity.io/images/6vfeftx9/articles/71ffd1bd5547cebaba4c4879a40dd4a147fcbe7b-2560x4072.png",
+      "retrievedAt": "2026-09-30",
+      "sha256": "45574cf5fde6a81a131eda69091eefe2ebb408cd7679ec4aba755818ddb94c7b"
     }
   ]
 }

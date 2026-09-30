@@ -1,5 +1,24 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Nowe wyniki:|New results:
+Data pobrania rankingu|Ranking capture date
+Stan rankingu na dzień pobrania|Ranking as captured on download date
+To stan rankingu na dzień pobrania. Źródło nie podaje dat poszczególnych testów.|This is the ranking as captured on download day. The source does not provide individual test dates.
+pkt indeksu|index points
+Agenci|Agents
+Indeks wielu testów w wersji 4.3.2. To nie IQ ani procent poprawnych odpowiedzi.|A multi-benchmark index, version 4.3.2. This is neither IQ nor percentage accuracy.
+Wynik pracy agentów: łączny rating Elo, bez przeliczania na procenty.|Agent performance: combined Elo rating, without converting to percentages.
+Praca profesjonalna oceniana porównawczo. Rating Elo wersji 2.1.|Comparative evaluation of professional work. Version 2.1 Elo rating.
+Automatyzacja zadań: częściowa nagroda w protokole AA, nie odsetek całkowicie ukończonych zadań.|Task automation: partial reward in the AA protocol, not the share of fully completed tasks.
+Zadania w terminalu: protokół Artificial Analysis, wersja 4.0.|Terminal tasks: Artificial Analysis protocol, version 4.0.
+HLE bez narzędzi w protokole AA. Nie łączymy z wynikami z dostępem do narzędzi.|HLE without tools in the AA protocol. Kept separate from results with tools.
+Pytania o złożone dokumenty PDF. Wynik all-pass wymaga powodzenia we wszystkich powtórzeniach.|Questions about complex PDF documents. All-pass requires success in every repeat.
+Odsetek poprawnych odpowiedzi. Osobna metryka od indeksu Omniscience i częstości halucynacji.|Share of correct answers. Separate from the Omniscience index and hallucination rate.
+100 × (1 − częstość halucynacji AA). Więcej oznacza lepiej; odmowa odpowiedzi nie oznacza poprawnej odpowiedzi.|100 × (1 − AA hallucination rate). Higher is better; refusing to answer does not count as a correct answer.
+Rozumowanie na długim kontekście w wersji 1.1 protokołu AA.|Long-context reasoning in version 1.1 of the AA protocol.
+Naukowe zadania w terminalu. Oddzielny benchmark i środowisko pomiaru Artificial Analysis.|Scientific terminal tasks. A separate benchmark and Artificial Analysis evaluation environment.
+Stan rankingu na dzień pobrania, bez dat poszczególnych testów. Oś premier jest retrospektywą. Warianty rozumowania i fallback są rozdzielone. SciCode i CritPt oznaczono w źródle jako „Under review”; nie dodajemy ich jako osobnych benchmarków.|Ranking captured on download day, without individual test dates. The release timeline is retrospective. Reasoning efforts and fallback configurations are separate. SciCode and CritPt are marked as under review by the source and are not added as standalone benchmarks.
+Publiczne wyniki Artificial Analysis; przypisanie do źródła. Sprawdź warunki dalszego wykorzystania.|Public Artificial Analysis results, attributed to the source. Check conditions for further reuse.
 Wygląd rolki|Reel appearance
 Wspólny styl zostaje przy zmianie danych.|Your shared style stays when you change data.
 Ustawienia wyglądu|Appearance settings

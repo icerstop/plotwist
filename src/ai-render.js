@@ -130,7 +130,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  endContent();
  // Essential methodology is burned into every exported frame.
  drawVisualOverlays(ctx,1080,1920,config,visualTime);
- const dating=basis==='release'?'Wg premier · retrospektywa, pomiary mogły być późniejsze':'Wg dat testu / publikacji · bez interpolacji';
+ const dating=basis==='release'?'Wg premier · retrospektywa, pomiary mogły być późniejsze':b.dateKind==='snapshot'?'Stan rankingu na dzień pobrania':'Wg dat testu / publikacji · bez interpolacji';
  const warning=b.id.startsWith('iq-')?'Quiz TrackingAI ≠ psychometryczne IQ człowieka':b.id==='eci'?'ECI ≠ IQ · aktualne przeliczenie historii':b.id==='codeforces2024'?'Percentyl wśród uczestników · 10 zgłoszeń':b.id.startsWith('swe-')?'Wynik systemu z narzędziami; wersje środowiska rozdzielone':b.id==='gpqa'&&mode==='duel'?'Eksperci dziedzinowi; różne protokoły ewaluacji':['frontiermath','frontiermath4'].includes(b.id)?'Od 13.11.2025 budżet tokenów 10× większy; porównanie orientacyjne':b.caveat;
  const endSource=beginElement(ctx,config,'source',{x:76,y:1673,w:928,h:158});
  wrap(ctx,dating,76,1700,928,22,2,muted,false,'source');wrap(ctx,warning,76,1760,928,22,2,muted,false,'source');wrap(ctx,`${b.source} · dane ${b.retrievedAt}`,76,1821,928,23,1,muted,false,'source');
