@@ -2,7 +2,8 @@ import {reelFonts,normalizeFontWeight} from './reel-fonts.js';
 
 export const overlayLimit=20;
 export const overlayKinds=[['text','Tekst'],['rectangle','Prostokąt'],['ellipse','Elipsa'],['line','Linia'],['arrow','Strzałka']];
-const builtins=['mark','title','subtitle','metric','content','date','source','signature'];
+import {reelElementDefinitions} from './reel-capabilities.js';
+const builtins=Object.keys(reelElementDefinitions);
 const number=(v,f,min,max)=>v!=null&&Number.isFinite(Number(v))?Math.max(min,Math.min(max,Number(v))):f;
 const color=(v,f)=>/^#[0-9a-f]{6}$/i.test(v||'')?v:f;
 export const normalizeHidden=raw=>Object.fromEntries(builtins.filter(id=>raw?.[id]===true).map(id=>[id,true]));

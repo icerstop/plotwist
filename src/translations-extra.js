@@ -1171,4 +1171,23 @@ Data i szczegóły pomiaru|Measurement date and details
 Metodologia osi czasu|Timeline methodology
 Objaśnienie benchmarku|Benchmark explanation
 Źródło i data pobrania|Source and retrieval date
+Liczniki i podsumowanie|Counters and summary
+Oś czasu / kalendarz|Timeline / calendar
+Słupki miesięczne|Monthly bars
+Karta ostatniego zdarzenia|Latest event card
+Licznik w miesiącu|Monthly count
+Aktualny miesiąc|Current month
+Licznik łączny|Total count
+Opis licznika łącznego|Total count caption
+Opis sposobu liczenia|Counting method caption
+Nazwa producenta|Publisher name
+Początek osi czasu|Timeline start
+Koniec osi czasu|Timeline end
+Data ostatniej premiery|Latest release date
+Nazwa modelu|Model name
+Odstęp między premierami|Gap between releases
+Własny tekst zastępuje automatycznie zmieniającą się treść na całej rolce.|Custom text replaces the automatically changing content throughout the reel.
+Dzień tygodnia|Day of the week
+Dzień miesiąca|Day of the month
+Miesiąc na słupkach|Month on bars
 `;

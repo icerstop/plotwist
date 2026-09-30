@@ -4,7 +4,7 @@ import {mysteryRole} from './reel-mystery.js';
 import {beginElement,textRect} from './reel-elements.js';
 import {roundFill} from './chart-appearance.js';
 
-export const textStyleOf=(config,role)=>config?.visuals?.design?.text?.[role]||{};
+export const textStyleOf=(config,role)=>config?.visuals?.design?.text?.[`${config._textElement}:${role}`]||config?.visuals?.design?.text?.[role]||{};
 export function textLines(ctx,value,width,manual=false){
  const lines=[];
  for(const paragraph of String(value??'').split(/\r?\n/)){

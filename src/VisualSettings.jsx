@@ -1,3 +1,4 @@
+import {reelCapabilities} from './reel-capabilities.js';
 import {normalizeCopies,updateCopy,copyScope,normalizeCopyHidden,updateCopyHidden} from './reel-copy.js';
 import {normalizeOverlays,normalizeHidden,newOverlay,overlayLimit,reorderOverlay} from './reel-overlays.js';
 import {seriesColor} from './chart-appearance.js';
@@ -63,7 +64,7 @@ export function VisualProvider({children}){
  function duplicateOverlay(id){if(visuals.overlays.length>=overlayLimit)return null;const original=visuals.overlays.find(o=>o.id===id);if(!original)return null;const o={...original,id:crypto.randomUUID(),x:Math.min(95,original.x+3),y:Math.min(95,original.y+3)};setVisuals(v=>{const motion=v.design.motion,track=motion.tracks[`overlay:${id}`];return {...v,overlays:normalizeOverlays([...v.overlays,o]),design:track?normalizeDesign({...v.design,motion:{...motion,tracks:{...motion.tracks,[`overlay:${o.id}`]:track}}}):v.design};});return o.id;}
  function removeOverlay(id){setVisuals(v=>{const tracks={...v.design.motion.tracks};delete tracks[`overlay:${id}`];return {...v,overlays:v.overlays.filter(o=>o.id!==id),design:normalizeDesign({...v.design,motion:{...v.design.motion,tracks}})};});}
  function orderOverlay(id,direction){setVisuals(v=>({...v,overlays:reorderOverlay(v.overlays,id,direction)}));}
- function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
+ function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,text:patch===null?Object.fromEntries(Object.entries(v.design.text).filter(([key])=>key!==id)):{...v.design.text,[id]:{...v.design.text[id.split(':').at(-1)],...v.design.text[id],...patch}}})}));}
  function metricLabel(key,language,text){setVisuals(v=>({...v,design:normalizeDesign({...v.design,metricLabels:{...v.design.metricLabels,[key]:{...v.design.metricLabels[key],[language]:text}}})}));}
  async function restoreComposition(saved){
   if(operation.current)return;
@@ -112,7 +113,7 @@ function LogoEditor(){
  </div>;
 }
 const themeOfLogo=id=>(reelThemes.find(t=>t.id===id)||reelThemes[0]).colors[0];
-export function StyleEditor({children,fontId}){
+export function StyleEditor({children,fontId,config}){
  const v=useVisualStatus(),d=v.visuals.design;
  return <div className="visual-editor design-editor"><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
   <CustomThemes visual={v} fontId={fontId}/>
@@ -131,19 +132,19 @@ export function StyleEditor({children,fontId}){
  <p className="visual-hint">Zmiana czcionki rolki obejmuje wszystkie napisy, także legendę i osie. Osobny krój możesz potem ustawić w zakładce Elementy.</p>
  <FontWeightPicker label="Grubość czcionki rolki" fontId={v.visuals.fontId||fontId} value={d.fontWeight} onChange={fontWeight=>v.design({fontWeight})}/>
  <p className="visual-hint">Ustawienie wspólne. Elementy z własną grubością mają pierwszeństwo.</p>
- <LegendOptions/>
+ {reelCapabilities(config).legendOptions&&<LegendOptions/>}
    <button type="button" className="text-btn visual-reset" onClick={()=>{v.theme('dark');v.design(normalizeDesign());v.logo({type:'none'});}}><RotateCcw size={14}/>Przywróć domyślny styl i układ</button>
 
  </fieldset></div></div>;
 }
-export function LayoutEditor(){
+export function LayoutEditor({config}){
  const v=useVisualStatus(),d=v.visuals.design,[section,setSection]=useState('header'),p=d.positions[section];
  const updatePosition=patch=>v.design({positions:{...d.positions,[section]:{...p,...patch}}});
  return <div className="visual-editor design-editor"><div className="visual-editor-body"><fieldset disabled={!v.ready||v.busy}>
-   <Range label="Szerokość wykresu" value={d.chart.width} min={60} max={100} onChange={width=>v.design({chart:{...d.chart,width}})}/>
+   {reelCapabilities(config).plotDimensions&&<><Range label="Szerokość wykresu" value={d.chart.width} min={60} max={100} onChange={width=>v.design({chart:{...d.chart,width}})}/>
    <Range label="Wysokość wykresu" value={d.chartHeight} min={50} max={100} onChange={chartHeight=>v.design({chartHeight})}/>
   <p className="visual-hint">100% wypełnia dostępne miejsce między nagłówkiem a legendą. Suwak zmienia wysokość obszaru osi, bez zmiany rozmiaru tekstu i skali wartości. Dotyczy linii, obszarów, kolumn i wykresów punktowych.</p>
-  <button type="button" className="text-btn" onClick={()=>v.design({chartHeight:100})}>Dopasuj wysokość do wolnego miejsca</button>
+  <button type="button" className="text-btn" onClick={()=>v.design({chartHeight:100})}>Dopasuj wysokość do wolnego miejsca</button></>}
   <div className="reel-layout-grid" role="group" aria-label="Układ rolki">{reelLayouts.map(l=><button type="button" key={l.id} aria-pressed={d.layout===l.id} className={d.layout===l.id?'selected':''} onClick={()=>v.design({layout:l.id,positions:normalizeDesign().positions})}><span className={`layout-mini ${l.id}`} aria-hidden="true"><i/><b/></span><strong>{l.name}</strong><small>{l.description}</small></button>)}</div>
   <details className="reel-position-editor"><summary>Dopasuj położenie elementów</summary>
    <label className="visual-field">Przesuwana sekcja<select aria-label="Przesuwana sekcja" value={section} onChange={e=>setSection(e.target.value)}><option value="header">Nagłówek i opis</option><option value="content">Wykres i legenda</option></select></label>

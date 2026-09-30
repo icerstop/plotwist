@@ -1,3 +1,4 @@
+import {reelCapabilities} from './reel-capabilities.js';
 import React from 'react';
 import {useVisualStatus,Range,Color} from './VisualSettings.jsx';
 import {chartPalettes,normalizeChart} from './chart-appearance.js';
@@ -6,11 +7,11 @@ import {lineLabelPresets} from './line-labels.js';
 
 function Select({label,value,options,onChange}){return <label className="visual-field">{label}<select aria-label={label} value={value} onChange={e=>onChange(e.target.value)}>{options.map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label>;}
 export function ChartEditor({config}){
- const v=useVisualStatus(),s=v.visuals.design.chart,mode=config.ai?.mode||config.chart||'line',plot=['line','area','bar','records','scatter'].includes(mode),line=['line','area','records'].includes(mode),bars=['bar','ranking'].includes(mode),cards=['cards','duel'].includes(mode)||config.ai?.groupBy==='brand'&&mode==='timeline';
+ const v=useVisualStatus(),s=v.visuals.design.chart,cap=reelCapabilities(config),{mode,plot,line,bars,cards}=cap;
  const patch=p=>v.design({chart:{...s,...p}}),range=(key,label,min,max,suffix='')=><Range label={label} value={s[key]} min={min} max={max} suffix={suffix} onChange={n=>patch({[key]:n})}/>;
  return <div className="visual-editor chart-editor"><fieldset disabled={!v.ready||v.busy}>
   <p className="visual-hint">Styl dopasowuje się do wybranego sposobu prezentacji danych. Typ wykresu wybierzesz w panelu danych.</p>
-  <label className="visual-check"><input type="checkbox" checked={s.scaleCaption} onChange={e=>patch({scaleCaption:e.target.checked})}/>Pokaż podpis zakresu i skali</label>
+  {cap.scaleCaption&&<label className="visual-check"><input type="checkbox" checked={s.scaleCaption} onChange={e=>patch({scaleCaption:e.target.checked})}/>Pokaż podpis zakresu i skali</label>}
   <div className="palette-grid" role="group" aria-label="Paleta wykresu">{chartPalettes.map(p=><button type="button" key={p.id} aria-pressed={s.palette===p.id} className={s.palette===p.id?'selected':''} onClick={()=>patch({palette:p.id})}><span aria-hidden="true">{(p.colors.length?(themeOf(config).dark?p.dark:p.colors):themeOf(config).colors).map((c,i)=><i key={i} style={{background:c}}/>)}</span><b>{p.name}</b></button>)}</div>
   {s.palette!=='original'&&<p className="visual-hint">Paleta zastępuje kolory serii. Wybierz „Kolory z danych i motywu”, aby wrócić do własnych kolorów i kolorów marek.</p>}
   {line&&<details className="appearance-group" open><summary>Linie i wypełnienie</summary>
@@ -19,8 +20,8 @@ export function ChartEditor({config}){
    {range('opacity','Widoczność serii',30,100,'%')}{range('glow','Poświata linii',0,30,' px')}
    {mode==='area'&&<>{range('fillOpacity','Siła wypełnienia',0,65,'%')}<Select label="Wypełnienie obszaru" value={s.fillStyle} options={[["flat","Jednolity kolor"],["fade","Zanikający gradient"]]} onChange={fillStyle=>patch({fillStyle})}/></>}
   </details>}
-  {(bars||cards)&&<details className="appearance-group" open><summary>Słupki i karty</summary>{bars&&range('barWidth',mode==='bar'?'Szerokość słupków':'Grubość słupków',25,95,'%')}{range('radius','Zaokrąglenie narożników',0,32,' px')}</details>}
-  {config.ai&&<details className="appearance-group" open><summary>Nazwy modeli i ustawienia</summary>
+  {(bars||cards)&&<details className="appearance-group" open><summary>Słupki i karty</summary>{bars&&range('barWidth',mode==='bar'||mode==='pulse'?'Szerokość słupków':'Grubość słupków',25,95,'%')}{range('radius','Zaokrąglenie narożników',0,32,' px')}</details>}
+  {cap.modelLabels&&<details className="appearance-group" open><summary>Nazwy modeli i ustawienia</summary>
    <Select label="Opis modelu" value={s.aiLabelStyle} options={[["structured","Model + ustawienia w osobnym wierszu"],["source","Pełna etykieta źródłowa"]]} onChange={aiLabelStyle=>patch({aiLabelStyle})}/>
    {mode==='ranking'&&range('aiRankCount','Maksymalna liczba pozycji',2,6)}
    <p className="visual-hint">Długie opisy zawijają się. „Max Effort” skracamy do „Max”. Ranking może pokazać mniej pozycji, aby zmieścić pełne ustawienia. Układ pozostaje stały przez całą rolkę.</p>
@@ -42,8 +43,8 @@ export function ChartEditor({config}){
    <label className="visual-check"><input type="checkbox" checked={s.axisGrouping} onChange={e=>patch({axisGrouping:e.target.checked})}/>Oddzielaj grupy tysięcy</label>
    <p className="visual-hint">Skala uwzględnia jednostkę danych: 16 000 mln USD to 16 mld USD. Automatyczny skrót pozostaje stały przez całą rolkę. Legenda i etykiety przy liniach zachowują jednostkę danych.</p>
   </details>
-  {(!config.ai||config.ai.groupBy==='brand'&&mode==='records')&&<label className="visual-check"><input type="checkbox" checked={s.legend} onChange={e=>patch({legend:e.target.checked})}/>Pokaż legendę pod wykresem</label>}
-  {(!config.ai&&['line','area'].includes(mode)||config.ai?.groupBy==='brand'&&mode==='records')&&<details className="appearance-group" open><summary>Etykiety przy liniach</summary>
+  {cap.legend&&<label className="visual-check"><input type="checkbox" checked={s.legend} onChange={e=>patch({legend:e.target.checked})}/>Pokaż legendę pod wykresem</label>}
+  {cap.endLabels&&<details className="appearance-group" open><summary>Etykiety przy liniach</summary>
    <label className="visual-check"><input type="checkbox" checked={s.endLabels} onChange={e=>patch({endLabels:e.target.checked})}/>Pokaż etykiety przy końcach linii</label>
    {s.endLabels&&<>
     <Select label="Zawartość etykiety" value={lineLabelPresets.find(p=>Object.entries(p.options).every(([key,value])=>s[key]===value))?.id||'custom'} options={[["custom","Własna kombinacja"],...lineLabelPresets.map(p=>[p.id,p.name])]} onChange={id=>{const preset=lineLabelPresets.find(p=>p.id===id);if(preset)patch(preset.options);}}/>

@@ -22,7 +22,7 @@ export default function CopyEditor({fields,beforeChange,focusRequest}){
   <label><span translate="no">{translate(field.label,uiLanguage)} · {field.language.toUpperCase()}</span>{field.multiline?<textarea {...props} rows={4}/>:<input {...props} type="text"/>}</label>
   <div className="reel-copy-actions"><button type="button" className="text-btn" disabled={!custom} onClick={()=>{beforeChange();v.copy(field.key,null);}}>Przywróć tekst automatyczny</button><span>{value.length}/{COPY_LIMIT}</span></div>
   <small>{field.shared?'Podpis autora jest wspólny dla rolek w tym języku.':'Tekst zapisuje się dla tych danych i języka rolki.'} Puste pole ukrywa tekst.</small>
-  {field.dynamic&&<small>Własny tekst zastępuje zmieniającą się datę na całej rolce.</small>}
+  {field.dynamic&&<small>Własny tekst zastępuje automatycznie zmieniającą się treść na całej rolce.</small>}
   {custom&&<details><summary>Tekst automatyczny</summary><p translate="no">{field.original||'—'}</p></details>}
  </section>;
 }

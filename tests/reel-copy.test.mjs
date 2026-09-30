@@ -12,6 +12,16 @@ function recorder(){
  const canvas={width:1080,height:1920,getContext:()=>ctx};ctx.canvas=canvas;return {canvas,text,stack};
 }
 const base=()=>({duration:12,language:'pl',title:'Original title',subtitle:'Original subtitle',source:'Original source',metricCaption:'Original metric',unit:'years',axisRange:'dynamic',series:[{name:'Polska',countryCode:'POL',points:[{x:2000,y:50},{x:2025,y:80}]}],visuals:{copy:{},design:normalizeDesign({chart:{endLabels:true,endLabelNames:true}})}});
+test('release captions use shared editing and stable dynamic visibility across playback and formats',()=>{
+ for(const mode of ['pulse','calendar'])for(const format of ['9:16','4:5','1:1']){
+  const c=base();c.format=format;c.releases={mode,start:'2026-09-01',end:'2026-09-30',count:'versions',publishers:['openai','anthropic'],rows:[{id:'a',date:'2026-09-01',publisher:'openai',name:'First'},{id:'b',date:'2026-09-29',publisher:'anthropic',name:'Last'}],verifiedAt:'2026-09-30'};
+  const {canvas,text,stack}=recorder();drawReel(canvas,c,1,12);const fields=reelCopyFields(canvas);
+  for(const id of ['release.monthCount','release.month','release.total','release.totalLabel','release.activeDate','release.model','release.gap','release.publisher'])assert.ok(fields.some(f=>f.id===id),id);
+  const total=fields.find(f=>f.id==='release.totalLabel'),gap=fields.find(f=>f.id==='release.gap');c.visuals.copy=updateCopy({},total.key,'My total caption');c.visuals.copyHidden=updateCopyHidden({},gap.visibilityKey,true);
+  for(const p of [.1,.5,1]){text.length=0;drawReel(canvas,c,p,p*12);assert.ok(text.includes('My total caption'));assert.ok(!text.some(t=>t.includes('dni od poprzedniej')));assert.ok(reelCopyFields(canvas).find(f=>f.id==='release.gap').hidden);assert.equal(stack.length,0);}
+  c.visuals.hidden={summary:true};text.length=0;drawReel(canvas,c,1,12);assert.ok(!text.includes('My total caption'));assert.ok(text.includes('Last'));
+ }
+});
 
 test('visibility preserves authored text, restores without data loss and isolates language/data',()=>{
  const c=base(),field=describeCopy(c,'subtitle',c.subtitle);c.visuals.copy=updateCopy({},field.key,'Keep my caption');c.visuals.copyHidden=updateCopyHidden({},field.visibilityKey,true);

@@ -1,10 +1,11 @@
 import {applyElementMotion} from './reel-motion.js';
 import {typingRole} from './reel-typing.js';
 import {mysteryRole} from './reel-mystery.js';
+import {reelElementDefinitions} from './reel-capabilities.js';
 // The renderer publishes geometry, never editor chrome. Export uses identical transforms.
 const frames=new WeakMap();
 const suppressed=new WeakMap();
-export const elementIds=['mark','title','subtitle','metric','content','date','source','signature'];
+export const elementIds=Object.keys(reelElementDefinitions);
 export const identityElement=()=>({x:0,y:0,scale:100,rotation:0});
 export function resetElements(canvas){frames.set(canvas,[]);}
 export const reelElements=canvas=>frames.get(canvas)||[];

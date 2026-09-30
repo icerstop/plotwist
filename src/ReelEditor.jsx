@@ -1,3 +1,4 @@
+import {reelCapabilities,reelElementDefinitions} from './reel-capabilities.js';
 import OverlayControls from './OverlayControls.jsx';
 import {overlayKinds,overlayLimit,overlayName} from './reel-overlays.js';
 import CopyEditor from './CopyEditor.jsx';
@@ -17,7 +18,7 @@ import {useLanguages} from './language-context.js';
 import {translate} from './translations.js';
 import './reel-editor.css';
 
-const names={mark:'Logo rolki',title:'Tytuł',subtitle:'Opis pod tytułem',metric:'Wspólny wskaźnik',content:'Wykres i legenda',date:'Data / rok',source:'Źródła i metodologia',signature:'Podpis autora'};
+
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const angle=v=>((v+180)%360+360)%360-180;
 const snapshot=(v,files={})=>({copy:structuredClone(v.copy||{}),copyHidden:{...v.copyHidden},hidden:{...v.hidden},overlays:structuredClone(v.overlays||[]),design:structuredClone(v.design),stickers:structuredClone(v.stickers),files:Object.fromEntries(v.stickers.filter(s=>files[s.assetId]).map(s=>[s.assetId,files[s.assetId]]))});
@@ -43,6 +44,7 @@ function AlignmentGuides({guides,width,height,scale,language}){
 }
 
 export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,valid,fontControls,playhead=1,onReplay,onSeek}){
+ const capabilities=reelCapabilities(config),names=Object.fromEntries(capabilities.elements.map(e=>[e.id,e.name]));
  const v=useVisualStatus(),{uiLanguage,reelLanguage}=useLanguages(),svg=useRef(),gesture=useRef(),history=useRef([]);
  const [selected,setSelected]=useState('title'),[panel,setPanel]=useState('style'),[regions,setRegions]=useState([]),[viewport,setViewport]=useState(null),[undoCount,setUndoCount]=useState(0),[chartRole,setChartRole]=useState('labels');
  const [motionTarget,setMotionTarget]=useState('title'),[copyFields,setCopyFields]=useState([]),[textFocus,setTextFocus]=useState(0);
@@ -56,15 +58,16 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   const observer=new ResizeObserver(update);observer.observe(el);update();return()=>observer.disconnect();
  },[canvas,config.format,enabled]);
  useEffect(()=>{if(selected?.startsWith('overlay:')&&!v.visuals.overlays.some(o=>`overlay:${o.id}`===selected))setSelected(null);},[selected,v.visuals.overlays]);
+ useEffect(()=>{if(selected&&!selected.includes(':')&&!names[selected])setSelected('content');},[selected,Object.keys(names).join(',')]);
  const overlay=v.visuals.overlays.find(o=>`overlay:${o.id}`===selected),hidden=!!v.visuals.hidden[selected];
  const region=regions.find(r=>r.id===selected),sticker=v.visuals.stickers.find(s=>`sticker:${s.id}`===selected);
- const role=selected==='content'?chartRole:textRoles.some(r=>r.id===selected)?selected:null,t=role?v.visuals.design.text[role]:null;
+ const groupRoles=reelElementDefinitions[selected]?.textRoles,baseRole=groupRoles?(groupRoles.includes(chartRole)?chartRole:groupRoles[0]):selected==='content'?chartRole:textRoles.some(r=>r.id===selected)?selected:null,role=groupRoles?`${selected}:${baseRole}`:baseRole,t=role?(v.visuals.design.text[role]||v.visuals.design.text[baseRole]):null;
  const transform=overlay?{rotation:overlay.rotation,scale:overlay.scale}:sticker?{rotation:sticker.rotation,scale:sticker.size}:v.visuals.design.elements[selected]||identityElement();
  const label=r=>r?.id?.startsWith('overlay:')?overlayName(v.visuals.overlays.find(o=>`overlay:${o.id}`===r.id)||{},reelLanguage):r?.stickerId?v.visuals.stickers.find(s=>s.id===r.stickerId)?.name||'Obrazek / GIF':names[r?.id]||'';
  function remember(){const s=snapshot(v.visuals,v.mediaFiles);if(JSON.stringify(history.current.at(-1))!==JSON.stringify(s)){history.current.push(s);if(history.current.length>40)history.current.shift();}setUndoCount(history.current.length);}
  function undo(){if(v.busy)return;clearGesture();const current=JSON.stringify(snapshot(v.visuals,v.mediaFiles));let previous=history.current.pop();while(previous&&JSON.stringify(previous)===current)previous=history.current.pop();if(previous)v.restoreComposition(previous);setUndoCount(history.current.length);}
  function changeTransform(patch){if(overlay)v.overlay(overlay.id,patch);else if(sticker)v.sticker(sticker.id,{...(patch.scale!==undefined?{size:patch.scale}:{}),...(patch.rotation!==undefined?{rotation:patch.rotation}:{})});else v.element(selected,patch);}
- function selectElement(id){setSelected(id||null);setPanel('elements');onPause();setEnabled(true);}
+ function selectElement(id){setChartRole(reelElementDefinitions[id]?.textRole||'labels');setSelected(id||null);setPanel('elements');onPause();setEnabled(true);}
  function addElement(kind){remember();const id=v.addOverlay(kind);if(id){selectElement(`overlay:${id}`);setTextFocus(n=>n+1);}}
  function removeElement(){if(!selected)return;remember();clearGesture();if(overlay){v.removeOverlay(overlay.id);setSelected(null);}else if(sticker){v.remove(sticker.id);setSelected(null);}else v.hide(selected,true);}
  const layers=[...Object.entries(names).map(([id,name])=>({id,name,visible:!v.visuals.hidden[id]})),...v.visuals.stickers.map(s=>({id:`sticker:${s.id}`,name:s.name,visible:s.visible,sticker:s})),...v.visuals.overlays.map(o=>({id:`overlay:${o.id}`,name:overlayName(o,reelLanguage),visible:o.visible,overlay:o}))];
@@ -74,7 +77,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
  function point(e){const box=svg.current.getBoundingClientRect();return {x:(e.clientX-box.left)/box.width*canvas.current.width,y:(e.clientY-box.top)/box.height*canvas.current.height};}
  function start(e,kind='move'){
   if(e.button!==0)return;const p=point(e),hit=kind==='move'?hitElement(regions,p):region;
-  if(!hit){setSelected(null);return;}e.preventDefault();onPause();setSelected(hit.id);setPanel('elements');remember();
+  if(!hit){setSelected(null);return;}e.preventDefault();onPause();setSelected(hit.id);setChartRole(reelElementDefinitions[hit.id]?.textRole||'labels');setPanel('elements');remember();
   const s=hit.stickerId?v.visuals.stickers.find(s=>s.id===hit.stickerId):null,o=v.visuals.overlays.find(o=>`overlay:${o.id}`===hit.id);
   gesture.current={id:hit.id,kind,start:p,center:hit.center,sticker:s,overlay:o,original:o?{...o}:s?{...s}:{...v.visuals.design.elements[hit.id]},before:snapshot(v.visuals,v.mediaFiles),distance:Math.hypot(p.x-hit.center.x,p.y-hit.center.y),angle:Math.atan2(p.y-hit.center.y,p.x-hit.center.x),pointerId:e.pointerId,pointer:{clientX:e.clientX,clientY:e.clientY},bounds:elementBounds(hit),targets:alignmentTargets(regions,hit.id,canvas.current.width,canvas.current.height),locks:{}};
   setAlignment({active:kind==='move'&&snapping&&!e.altKey,guides:[]});
@@ -109,7 +112,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
  }
  const corners=region?.corners,top=corners?{x:(corners[0].x+corners[1].x)/2,y:(corners[0].y+corners[1].y)/2}:null;
  const unit=viewport?.scale||1,handle=top?{x:top.x+(top.x-region.center.x)/Math.max(1,Math.hypot(top.x-region.center.x,top.y-region.center.y))*26/unit,y:top.y+(top.y-region.center.y)/Math.max(1,Math.hypot(top.x-region.center.x,top.y-region.center.y))*26/unit}:null;
- const color=t?.color||(['labels','subtitle','source'].includes(role)?themeOf(config).muted:themeOf(config).fg);
+ const color=t?.color||(['labels','subtitle','source'].includes(baseRole)?themeOf(config).muted:themeOf(config).fg);
  return <>
   {enabled&&valid&&viewport&&canvas.current&&createPortal(<svg ref={svg} className="reel-edit-overlay" style={{left:viewport.left,top:viewport.top,width:viewport.width,height:viewport.height}} viewBox={`0 0 ${canvas.current.width} ${canvas.current.height}`} tabIndex="0" role="application" aria-label="Edytor elementów rolki" onPointerDown={start} onPointerMove={move} onPointerUp={finish} onPointerCancel={e=>finish(e,true)} onLostPointerCapture={e=>finish(e,true)} onKeyDown={keys} onKeyUp={altKey} onDoubleClick={e=>{const hit=hitElement(regions,point(e));if(hit){selectElement(hit.id);setTextFocus(n=>n+1);}}}>
    {regions.map(r=><polygon key={r.id} className="reel-hit-region" points={r.corners.map(p=>`${p.x},${p.y}`).join(' ')}><title>{translate(label(r),uiLanguage)}</title></polygon>)}
@@ -121,8 +124,8 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
    <div className="reel-edit-toolbar"><button type="button" className={`secondary ${enabled?'is-editing':''}`} aria-pressed={enabled} disabled={!valid} onClick={()=>{onPause();setEnabled(!enabled);if(!enabled)setPanel('elements');}}>{enabled?<Check size={15}/>:<MousePointer2 size={15}/>}<span>{enabled?'Zakończ edycję':'Edytuj na podglądzie'}</span></button>{(enabled||undoCount>0)&&<button type="button" className="icon-btn" aria-label="Cofnij zmianę elementu" disabled={!undoCount} onClick={undo}><Undo2 size={18}/></button>}</div>
    <div className="reel-appearance-tabs" role="tablist" aria-label="Ustawienia wyglądu">{panels.map(([id,name],i)=><button key={id} type="button" role="tab" id={`appearance-tab-${id}`} aria-selected={panel===id} aria-controls={`appearance-panel-${id}`} tabIndex={panel===id?0:-1} onKeyDown={e=>navigateTabs(e,i)} onClick={()=>{setPanel(id);if(id==='motion')setEnabled(false);if(id==='elements'){onPause();setEnabled(true);}}}>{name}</button>)}</div>
    <div className="reel-appearance-content" role="tabpanel" id={`appearance-panel-${panel}`} aria-labelledby={`appearance-tab-${panel}`}>
-    {panel==='style'&&<StyleEditor fontId={config.fontId}>{fontControls}</StyleEditor>}
-    {panel==='layout'&&<LayoutEditor/>}
+    {panel==='style'&&<StyleEditor config={config} fontId={config.fontId}>{fontControls}</StyleEditor>}
+    {panel==='layout'&&<LayoutEditor config={config}/>}
     {panel==='chart'&&<ChartEditor config={config}/>}
     {panel==='motion'&&<MotionEditor config={config} playhead={playhead} onSeek={onSeek} onReplay={onReplay} target={motionTarget} setTarget={setMotionTarget} beforeChange={remember}/>}
     {panel==='media'&&<MediaEditor onSelect={selectElement}/>}
@@ -136,11 +139,11 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
     {hidden&&<p>Element jest usunięty z podglądu i eksportu. Możesz go przywrócić bez utraty tekstu i ustawień.</p>}
     {selected&&selected!=='source'&&<button type="button" className="secondary full" onClick={()=>{setMotionTarget(selected);setPanel('motion');setEnabled(false);}}>Ustaw animację tego elementu</button>}
     {overlay?<OverlayControls item={overlay} config={config} beforeChange={remember} focusRequest={textFocus}/>:selected&&!sticker?<>
-     <CopyEditor fields={copyFields.filter(f=>f.element===selected)} beforeChange={remember} focusRequest={textFocus}/>
-     {selected==='content'&&<label>Tekst wykresu<select aria-label="Tekst wykresu" value={chartRole} onChange={e=>setChartRole(e.target.value)}><option value="labels">Etykiety i osie</option><option value="values">Wartości liczbowe</option></select></label>}
-     {t&&<><FontPicker label="Czcionka elementu" value={t.fontId||''} inheritFontId={config.fontId} onChange={fontId=>{remember();v.textStyle(role,{fontId:fontId||null});}}/><FontWeightPicker label="Grubość czcionki elementu" fontId={t.fontId||config.fontId} value={t.weight} element onChange={weight=>{remember();v.textStyle(role,{weight});}}/><div onFocusCapture={remember} onPointerDownCapture={remember}><Range label="Rozmiar tekstu" value={t.size} min={textRoles.find(r=>r.id===role).min} max={textRoles.find(r=>r.id===role).max} onChange={size=>v.textStyle(role,{size})}/><Color label="Kolor elementu" value={color} onChange={color=>v.textStyle(role,{color})}/></div><button type="button" className="text-btn" onClick={()=>{remember();v.textStyle(role,normalizeDesign().text[role]);}}>Przywróć styl tego tekstu</button>{!['labels','values'].includes(role)&&<TextEffects role={role} config={config} beforeChange={remember}/>}<p>100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p></>}
+     <CopyEditor fields={copyFields.filter(f=>f.element===selected||selected==='content'&&reelElementDefinitions[f.element]?.textRole)} beforeChange={remember} focusRequest={textFocus}/>
+     {(selected==='content'||groupRoles?.length>1)&&<label>Tekst wykresu<select aria-label="Tekst wykresu" value={chartRole} onChange={e=>setChartRole(e.target.value)}><option value="labels">Etykiety i osie</option><option value="values">Wartości liczbowe</option></select></label>}
+     {t&&<><FontPicker label="Czcionka elementu" value={t.fontId||''} inheritFontId={config.fontId} onChange={fontId=>{remember();v.textStyle(role,{fontId:fontId||null});}}/><FontWeightPicker label="Grubość czcionki elementu" fontId={t.fontId||config.fontId} value={t.weight} element onChange={weight=>{remember();v.textStyle(role,{weight});}}/><div onFocusCapture={remember} onPointerDownCapture={remember}><Range label="Rozmiar tekstu" value={t.size} min={textRoles.find(r=>r.id===baseRole).min} max={textRoles.find(r=>r.id===baseRole).max} onChange={size=>v.textStyle(role,{size})}/><Color label="Kolor elementu" value={color} onChange={color=>v.textStyle(role,{color})}/></div><button type="button" className="text-btn" onClick={()=>{remember();v.textStyle(role,groupRoles?null:normalizeDesign().text[role]);}}>Przywróć styl tego tekstu</button>{!['labels','values'].includes(baseRole)&&<TextEffects role={role} config={config} beforeChange={remember}/>}<p>100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p></>}
      <div className="reel-inspector-pair"><label>Skala elementu<input aria-label="Skala elementu" type="number" min={sticker?5:25} max={sticker?100:200} step="1" value={Math.round(transform.scale)} onFocus={remember} onChange={e=>changeTransform({scale:clamp(Number(e.target.value),sticker?5:25,sticker?100:200)})}/></label><label>Obrót elementu<input aria-label="Obrót elementu" type="number" min="-180" max="180" step="1" value={Math.round(transform.rotation)} onFocus={remember} onChange={e=>changeTransform({rotation:clamp(Number(e.target.value),-180,180)})}/></label></div>
-     <button type="button" className="text-btn" onClick={()=>{remember();for(const f of copyFields.filter(f=>f.element===selected)){v.copy(f.key,null);v.hideCopy(f.visibilityKey,false);}if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
+     <button type="button" className="text-btn" onClick={()=>{remember();for(const f of copyFields.filter(f=>f.element===selected||selected==='content'&&reelElementDefinitions[f.element]?.textRole)){v.copy(f.key,null);v.hideCopy(f.visibilityKey,false);}if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,groupRoles?null:normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
     </>:sticker?<StickerControls sticker={sticker} index={v.visuals.stickers.indexOf(sticker)} beforeChange={remember}/>:null}
     <p>Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.</p>
    </fieldset>}

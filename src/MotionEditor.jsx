@@ -1,3 +1,4 @@
+import {reelCapabilities} from './reel-capabilities.js';
 import React,{memo} from 'react';
 import {overlayName} from './reel-overlays.js';
 import {Play,RotateCcw} from 'lucide-react';
@@ -14,20 +15,21 @@ const PresetLibrary=memo(function PresetLibrary({selected,onSelect}){
 });
 export default function MotionEditor({config,playhead,onSeek,onReplay,target,setTarget,beforeChange}){
  const v=useVisualStatus(),{uiLanguage}=useLanguages(),m=v.visuals.design.motion,duration=config.duration||12,mystery=m.mystery.enabled;
- const choices=mystery?[['title','Tytuł']]:[...motionRoles,...v.visuals.stickers.map(s=>[`sticker:${s.id}`,s.name]),...v.visuals.overlays.map(o=>[`overlay:${o.id}`,overlayName(o,uiLanguage)])],id=choices.some(([id])=>id===target)?target:'title',t=m.tracks[id]||m.tracks.stickers;
+ const cap=reelCapabilities(config),available=id=>cap.motionElements.includes(id)&&!v.visuals.hidden[id];
+ const choices=mystery?[['title','Tytuł']]:[...cap.elements.filter(e=>available(e.id)).map(e=>[e.id,e.name]),...v.visuals.stickers.map(s=>[`sticker:${s.id}`,s.name]),...v.visuals.overlays.map(o=>[`overlay:${o.id}`,overlayName(o,uiLanguage)])],id=choices.some(([id])=>id===target)?target:'title',t=m.tracks[id]||m.tracks.stickers;
  const seconds=n=>Math.round(n*duration*100)/100,format=n=>seconds(n).toLocaleString(uiLanguage==='en'?'en-GB':'pl-PL',{maximumFractionDigits:2})+' s';
  const update=patch=>v.design({motion:normalizeMotion({...m,...patch})});
  const track=patch=>update({preset:'custom',tracks:{...m.tracks,[id]:{...t,...patch}}});
  const handlers=React.useRef();handlers.current={beforeChange,design:v.design};
  const selectPreset=React.useCallback(id=>{handlers.current.beforeChange();handlers.current.design({motion:motionPreset(id)});},[]);
  const sequential=m.typing.enabled,stages=typingStages(m.chartStart);
- const rows=mystery?[['title','Tytuł'],['content','Wykres bez opisów'],['data','Animacja danych'],['answer','Odsłonięcie odpowiedzi']]:sequential?[...typingRoles,['data','Animacja danych']]:[['title','Tytuł'],['subtitle','Opis'],['content','Wejście wykresu'],['data','Animacja danych'],['signature','Podpis autora']];
+ const rows=mystery?[['title','Tytuł'],['content','Wykres bez opisów'],['data','Animacja danych'],['answer','Odsłonięcie odpowiedzi']]:sequential?[...typingRoles,['data','Animacja danych']]:[['title','Tytuł'],['subtitle','Opis'],['content','Wejście wykresu'],...cap.elements.filter(e=>e.textRole).map(e=>[e.id,e.name]),['data','Animacja danych'],['signature','Podpis autora']];
  return <div className="visual-editor motion-editor"><fieldset disabled={!v.ready||v.busy}>
   <label className="visual-check motion-enable"><input type="checkbox" checked={m.enabled} onChange={e=>{beforeChange();update({enabled:e.target.checked});}}/>Animacje elementów</label>
   <button type="button" className="secondary full motion-replay" onClick={onReplay}><Play size={15}/>Odtwórz od początku</button>
   <div className={`motion-timeline ${m.enabled?'':'is-disabled'}`} aria-label="Oś czasu animacji">
    <div className="motion-time-header"><span>Przebieg rolki</span><output>{format(playhead)} / {duration} s</output></div>
-   {rows.map(([key,label])=>{const tr=key==='answer'?{effect:'fade',start:m.mystery.answerAt,duration:m.mystery.fade}:sequential?stages[key]:m.tracks[key],start=key==='data'?(m.enabled?m.chartStart:0):m.enabled&&(sequential||tr.effect!=='none')?tr.start:0,length=key==='data'?.9-start:m.enabled&&(sequential||tr.effect!=='none')?tr.duration:0;
+   {rows.filter(([key])=>['data','answer'].includes(key)||key==='source'||available(key)).map(([key,label])=>{const tr=key==='answer'?{effect:'fade',start:m.mystery.answerAt,duration:m.mystery.fade}:sequential?stages[key]:m.tracks[key],start=key==='data'?(m.enabled?m.chartStart:0):m.enabled&&(sequential||tr.effect!=='none')?tr.start:0,length=key==='data'?.9-start:m.enabled&&(sequential||tr.effect!=='none')?tr.duration:0;
     return <button type="button" key={key} className={`motion-time-row ${key==='data'?'is-data':''}`} onClick={()=>onSeek(start+length*.5)} aria-label={`Podgląd etapu: ${label}`}><span>{label}</span><span className="motion-time-track"><i style={{left:`${start*100}%`,width:`${Math.max(length*100,.6)}%`}}/><b style={{left:`${playhead*100}%`}}/></span></button>;
    })}
    <p className="visual-hint">Kliknij etap, aby zobaczyć jego środek. Suwak pod rolką przewija cały film.</p>
