@@ -169,6 +169,10 @@ W panelu Wygląd rolki, w sekcji Styl, dostępnych jest 61 czcionek: 55 dołącz
 
 ## Wiele serii, surowce i logotypy
 
+**Wygląd rolki → Wykres → Liczby na osi** steruje zapisem podziałki: automatycznym, pełnym (w jednostce danych), tysiącami, milionami, miliardami, bilionami lub jawnym zapisem naukowym. Domyślnie liczby nie przechodzą w notację naukową, nawet gdy opis jest długi. Można wybrać liczbę miejsc po przecinku, separatory tysięcy, jednostkę nad wykresem albo skróty przy liczbach i własny podpis osi. Ustawienia zapisują się we wspólnym wyglądzie oraz motywach i działają w zwykłych wykresach oraz osiach AI.
+
+Konwersja uwzględnia rozpoznany przedrostek jednostki źródłowej: 16 000 mln USD = 16 mld USD. Mianowniki, np. USD / mln tokenów, nie są przeliczane jako miliony dolarów. Tryb automatyczny dobiera jeden przedrostek dla całej wybranej historii, także przy animowanej skali rosnącej. Dane, geometria wykresu, legenda i wartości przy liniach pozostają w jednostce źródłowej. Automatyczne opisy zmieniają język wraz z rolką; własny podpis pozostaje dosłowny.
+
 **Wygląd rolki → Wykres → Wartości przy liniach** włącza etykiety bieżącej wartości z flagą kraju lub lokalnym logotypem firmy. Działają dla linii, wypełnienia oraz porównania rekordów marek AI, niezależnie od legendy. Są domyślnie wyłączone; można zmienić rozmiar, włączyć nazwy i wyłączyć ikony. Brak lub powtórzona ikona automatycznie wymaga nazwy. Identyfikacja korzysta z metadanych serii, nie z tekstu edytowanej etykiety.
 
 Etykiety rezerwują miejsce po prawej, układają się według wysokości linii, mają odstępy i kolorowe łączniki. Niski wykres może użyć kilku kolumn. Wartości interpolowane w punkcie animacji są oznaczone `≈`; można przełączyć je na ostatni pomiar. Interpolacja uwzględnia skalę logarytmiczną i serie schodkowe. Luki nie otrzymują wartości, zakończona seria pokazuje datę ostatniego pomiaru. Wyniki AI pozostają dokładnymi wynikami źródłowymi. Podgląd, PNG i eksport klatka po klatce korzystają z tego samego układu. Ustawienia zapisują się również we własnych motywach.

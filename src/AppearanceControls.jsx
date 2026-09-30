@@ -27,6 +27,14 @@ export function ChartEditor({config}){
    <label className="visual-check"><input type="checkbox" checked={s.axisLabels} onChange={e=>patch({axisLabels:e.target.checked})}/>Pokaż opisy osi</label>
    <label className="visual-check"><input type="checkbox" checked={s.plotPanel} onChange={e=>patch({plotPanel:e.target.checked})}/>Kontrastowe tło pola wykresu</label>
   </details>
+  <details className="appearance-group" open><summary>Liczby na osi</summary>
+   <Select label="Zapis liczb na osi" value={s.axisNumbers} options={[["auto","Automatyczny · czytelne liczby"],["full","Pełne liczby · jednostka danych"],["thousand","Tysiące (tys.)"],["million","Miliony (mln)"],["billion","Miliardy (mld)"],["trillion","Biliony (bln)"],["scientific","Zapis naukowy"]]} onChange={axisNumbers=>patch({axisNumbers})}/>
+   <Select label="Miejsca po przecinku na osi" value={s.axisDecimals} options={[["auto","Automatycznie"],...[0,1,2,3,4,6].map(n=>[String(n),String(n)])]} onChange={axisDecimals=>patch({axisDecimals})}/>
+   <Select label="Opis jednostki osi" value={s.axisUnitPosition} options={[["caption","Nad wykresem"],["ticks","Skrót przy liczbach"]]} onChange={axisUnitPosition=>patch({axisUnitPosition})}/>
+   {s.axisUnitPosition==='caption'&&<label className="visual-field">Własny opis osi (opcjonalnie)<input aria-label="Własny opis osi (opcjonalnie)" maxLength={100} value={s.axisUnitLabel} placeholder="Automatyczny opis jednostki" onChange={e=>patch({axisUnitLabel:e.target.value})}/></label>}
+   <label className="visual-check"><input type="checkbox" checked={s.axisGrouping} onChange={e=>patch({axisGrouping:e.target.checked})}/>Oddzielaj grupy tysięcy</label>
+   <p className="visual-hint">Skala uwzględnia jednostkę danych: 16 000 mln USD to 16 mld USD. Automatyczny skrót pozostaje stały przez całą rolkę. Legenda i etykiety przy liniach zachowują jednostkę danych.</p>
+  </details>
   {(!config.ai||config.ai.groupBy==='brand'&&mode==='records')&&<label className="visual-check"><input type="checkbox" checked={s.legend} onChange={e=>patch({legend:e.target.checked})}/>Pokaż legendę pod wykresem</label>}
   {(!config.ai&&['line','area'].includes(mode)||config.ai?.groupBy==='brand'&&mode==='records')&&<details className="appearance-group" open><summary>Wartości przy liniach</summary>
    <label className="visual-check"><input type="checkbox" checked={s.endLabels} onChange={e=>patch({endLabels:e.target.checked})}/>Pokaż etykiety przy końcach linii</label>

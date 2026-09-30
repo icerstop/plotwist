@@ -1,7 +1,8 @@
 import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill,plotGrid} from './chart-appearance.js';
 import {aiBrandMotion,aiModelLabel} from './ai-brand-history.js';
 import {getReelLogo} from './reel-assets.js';
-import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
+import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption} from './chart-scale.js';
+import {axisNumberFormat,drawAxisNumber,drawAxisCaption} from './axis-numbers.js';
 import {clamp,lerp,rankMotion} from './presentation.js';
 import {aiValue} from './ai.js';
 import {themeOf,textSize,textColor,reelTextFont,chartTop} from './reel-design.js';
@@ -52,8 +53,10 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   const legendTop=1615-legendHeight,bottom=appearance.legend?legendTop-97:1575,top=chartTop(config,840,bottom);const [left,baseRight]=plotSides(config,144,962);
   const labelGeometry=appearance.endLabels?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:brands.length,needsNames:!showBrandLogos||appearance.endLabelIcons===false||brands.some(b=>!b.logo)}):null,right=labelGeometry?.right??baseRight;
   const first=history.times[0],last=history.times.at(-1),x=t=>left+(t-first)/(last-first||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top),currentX=x(current);
-  if(caption)wrap(ctx,caption,left,top-25,840,21,1,muted);
-  const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',24));plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const tick of ticks){ctx.textAlign='right';text(formatAxisTick(tick,config.language),left-20,y(tick)+8,118,24,muted);ctx.textAlign='left';}
+  const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',24)),numbers=axisNumberFormat(config,bounds(raw.map(r=>r.score)),ticks);
+  ctx.font=reelTextFont(config,'labels',textSize(config,'labels',28));ctx.fillStyle=textColor(config,'labels',muted);
+  drawAxisCaption(ctx,appearance.axisLabels?numbers.caption:'',caption,left,top-25,840);
+  plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const tick of ticks){ctx.textAlign='right';ctx.font=reelTextFont(config,'labels',Math.min(textSize(config,'labels',24),28));ctx.fillStyle=textColor(config,'labels',muted);drawAxisNumber(ctx,numbers.format(tick),left-20,y(tick)+8,left-30);ctx.textAlign='left';}
   // A step appears at its measurement date. Lines never interpolate future scores.
   ctx.save();ctx.beginPath();ctx.rect(left-4,top-5,right-left+8,bottom-top+10);ctx.clip();
   for(const s of history.series){const visible=s.points.filter(p=>p.time<=current);if(!visible.length)continue;

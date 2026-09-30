@@ -1,5 +1,22 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Liczby na osi|Axis numbers
+Zapis liczb na osi|Axis number format
+Automatyczny · czytelne liczby|Automatic · readable numbers
+Pełne liczby · jednostka danych|Full numbers · source unit
+Tysiące (tys.)|Thousands (k)
+Miliony (mln)|Millions (m)
+Miliardy (mld)|Billions (bn)
+Biliony (bln)|Trillions (tn)
+Zapis naukowy|Scientific notation
+Miejsca po przecinku na osi|Axis decimal places
+Opis jednostki osi|Axis unit placement
+Nad wykresem|Above the chart
+Skrót przy liczbach|Abbreviation beside numbers
+Własny opis osi (opcjonalnie)|Custom axis caption (optional)
+Automatyczny opis jednostki|Automatic unit caption
+Oddzielaj grupy tysięcy|Use thousands separators
+Skala uwzględnia jednostkę danych: 16 000 mln USD to 16 mld USD. Automatyczny skrót pozostaje stały przez całą rolkę. Legenda i etykiety przy liniach zachowują jednostkę danych.|The scale accounts for the source unit: USD 16,000 million is USD 16 billion. The automatic abbreviation stays fixed throughout the reel. Legends and line labels keep the source unit.
 Wartości przy liniach|Values beside lines
 Pokaż etykiety przy końcach linii|Show labels at line ends
 Flagi i logotypy przy wartościach|Flags and logos beside values

@@ -56,7 +56,7 @@ test('preview/export renderer respects both scale options and the chosen reel la
  const drawn=[];const ctx=new Proxy({canvas:{width:1080,height:1920},getTransform:()=>({a:1,b:0,c:0,d:1,e:0,f:0}),measureText:t=>({width:String(t).length*10}),fillText:t=>drawn.push(t),globalAlpha:1},{get:(o,k)=>k in o?o[k]:(...args)=>{for(const v of args)if(typeof v==='number')assert.ok(Number.isFinite(v),`${String(k)} must have finite coordinates`);}});
  const canvas={width:1080,height:1920,getContext:()=>ctx};
  const config=localizeReelConfig({series,chart:'line',title:'Test',subtitle:'Test',source:'Test',unit:'USD',axisRange:'dynamic',axisScale:'log'},'en');
- drawReel(canvas,config,.05,.6);assert.ok(drawn.includes('Expanding range · Log scale'));
+ drawReel(canvas,config,.05,.6);assert.ok(drawn.some(text=>text.endsWith('Expanding range · Log scale')));
  assert.equal(scaleCaption({...config,language:'pl'}),'Zakres rosnący · Skala logarytmiczna');
  for(const chart of ['line','area','bar','ranking','cards'])for(const p of [0,.001,.5,1])drawReel(canvas,{...config,chart},p,p*12);
  const rows=[{id:'a',modelId:'a',model:'A',date:'2020-01-01',score:-10,low:-12,high:-8},{id:'b',modelId:'b',model:'B',date:'2021-01-01',score:100,low:90,high:110}];

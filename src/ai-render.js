@@ -10,7 +10,8 @@ import {reelFont,reelTitleSize,drawSignature} from './reel-style.js';
 import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
 import {crossText} from './series-render.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
-import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
+import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption} from './chart-scale.js';
+import {axisNumberFormat,drawAxisNumber,drawAxisCaption} from './axis-numbers.js';
 import {themeOf,textSize,textColor,setReelText,reelTextFont,textWeight,beginReelSection,chartTop,designOf} from './reel-design.js';
 function typography(font,language,config){
 function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels'){
@@ -93,9 +94,11 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    const motion=aiMotionFrame(rows,progress,duration,transition,timeSeconds),{frames,frame:now,before:old,mix,current}=motion;
    const bottom=1410,top=chartTop(config,815,bottom),axis=aiAxis();const [left,right]=plotSides(config,130,960);
    const start=frames[0].time,end=frames.at(-1).time,x=t=>left+(t-start)/(end-start||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
-   if(caption)wrap(ctx,caption,left,top-22,850,23,1,muted);
+   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25)),numbers=axisNumberFormat(config,bounds(rows.map(r=>r.score)),ticks);
+   setReelText(ctx,config,'labels',28,reelFont(config.fontId),muted);
+   drawAxisCaption(ctx,appearance.axisLabels?numbers.caption:'',caption,left,top-22,850);
    wrap(ctx,`${b.unit} · najwyższy dotąd wynik w filtrze`,76,727,920,30,2,muted);
-   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25));plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';wrap(ctx,formatAxisTick(value,config.language),left-20,y(value)+9,120,25,1,muted);ctx.textAlign='left';}
+   plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';setReelText(ctx,config,'labels',25,reelFont(config.fontId),muted);drawAxisNumber(ctx,numbers.format(value),left-20,y(value)+9,left-30);ctx.textAlign='left';}
    ctx.save();ctx.beginPath();ctx.rect(left-5,top-5,(right-left)*progress+5,bottom-top+10);ctx.clip();lineAppearance(ctx,config,accent);ctx.beginPath();let previous=frames[0].record.score;ctx.moveTo(left,y(previous));
    for(const f of frames.slice(1)){ctx.lineTo(x(f.time),y(previous));ctx.lineTo(x(f.time),y(f.record.score));previous=f.record.score;}ctx.lineTo(right,y(previous));ctx.stroke();ctx.restore();
    if(appearance.axisLabels){wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';}
@@ -112,8 +115,10 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
    const bottom=1450,top=chartTop(config,775,bottom);const [left,right]=plotSides(config,130,960);
    const axis=aiAxis(),min=axis.min,max=axis.max;
    const t0=Date.parse(first.date),t1=Date.parse(last.date);const x=d=>left+(Date.parse(d)-t0)/(t1-t0||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top);
-   if(caption)wrap(ctx,caption,left,top-22,850,23,1,muted);
-   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25));plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';wrap(ctx,formatAxisTick(value,config.language),left-20,y(value)+9,120,25,1,muted);ctx.textAlign='left';}
+   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25)),numbers=axisNumberFormat(config,bounds(rows.map(r=>r.score)),ticks);
+   setReelText(ctx,config,'labels',28,reelFont(config.fontId),muted);
+   drawAxisCaption(ctx,appearance.axisLabels?numbers.caption:'',caption,left,top-22,850);
+   plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(y),color:grid,panel});if(appearance.axisLabels)for(const value of ticks){ctx.textAlign='right';setReelText(ctx,config,'labels',25,reelFont(config.fontId),muted);drawAxisNumber(ctx,numbers.format(value),left-20,y(value)+9,left-30);ctx.textAlign='left';}
    wrap(ctx,b.unit,76,720,920,30,1,muted);
    if(b.baseline){const yy=y(b.baseline.score);ctx.strokeStyle=purple;ctx.setLineDash([10,10]);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(right,yy);ctx.stroke();ctx.setLineDash([]);wrap(ctx,`Punkt odniesienia: ${aiValue(b.baseline.score)}`,left,yy-15,800,26,1,purple);}
    frame.visible.forEach(r=>{const age=(lerp(t0,t1,progress)-Date.parse(r.date))/(t1-t0||1)*duration*.9+Math.max(0,timeSeconds-duration*.9);const alpha=transition&&r.date!==first.date?ease(age/Math.min(transition,duration*.08)):1;ctx.save();ctx.globalAlpha*=alpha;ctx.fillStyle=accent;ctx.save();ctx.globalAlpha*=.48;ctx.beginPath();ctx.arc(x(r.date),y(r.score),7,0,Math.PI*2);ctx.fill();ctx.restore();const lo=r.low??(r.stderr!=null?r.score-r.stderr:null),hi=r.high??(r.stderr!=null?r.score+r.stderr:null);if(lo!=null&&hi!=null){ctx.strokeStyle=grid;ctx.beginPath();ctx.moveTo(x(r.date),y(Math.max(min,lo)));ctx.lineTo(x(r.date),y(Math.min(max,hi)));ctx.stroke();}ctx.restore();});

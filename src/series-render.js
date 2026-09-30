@@ -2,7 +2,8 @@ import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill
 import {timelineDate,observationPeriod} from './observation-date.js';
 import {getReelLogo} from './reel-assets.js';
 import {seriesFrame,lerp,rankMotion} from './presentation.js';
-import {resolveScale,bounds,visibleSeriesBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
+import {resolveScale,bounds,visibleSeriesBounds,createAxis,scaleCaption} from './chart-scale.js';
+import {axisNumberFormat,drawAxisNumber,drawAxisCaption} from './axis-numbers.js';
 import {textSize,textColor,setReelText,reelTextFont} from './reel-design.js';
 import {lineEndpoint,lineLabelGeometry,endpointLabelText,drawLineLabels} from './line-labels.js';
 import {lineLabelsNeedNames} from './series-identity.js';
@@ -34,8 +35,9 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
  // Bars may still be tweening the last observation: keep the axis large enough.
  if(scale.dynamic&&['bar','ranking'].includes(chart))for(const row of before)if(Number.isFinite(row.value)){extent.min=Math.min(extent.min,row.value);extent.max=Math.max(extent.max,row.value);}
  const axis=createAxis(extent,{log:scale.log,dynamic:scale.dynamic,fixedDomain:[minY,maxY]});
- const caption=scaleCaption(config,scale);
- if(caption){setReelText(ctx,config,'labels',23,font,muted);ctx.fillText(caption,chart==='ranking'?78:135,chart==='ranking'?contentTop-22:top-22,860);}
+ const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25)),numbers=axisNumberFormat(config,all.range,ticks);
+ const unitCaption=chartAppearance(config).axisLabels&&['line','area','bar'].includes(chart)?numbers.caption:'',caption=scaleCaption(config,scale);
+ if(unitCaption||caption){setReelText(ctx,config,'labels',unitCaption?28:23,font,muted);drawAxisCaption(ctx,unitCaption,caption,chart==='ranking'?78:135,chart==='ranking'?contentTop-22:top-22,860);}
  const appearance=chartAppearance(config),color=i=>seriesColor(config,i,series[i].customColor?series[i].color:colors[i%colors.length]);
  const text=v=>v===null?(config.language==='en'?'no data':'brak danych'):`${formatValue(v)} ${unit}`;
  const rowText=row=>(row.value!==null&&row.point?.valueQualifier?(row.point.valueQualifier==='approximately'?'≈ ':row.point.valueQualifier+' '):'')+text(row.value)+(config.showObservationDates&&row.value!==null&&row.point?.date?` · ${observationPeriod(row.point,config.language)}`:'');
@@ -62,10 +64,9 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
   return current;
  }
  ctx.lineWidth=2;setReelText(ctx,config,'labels',25,font,muted);
- const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',25));
  plotGrid(ctx,config,{left,right,top,bottom,ys:ticks.map(py),color:grid,panel});
  if(appearance.axisLabels){
-  for(const val of ticks){const y=py(val);ctx.fillStyle=textColor(config,'labels',muted);ctx.textAlign='right';let label=formatAxisTick(val,config.language);if(ctx.measureText(label).width>left-30)label=val.toLocaleString(config.language==='en'?'en-GB':'pl-PL',{notation:'scientific',maximumSignificantDigits:2});ctx.fillText(label,left-22,y+8,left-30);}
+  for(const val of ticks){const y=py(val);ctx.fillStyle=textColor(config,'labels',muted);ctx.textAlign='right';drawAxisNumber(ctx,numbers.format(val),left-22,y+8,left-30);}
   ctx.textAlign='center';ctx.fillStyle=textColor(config,'labels',muted);
   if(chart==='bar')ctx.fillText(xType==='date'?timelineDate(current,config):String(Math.floor(current)),(left+right)/2,bottom+47);
   else for(let i=0;i<appearance.xTicks;i++){const x=minX+(maxX-minX)*i/(appearance.xTicks-1);ctx.fillText(xType==='date'?timelineDate(Math.round(x),config):String(Math.round(x)),px(x),bottom+47,Math.min(180,(right-left)/(appearance.xTicks-1)));}
