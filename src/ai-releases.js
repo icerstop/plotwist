@@ -31,6 +31,16 @@ export function releaseFrame(rows,start,end,progress,mode='versions'){
  const first=releaseDay(start),last=releaseDay(end),current=first+Math.max(0,Math.min(1,progress))*(last-first),date=releaseDate(current),visible=rows.filter(r=>r.date<=date),dates=[...new Set(visible.map(r=>r.date))].sort(),latest=dates.at(-1),previous=dates.at(-2);
  return {current,date,visible,latest:visible.filter(r=>r.date===latest),total:releaseCount(visible,mode),monthTotal:releaseCount(visible.filter(r=>r.date.startsWith(date.slice(0,7))),mode),gap:previous?(releaseDay(latest)-releaseDay(previous)):null,since:latest?Math.floor(current-releaseDay(latest)):null};
 }
+// Dates stop at the range boundary; transient effects keep ageing during the
+// final hold. Use the same deterministic seconds for seeking and video export.
+export function releaseEventAge(date,start,end,progress,dataDuration,dataTime){
+ const span=releaseDay(end)-releaseDay(start),fraction=span?(releaseDay(date)-releaseDay(start))/span:0;
+ return (Math.max(0,Math.min(1,progress))-fraction)*dataDuration*.9+Math.max(0,dataTime-dataDuration*.9);
+}
+export function releaseEndingState(time,duration){
+ const fadeDuration=Math.min(.65,duration*.06),elapsed=Math.max(0,time-duration*.9),p=Math.min(1,elapsed/fadeDuration);
+ return {pulseDuration:fadeDuration,cursorOpacity:1-p*p*(3-2*p)};
+}
 export function releaseCsv(rows){
  const keys=['date','publisher','name','category','availability','sourceUrl','notes','verifiedAt','id'];
  const cell=s=>'"'+String(s??'').replaceAll('"','""')+'"';return '\uFEFF'+[keys,...rows.map(r=>keys.map(k=>r[k]))].map(row=>row.map(cell).join(',')).join('\r\n');

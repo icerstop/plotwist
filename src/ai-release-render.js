@@ -1,4 +1,4 @@
-import {RELEASE_PUBLISHERS,releaseDay,releaseDate,releaseFrame,releaseCount,groupReleases,releaseMonths} from './ai-releases.js';
+import {RELEASE_PUBLISHERS,releaseDay,releaseDate,releaseFrame,releaseCount,groupReleases,releaseMonths,releaseEventAge,releaseEndingState} from './ai-releases.js';
 import {aiFrameLayout} from './ai-layout.js';
 import {reelMotionFrame} from './reel-motion.js';
 import {themeOf,textSize,setReelText,beginReelSection,designOf} from './reel-design.js';
@@ -14,6 +14,8 @@ const clamp=n=>Math.max(0,Math.min(1,n));
 export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  const motion=reelMotionFrame(initial,progress,timeSeconds),layout=aiFrameLayout(initial.format),{height,start,end,textScale}=layout;
  const config={...motion.config,_aiTextScale:textScale},r=config.releases,frame=releaseFrame(r.rows,r.start,r.end,motion.progress,r.count);
+ const ending=releaseEndingState(timeSeconds,initial.duration||24);
+ const eventAge=date=>config.editorPreview?Infinity:releaseEventAge(date,r.start,r.end,motion.progress,config.duration||24,motion.dataTime);
  if(canvas.width!==1080||canvas.height!==height){canvas.width=1080;canvas.height=height;}
  const ctx=canvas.getContext('2d'),theme=themeOf(config),{fg,muted,grid,panel,bg,dark}=theme;
  const en=config.language==='en',t=(pl,eng)=>en?eng:pl,locale=en?'en-GB':'pl-PL',font=reelFont(config.fontId);
@@ -63,10 +65,10 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
    line(left,yy,right,yy);line(left,yy,x(frame.current),yy,p.color,3);
    for(const group of groups.filter(g=>g.publisher===p.id)){
     const px=x(releaseDay(group.date));dot(px,yy,p.color,6+Math.min(3,group.models.length));
-    const age=(frame.current-releaseDay(group.date))/(b-a||1)*(config.duration||24);if(age<.65){ctx.save();ctx.globalAlpha*=1-age/.65;ctx.strokeStyle=p.color;ctx.lineWidth=3;ctx.beginPath();ctx.arc(px,yy,10+30*age/.65,0,Math.PI*2);ctx.stroke();ctx.restore();}
+    const age=eventAge(group.date),life=ending.pulseDuration;if(age>=0&&age<life){const p=age/life;ctx.save();ctx.globalAlpha*=(1-p)**2;ctx.strokeStyle=p.color;ctx.lineWidth=3;ctx.beginPath();ctx.arc(px,yy,10+30*p,0,Math.PI*2);ctx.stroke();ctx.restore();}
    }
   });
-  line(x(frame.current),vt-10,x(frame.current),vt+vh*.65,fg,2);
+  ctx.save();ctx.globalAlpha*=config.editorPreview?0:ending.cursorOpacity;line(x(frame.current),vt-10,x(frame.current),vt+vh*.65,fg,2);ctx.restore();
   text(dateLabel(r.start),left,vt+vh*.77,340,23,'labels',muted);ctx.textAlign='right';text(dateLabel(r.end),right,vt+vh*.77,340,23,'labels',muted);ctx.textAlign='left';
   // Monthly bars use a fixed maximum for the whole selection. Future bars stay blank.
   const months=releaseMonths(r.rows,r.start,r.end,r.count),max=Math.max(1,...months.map(m=>m.count)),step=924/months.length,barBase=vb+10;
@@ -78,7 +80,7 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  const activeDate=frame.latest[0]?.date,titleY=cardTop+textSize(config,'labels',28)+16;
  text(activeDate?dateLabel(activeDate):t('Czekamy na pierwszą premierę…','Waiting for the first release…'),98,titleY,880,28,'labels',muted);
  const rows=frame.latest.slice(0,4),rowStep=Math.min(64,(cardBottom-titleY-50)/Math.max(3,rows.length));
- const age=activeDate?(frame.current-releaseDay(activeDate))/(releaseDay(r.end)-releaseDay(r.start)||1)*(config.duration||24):1,enter=motion.progress>=1||r.start===r.end?1:clamp(age/.22);
+ const age=activeDate?eventAge(activeDate):1,enter=clamp(age/.22);
  ctx.save();ctx.globalAlpha*=enter;ctx.translate(0,12*(1-enter));
  rows.forEach((item,i)=>{const p=publishers.find(p=>p.id===item.publisher),yy=titleY+22+(i+.5)*rowStep;logo(p,98,yy-20,36);text(item.name,150,yy+8,820,rows.length>3?30:35,'labels',fg);});ctx.restore();
  const gap=frame.gap===null?t('Pierwsza data w filtrze','First date in selection'):`${frame.gap} ${t('dni od poprzedniej daty premier','days since the preceding launch date')}`;

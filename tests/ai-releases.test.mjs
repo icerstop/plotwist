@@ -1,8 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateReleases,selectReleases,groupReleases,releaseCount,releaseFrame,releaseMonths,releaseDay,releaseDate,releaseCsv} from '../src/ai-releases.js';
+import {validateReleases,selectReleases,groupReleases,releaseCount,releaseFrame,releaseMonths,releaseDay,releaseDate,releaseCsv,releaseEventAge,releaseEndingState} from '../src/ai-releases.js';
+import {reelMotionFrame,motionPreset} from '../src/reel-motion.js';
 const data=JSON.parse(readFileSync(new URL('../public/ai/releases.json',import.meta.url))),rows=data.rows;
+test('last-day release effects finish before the last exported frame, with and without an intro',()=>{
+ for(const duration of [6,12,24,60])for(const preset of [null,'soft','typing-retro'])for(const start of ['2024-01-01','2026-09-29']){
+  const config={duration,visuals:{design:{motion:preset?motionPreset(preset):undefined}}},end='2026-09-29';
+  const at=time=>{const m=reelMotionFrame(config,Math.min(time/(duration*.9),1),time);return releaseEventAge(end,start,end,m.progress,m.config.duration,m.dataTime);};
+  if(start!==end)assert.ok(Math.abs(at(duration*.9))<1e-10);
+  assert.ok(Math.abs(at(duration*.9+.1)-at(duration*.9)-.1)<1e-10);
+  const final=duration-1/30,ending=releaseEndingState(final,duration);
+  assert.ok(at(final)>ending.pulseDuration);assert.ok(at(final)>.22);assert.equal(ending.cursorOpacity,0);
+  assert.ok(releaseEndingState(duration*.9+.1,duration).cursorOpacity>0);
+ }
+});
 test('release catalogue has unique, sorted, source-linked dates within its declared scope',()=>{
  assert.equal(validateReleases(data),true);assert.equal(data.coverage.complete,false);
  assert.throws(()=>validateReleases({...data,rows:[rows[0],rows[0]]}));
