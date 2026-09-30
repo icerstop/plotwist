@@ -71,7 +71,7 @@ const join=(a,b)=>pair(`${a.pl} · ${b.pl}`,`${a.en} · ${b.en}`);
 const singleTopics=new Set(['battery','chips','nvidia','inflation','internet-speed','dna-cost']);
 
 export function storyLabelParts(s){
- let metric=metrics.get(s.metric),subject=country(s.entity),key=metric?`${s.topicId}|${s.metric}|${s.unitKey}`:null,full;
+ let metric=s.metricLabels||metrics.get(s.metric),subject=country(s.entity),key=metric?`${s.topicId}|${s.metric}|${s.unitKey}`:null,full;
  if(s.topicId==='storage'){
   subject={Memory:pair('Pamięć RAM','RAM'),Flash:pair('Pamięć flash','Flash memory'),Disk:pair('Dyski HDD','HDD'), 'Solid state':pair('Dyski SSD','SSD')}[s.metric];
   metric=pair('Najniższy koszt terabajta','Lowest cost per terabyte');key=`storage|cost-per-tb|${s.unitKey}`;

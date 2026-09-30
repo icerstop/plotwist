@@ -1,6 +1,6 @@
 import {countries} from './catalog.js';
 export function buildSeries(snapshot,selected,start,end){
- return selected.map((country,index)=>({countryCode:country,name:countries[country]||country,color:index===0?'#bcf34a':'#b18aff',points:Array.from({length:end-start+1},(_,i)=>{const year=start+i;const row=snapshot?.rows.find(r=>r.country===country&&r.year===year);return {x:year,y:row?.value??null};})}));
+ return selected.map((country,index)=>({countryCode:country,name:countries[country]||country,color:['#bcf34a','#b18aff','#2694be','#e48b28','#d95376','#648178'][index%6],points:Array.from({length:end-start+1},(_,i)=>{const year=start+i;const row=snapshot?.rows.find(r=>r.country===country&&r.year===year);return {x:year,y:row?.value??null};})}));
 }
 export function coffeeSeries(daily=5,coffee=10,rate=7,years=10){
  const dailyRate=(1+rate/100)**(1/365)-1;
@@ -21,15 +21,16 @@ export function parseCsv(text){
  if(series.some(s=>s.points.filter(p=>p.y!==null).length<2))throw new Error('Każda seria potrzebuje co najmniej 2 wartości.');return series;
 }
 export function downloadBlob(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}
-export async function loadWorldBank(code,signal){
+export async function loadWorldBank(code,signal,{onPage}={}){
  if(!/^[A-Z0-9_.]{3,80}$/.test(code))throw new Error('Wpisz prawidłowy kod wskaźnika, np. IT.NET.USER.ZS.');
- const url=`https://api.worldbank.org/v2/country/${Object.keys(countries).join(';')}/indicator/${code}?format=json&per_page=1000`;
+ const url=`https://api.worldbank.org/v2/country/all/indicator/${code}?format=json&source=2&per_page=20000`;
  const rows=[];let pages=1,metadata,name;const requests=[];
  for(let page=1;page<=pages;page++){
   const request=`${url}&page=${page}`;const res=await fetch(request,{signal});if(!res.ok)throw new Error(`World Bank: HTTP ${res.status}`);const data=await res.json();
   if(!Array.isArray(data[1])||!Number.isInteger(Number(data[0]?.pages)))throw new Error('Brak danych dla tego kodu.');
   if(page===1){metadata=data[0];pages=Number(metadata.pages);name=data[1][0]?.indicator.value;}
-  requests.push(request);rows.push(...data[1].map(r=>({country:r.countryiso3code,year:Number(r.date),value:r.value})));
+  if(onPage)await onPage(data,request,page);
+  requests.push(request);rows.push(...data[1].map(r=>({country:r.countryiso3code||`WB:${r.country.id}`,year:Number(r.date),value:r.value,...(r.obs_status?{status:r.obs_status}:{}),...(r.footnote?{footnote:r.footnote}:{})})));
  }
  if(!rows.some(r=>Number.isFinite(r.value)))throw new Error('Brak opublikowanych wartości dla wybranych krajów.');
  if(rows.length!==Number(metadata.total)||new Set(rows.map(r=>`${r.country}:${r.year}`)).size!==rows.length)throw new Error('Niepełna lub powielona odpowiedź World Bank. Spróbuj ponownie.');

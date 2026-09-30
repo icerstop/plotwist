@@ -1,0 +1,2272 @@
+[
+  {
+    "id": "AFG",
+    "iso2": "AF",
+    "pl": "Afganistan",
+    "en": "Afghanistan",
+    "sourceName": "Afghanistan",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "ALB",
+    "iso2": "AL",
+    "pl": "Albania",
+    "en": "Albania",
+    "sourceName": "Albania",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "DZA",
+    "iso2": "DZ",
+    "pl": "Algieria",
+    "en": "Algeria",
+    "sourceName": "Algeria",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "AND",
+    "iso2": "AD",
+    "pl": "Andora",
+    "en": "Andorra",
+    "sourceName": "Andorra",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "AGO",
+    "iso2": "AO",
+    "pl": "Angola",
+    "en": "Angola",
+    "sourceName": "Angola",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "ATG",
+    "iso2": "AG",
+    "pl": "Antigua i Barbuda",
+    "en": "Antigua & Barbuda",
+    "sourceName": "Antigua and Barbuda",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SAU",
+    "iso2": "SA",
+    "pl": "Arabia Saudyjska",
+    "en": "Saudi Arabia",
+    "sourceName": "Saudi Arabia",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "ARG",
+    "iso2": "AR",
+    "pl": "Argentyna",
+    "en": "Argentina",
+    "sourceName": "Argentina",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "ARM",
+    "iso2": "AM",
+    "pl": "Armenia",
+    "en": "Armenia",
+    "sourceName": "Armenia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "ABW",
+    "iso2": "AW",
+    "pl": "Aruba",
+    "en": "Aruba",
+    "sourceName": "Aruba",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "AUS",
+    "iso2": "AU",
+    "pl": "Australia",
+    "en": "Australia",
+    "sourceName": "Australia",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "AUT",
+    "iso2": "AT",
+    "pl": "Austria",
+    "en": "Austria",
+    "sourceName": "Austria",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "AZE",
+    "iso2": "AZ",
+    "pl": "Azerbejdżan",
+    "en": "Azerbaijan",
+    "sourceName": "Azerbaijan",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "BHS",
+    "iso2": "BS",
+    "pl": "Bahamy",
+    "en": "Bahamas",
+    "sourceName": "Bahamas, The",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "BHR",
+    "iso2": "BH",
+    "pl": "Bahrajn",
+    "en": "Bahrain",
+    "sourceName": "Bahrain",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "BGD",
+    "iso2": "BD",
+    "pl": "Bangladesz",
+    "en": "Bangladesh",
+    "sourceName": "Bangladesh",
+    "aggregate": false,
+    "region": "SAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "BRB",
+    "iso2": "BB",
+    "pl": "Barbados",
+    "en": "Barbados",
+    "sourceName": "Barbados",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "BEL",
+    "iso2": "BE",
+    "pl": "Belgia",
+    "en": "Belgium",
+    "sourceName": "Belgium",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "BLZ",
+    "iso2": "BZ",
+    "pl": "Belize",
+    "en": "Belize",
+    "sourceName": "Belize",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "BEN",
+    "iso2": "BJ",
+    "pl": "Benin",
+    "en": "Benin",
+    "sourceName": "Benin",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "BMU",
+    "iso2": "BM",
+    "pl": "Bermudy",
+    "en": "Bermuda",
+    "sourceName": "Bermuda",
+    "aggregate": false,
+    "region": "NAC",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "BTN",
+    "iso2": "BT",
+    "pl": "Bhutan",
+    "en": "Bhutan",
+    "sourceName": "Bhutan",
+    "aggregate": false,
+    "region": "SAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "BLR",
+    "iso2": "BY",
+    "pl": "Białoruś",
+    "en": "Belarus",
+    "sourceName": "Belarus",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "BOL",
+    "iso2": "BO",
+    "pl": "Boliwia",
+    "en": "Bolivia",
+    "sourceName": "Bolivia",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "BIH",
+    "iso2": "BA",
+    "pl": "Bośnia i Hercegowina",
+    "en": "Bosnia & Herzegovina",
+    "sourceName": "Bosnia and Herzegovina",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "BWA",
+    "iso2": "BW",
+    "pl": "Botswana",
+    "en": "Botswana",
+    "sourceName": "Botswana",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "BRA",
+    "iso2": "BR",
+    "pl": "Brazylia",
+    "en": "Brazil",
+    "sourceName": "Brazil",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "BRN",
+    "iso2": "BN",
+    "pl": "Brunei",
+    "en": "Brunei",
+    "sourceName": "Brunei Darussalam",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "VGB",
+    "iso2": "VG",
+    "pl": "Brytyjskie Wyspy Dziewicze",
+    "en": "British Virgin Islands",
+    "sourceName": "British Virgin Islands",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "BGR",
+    "iso2": "BG",
+    "pl": "Bułgaria",
+    "en": "Bulgaria",
+    "sourceName": "Bulgaria",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "BFA",
+    "iso2": "BF",
+    "pl": "Burkina Faso",
+    "en": "Burkina Faso",
+    "sourceName": "Burkina Faso",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "BDI",
+    "iso2": "BI",
+    "pl": "Burundi",
+    "en": "Burundi",
+    "sourceName": "Burundi",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "CHL",
+    "iso2": "CL",
+    "pl": "Chile",
+    "en": "Chile",
+    "sourceName": "Chile",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "CHN",
+    "iso2": "CN",
+    "pl": "Chiny",
+    "en": "China",
+    "sourceName": "China",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "HRV",
+    "iso2": "HR",
+    "pl": "Chorwacja",
+    "en": "Croatia",
+    "sourceName": "Croatia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "CIV",
+    "iso2": "CI",
+    "pl": "Côte d’Ivoire",
+    "en": "Côte d’Ivoire",
+    "sourceName": "Cote d'Ivoire",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "CUW",
+    "iso2": "CW",
+    "pl": "Curaçao",
+    "en": "Curaçao",
+    "sourceName": "Curacao",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "CYP",
+    "iso2": "CY",
+    "pl": "Cypr",
+    "en": "Cyprus",
+    "sourceName": "Cyprus",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "TCD",
+    "iso2": "TD",
+    "pl": "Czad",
+    "en": "Chad",
+    "sourceName": "Chad",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "MNE",
+    "iso2": "ME",
+    "pl": "Czarnogóra",
+    "en": "Montenegro",
+    "sourceName": "Montenegro",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "CZE",
+    "iso2": "CZ",
+    "pl": "Czechy",
+    "en": "Czechia",
+    "sourceName": "Czechia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "DNK",
+    "iso2": "DK",
+    "pl": "Dania",
+    "en": "Denmark",
+    "sourceName": "Denmark",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "COD",
+    "iso2": "CD",
+    "pl": "Demokratyczna Republika Konga",
+    "en": "Congo - Kinshasa",
+    "sourceName": "Congo, Dem. Rep.",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "DMA",
+    "iso2": "DM",
+    "pl": "Dominika",
+    "en": "Dominica",
+    "sourceName": "Dominica",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "DOM",
+    "iso2": "DO",
+    "pl": "Dominikana",
+    "en": "Dominican Republic",
+    "sourceName": "Dominican Republic",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "DJI",
+    "iso2": "DJ",
+    "pl": "Dżibuti",
+    "en": "Djibouti",
+    "sourceName": "Djibouti",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "EGY",
+    "iso2": "EG",
+    "pl": "Egipt",
+    "en": "Egypt",
+    "sourceName": "Egypt, Arab Rep.",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "ECU",
+    "iso2": "EC",
+    "pl": "Ekwador",
+    "en": "Ecuador",
+    "sourceName": "Ecuador",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "ERI",
+    "iso2": "ER",
+    "pl": "Erytrea",
+    "en": "Eritrea",
+    "sourceName": "Eritrea",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "EST",
+    "iso2": "EE",
+    "pl": "Estonia",
+    "en": "Estonia",
+    "sourceName": "Estonia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SWZ",
+    "iso2": "SZ",
+    "pl": "Eswatini",
+    "en": "Eswatini",
+    "sourceName": "Eswatini",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "ETH",
+    "iso2": "ET",
+    "pl": "Etiopia",
+    "en": "Ethiopia",
+    "sourceName": "Ethiopia",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "FJI",
+    "iso2": "FJ",
+    "pl": "Fidżi",
+    "en": "Fiji",
+    "sourceName": "Fiji",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "PHL",
+    "iso2": "PH",
+    "pl": "Filipiny",
+    "en": "Philippines",
+    "sourceName": "Philippines",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "FIN",
+    "iso2": "FI",
+    "pl": "Finlandia",
+    "en": "Finland",
+    "sourceName": "Finland",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "FRA",
+    "iso2": "FR",
+    "pl": "Francja",
+    "en": "France",
+    "sourceName": "France",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "GAB",
+    "iso2": "GA",
+    "pl": "Gabon",
+    "en": "Gabon",
+    "sourceName": "Gabon",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "GMB",
+    "iso2": "GM",
+    "pl": "Gambia",
+    "en": "Gambia",
+    "sourceName": "Gambia, The",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "GHA",
+    "iso2": "GH",
+    "pl": "Ghana",
+    "en": "Ghana",
+    "sourceName": "Ghana",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "GIB",
+    "iso2": "GI",
+    "pl": "Gibraltar",
+    "en": "Gibraltar",
+    "sourceName": "Gibraltar",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "GRC",
+    "iso2": "GR",
+    "pl": "Grecja",
+    "en": "Greece",
+    "sourceName": "Greece",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "GRD",
+    "iso2": "GD",
+    "pl": "Grenada",
+    "en": "Grenada",
+    "sourceName": "Grenada",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "GRL",
+    "iso2": "GL",
+    "pl": "Grenlandia",
+    "en": "Greenland",
+    "sourceName": "Greenland",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "GEO",
+    "iso2": "GE",
+    "pl": "Gruzja",
+    "en": "Georgia",
+    "sourceName": "Georgia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "GUM",
+    "iso2": "GU",
+    "pl": "Guam",
+    "en": "Guam",
+    "sourceName": "Guam",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "GUY",
+    "iso2": "GY",
+    "pl": "Gujana",
+    "en": "Guyana",
+    "sourceName": "Guyana",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "GTM",
+    "iso2": "GT",
+    "pl": "Gwatemala",
+    "en": "Guatemala",
+    "sourceName": "Guatemala",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "GIN",
+    "iso2": "GN",
+    "pl": "Gwinea",
+    "en": "Guinea",
+    "sourceName": "Guinea",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "GNB",
+    "iso2": "GW",
+    "pl": "Gwinea Bissau",
+    "en": "Guinea-Bissau",
+    "sourceName": "Guinea-Bissau",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "GNQ",
+    "iso2": "GQ",
+    "pl": "Gwinea Równikowa",
+    "en": "Equatorial Guinea",
+    "sourceName": "Equatorial Guinea",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "HTI",
+    "iso2": "HT",
+    "pl": "Haiti",
+    "en": "Haiti",
+    "sourceName": "Haiti",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "ESP",
+    "iso2": "ES",
+    "pl": "Hiszpania",
+    "en": "Spain",
+    "sourceName": "Spain",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "NLD",
+    "iso2": "NL",
+    "pl": "Holandia",
+    "en": "Netherlands",
+    "sourceName": "Netherlands",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "HND",
+    "iso2": "HN",
+    "pl": "Honduras",
+    "en": "Honduras",
+    "sourceName": "Honduras",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "IND",
+    "iso2": "IN",
+    "pl": "Indie",
+    "en": "India",
+    "sourceName": "India",
+    "aggregate": false,
+    "region": "SAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "IDN",
+    "iso2": "ID",
+    "pl": "Indonezja",
+    "en": "Indonesia",
+    "sourceName": "Indonesia",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "IRQ",
+    "iso2": "IQ",
+    "pl": "Irak",
+    "en": "Iraq",
+    "sourceName": "Iraq",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "IRN",
+    "iso2": "IR",
+    "pl": "Iran",
+    "en": "Iran",
+    "sourceName": "Iran, Islamic Rep.",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "IRL",
+    "iso2": "IE",
+    "pl": "Irlandia",
+    "en": "Ireland",
+    "sourceName": "Ireland",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "ISL",
+    "iso2": "IS",
+    "pl": "Islandia",
+    "en": "Iceland",
+    "sourceName": "Iceland",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "ISR",
+    "iso2": "IL",
+    "pl": "Izrael",
+    "en": "Israel",
+    "sourceName": "Israel",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "JAM",
+    "iso2": "JM",
+    "pl": "Jamajka",
+    "en": "Jamaica",
+    "sourceName": "Jamaica",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "JPN",
+    "iso2": "JP",
+    "pl": "Japonia",
+    "en": "Japan",
+    "sourceName": "Japan",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "YEM",
+    "iso2": "YE",
+    "pl": "Jemen",
+    "en": "Yemen",
+    "sourceName": "Yemen, Rep.",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "JOR",
+    "iso2": "JO",
+    "pl": "Jordania",
+    "en": "Jordan",
+    "sourceName": "Jordan",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "CYM",
+    "iso2": "KY",
+    "pl": "Kajmany",
+    "en": "Cayman Islands",
+    "sourceName": "Cayman Islands",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "KHM",
+    "iso2": "KH",
+    "pl": "Kambodża",
+    "en": "Cambodia",
+    "sourceName": "Cambodia",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "CMR",
+    "iso2": "CM",
+    "pl": "Kamerun",
+    "en": "Cameroon",
+    "sourceName": "Cameroon",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "CAN",
+    "iso2": "CA",
+    "pl": "Kanada",
+    "en": "Canada",
+    "sourceName": "Canada",
+    "aggregate": false,
+    "region": "NAC",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "QAT",
+    "iso2": "QA",
+    "pl": "Katar",
+    "en": "Qatar",
+    "sourceName": "Qatar",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "KAZ",
+    "iso2": "KZ",
+    "pl": "Kazachstan",
+    "en": "Kazakhstan",
+    "sourceName": "Kazakhstan",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "KEN",
+    "iso2": "KE",
+    "pl": "Kenia",
+    "en": "Kenya",
+    "sourceName": "Kenya",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "KGZ",
+    "iso2": "KG",
+    "pl": "Kirgistan",
+    "en": "Kyrgyzstan",
+    "sourceName": "Kyrgyz Republic",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "KIR",
+    "iso2": "KI",
+    "pl": "Kiribati",
+    "en": "Kiribati",
+    "sourceName": "Kiribati",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "COL",
+    "iso2": "CO",
+    "pl": "Kolumbia",
+    "en": "Colombia",
+    "sourceName": "Colombia",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "COM",
+    "iso2": "KM",
+    "pl": "Komory",
+    "en": "Comoros",
+    "sourceName": "Comoros",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "COG",
+    "iso2": "CG",
+    "pl": "Kongo",
+    "en": "Congo - Brazzaville",
+    "sourceName": "Congo, Rep.",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "KOR",
+    "iso2": "KR",
+    "pl": "Korea Południowa",
+    "en": "South Korea",
+    "sourceName": "Korea, Rep.",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "PRK",
+    "iso2": "KP",
+    "pl": "Korea Północna",
+    "en": "North Korea",
+    "sourceName": "Korea, Dem. People's Rep.",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "XKX",
+    "iso2": "XK",
+    "pl": "Kosowo",
+    "en": "Kosovo",
+    "sourceName": "Kosovo",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "CRI",
+    "iso2": "CR",
+    "pl": "Kostaryka",
+    "en": "Costa Rica",
+    "sourceName": "Costa Rica",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "CUB",
+    "iso2": "CU",
+    "pl": "Kuba",
+    "en": "Cuba",
+    "sourceName": "Cuba",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "KWT",
+    "iso2": "KW",
+    "pl": "Kuwejt",
+    "en": "Kuwait",
+    "sourceName": "Kuwait",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "LAO",
+    "iso2": "LA",
+    "pl": "Laos",
+    "en": "Laos",
+    "sourceName": "Lao PDR",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "LSO",
+    "iso2": "LS",
+    "pl": "Lesotho",
+    "en": "Lesotho",
+    "sourceName": "Lesotho",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "LBN",
+    "iso2": "LB",
+    "pl": "Liban",
+    "en": "Lebanon",
+    "sourceName": "Lebanon",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "LBR",
+    "iso2": "LR",
+    "pl": "Liberia",
+    "en": "Liberia",
+    "sourceName": "Liberia",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "LBY",
+    "iso2": "LY",
+    "pl": "Libia",
+    "en": "Libya",
+    "sourceName": "Libya",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "LIE",
+    "iso2": "LI",
+    "pl": "Liechtenstein",
+    "en": "Liechtenstein",
+    "sourceName": "Liechtenstein",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "LTU",
+    "iso2": "LT",
+    "pl": "Litwa",
+    "en": "Lithuania",
+    "sourceName": "Lithuania",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "LUX",
+    "iso2": "LU",
+    "pl": "Luksemburg",
+    "en": "Luxembourg",
+    "sourceName": "Luxembourg",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "LVA",
+    "iso2": "LV",
+    "pl": "Łotwa",
+    "en": "Latvia",
+    "sourceName": "Latvia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "MKD",
+    "iso2": "MK",
+    "pl": "Macedonia Północna",
+    "en": "North Macedonia",
+    "sourceName": "North Macedonia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "MDG",
+    "iso2": "MG",
+    "pl": "Madagaskar",
+    "en": "Madagascar",
+    "sourceName": "Madagascar",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "MWI",
+    "iso2": "MW",
+    "pl": "Malawi",
+    "en": "Malawi",
+    "sourceName": "Malawi",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "MDV",
+    "iso2": "MV",
+    "pl": "Malediwy",
+    "en": "Maldives",
+    "sourceName": "Maldives",
+    "aggregate": false,
+    "region": "SAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "MYS",
+    "iso2": "MY",
+    "pl": "Malezja",
+    "en": "Malaysia",
+    "sourceName": "Malaysia",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "MLI",
+    "iso2": "ML",
+    "pl": "Mali",
+    "en": "Mali",
+    "sourceName": "Mali",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "MLT",
+    "iso2": "MT",
+    "pl": "Malta",
+    "en": "Malta",
+    "sourceName": "Malta",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "MNP",
+    "iso2": "MP",
+    "pl": "Mariany Północne",
+    "en": "Northern Mariana Islands",
+    "sourceName": "Northern Mariana Islands",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "MAR",
+    "iso2": "MA",
+    "pl": "Maroko",
+    "en": "Morocco",
+    "sourceName": "Morocco",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "MRT",
+    "iso2": "MR",
+    "pl": "Mauretania",
+    "en": "Mauritania",
+    "sourceName": "Mauritania",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "MUS",
+    "iso2": "MU",
+    "pl": "Mauritius",
+    "en": "Mauritius",
+    "sourceName": "Mauritius",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "MEX",
+    "iso2": "MX",
+    "pl": "Meksyk",
+    "en": "Mexico",
+    "sourceName": "Mexico",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "FSM",
+    "iso2": "FM",
+    "pl": "Mikronezja",
+    "en": "Micronesia",
+    "sourceName": "Micronesia, Fed. Sts.",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "MMR",
+    "iso2": "MM",
+    "pl": "Mjanma (Birma)",
+    "en": "Myanmar (Burma)",
+    "sourceName": "Myanmar",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "MDA",
+    "iso2": "MD",
+    "pl": "Mołdawia",
+    "en": "Moldova",
+    "sourceName": "Moldova",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "MCO",
+    "iso2": "MC",
+    "pl": "Monako",
+    "en": "Monaco",
+    "sourceName": "Monaco",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "MNG",
+    "iso2": "MN",
+    "pl": "Mongolia",
+    "en": "Mongolia",
+    "sourceName": "Mongolia",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "MOZ",
+    "iso2": "MZ",
+    "pl": "Mozambik",
+    "en": "Mozambique",
+    "sourceName": "Mozambique",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "NAM",
+    "iso2": "NA",
+    "pl": "Namibia",
+    "en": "Namibia",
+    "sourceName": "Namibia",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "NRU",
+    "iso2": "NR",
+    "pl": "Nauru",
+    "en": "Nauru",
+    "sourceName": "Naoero",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "NPL",
+    "iso2": "NP",
+    "pl": "Nepal",
+    "en": "Nepal",
+    "sourceName": "Nepal",
+    "aggregate": false,
+    "region": "SAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "DEU",
+    "iso2": "DE",
+    "pl": "Niemcy",
+    "en": "Germany",
+    "sourceName": "Germany",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "NER",
+    "iso2": "NE",
+    "pl": "Niger",
+    "en": "Niger",
+    "sourceName": "Niger",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "NGA",
+    "iso2": "NG",
+    "pl": "Nigeria",
+    "en": "Nigeria",
+    "sourceName": "Nigeria",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "NIC",
+    "iso2": "NI",
+    "pl": "Nikaragua",
+    "en": "Nicaragua",
+    "sourceName": "Nicaragua",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "NOR",
+    "iso2": "NO",
+    "pl": "Norwegia",
+    "en": "Norway",
+    "sourceName": "Norway",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "NCL",
+    "iso2": "NC",
+    "pl": "Nowa Kaledonia",
+    "en": "New Caledonia",
+    "sourceName": "New Caledonia",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "NZL",
+    "iso2": "NZ",
+    "pl": "Nowa Zelandia",
+    "en": "New Zealand",
+    "sourceName": "New Zealand",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "OMN",
+    "iso2": "OM",
+    "pl": "Oman",
+    "en": "Oman",
+    "sourceName": "Oman",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "PAK",
+    "iso2": "PK",
+    "pl": "Pakistan",
+    "en": "Pakistan",
+    "sourceName": "Pakistan",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "PLW",
+    "iso2": "PW",
+    "pl": "Palau",
+    "en": "Palau",
+    "sourceName": "Palau",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "PAN",
+    "iso2": "PA",
+    "pl": "Panama",
+    "en": "Panama",
+    "sourceName": "Panama",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "PNG",
+    "iso2": "PG",
+    "pl": "Papua-Nowa Gwinea",
+    "en": "Papua New Guinea",
+    "sourceName": "Papua New Guinea",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "PRY",
+    "iso2": "PY",
+    "pl": "Paragwaj",
+    "en": "Paraguay",
+    "sourceName": "Paraguay",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "PER",
+    "iso2": "PE",
+    "pl": "Peru",
+    "en": "Peru",
+    "sourceName": "Peru",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "PYF",
+    "iso2": "PF",
+    "pl": "Polinezja Francuska",
+    "en": "French Polynesia",
+    "sourceName": "French Polynesia",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "POL",
+    "iso2": "PL",
+    "pl": "Polska",
+    "en": "Poland",
+    "sourceName": "Poland",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "PRI",
+    "iso2": "PR",
+    "pl": "Portoryko",
+    "en": "Puerto Rico",
+    "sourceName": "Puerto Rico (US)",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "PRT",
+    "iso2": "PT",
+    "pl": "Portugalia",
+    "en": "Portugal",
+    "sourceName": "Portugal",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "ZAF",
+    "iso2": "ZA",
+    "pl": "Republika Południowej Afryki",
+    "en": "South Africa",
+    "sourceName": "South Africa",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "CAF",
+    "iso2": "CF",
+    "pl": "Republika Środkowoafrykańska",
+    "en": "Central African Republic",
+    "sourceName": "Central African Republic",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "CPV",
+    "iso2": "CV",
+    "pl": "Republika Zielonego Przylądka",
+    "en": "Cape Verde",
+    "sourceName": "Cabo Verde",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "RUS",
+    "iso2": "RU",
+    "pl": "Rosja",
+    "en": "Russia",
+    "sourceName": "Russian Federation",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "ROU",
+    "iso2": "RO",
+    "pl": "Rumunia",
+    "en": "Romania",
+    "sourceName": "Romania",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "RWA",
+    "iso2": "RW",
+    "pl": "Rwanda",
+    "en": "Rwanda",
+    "sourceName": "Rwanda",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "KNA",
+    "iso2": "KN",
+    "pl": "Saint Kitts i Nevis",
+    "en": "St. Kitts & Nevis",
+    "sourceName": "St. Kitts and Nevis",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "LCA",
+    "iso2": "LC",
+    "pl": "Saint Lucia",
+    "en": "St. Lucia",
+    "sourceName": "St. Lucia",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "VCT",
+    "iso2": "VC",
+    "pl": "Saint Vincent i Grenadyny",
+    "en": "St. Vincent & Grenadines",
+    "sourceName": "St. Vincent and the Grenadines",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "MAF",
+    "iso2": "MF",
+    "pl": "Saint-Martin",
+    "en": "St. Martin",
+    "sourceName": "St. Martin (French part)",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SLV",
+    "iso2": "SV",
+    "pl": "Salwador",
+    "en": "El Salvador",
+    "sourceName": "El Salvador",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "WSM",
+    "iso2": "WS",
+    "pl": "Samoa",
+    "en": "Samoa",
+    "sourceName": "Samoa",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "ASM",
+    "iso2": "AS",
+    "pl": "Samoa Amerykańskie",
+    "en": "American Samoa",
+    "sourceName": "American Samoa",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SMR",
+    "iso2": "SM",
+    "pl": "San Marino",
+    "en": "San Marino",
+    "sourceName": "San Marino",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SEN",
+    "iso2": "SN",
+    "pl": "Senegal",
+    "en": "Senegal",
+    "sourceName": "Senegal",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "SRB",
+    "iso2": "RS",
+    "pl": "Serbia",
+    "en": "Serbia",
+    "sourceName": "Serbia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "SYC",
+    "iso2": "SC",
+    "pl": "Seszele",
+    "en": "Seychelles",
+    "sourceName": "Seychelles",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SLE",
+    "iso2": "SL",
+    "pl": "Sierra Leone",
+    "en": "Sierra Leone",
+    "sourceName": "Sierra Leone",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "SGP",
+    "iso2": "SG",
+    "pl": "Singapur",
+    "en": "Singapore",
+    "sourceName": "Singapore",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SXM",
+    "iso2": "SX",
+    "pl": "Sint Maarten",
+    "en": "Sint Maarten",
+    "sourceName": "Sint Maarten (Dutch part)",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SVK",
+    "iso2": "SK",
+    "pl": "Słowacja",
+    "en": "Slovakia",
+    "sourceName": "Slovak Republic",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SVN",
+    "iso2": "SI",
+    "pl": "Słowenia",
+    "en": "Slovenia",
+    "sourceName": "Slovenia",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SOM",
+    "iso2": "SO",
+    "pl": "Somalia",
+    "en": "Somalia",
+    "sourceName": "Somalia, Fed. Rep.",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "HKG",
+    "iso2": "HK",
+    "pl": "SRA Hongkong (Chiny)",
+    "en": "Hong Kong SAR China",
+    "sourceName": "Hong Kong SAR, China",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "MAC",
+    "iso2": "MO",
+    "pl": "SRA Makau (Chiny)",
+    "en": "Macao SAR China",
+    "sourceName": "Macao SAR, China",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "LKA",
+    "iso2": "LK",
+    "pl": "Sri Lanka",
+    "en": "Sri Lanka",
+    "sourceName": "Sri Lanka",
+    "aggregate": false,
+    "region": "SAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "USA",
+    "iso2": "US",
+    "pl": "Stany Zjednoczone",
+    "en": "United States",
+    "sourceName": "United States",
+    "aggregate": false,
+    "region": "NAC",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SDN",
+    "iso2": "SD",
+    "pl": "Sudan",
+    "en": "Sudan",
+    "sourceName": "Sudan",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "SSD",
+    "iso2": "SS",
+    "pl": "Sudan Południowy",
+    "en": "South Sudan",
+    "sourceName": "South Sudan",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "SUR",
+    "iso2": "SR",
+    "pl": "Surinam",
+    "en": "Suriname",
+    "sourceName": "Suriname",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "SYR",
+    "iso2": "SY",
+    "pl": "Syria",
+    "en": "Syria",
+    "sourceName": "Syrian Arab Republic",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "CHE",
+    "iso2": "CH",
+    "pl": "Szwajcaria",
+    "en": "Switzerland",
+    "sourceName": "Switzerland",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SWE",
+    "iso2": "SE",
+    "pl": "Szwecja",
+    "en": "Sweden",
+    "sourceName": "Sweden",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "TJK",
+    "iso2": "TJ",
+    "pl": "Tadżykistan",
+    "en": "Tajikistan",
+    "sourceName": "Tajikistan",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "THA",
+    "iso2": "TH",
+    "pl": "Tajlandia",
+    "en": "Thailand",
+    "sourceName": "Thailand",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "TZA",
+    "iso2": "TZ",
+    "pl": "Tanzania",
+    "en": "Tanzania",
+    "sourceName": "Tanzania",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "PSE",
+    "iso2": "PS",
+    "pl": "Terytoria Palestyńskie",
+    "en": "Palestinian Territories",
+    "sourceName": "West Bank and Gaza",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "TLS",
+    "iso2": "TL",
+    "pl": "Timor Wschodni",
+    "en": "Timor-Leste",
+    "sourceName": "Timor-Leste",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "TGO",
+    "iso2": "TG",
+    "pl": "Togo",
+    "en": "Togo",
+    "sourceName": "Togo",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "TON",
+    "iso2": "TO",
+    "pl": "Tonga",
+    "en": "Tonga",
+    "sourceName": "Tonga",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "TTO",
+    "iso2": "TT",
+    "pl": "Trynidad i Tobago",
+    "en": "Trinidad & Tobago",
+    "sourceName": "Trinidad and Tobago",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "TUN",
+    "iso2": "TN",
+    "pl": "Tunezja",
+    "en": "Tunisia",
+    "sourceName": "Tunisia",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "TUR",
+    "iso2": "TR",
+    "pl": "Turcja",
+    "en": "Türkiye",
+    "sourceName": "Turkiye",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "TKM",
+    "iso2": "TM",
+    "pl": "Turkmenistan",
+    "en": "Turkmenistan",
+    "sourceName": "Turkmenistan",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "TCA",
+    "iso2": "TC",
+    "pl": "Turks i Caicos",
+    "en": "Turks & Caicos Islands",
+    "sourceName": "Turks and Caicos Islands",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "TUV",
+    "iso2": "TV",
+    "pl": "Tuvalu",
+    "en": "Tuvalu",
+    "sourceName": "Tuvalu",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "UGA",
+    "iso2": "UG",
+    "pl": "Uganda",
+    "en": "Uganda",
+    "sourceName": "Uganda",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LIC"
+  },
+  {
+    "id": "UKR",
+    "iso2": "UA",
+    "pl": "Ukraina",
+    "en": "Ukraine",
+    "sourceName": "Ukraine",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "URY",
+    "iso2": "UY",
+    "pl": "Urugwaj",
+    "en": "Uruguay",
+    "sourceName": "Uruguay",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "UZB",
+    "iso2": "UZ",
+    "pl": "Uzbekistan",
+    "en": "Uzbekistan",
+    "sourceName": "Uzbekistan",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "VUT",
+    "iso2": "VU",
+    "pl": "Vanuatu",
+    "en": "Vanuatu",
+    "sourceName": "Vanuatu",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "VEN",
+    "iso2": "VE",
+    "pl": "Wenezuela",
+    "en": "Venezuela",
+    "sourceName": "Venezuela, RB",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "HUN",
+    "iso2": "HU",
+    "pl": "Węgry",
+    "en": "Hungary",
+    "sourceName": "Hungary",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "GBR",
+    "iso2": "GB",
+    "pl": "Wielka Brytania",
+    "en": "United Kingdom",
+    "sourceName": "United Kingdom",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "VNM",
+    "iso2": "VN",
+    "pl": "Wietnam",
+    "en": "Vietnam",
+    "sourceName": "Viet Nam",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "ITA",
+    "iso2": "IT",
+    "pl": "Włochy",
+    "en": "Italy",
+    "sourceName": "Italy",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "IMN",
+    "iso2": "IM",
+    "pl": "Wyspa Man",
+    "en": "Isle of Man",
+    "sourceName": "Isle of Man",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "VIR",
+    "iso2": "VI",
+    "pl": "Wyspy Dziewicze Stanów Zjednoczonych",
+    "en": "U.S. Virgin Islands",
+    "sourceName": "Virgin Islands (U.S.)",
+    "aggregate": false,
+    "region": "LCN",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "MHL",
+    "iso2": "MH",
+    "pl": "Wyspy Marshalla",
+    "en": "Marshall Islands",
+    "sourceName": "Marshall Islands",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "UMC"
+  },
+  {
+    "id": "CHI",
+    "iso2": "JG",
+    "pl": "Wyspy Normandzkie",
+    "en": "Channel Islands",
+    "sourceName": "Channel Islands",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "FRO",
+    "iso2": "FO",
+    "pl": "Wyspy Owcze",
+    "en": "Faroe Islands",
+    "sourceName": "Faroe Islands",
+    "aggregate": false,
+    "region": "ECS",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SLB",
+    "iso2": "SB",
+    "pl": "Wyspy Salomona",
+    "en": "Solomon Islands",
+    "sourceName": "Solomon Islands",
+    "aggregate": false,
+    "region": "EAS",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "STP",
+    "iso2": "ST",
+    "pl": "Wyspy Świętego Tomasza i Książęca",
+    "en": "São Tomé & Príncipe",
+    "sourceName": "Sao Tome and Principe",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "ZMB",
+    "iso2": "ZM",
+    "pl": "Zambia",
+    "en": "Zambia",
+    "sourceName": "Zambia",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "ZWE",
+    "iso2": "ZW",
+    "pl": "Zimbabwe",
+    "en": "Zimbabwe",
+    "sourceName": "Zimbabwe",
+    "aggregate": false,
+    "region": "SSF",
+    "incomeLevel": "LMC"
+  },
+  {
+    "id": "ARE",
+    "iso2": "AE",
+    "pl": "Zjednoczone Emiraty Arabskie",
+    "en": "United Arab Emirates",
+    "sourceName": "United Arab Emirates",
+    "aggregate": false,
+    "region": "MEA",
+    "incomeLevel": "HIC"
+  },
+  {
+    "id": "SSF",
+    "iso2": "ZG",
+    "pl": "Afryka Subsaharyjska",
+    "en": "Sub-Saharan Africa",
+    "sourceName": "Sub-Saharan Africa ",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "LCN",
+    "iso2": "ZJ",
+    "pl": "Ameryka Łacińska i Karaiby",
+    "en": "Latin America & Caribbean",
+    "sourceName": "Latin America & Caribbean ",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "NAC",
+    "iso2": "XU",
+    "pl": "Ameryka Północna",
+    "en": "North America",
+    "sourceName": "North America",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "SAS",
+    "iso2": "8S",
+    "pl": "Azja Południowa",
+    "en": "South Asia",
+    "sourceName": "South Asia",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "EAS",
+    "iso2": "Z4",
+    "pl": "Azja Wschodnia i Pacyfik",
+    "en": "East Asia & Pacific",
+    "sourceName": "East Asia & Pacific",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "MEA",
+    "iso2": "ZQ",
+    "pl": "Bliski Wschód, Afryka Północna, Afganistan i Pakistan",
+    "en": "Middle East, North Africa, Afghanistan & Pakistan",
+    "sourceName": "Middle East, North Africa, Afghanistan & Pakistan",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "ECS",
+    "iso2": "Z7",
+    "pl": "Europa i Azja Centralna",
+    "en": "Europe & Central Asia",
+    "sourceName": "Europe & Central Asia",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "OED",
+    "iso2": "OE",
+    "pl": "OECD",
+    "en": "OECD members",
+    "sourceName": "OECD members",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "WLD",
+    "iso2": "1W",
+    "pl": "Świat",
+    "en": "World",
+    "sourceName": "World",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  },
+  {
+    "id": "EUU",
+    "iso2": "EU",
+    "pl": "Unia Europejska",
+    "en": "European Union",
+    "sourceName": "European Union",
+    "aggregate": true,
+    "region": "aggregates",
+    "incomeLevel": "NA"
+  }
+]

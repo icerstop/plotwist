@@ -15,13 +15,15 @@ known.set('Rest of World',{pl:'Reszta świata',en:'Rest of World'});
 known.set('European Union (27)',{pl:'Unia Europejska (27)',en:'European Union (27)'});
 known.set('European Union (28)',{pl:'Unia Europejska (28)',en:'European Union (28)'});
 const groups={EAS:['Azja Wschodnia i Pacyfik','East Asia & Pacific'],ECS:['Europa i Azja Centralna','Europe & Central Asia'],LCN:['Ameryka Łacińska i Karaiby','Latin America & Caribbean'],MEA:['Bliski Wschód, Afryka Północna, Afganistan i Pakistan','Middle East, North Africa, Afghanistan & Pakistan'],NAC:['Ameryka Północna','North America'],SAS:['Azja Południowa','South Asia'],SSF:['Afryka Subsaharyjska','Sub-Saharan Africa'],WLD:['Świat','World']};
+for(const c of read('src/world-bank-countries.json'))for(const key of [c.id,c.pl,c.en,c.sourceName])known.set(key,{pl:c.pl,en:c.en});
+for(const [en,pl] of Object.entries({'Czechoslovakia':'Czechosłowacja','USSR':'ZSRR','Yugoslavia':'Jugosławia','Sudan (former)':'Sudan (dawne granice)','Western Europe (Maddison)':'Europa Zachodnia (Maddison)','Eastern Europe (Maddison)':'Europa Wschodnia (Maddison)','East Asia (Maddison)':'Azja Wschodnia (Maddison)','Latin America (Maddison)':'Ameryka Łacińska (Maddison)','Western offshoots (Maddison)':'Gospodarki osadnicze Zachodu (Maddison)','South and South East Asia (Maddison)':'Azja Południowa i Południowo-Wschodnia (Maddison)','Middle East and North Africa (Maddison)':'Bliski Wschód i Afryka Północna (Maddison)','Sub Saharan Africa (Maddison)':'Afryka Subsaharyjska (Maddison)'}))known.set(en,{pl,en});
 for(const [code,[pl,en]] of Object.entries(groups))known.set(code,{pl,en});
 for(const r of wb){
  const id=r.countryiso3code,code=r.country.id;
  if(!known.has(id)&&/^[A-Z]{2}$/.test(code)&&en.of(code))known.set(id,{pl:pl.of(code),en:en.of(code)});
  if(known.has(id))known.set(r.country.value,known.get(id));
 }
-const geographic=new Set(['solar','ev','work','patents',...manifest.topics.filter(t=>t.id.includes('.')).map(t=>t.id)]);
+const geographic=new Set(['solar','ev','work','patents','maddison-gdp',...manifest.topics.filter(t=>t.id.includes('.')).map(t=>t.id)]);
 const result={},missing=new Set();
 for(const s of manifest.series.filter(s=>geographic.has(s.topicId))){
  const value=known.get(s.entity);if(!value){missing.add(s.entity);continue;}

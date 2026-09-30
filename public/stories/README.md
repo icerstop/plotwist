@@ -1,6 +1,7 @@
 # Plotwist — biblioteka historii
 
 Snapshot źródeł, nie bieżący feed. manifest.json opisuje serie, źródła i ograniczenia każdego tematu.
+Pełny all-observations.csv jest w archiwum ZIP; pojedyncze tematy mają osobne CSV i JSON.
 CSV ma format długi: jeden wiersz = seria × okres; pusta wartość oznacza brak danych, nigdy zero.
 Daty są rosnące. date_precision i period zachowują dokładność źródła. Roczne daty 31 grudnia i kotwice fiskalne służą porządkowaniu, nie oznaczają pomiaru dziennego.
 Nie sumuj stanów, procentów i przepływów. Nie mieszaj USD o różnych latach cenowych, MAU/WAU ani BEV/BEV+PHEV.

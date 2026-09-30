@@ -1,83 +1,344 @@
 {
-  "builtAt": "2026-09-30T11:24:18.873303+00:00",
-  "topics": 31,
-  "series": 1111,
-  "observations": 42001,
-  "missingCells": 15802,
+  "builtAt": "2026-09-30T15:43:28.224590+00:00",
+  "topics": 60,
+  "series": 8795,
+  "observations": 405839,
+  "missingCells": 168946,
   "duplicateDates": 0,
   "nonFiniteValues": 0,
   "coverage": [
     {
       "id": "IT.NET.USER.ZS",
       "status": "ready",
-      "series": 12,
-      "observations": 404,
+      "series": 221,
+      "observations": 6392,
       "start": "1990-12-31",
       "end": "2025-12-31",
-      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+      "limitations": "Udział osób korzystających z internetu. Źródło pierwotne: ITU, przez World Bank. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
     },
     {
       "id": "NY.GDP.PCAP.KD",
       "status": "ready",
-      "series": 12,
-      "observations": 732,
+      "series": 223,
+      "observations": 12193,
       "start": "1960-12-31",
       "end": "2025-12-31",
-      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+      "limitations": "Ceny stałe usuwają wpływ inflacji USD. To nie jest PKB według parytetu siły nabywczej ani miara zarobków. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
     },
     {
       "id": "SP.DYN.LE00.IN",
       "status": "ready",
-      "series": 12,
-      "observations": 780,
+      "series": 227,
+      "observations": 14721,
       "start": "1960-12-31",
       "end": "2024-12-31",
-      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+      "limitations": "Oczekiwana długość życia, nie średni wiek zmarłych. Różnice nie dowodzą wpływu jednej przyczyny. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
     },
     {
       "id": "IT.CEL.SETS.P2",
       "status": "ready",
-      "series": 12,
-      "observations": 625,
+      "series": 224,
+      "observations": 11120,
       "start": "1960-12-31",
       "end": "2025-12-31",
-      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+      "limitations": "Aktywne abonamenty i karty prepaid, nie unikalni użytkownicy. Wartość może przekroczyć 100. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
     },
     {
       "id": "GB.XPD.RSDV.GD.ZS",
       "status": "ready",
-      "series": 12,
-      "observations": 327,
+      "series": 166,
+      "observations": 2687,
       "start": "1996-12-31",
-      "end": "2023-12-31",
-      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+      "end": "2024-12-31",
+      "limitations": "Nakłady B+R w relacji do PKB. Dane nie obejmują wszystkich lat; luki pozostają widoczne. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
     },
     {
       "id": "EG.ELC.ACCS.ZS",
       "status": "ready",
-      "series": 12,
-      "observations": 399,
+      "series": 226,
+      "observations": 7058,
       "start": "1990-12-31",
       "end": "2024-12-31",
-      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+      "limitations": "Dostęp do prądu nie oznacza niezawodnej dostawy ani jej przystępnej ceny. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
     },
     {
       "id": "SP.URB.TOTL.IN.ZS",
       "status": "ready",
-      "series": 12,
-      "observations": 792,
+      "series": 227,
+      "observations": 14982,
       "start": "1960-12-31",
       "end": "2025-12-31",
-      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+      "limitations": "Definicje obszarów miejskich różnią się między krajami. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
     },
     {
       "id": "NE.EXP.GNFS.ZS",
       "status": "ready",
-      "series": 12,
-      "observations": 672,
+      "series": 204,
+      "observations": 9599,
       "start": "1960-12-31",
       "end": "2025-12-31",
-      "limitations": "Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano."
+      "limitations": "Eksport brutto względem PKB; może przekraczać 100%. Nie jest to udział krajowej wartości dodanej. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SP.POP.TOTL",
+      "status": "ready",
+      "series": 227,
+      "observations": 14952,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Ludność w połowie roku według źródła; nie suma urodzeń. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NY.GDP.MKTP.KD",
+      "status": "ready",
+      "series": 223,
+      "observations": 12193,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "PKB całej gospodarki w cenach stałych 2015. Różna liczba mieszkańców ma wpływ na wielkość gospodarki. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NY.GDP.PCAP.CD",
+      "status": "ready",
+      "series": 224,
+      "observations": 12424,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Nominalne USD zależą od inflacji i kursów walut; do długich porównań użyj cen stałych lub PPP. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NY.GDP.PCAP.PP.KD",
+      "status": "ready",
+      "series": 209,
+      "observations": 7337,
+      "start": "1990-12-31",
+      "end": "2025-12-31",
+      "limitations": "Stałe dolary międzynarodowe z 2021 r. PPP uwzględnia różnice poziomu cen. Nie łącz poziomów z Maddisonem (ceny 2011). Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NY.GDP.MKTP.KD.ZG",
+      "status": "ready",
+      "series": 224,
+      "observations": 12058,
+      "start": "1961-12-31",
+      "end": "2025-12-31",
+      "limitations": "Roczna zmiana realnego PKB całej gospodarki, nie skumulowany wzrost ani wzrost płac. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "FP.CPI.TOTL.ZG",
+      "status": "ready",
+      "series": 203,
+      "observations": 9678,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Roczna zmiana CPI, nie poziom cen. Ujemna wartość oznacza deflację. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SL.UEM.TOTL.ZS",
+      "status": "ready",
+      "series": 197,
+      "observations": 6881,
+      "start": "1991-12-31",
+      "end": "2025-12-31",
+      "limitations": "Modelowana estymacja ILO. Nie jest krajową stopą bezrobocia rejestrowanego. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SP.DYN.TFRT.IN",
+      "status": "ready",
+      "series": 227,
+      "observations": 14723,
+      "start": "1960-12-31",
+      "end": "2024-12-31",
+      "limitations": "Okresowy współczynnik dzietności; nie faktyczna liczba dzieci danej kohorty kobiet. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SP.DYN.IMRT.IN",
+      "status": "ready",
+      "series": 206,
+      "observations": 12180,
+      "start": "1960-12-31",
+      "end": "2024-12-31",
+      "limitations": "Zgony przed pierwszymi urodzinami na 1000 żywych urodzeń; często estymacje modelowe. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SH.DYN.MORT",
+      "status": "ready",
+      "series": 206,
+      "observations": 12211,
+      "start": "1960-12-31",
+      "end": "2024-12-31",
+      "limitations": "Ryzyko zgonu przed piątymi urodzinami na 1000 żywych urodzeń; nie porównuj jako tej samej miary z umieralnością niemowląt. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SP.POP.65UP.TO.ZS",
+      "status": "ready",
+      "series": 227,
+      "observations": 14982,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Udział osób w wieku co najmniej 65 lat w całej populacji. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SP.POP.GROW",
+      "status": "ready",
+      "series": 227,
+      "observations": 14723,
+      "start": "1961-12-31",
+      "end": "2025-12-31",
+      "limitations": "Roczne tempo zmiany populacji obejmujące ruch naturalny i migracje. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NE.TRD.GNFS.ZS",
+      "status": "ready",
+      "series": 204,
+      "observations": 9576,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Suma eksportu i importu towarów i usług względem PKB; może przekraczać 100%. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NE.IMP.GNFS.ZS",
+      "status": "ready",
+      "series": 204,
+      "observations": 9620,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Import brutto względem PKB. Nie jest miarą samowystarczalności. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "BX.KLT.DINV.WD.GD.ZS",
+      "status": "ready",
+      "series": 212,
+      "observations": 9865,
+      "start": "1970-12-31",
+      "end": "2025-12-31",
+      "limitations": "Napływ netto BIZ. Ujemne wartości są możliwe; przepływy roczne nie są zasobem inwestycji. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NV.IND.TOTL.ZS",
+      "status": "ready",
+      "series": 218,
+      "observations": 9500,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Wartość dodana przemysłu i budownictwa; szersza miara niż samo przetwórstwo przemysłowe. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NV.IND.MANF.ZS",
+      "status": "ready",
+      "series": 214,
+      "observations": 8648,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Wartość dodana przetwórstwa przemysłowego względem PKB, nie wartość całej produkcji. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NV.AGR.TOTL.ZS",
+      "status": "ready",
+      "series": 216,
+      "observations": 9538,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Wartość dodana sektora względem PKB, nie udział zatrudnionych w rolnictwie. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NV.SRV.TOTL.ZS",
+      "status": "ready",
+      "series": 215,
+      "observations": 9025,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Wartość dodana usług względem PKB. Udziały sektorów mogą nie sumować się do 100 z powodu podatków i metod rachunków. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "NE.GDI.TOTL.ZS",
+      "status": "ready",
+      "series": 197,
+      "observations": 9238,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Nakłady na aktywa trwałe oraz zmiany zapasów; nie tylko inwestycje zagraniczne. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "EG.USE.ELEC.KH.PC",
+      "status": "ready",
+      "series": 160,
+      "observations": 5401,
+      "start": "1990-12-31",
+      "end": "2024-12-31",
+      "limitations": "Zużycie energii elektrycznej na mieszkańca. Zakres lat zależy od danych IEA publikowanych przez World Bank. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "EG.USE.PCAP.KG.OE",
+      "status": "ready",
+      "series": 189,
+      "observations": 5540,
+      "start": "1990-12-31",
+      "end": "2024-12-31",
+      "limitations": "Energia pierwotna przed przetworzeniem, nie tylko prąd i nie sama energia końcowa. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "EG.FEC.RNEW.ZS",
+      "status": "ready",
+      "series": 222,
+      "observations": 7056,
+      "start": "1990-12-31",
+      "end": "2022-12-31",
+      "limitations": "Obejmuje także biomasę; nie jest udziałem OZE wyłącznie w produkcji prądu. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "IT.NET.BBND.P2",
+      "status": "ready",
+      "series": 218,
+      "observations": 4569,
+      "start": "1998-12-31",
+      "end": "2025-12-31",
+      "limitations": "Liczba abonamentów stacjonarnych, nie osób ani gospodarstw domowych z internetem. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "IT.MLT.MAIN.P2",
+      "status": "ready",
+      "series": 223,
+      "observations": 12424,
+      "start": "1960-12-31",
+      "end": "2025-12-31",
+      "limitations": "Abonamenty telefonii stacjonarnej; odrębna miara od telefonii komórkowej. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SE.SEC.ENRR",
+      "status": "ready",
+      "series": 218,
+      "observations": 6656,
+      "start": "1970-12-31",
+      "end": "2025-12-31",
+      "limitations": "Wskaźnik brutto obejmuje uczniów poza typowym wiekiem szkolnym i może przekraczać 100%. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SH.XPD.CHEX.GD.ZS",
+      "status": "ready",
+      "series": 203,
+      "observations": 4803,
+      "start": "2000-12-31",
+      "end": "2024-12-31",
+      "limitations": "Bieżące wydatki publiczne i prywatne; nie sama część budżetu państwa ani nakłady inwestycyjne. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "SI.POV.GINI",
+      "status": "ready",
+      "series": 171,
+      "observations": 2430,
+      "start": "1963-12-31",
+      "end": "2025-12-31",
+      "limitations": "Badania gospodarstw domowych; nierównomierne lata. Dochód i konsumpcja oraz definicje ankiet mogą się różnić między krajami. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości."
+    },
+    {
+      "id": "maddison-gdp",
+      "status": "ready",
+      "series": 178,
+      "observations": 21586,
+      "start": "0001-12-31",
+      "end": "2022-12-31",
+      "limitations": "Maddison Project Database 2023 (Bolt i van Zanden), dystrybucja OWID. Historyczne estymacje PKB na mieszkańca w stałych dolarach międzynarodowych 2011; do 2022 r. To osobny zbiór, nie przedłużenie World Bank PPP 2021. Wczesne lata są nieciągłe. Rekonstrukcje dawnych państw nie oznaczają ich istnienia w późniejszych latach. Granice i metody zmieniają się; samo porównanie przed/po nie dowodzi skutków ustroju."
     },
     {
       "id": "coffee",

@@ -1,6 +1,7 @@
 # Plotwist — biblioteka historii
 
 Snapshot źródeł, nie bieżący feed. manifest.json opisuje serie, źródła i ograniczenia każdego tematu.
+Pełny all-observations.csv jest w archiwum ZIP; pojedyncze tematy mają osobne CSV i JSON.
 CSV ma format długi: jeden wiersz = seria × okres; pusta wartość oznacza brak danych, nigdy zero.
 Daty są rosnące. date_precision i period zachowują dokładność źródła. Roczne daty 31 grudnia i kotwice fiskalne służą porządkowaniu, nie oznaczają pomiaru dziennego.
 Nie sumuj stanów, procentów i przepływów. Nie mieszaj USD o różnych latach cenowych, MAU/WAU ani BEV/BEV+PHEV.
@@ -11,69 +12,302 @@ Odtwarzanie: scripts/build-story-data.py; pobieranie: scripts/fetch-story-source
 
 ## Tematy i dostępna historia
 
-### Internet zmienił wszystko
+### Świat coraz bardziej online
 
-12 serii; 404 obserwacji; 1990-12-31 → 2025-12-31. Status: ready.
+221 serii; 6392 obserwacji; 1990-12-31 → 2025-12-31. Status: ready.
 
-Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.
+Udział osób korzystających z internetu. Źródło pierwotne: ITU, przez World Bank. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
 
 - Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
 
 ### Jak bogaci się świat?
 
-12 serii; 732 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+223 serii; 12193 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
 
-Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.
+Ceny stałe usuwają wpływ inflacji USD. To nie jest PKB według parytetu siły nabywczej ani miara zarobków. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
 
 - Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
 
 ### Żyjemy coraz dłużej?
 
-12 serii; 780 obserwacji; 1960-12-31 → 2024-12-31. Status: ready.
+227 serii; 14721 obserwacji; 1960-12-31 → 2024-12-31. Status: ready.
 
-Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.
+Oczekiwana długość życia, nie średni wiek zmarłych. Różnice nie dowodzą wpływu jednej przyczyny. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
 
 - Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
 
 ### Telefon w każdej kieszeni
 
-12 serii; 625 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+224 serii; 11120 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
 
-Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.
+Aktywne abonamenty i karty prepaid, nie unikalni użytkownicy. Wartość może przekroczyć 100. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
 
 - Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
 
 ### Kto inwestuje w przyszłość?
 
-12 serii; 327 obserwacji; 1996-12-31 → 2023-12-31. Status: ready.
+166 serii; 2687 obserwacji; 1996-12-31 → 2024-12-31. Status: ready.
 
-Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.
+Nakłady B+R w relacji do PKB. Dane nie obejmują wszystkich lat; luki pozostają widoczne. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
 
 - Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
 
 ### Światło zmienia życie
 
-12 serii; 399 obserwacji; 1990-12-31 → 2024-12-31. Status: ready.
+226 serii; 7058 obserwacji; 1990-12-31 → 2024-12-31. Status: ready.
 
-Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.
+Dostęp do prądu nie oznacza niezawodnej dostawy ani jej przystępnej ceny. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
 
 - Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
 
 ### Przeprowadzka do miast
 
-12 serii; 792 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+227 serii; 14982 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
 
-Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.
+Definicje obszarów miejskich różnią się między krajami. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
 
 - Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
 
 ### Gospodarka bez granic
 
-12 serii; 672 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+204 serii; 9599 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
 
-Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.
+Eksport brutto względem PKB; może przekraczać 100%. Nie jest to udział krajowej wartości dodanej. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
 
 - Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Ile nas jest?
+
+227 serii; 14952 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Ludność w połowie roku według źródła; nie suma urodzeń. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Wielkość gospodarek
+
+223 serii; 12193 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+PKB całej gospodarki w cenach stałych 2015. Różna liczba mieszkańców ma wpływ na wielkość gospodarki. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### PKB w bieżących dolarach
+
+224 serii; 12424 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Nominalne USD zależą od inflacji i kursów walut; do długich porównań użyj cen stałych lub PPP. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Poziom życia według PPP
+
+209 serii; 7337 obserwacji; 1990-12-31 → 2025-12-31. Status: ready.
+
+Stałe dolary międzynarodowe z 2021 r. PPP uwzględnia różnice poziomu cen. Nie łącz poziomów z Maddisonem (ceny 2011). Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Wzrost i kryzysy
+
+224 serii; 12058 obserwacji; 1961-12-31 → 2025-12-31. Status: ready.
+
+Roczna zmiana realnego PKB całej gospodarki, nie skumulowany wzrost ani wzrost płac. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Historia inflacji
+
+203 serii; 9678 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Roczna zmiana CPI, nie poziom cen. Ujemna wartość oznacza deflację. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Rynek pracy w przemianie
+
+197 serii; 6881 obserwacji; 1991-12-31 → 2025-12-31. Status: ready.
+
+Modelowana estymacja ILO. Nie jest krajową stopą bezrobocia rejestrowanego. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Jak zmienia się dzietność?
+
+227 serii; 14723 obserwacji; 1960-12-31 → 2024-12-31. Status: ready.
+
+Okresowy współczynnik dzietności; nie faktyczna liczba dzieci danej kohorty kobiet. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Przeżywalność niemowląt
+
+206 serii; 12180 obserwacji; 1960-12-31 → 2024-12-31. Status: ready.
+
+Zgony przed pierwszymi urodzinami na 1000 żywych urodzeń; często estymacje modelowe. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Dzieci żyją dłużej
+
+206 serii; 12211 obserwacji; 1960-12-31 → 2024-12-31. Status: ready.
+
+Ryzyko zgonu przed piątymi urodzinami na 1000 żywych urodzeń; nie porównuj jako tej samej miary z umieralnością niemowląt. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Starzenie się społeczeństw
+
+227 serii; 14982 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Udział osób w wieku co najmniej 65 lat w całej populacji. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Kto rośnie, kto się kurczy?
+
+227 serii; 14723 obserwacji; 1961-12-31 → 2025-12-31. Status: ready.
+
+Roczne tempo zmiany populacji obejmujące ruch naturalny i migracje. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Otwarcie na świat
+
+204 serii; 9576 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Suma eksportu i importu towarów i usług względem PKB; może przekraczać 100%. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Gospodarka a import
+
+204 serii; 9620 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Import brutto względem PKB. Nie jest miarą samowystarczalności. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Gdzie płynie kapitał?
+
+212 serii; 9865 obserwacji; 1970-12-31 → 2025-12-31. Status: ready.
+
+Napływ netto BIZ. Ujemne wartości są możliwe; przepływy roczne nie są zasobem inwestycji. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Industrializacja gospodarek
+
+218 serii; 9500 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Wartość dodana przemysłu i budownictwa; szersza miara niż samo przetwórstwo przemysłowe. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Fabryki świata
+
+214 serii; 8648 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Wartość dodana przetwórstwa przemysłowego względem PKB, nie wartość całej produkcji. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Od rolnictwa do usług
+
+216 serii; 9538 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Wartość dodana sektora względem PKB, nie udział zatrudnionych w rolnictwie. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Gospodarka usług
+
+215 serii; 9025 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Wartość dodana usług względem PKB. Udziały sektorów mogą nie sumować się do 100 z powodu podatków i metod rachunków. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Kto buduje przyszłość?
+
+197 serii; 9238 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Nakłady na aktywa trwałe oraz zmiany zapasów; nie tylko inwestycje zagraniczne. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Prąd na mieszkańca
+
+160 serii; 5401 obserwacji; 1990-12-31 → 2024-12-31. Status: ready.
+
+Zużycie energii elektrycznej na mieszkańca. Zakres lat zależy od danych IEA publikowanych przez World Bank. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Energia rozwoju
+
+189 serii; 5540 obserwacji; 1990-12-31 → 2024-12-31. Status: ready.
+
+Energia pierwotna przed przetworzeniem, nie tylko prąd i nie sama energia końcowa. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Zwrot ku odnawialnym źródłom
+
+222 serii; 7056 obserwacji; 1990-12-31 → 2022-12-31. Status: ready.
+
+Obejmuje także biomasę; nie jest udziałem OZE wyłącznie w produkcji prądu. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Szerokopasmowy świat
+
+218 serii; 4569 obserwacji; 1998-12-31 → 2025-12-31. Status: ready.
+
+Liczba abonamentów stacjonarnych, nie osób ani gospodarstw domowych z internetem. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Epoka telefonów stacjonarnych
+
+223 serii; 12424 obserwacji; 1960-12-31 → 2025-12-31. Status: ready.
+
+Abonamenty telefonii stacjonarnej; odrębna miara od telefonii komórkowej. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Edukacja ponadpodstawowa
+
+218 serii; 6656 obserwacji; 1970-12-31 → 2025-12-31. Status: ready.
+
+Wskaźnik brutto obejmuje uczniów poza typowym wiekiem szkolnym i może przekraczać 100%. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Ile wydajemy na zdrowie?
+
+203 serii; 4803 obserwacji; 2000-12-31 → 2024-12-31. Status: ready.
+
+Bieżące wydatki publiczne i prywatne; nie sama część budżetu państwa ani nakłady inwestycyjne. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Nierówności w liczbach
+
+171 serii; 2430 obserwacji; 1963-12-31 → 2025-12-31. Status: ready.
+
+Badania gospodarstw domowych; nierównomierne lata. Dochód i konsumpcja oraz definicje ankiet mogą się różnić między krajami. Pełna dostępna historia World Bank; brak danych pozostaje pusty. Kraje i agregaty mają różne zakresy. Granice i definicje mogą zmieniać się w czasie; porównanie przed/po nie dowodzi przyczynowości.
+
+- Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.
+
+### Długi rozwój gospodarczy · Maddison
+
+178 serii; 21586 obserwacji; 0001-12-31 → 2022-12-31. Status: ready.
+
+Maddison Project Database 2023 (Bolt i van Zanden), dystrybucja OWID. Historyczne estymacje PKB na mieszkańca w stałych dolarach międzynarodowych 2011; do 2022 r. To osobny zbiór, nie przedłużenie World Bank PPP 2021. Wczesne lata są nieciągłe. Rekonstrukcje dawnych państw nie oznaczają ich istnienia w późniejszych latach. Granice i metody zmieniają się; samo porównanie przed/po nie dowodzi skutków ustroju.
+
+- Polska, Niemcy i Korea Południowa w latach 1950–2022. Porównaj poziomy albo tempo zmian od wspólnego roku.
+- Europa Środkowa przed i po 1989 r.; uwzględnij luki, granice i historyczne rekonstrukcje. Daty graniczne ustawiasz samodzielnie.
 
 ### Kawa czy inwestycja?
 

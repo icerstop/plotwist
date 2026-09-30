@@ -3,6 +3,10 @@
     "pl": "Aruba",
     "en": "Aruba"
   },
+  "AFG": {
+    "pl": "Afganistan",
+    "en": "Afghanistan"
+  },
   "AGO": {
     "pl": "Angola",
     "en": "Angola"
@@ -27,6 +31,10 @@
     "pl": "Armenia",
     "en": "Armenia"
   },
+  "ASM": {
+    "pl": "Samoa Amerykańskie",
+    "en": "American Samoa"
+  },
   "ATG": {
     "pl": "Antigua i Barbuda",
     "en": "Antigua & Barbuda"
@@ -42,6 +50,10 @@
   "AZE": {
     "pl": "Azerbejdżan",
     "en": "Azerbaijan"
+  },
+  "Afghanistan": {
+    "pl": "Afganistan",
+    "en": "Afghanistan"
   },
   "Albania": {
     "pl": "Albania",
@@ -83,6 +95,10 @@
     "pl": "Belgia",
     "en": "Belgium"
   },
+  "BEN": {
+    "pl": "Benin",
+    "en": "Benin"
+  },
   "BFA": {
     "pl": "Burkina Faso",
     "en": "Burkina Faso"
@@ -114,6 +130,10 @@
   "BLZ": {
     "pl": "Belize",
     "en": "Belize"
+  },
+  "BMU": {
+    "pl": "Bermudy",
+    "en": "Bermuda"
   },
   "BOL": {
     "pl": "Boliwia",
@@ -147,6 +167,10 @@
     "pl": "Bangladesz",
     "en": "Bangladesh"
   },
+  "Barbados": {
+    "pl": "Barbados",
+    "en": "Barbados"
+  },
   "Belarus": {
     "pl": "Białoruś",
     "en": "Belarus"
@@ -154,6 +178,10 @@
   "Belgium": {
     "pl": "Belgia",
     "en": "Belgium"
+  },
+  "Benin": {
+    "pl": "Benin",
+    "en": "Benin"
   },
   "Bolivia": {
     "pl": "Boliwia",
@@ -179,6 +207,14 @@
     "pl": "Burkina Faso",
     "en": "Burkina Faso"
   },
+  "Burundi": {
+    "pl": "Burundi",
+    "en": "Burundi"
+  },
+  "CAF": {
+    "pl": "Republika Środkowoafrykańska",
+    "en": "Central African Republic"
+  },
   "CAN": {
     "pl": "Kanada",
     "en": "Canada"
@@ -186,6 +222,10 @@
   "CHE": {
     "pl": "Szwajcaria",
     "en": "Switzerland"
+  },
+  "CHI": {
+    "pl": "Wyspy Normandzkie",
+    "en": "Channel Islands"
   },
   "CHL": {
     "pl": "Chile",
@@ -199,6 +239,10 @@
     "pl": "Côte d’Ivoire",
     "en": "Côte d’Ivoire"
   },
+  "CMR": {
+    "pl": "Kamerun",
+    "en": "Cameroon"
+  },
   "COD": {
     "pl": "Demokratyczna Republika Konga",
     "en": "Congo - Kinshasa"
@@ -211,6 +255,10 @@
     "pl": "Kolumbia",
     "en": "Colombia"
   },
+  "COM": {
+    "pl": "Komory",
+    "en": "Comoros"
+  },
   "CPV": {
     "pl": "Republika Zielonego Przylądka",
     "en": "Cape Verde"
@@ -222,6 +270,14 @@
   "CUB": {
     "pl": "Kuba",
     "en": "Cuba"
+  },
+  "CUW": {
+    "pl": "Curaçao",
+    "en": "Curaçao"
+  },
+  "CYM": {
+    "pl": "Kajmany",
+    "en": "Cayman Islands"
   },
   "CYP": {
     "pl": "Cypr",
@@ -243,6 +299,14 @@
     "pl": "Kanada",
     "en": "Canada"
   },
+  "Cape Verde": {
+    "pl": "Republika Zielonego Przylądka",
+    "en": "Cape Verde"
+  },
+  "Central African Republic": {
+    "pl": "Republika Środkowoafrykańska",
+    "en": "Central African Republic"
+  },
   "Chad": {
     "pl": "Czad",
     "en": "Chad"
@@ -258,6 +322,10 @@
   "Colombia": {
     "pl": "Kolumbia",
     "en": "Colombia"
+  },
+  "Comoros": {
+    "pl": "Komory",
+    "en": "Comoros"
   },
   "Congo": {
     "pl": "Kongo",
@@ -275,6 +343,10 @@
     "pl": "Chorwacja",
     "en": "Croatia"
   },
+  "Cuba": {
+    "pl": "Kuba",
+    "en": "Cuba"
+  },
   "Cyprus": {
     "pl": "Cypr",
     "en": "Cyprus"
@@ -283,6 +355,10 @@
     "pl": "Czechy",
     "en": "Czechia"
   },
+  "Czechoslovakia": {
+    "pl": "Czechosłowacja",
+    "en": "Czechoslovakia"
+  },
   "DEU": {
     "pl": "Niemcy",
     "en": "Germany"
@@ -290,6 +366,10 @@
   "DJI": {
     "pl": "Dżibuti",
     "en": "Djibouti"
+  },
+  "DMA": {
+    "pl": "Dominika",
+    "en": "Dominica"
   },
   "DNK": {
     "pl": "Dania",
@@ -311,6 +391,14 @@
     "pl": "Dania",
     "en": "Denmark"
   },
+  "Djibouti": {
+    "pl": "Dżibuti",
+    "en": "Djibouti"
+  },
+  "Dominica": {
+    "pl": "Dominika",
+    "en": "Dominica"
+  },
   "Dominican Republic": {
     "pl": "Dominikana",
     "en": "Dominican Republic"
@@ -331,6 +419,10 @@
     "pl": "Egipt",
     "en": "Egypt"
   },
+  "ERI": {
+    "pl": "Erytrea",
+    "en": "Eritrea"
+  },
   "ESP": {
     "pl": "Hiszpania",
     "en": "Spain"
@@ -343,6 +435,18 @@
     "pl": "Etiopia",
     "en": "Ethiopia"
   },
+  "EUU": {
+    "pl": "Unia Europejska",
+    "en": "European Union"
+  },
+  "East Asia (Maddison)": {
+    "pl": "Azja Wschodnia (Maddison)",
+    "en": "East Asia (Maddison)"
+  },
+  "Eastern Europe (Maddison)": {
+    "pl": "Europa Wschodnia (Maddison)",
+    "en": "Eastern Europe (Maddison)"
+  },
   "Ecuador": {
     "pl": "Ekwador",
     "en": "Ecuador"
@@ -351,9 +455,21 @@
     "pl": "Egipt",
     "en": "Egypt"
   },
+  "El Salvador": {
+    "pl": "Salwador",
+    "en": "El Salvador"
+  },
+  "Equatorial Guinea": {
+    "pl": "Gwinea Równikowa",
+    "en": "Equatorial Guinea"
+  },
   "Estonia": {
     "pl": "Estonia",
     "en": "Estonia"
+  },
+  "Eswatini": {
+    "pl": "Eswatini",
+    "en": "Eswatini"
   },
   "Ethiopia": {
     "pl": "Etiopia",
@@ -379,6 +495,14 @@
     "pl": "Francja",
     "en": "France"
   },
+  "FRO": {
+    "pl": "Wyspy Owcze",
+    "en": "Faroe Islands"
+  },
+  "FSM": {
+    "pl": "Mikronezja",
+    "en": "Micronesia"
+  },
   "Finland": {
     "pl": "Finlandia",
     "en": "Finland"
@@ -386,6 +510,10 @@
   "France": {
     "pl": "Francja",
     "en": "France"
+  },
+  "GAB": {
+    "pl": "Gabon",
+    "en": "Gabon"
   },
   "GBR": {
     "pl": "Wielka Brytania",
@@ -399,13 +527,45 @@
     "pl": "Ghana",
     "en": "Ghana"
   },
+  "GIB": {
+    "pl": "Gibraltar",
+    "en": "Gibraltar"
+  },
+  "GIN": {
+    "pl": "Gwinea",
+    "en": "Guinea"
+  },
+  "GMB": {
+    "pl": "Gambia",
+    "en": "Gambia"
+  },
+  "GNB": {
+    "pl": "Gwinea Bissau",
+    "en": "Guinea-Bissau"
+  },
+  "GNQ": {
+    "pl": "Gwinea Równikowa",
+    "en": "Equatorial Guinea"
+  },
   "GRC": {
     "pl": "Grecja",
     "en": "Greece"
   },
+  "GRD": {
+    "pl": "Grenada",
+    "en": "Grenada"
+  },
+  "GRL": {
+    "pl": "Grenlandia",
+    "en": "Greenland"
+  },
   "GTM": {
     "pl": "Gwatemala",
     "en": "Guatemala"
+  },
+  "GUM": {
+    "pl": "Guam",
+    "en": "Guam"
   },
   "GUY": {
     "pl": "Gujana",
@@ -414,6 +574,10 @@
   "Gabon": {
     "pl": "Gabon",
     "en": "Gabon"
+  },
+  "Gambia": {
+    "pl": "Gambia",
+    "en": "Gambia"
   },
   "Georgia": {
     "pl": "Gruzja",
@@ -435,6 +599,14 @@
     "pl": "Gwatemala",
     "en": "Guatemala"
   },
+  "Guinea": {
+    "pl": "Gwinea",
+    "en": "Guinea"
+  },
+  "Guinea-Bissau": {
+    "pl": "Gwinea Bissau",
+    "en": "Guinea-Bissau"
+  },
   "HKG": {
     "pl": "SRA Hongkong (Chiny)",
     "en": "Hong Kong SAR China"
@@ -455,6 +627,14 @@
     "pl": "Węgry",
     "en": "Hungary"
   },
+  "Haiti": {
+    "pl": "Haiti",
+    "en": "Haiti"
+  },
+  "Honduras": {
+    "pl": "Honduras",
+    "en": "Honduras"
+  },
   "Hong Kong": {
     "pl": "SRA Hongkong (Chiny)",
     "en": "Hong Kong SAR China"
@@ -466,6 +646,10 @@
   "IDN": {
     "pl": "Indonezja",
     "en": "Indonesia"
+  },
+  "IMN": {
+    "pl": "Wyspa Man",
+    "en": "Isle of Man"
   },
   "IND": {
     "pl": "Indie",
@@ -567,6 +751,14 @@
     "pl": "Kambodża",
     "en": "Cambodia"
   },
+  "KIR": {
+    "pl": "Kiribati",
+    "en": "Kiribati"
+  },
+  "KNA": {
+    "pl": "Saint Kitts i Nevis",
+    "en": "St. Kitts & Nevis"
+  },
   "KOR": {
     "pl": "Korea Południowa",
     "en": "South Korea"
@@ -615,6 +807,10 @@
     "pl": "Ameryka Łacińska i Karaiby",
     "en": "Latin America & Caribbean"
   },
+  "LIE": {
+    "pl": "Liechtenstein",
+    "en": "Liechtenstein"
+  },
   "LKA": {
     "pl": "Sri Lanka",
     "en": "Sri Lanka"
@@ -639,6 +835,10 @@
     "pl": "Laos",
     "en": "Laos"
   },
+  "Latin America (Maddison)": {
+    "pl": "Ameryka Łacińska (Maddison)",
+    "en": "Latin America (Maddison)"
+  },
   "Latvia": {
     "pl": "Łotwa",
     "en": "Latvia"
@@ -646,6 +846,18 @@
   "Lebanon": {
     "pl": "Liban",
     "en": "Lebanon"
+  },
+  "Lesotho": {
+    "pl": "Lesotho",
+    "en": "Lesotho"
+  },
+  "Liberia": {
+    "pl": "Liberia",
+    "en": "Liberia"
+  },
+  "Libya": {
+    "pl": "Libia",
+    "en": "Libya"
   },
   "Lithuania": {
     "pl": "Litwa",
@@ -658,6 +870,10 @@
   "MAC": {
     "pl": "SRA Makau (Chiny)",
     "en": "Macao SAR China"
+  },
+  "MAF": {
+    "pl": "Saint-Martin",
+    "en": "St. Martin"
   },
   "MAR": {
     "pl": "Maroko",
@@ -675,6 +891,10 @@
     "pl": "Madagaskar",
     "en": "Madagascar"
   },
+  "MDV": {
+    "pl": "Malediwy",
+    "en": "Maldives"
+  },
   "MEA": {
     "pl": "Bliski Wschód, Afryka Północna, Afganistan i Pakistan",
     "en": "Middle East, North Africa, Afghanistan & Pakistan"
@@ -682,6 +902,10 @@
   "MEX": {
     "pl": "Meksyk",
     "en": "Mexico"
+  },
+  "MHL": {
+    "pl": "Wyspy Marshalla",
+    "en": "Marshall Islands"
   },
   "MKD": {
     "pl": "Macedonia Północna",
@@ -695,6 +919,10 @@
     "pl": "Malta",
     "en": "Malta"
   },
+  "MMR": {
+    "pl": "Mjanma (Birma)",
+    "en": "Myanmar (Burma)"
+  },
   "MNE": {
     "pl": "Czarnogóra",
     "en": "Montenegro"
@@ -703,9 +931,17 @@
     "pl": "Mongolia",
     "en": "Mongolia"
   },
+  "MNP": {
+    "pl": "Mariany Północne",
+    "en": "Northern Mariana Islands"
+  },
   "MOZ": {
     "pl": "Mozambik",
     "en": "Mozambique"
+  },
+  "MRT": {
+    "pl": "Mauretania",
+    "en": "Mauritania"
   },
   "MUS": {
     "pl": "Mauritius",
@@ -739,6 +975,10 @@
     "pl": "Malta",
     "en": "Malta"
   },
+  "Mauritania": {
+    "pl": "Mauretania",
+    "en": "Mauritania"
+  },
   "Mauritius": {
     "pl": "Mauritius",
     "en": "Mauritius"
@@ -747,9 +987,21 @@
     "pl": "Meksyk",
     "en": "Mexico"
   },
+  "Middle East and North Africa (Maddison)": {
+    "pl": "Bliski Wschód i Afryka Północna (Maddison)",
+    "en": "Middle East and North Africa (Maddison)"
+  },
   "Moldova": {
     "pl": "Mołdawia",
     "en": "Moldova"
+  },
+  "Mongolia": {
+    "pl": "Mongolia",
+    "en": "Mongolia"
+  },
+  "Montenegro": {
+    "pl": "Czarnogóra",
+    "en": "Montenegro"
   },
   "Morocco": {
     "pl": "Maroko",
@@ -771,6 +1023,14 @@
     "pl": "Namibia",
     "en": "Namibia"
   },
+  "NCL": {
+    "pl": "Nowa Kaledonia",
+    "en": "New Caledonia"
+  },
+  "NER": {
+    "pl": "Niger",
+    "en": "Niger"
+  },
   "NGA": {
     "pl": "Nigeria",
     "en": "Nigeria"
@@ -790,6 +1050,10 @@
   "NPL": {
     "pl": "Nepal",
     "en": "Nepal"
+  },
+  "NRU": {
+    "pl": "Nauru",
+    "en": "Nauru"
   },
   "NZL": {
     "pl": "Nowa Zelandia",
@@ -811,6 +1075,10 @@
     "pl": "Nowa Zelandia",
     "en": "New Zealand"
   },
+  "Nicaragua": {
+    "pl": "Nikaragua",
+    "en": "Nicaragua"
+  },
   "Niger": {
     "pl": "Niger",
     "en": "Niger"
@@ -819,6 +1087,10 @@
     "pl": "Nigeria",
     "en": "Nigeria"
   },
+  "North Korea": {
+    "pl": "Korea Północna",
+    "en": "North Korea"
+  },
   "North Macedonia": {
     "pl": "Macedonia Północna",
     "en": "North Macedonia"
@@ -826,6 +1098,10 @@
   "Norway": {
     "pl": "Norwegia",
     "en": "Norway"
+  },
+  "OED": {
+    "pl": "OECD",
+    "en": "OECD members"
   },
   "OMN": {
     "pl": "Oman",
@@ -851,6 +1127,10 @@
     "pl": "Filipiny",
     "en": "Philippines"
   },
+  "PLW": {
+    "pl": "Palau",
+    "en": "Palau"
+  },
   "PNG": {
     "pl": "Papua-Nowa Gwinea",
     "en": "Papua New Guinea"
@@ -858,6 +1138,10 @@
   "POL": {
     "pl": "Polska",
     "en": "Poland"
+  },
+  "PRI": {
+    "pl": "Portoryko",
+    "en": "Puerto Rico"
   },
   "PRK": {
     "pl": "Korea Północna",
@@ -871,9 +1155,21 @@
     "pl": "Paragwaj",
     "en": "Paraguay"
   },
+  "PSE": {
+    "pl": "Terytoria Palestyńskie",
+    "en": "Palestinian Territories"
+  },
+  "PYF": {
+    "pl": "Polinezja Francuska",
+    "en": "French Polynesia"
+  },
   "Pakistan": {
     "pl": "Pakistan",
     "en": "Pakistan"
+  },
+  "Palestine": {
+    "pl": "Terytoria Palestyńskie",
+    "en": "Palestinian Territories"
   },
   "Panama": {
     "pl": "Panama",
@@ -898,6 +1194,10 @@
   "Portugal": {
     "pl": "Portugalia",
     "en": "Portugal"
+  },
+  "Puerto Rico": {
+    "pl": "Portoryko",
+    "en": "Puerto Rico"
   },
   "QAT": {
     "pl": "Katar",
@@ -947,9 +1247,21 @@
     "pl": "Sudan",
     "en": "Sudan"
   },
+  "SEN": {
+    "pl": "Senegal",
+    "en": "Senegal"
+  },
   "SGP": {
     "pl": "Singapur",
     "en": "Singapore"
+  },
+  "SLB": {
+    "pl": "Wyspy Salomona",
+    "en": "Solomon Islands"
+  },
+  "SLE": {
+    "pl": "Sierra Leone",
+    "en": "Sierra Leone"
   },
   "SLV": {
     "pl": "Salwador",
@@ -967,9 +1279,21 @@
     "pl": "Serbia",
     "en": "Serbia"
   },
+  "SSD": {
+    "pl": "Sudan Południowy",
+    "en": "South Sudan"
+  },
   "SSF": {
     "pl": "Afryka Subsaharyjska",
     "en": "Sub-Saharan Africa"
+  },
+  "STP": {
+    "pl": "Wyspy Świętego Tomasza i Książęca",
+    "en": "São Tomé & Príncipe"
+  },
+  "SUR": {
+    "pl": "Surinam",
+    "en": "Suriname"
   },
   "SVK": {
     "pl": "Słowacja",
@@ -983,6 +1307,14 @@
     "pl": "Szwecja",
     "en": "Sweden"
   },
+  "SWZ": {
+    "pl": "Eswatini",
+    "en": "Eswatini"
+  },
+  "SXM": {
+    "pl": "Sint Maarten",
+    "en": "Sint Maarten"
+  },
   "SYC": {
     "pl": "Seszele",
     "en": "Seychelles"
@@ -990,6 +1322,14 @@
   "SYR": {
     "pl": "Syria",
     "en": "Syria"
+  },
+  "Saint Lucia": {
+    "pl": "Saint Lucia",
+    "en": "St. Lucia"
+  },
+  "Sao Tome and Principe": {
+    "pl": "Wyspy Świętego Tomasza i Książęca",
+    "en": "São Tomé & Príncipe"
   },
   "Saudi Arabia": {
     "pl": "Arabia Saudyjska",
@@ -1006,6 +1346,10 @@
   "Seychelles": {
     "pl": "Seszele",
     "en": "Seychelles"
+  },
+  "Sierra Leone": {
+    "pl": "Sierra Leone",
+    "en": "Sierra Leone"
   },
   "Singapore": {
     "pl": "Singapur",
@@ -1027,6 +1371,10 @@
     "pl": "Korea Południowa",
     "en": "South Korea"
   },
+  "South and South East Asia (Maddison)": {
+    "pl": "Azja Południowa i Południowo-Wschodnia (Maddison)",
+    "en": "South and South East Asia (Maddison)"
+  },
   "Spain": {
     "pl": "Hiszpania",
     "en": "Spain"
@@ -1034,6 +1382,14 @@
   "Sri Lanka": {
     "pl": "Sri Lanka",
     "en": "Sri Lanka"
+  },
+  "Sub Saharan Africa (Maddison)": {
+    "pl": "Afryka Subsaharyjska (Maddison)",
+    "en": "Sub Saharan Africa (Maddison)"
+  },
+  "Sudan (former)": {
+    "pl": "Sudan (dawne granice)",
+    "en": "Sudan (former)"
   },
   "Sudan": {
     "pl": "Sudan",
@@ -1051,6 +1407,18 @@
     "pl": "Syria",
     "en": "Syria"
   },
+  "TCA": {
+    "pl": "Turks i Caicos",
+    "en": "Turks & Caicos Islands"
+  },
+  "TCD": {
+    "pl": "Czad",
+    "en": "Chad"
+  },
+  "TGO": {
+    "pl": "Togo",
+    "en": "Togo"
+  },
   "THA": {
     "pl": "Tajlandia",
     "en": "Thailand"
@@ -1063,6 +1431,14 @@
     "pl": "Turkmenistan",
     "en": "Turkmenistan"
   },
+  "TLS": {
+    "pl": "Timor Wschodni",
+    "en": "Timor-Leste"
+  },
+  "TON": {
+    "pl": "Tonga",
+    "en": "Tonga"
+  },
   "TTO": {
     "pl": "Trynidad i Tobago",
     "en": "Trinidad & Tobago"
@@ -1074,6 +1450,10 @@
   "TUR": {
     "pl": "Turcja",
     "en": "Türkiye"
+  },
+  "TUV": {
+    "pl": "Tuvalu",
+    "en": "Tuvalu"
   },
   "TZA": {
     "pl": "Tanzania",
@@ -1094,6 +1474,10 @@
   "Thailand": {
     "pl": "Tajlandia",
     "en": "Thailand"
+  },
+  "Togo": {
+    "pl": "Togo",
+    "en": "Togo"
   },
   "Trinidad and Tobago": {
     "pl": "Trynidad i Tobago",
@@ -1127,6 +1511,10 @@
     "pl": "Stany Zjednoczone",
     "en": "United States"
   },
+  "USSR": {
+    "pl": "ZSRR",
+    "en": "USSR"
+  },
   "UZB": {
     "pl": "Uzbekistan",
     "en": "Uzbekistan"
@@ -1159,13 +1547,29 @@
     "pl": "Uzbekistan",
     "en": "Uzbekistan"
   },
+  "VCT": {
+    "pl": "Saint Vincent i Grenadyny",
+    "en": "St. Vincent & Grenadines"
+  },
   "VEN": {
     "pl": "Wenezuela",
     "en": "Venezuela"
   },
+  "VGB": {
+    "pl": "Brytyjskie Wyspy Dziewicze",
+    "en": "British Virgin Islands"
+  },
+  "VIR": {
+    "pl": "Wyspy Dziewicze Stanów Zjednoczonych",
+    "en": "U.S. Virgin Islands"
+  },
   "VNM": {
     "pl": "Wietnam",
     "en": "Vietnam"
+  },
+  "VUT": {
+    "pl": "Vanuatu",
+    "en": "Vanuatu"
   },
   "Venezuela": {
     "pl": "Wenezuela",
@@ -1183,9 +1587,21 @@
     "pl": "Samoa",
     "en": "Samoa"
   },
+  "Western Europe (Maddison)": {
+    "pl": "Europa Zachodnia (Maddison)",
+    "en": "Western Europe (Maddison)"
+  },
+  "Western offshoots (Maddison)": {
+    "pl": "Gospodarki osadnicze Zachodu (Maddison)",
+    "en": "Western offshoots (Maddison)"
+  },
   "World": {
     "pl": "Świat",
     "en": "World"
+  },
+  "XKX": {
+    "pl": "Kosowo",
+    "en": "Kosovo"
   },
   "YEM": {
     "pl": "Jemen",
@@ -1194,6 +1610,10 @@
   "Yemen": {
     "pl": "Jemen",
     "en": "Yemen"
+  },
+  "Yugoslavia": {
+    "pl": "Jugosławia",
+    "en": "Yugoslavia"
   },
   "ZAF": {
     "pl": "Republika Południowej Afryki",

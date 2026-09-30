@@ -1,5 +1,7 @@
 # plotwist
 
+World Bank rozszerzono 30.09.2026 do 36 wskaźników, 217 krajów/terytoriów i 10 agregatów (346 983 obserwacje). Biblioteka pozwala filtrować regiony, zestawy krajów i faktyczną dostępność danego roku. Osobny Maddison Project obejmuje historyczne estymacje PKB do 2022 r., także Polskę przed 1990 r. [Zakres i metodologia](research/world-bank/README.md), [wykonany audyt](research/world-bank/audit.ipynb). Pełny CSV jest w ZIP, a tematy mają osobne CSV/JSON.
+
 Studio animowanych wykresów do rolek z niezależnym wyborem języka menu i rolki (PL/EN). React + Vite, Canvas 2D, WebCodecs i Mediabunny. Aplikacja nie potrzebuje płatnego API ani serwera AI.
 
 ## Uruchomienie

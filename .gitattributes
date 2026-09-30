@@ -3,3 +3,6 @@ research/stories/raw/epoch-thought-* -text
 research/stories/raw/epoch-chip-* -text
 research/stories/raw/nhgri-* -text
 research/stories/raw/cost-of-sequencing-a-full-human-genome.* -text
+research/stories/raw/gdp-per-capita-maddison-project-database.* -text
+research/world-bank/*.json -text
+public/data/*.json -text

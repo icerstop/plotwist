@@ -10,8 +10,8 @@ const read=name=>JSON.parse(readFileSync(new URL(`../public/stories/${name}.json
 const manifest=read('manifest'),topics=manifest.topics.map(t=>read(t.id)),all=topics.flatMap(t=>t.series),byId=new Map(all.map(s=>[s.id,s]));
 const config=(ids,options={})=>({...storyDefaults,selected:ids.map(id=>({id})),...options});
 test('every inspiration topic has explicit coverage and source-backed chronological data',()=>{
- assert.equal(manifest.topics.length,31);assert.equal(all.length,manifest.series.length);
- assert.equal(manifest.topics.filter(t=>t.seriesCount>0).length,30);
+ assert.equal(manifest.topics.length,60);assert.equal(all.length,manifest.series.length);
+ assert.equal(manifest.topics.filter(t=>t.seriesCount>0).length,59);
  const sources=new Set(manifest.sources.map(s=>s.id));let count=0;
  for(const s of all){
   assert.equal(new Set(s.points.map(p=>p.date)).size,s.points.length,s.id);

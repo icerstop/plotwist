@@ -11,6 +11,7 @@
     "data:markets": "node scripts/fetch-market-data.mjs",
     "data:commodities": "node scripts/fetch-commodity-data.mjs",
     "data:ai": "node scripts/build-ai-data.mjs",
+    "data:world-bank": "node scripts/refresh-world-bank.mjs",
     "data:stories": "python scripts/build-story-data.py"
   },
   "overrides": {

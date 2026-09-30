@@ -1,3 +1,5 @@
+import wbIndicators from './world-bank-indicators.json' with {type:'json'};
+import wbCountries from './world-bank-countries.json' with {type:'json'};
 import {extraPairs} from './translations-extra.js';
 // Audited, local translations. No paid API and no automatic rewriting of user input.
 const pairs = `
@@ -597,6 +599,9 @@ const fragments={
  '· dokumentacja':'· documentation','— dokumentacja':'— documentation',
 };
 Object.assign(english,fragments,Object.fromEntries(extraPairs.trim().split('\n').map(line=>line.split('|'))));
+for(const c of wbCountries)english[c.pl]=c.en;
+Object.assign(english,{'int. USD 2011 / osobę':'2011 international dollars per person','Długi rozwój gospodarczy · Maddison':'Long-run economic development · Maddison','Wpisz kod dowolnego wskaźnika. Pobierz całą dostępną historię dla wszystkich krajów i agregatów, do najnowszych opublikowanych wartości.':'Enter a WDI indicator code to download the full available history for all countries and aggregates, through the latest published observations.'});
+for(const d of wbIndicators){for(const [pl,en] of [[d.metric,d.metricEn],[d.name,d.nameEn],[d.title,d.nameEn],[d.unit,d.unitEn],[d.note,d.noteEn]])if(pl&&en&&!Object.hasOwn(english,pl))english[pl]=en;}
 export function translate(value,language='pl'){
  if(language!=='en'||typeof value!=='string'||!value)return value;
  const text=value.trim(),leading=value.match(/^\s*/)[0],trailing=value.match(/\s*$/)[0];

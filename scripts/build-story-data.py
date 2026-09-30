@@ -9,6 +9,7 @@ import openpyxl
 from bs4 import BeautifulSoup, XMLParsedAsHTMLWarning
 import warnings
 from build_technology_costs import add_cost_topics
+from build_world_bank import add_world_bank_topics
 warnings.filterwarnings('ignore',category=XMLParsedAsHTMLWarning)
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -64,25 +65,8 @@ def owid(topicId,file,unit=None,unitKey=None,notes='',entities=None,columns=None
    for r in rr:point(s,r.get('Year') or r.get('Quarter') or r.get('Day'),numeric(r[col]),sid,'year' if 'Year'in r else 'quarter')
  return rows
 
-# Existing World Bank snapshots are reused with their original retrieval dates.
-wbNames={
- 'IT.NET.USER.ZS':('Internet zmienił wszystko','% populacji'),
- 'NY.GDP.PCAP.KD':('Jak bogaci się świat?','USD 2015 / osobę'),
- 'SP.DYN.LE00.IN':('Żyjemy coraz dłużej?','lata'),
- 'IT.CEL.SETS.P2':('Telefon w każdej kieszeni','abonamenty / 100 osób'),
- 'GB.XPD.RSDV.GD.ZS':('Kto inwestuje w przyszłość?','% PKB'),
- 'EG.ELC.ACCS.ZS':('Światło zmienia życie','% populacji'),
- 'SP.URB.TOTL.IN.ZS':('Przeprowadzka do miast','% populacji'),
- 'NE.EXP.GNFS.ZS':('Gospodarka bez granic','% PKB')}
-names={'POL':'Polska','WLD':'Świat','USA':'USA','CHN':'Chiny','DEU':'Niemcy','IND':'Indie','KOR':'Korea Płd.','JPN':'Japonia','GBR':'Wielka Brytania','FRA':'Francja','BRA':'Brazylia','EST':'Estonia'}
-for code,(title,unit) in wbNames.items():
- d=json.loads((ROOT/f'public/data/{code}.json').read_text(encoding='utf8'));topic(code,title,'Pełna historia dostępna w istniejącym snapshotcie World Bank; puste lata zachowano.')
- sid=source(code,'World Bank · '+d['name'],d['url']);SOURCES[sid].update(retrievedAt=d['retrievedAt'],lastUpdated=d.get('lastUpdated'),extraction='Existing downloaded World Bank snapshot')
- for c in names:
-  s=series(code,c,names[c],unit,code,entity=c,metric=d['name'])
-  for r in d['rows']:
-   if r['country']==c:point(s,str(r['year']),r['value'],sid)
- TOPICS[code]['defaults']=[code+'--pol',code+'--wld']
+add_world_bank_topics(ROOT, topic, series, point, source, TOPICS, SOURCES)
+
 topic('coffee','Kawa czy inwestycja?','Model matematyczny w dotychczasowym studiu. Nie istnieje źródłowy historyczny dataset dla hipotetycznej stałej stopy zwrotu.','simulation')
 
 topic('battery','Baterie coraz tańsze','Pobrano historię ogniw, nie całych pakietów. Brak porównywalnej historii pakietów z tego źródła.','partial')
@@ -319,9 +303,9 @@ for t in TOPICS.values():
 for src in SOURCES.values():
  n=src['name'].lower()
  labels=[('yahoo','Yahoo Finance'),('apple','Apple / SEC'),('spotify','Spotify / SEC'),('amazon','Amazon / SEC'),('alphabet','Alphabet / SEC'),('meta','Meta / SEC'),('facebook','Meta / SEC'),('nvidia','NVIDIA / OWID'),('nintendo','Nintendo'),('microsoft','Microsoft'),('gus','GUS'),('nbp','NBP'),('openai','OpenAI'),('tiktok','TikTok'),('ofcom','Ofcom'),('epoch','Epoch AI'),('wipo','WIPO / World Bank'),('world bank','World Bank'),('irena','IRENA / OWID'),('iea','IEA / OWID')]
- src['shortName']='NHGRI' if 'nhgri' in n else next((label for word,label in labels if word in n),'OWID')
+ src['shortName']=src.get('shortName') or ('NHGRI' if 'nhgri' in n else next((label for word,label in labels if word in n),'OWID'))
 angles=json.loads((ROOT/'research/stories/story-notes.json').read_text(encoding='utf8'))
-for t in TOPICS.values():t['variants']=angles.get(t['id'],['Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.'] if t['seriesCount'] else ['Model hipotetyczny w module Studio; historyczne symulacje wpłat w module Giełda.'])
+for t in TOPICS.values():t['variants']=t.get('variants') or angles.get(t['id'],['Porównanie wybranych krajów w czasie: linie, karty lub wyścig słupków. Zakres i luki sprawdź dla każdej serii.'] if t['seriesCount'] else ['Model hipotetyczny w module Studio; historyczne symulacje wpłat w module Giełda.'])
 manifest={'schemaVersion':1,'builtAt':NOW,'topics':list(TOPICS.values()),'series':[{k:v for k,v in s.items() if k!='points'} for s in SERIES.values()],'sources':list(SOURCES.values())}
 (OUT/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,separators=(',',':')),encoding='utf8')
 (ROOT/'src/story-catalog.json').write_text(json.dumps({'builtAt':NOW,'topics':[{k:v for k,v in t.items() if k not in ['seriesIds','defaults']} for t in TOPICS.values()],'observations':sum(s['count'] for s in SERIES.values()),'seriesCount':len(SERIES)},ensure_ascii=False,separators=(',',':')),encoding='utf8')
@@ -337,23 +321,30 @@ def writeCsv(path,rows):
 for t in TOPICS.values():
  ss=[SERIES[s] for s in t['seriesIds']];(OUT/(t['id']+'.json')).write_text(json.dumps({'topic':t,'series':ss},ensure_ascii=False,separators=(',',':')),encoding='utf8')
  writeCsv(OUT/(t['id']+'.csv'),sorted(csvRows(ss),key=lambda r:(r[5],r[1])))
-writeCsv(OUT/'all-observations.csv',sorted(csvRows(SERIES.values()),key=lambda r:(r[5],r[1])))
+# The complete CSV is streamed into the ZIP to avoid oversized web assets.
+(OUT/'all-observations.csv').unlink(missing_ok=True)
 (ROOT/'research/stories/extracted-financial-tables.json').write_text(json.dumps(EVIDENCE,ensure_ascii=False,indent=2),encoding='utf8')
 quality={'builtAt':NOW,'topics':len(TOPICS),'series':len(SERIES),'observations':sum(s['count'] for s in SERIES.values()),'missingCells':sum(s['missing'] for s in SERIES.values()),'duplicateDates':0,'nonFiniteValues':0,'coverage':[{'id':t['id'],'status':t['status'],'series':t['seriesCount'],'observations':t['count'],'start':t['start'],'end':t['end'],'limitations':t['note']} for t in TOPICS.values()]}
 (OUT/'quality-report.json').write_text(json.dumps(quality,ensure_ascii=False,indent=2),encoding='utf8')
-readme='''# Plotwist — biblioteka historii\n\nSnapshot źródeł, nie bieżący feed. manifest.json opisuje serie, źródła i ograniczenia każdego tematu.\nCSV ma format długi: jeden wiersz = seria × okres; pusta wartość oznacza brak danych, nigdy zero.\nDaty są rosnące. date_precision i period zachowują dokładność źródła. Roczne daty 31 grudnia i kotwice fiskalne służą porządkowaniu, nie oznaczają pomiaru dziennego.\nNie sumuj stanów, procentów i przepływów. Nie mieszaj USD o różnych latach cenowych, MAU/WAU ani BEV/BEV+PHEV.\nkind=derived oznacza obliczenie; lower-bound oznacza dolną granicę, nie dokładny wynik.\nPunkty przejściowe animacji nie są nowymi obserwacjami.\nLicencje oryginalnych dostawców zachowują moc; metadane OWID i bezpośrednie URL źródeł są w pakiecie.\nOdtwarzanie: scripts/build-story-data.py; pobieranie: scripts/fetch-story-sources.mjs, fetch-story-files.mjs, fetch-story-filings.mjs.\n'''
+readme='''# Plotwist — biblioteka historii\n\nSnapshot źródeł, nie bieżący feed. manifest.json opisuje serie, źródła i ograniczenia każdego tematu.\nPełny all-observations.csv jest w archiwum ZIP; pojedyncze tematy mają osobne CSV i JSON.\nCSV ma format długi: jeden wiersz = seria × okres; pusta wartość oznacza brak danych, nigdy zero.\nDaty są rosnące. date_precision i period zachowują dokładność źródła. Roczne daty 31 grudnia i kotwice fiskalne służą porządkowaniu, nie oznaczają pomiaru dziennego.\nNie sumuj stanów, procentów i przepływów. Nie mieszaj USD o różnych latach cenowych, MAU/WAU ani BEV/BEV+PHEV.\nkind=derived oznacza obliczenie; lower-bound oznacza dolną granicę, nie dokładny wynik.\nPunkty przejściowe animacji nie są nowymi obserwacjami.\nLicencje oryginalnych dostawców zachowują moc; metadane OWID i bezpośrednie URL źródeł są w pakiecie.\nOdtwarzanie: scripts/build-story-data.py; pobieranie: scripts/fetch-story-sources.mjs, fetch-story-files.mjs, fetch-story-filings.mjs.\n'''
 (OUT/'README.md').write_text(readme,encoding='utf8')
 guide=readme+'\n## Tematy i dostępna historia\n\n'
 for t in TOPICS.values():
  guide+=f"### {t['title']}\n\n{t['seriesCount']} serii; {t['count']} obserwacji; {t['start'] or '—'} → {t['end'] or '—'}. Status: {t['status']}.\n\n{t['note']}\n\n"+'\n'.join('- '+a for a in t['variants'])+'\n\n'
 (OUT/'STORY-GUIDE.md').write_text(guide,encoding='utf8')
 (OUT/'TECHNOLOGY-COSTS.md').write_text((ROOT/'research/stories/technology-costs.md').read_text(encoding='utf8'),encoding='utf8')
+(OUT/'WORLD-BANK.md').write_text((ROOT/'research/world-bank/README.md').read_text(encoding='utf8'),encoding='utf8')
 with zipfile.ZipFile(OUT/'plotwist-story-datasets.zip','w',compression=zipfile.ZIP_DEFLATED) as z:
+ with z.open('all-observations.csv','w',force_zip64=True) as entry:
+  with io.TextIOWrapper(entry,encoding='utf-8-sig',newline='') as text:
+   writer=csv.writer(text);writer.writerow(headers);writer.writerows(sorted(csvRows(SERIES.values()),key=lambda r:(r[5],r[1])))
  for p in OUT.iterdir():
-  if p.suffix in ['.json','.csv','.md']:z.write(p,p.name)
+  if p.suffix in ['.json','.md']:z.write(p,p.name)
  for p in RAW.glob('*.metadata.json'):z.write(p,'source-metadata/'+p.name)
  for pattern in ['epoch-thought-*','epoch-chip-performance.csv*','nhgri-sequencing-costs.xls*']:
   for p in RAW.glob(pattern):z.write(p,'technology-cost-sources/'+p.name)
+ for p in RAW.glob('gdp-per-capita-maddison-project-database.*'):z.write(p,'historical-economy-sources/'+p.name)
+ z.write(ROOT/'research/world-bank/receipt.json','world-bank-sources/receipt.json')
  z.write(ROOT/'research/stories/extracted-financial-tables.json','evidence/extracted-financial-tables.json')
 print(json.dumps({k:v for k,v in quality.items() if k!='coverage'},ensure_ascii=False))
 for t in TOPICS.values():print(t['id'],t['seriesCount'],t['count'],t['start'],t['end'],t['status'])
