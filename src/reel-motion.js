@@ -38,14 +38,14 @@ export const motionPresets=[
  sequence('finale','Historia z finałem','Pisany tytuł, dane i podpis na końcu',track('write',.01,.17),track('fade',.23,.08),.28,{signature:track('rise',.8,.09),stickers:track('pop',.72,.09)})
 ];
 export function normalizeTrack(raw={},id='title'){
- const allowed=motionEffects.map(([id])=>id).filter(effect=>textMotionRoles.has(id)||!textMotionEffects.has(effect));
+ const allowed=motionEffects.map(([id])=>id).filter(effect=>textMotionRoles.has(id)||id.startsWith('overlay:')||!textMotionEffects.has(effect));
  const start=number(raw.start,0,0,id==='content'?.5:.8),duration=number(raw.duration,.1,.015,Math.min(.3,(id==='content'?.6:.92)-start));
  return {effect:allowed.includes(raw.effect)?raw.effect:'none',start,duration,easing:motionEasings.some(([id])=>id===raw.easing)?raw.easing:'smooth'};
 }
 export function normalizeMotion(raw={}){
  raw=raw&&typeof raw==='object'?raw:{};
  const tracks=Object.fromEntries(motionRoles.map(([id])=>[id,normalizeTrack(raw.tracks?.[id]||{},id)]));
- for(const [id,value] of Object.entries(raw.tracks||{}).filter(([id,value])=>id.startsWith('sticker:')&&id.length<180&&value&&typeof value==='object').slice(0,3))tracks[id]=normalizeTrack(value,id);
+ for(const [id,value] of Object.entries(raw.tracks||{}).filter(([id,value])=>(id.startsWith('sticker:')||id.startsWith('overlay:'))&&id.length<180&&value&&typeof value==='object').slice(0,23))tracks[id]=normalizeTrack(value,id);
  const preset=motionPresets.find(p=>p.id===raw.preset),mystery=normalizeMystery(raw.mystery||preset?.mystery),typingRaw=raw.typing||preset?.typing||{},typing={enabled:typingRaw.enabled===true&&!mystery.enabled,style:typingStyles.some(([id])=>id===typingRaw.style)?typingRaw.style:'classic',cursor:typingCursors.some(([id])=>id===typingRaw.cursor)?typingRaw.cursor:'bar',blink:typingRaw.blink!==false};
  const chartStart=mystery.enabled?mystery.chartAt+mystery.fade:typing.enabled?number(!raw.typing&&preset?.typing?preset.chartStart:raw.chartStart,.56,.2,.6):number(raw.chartStart,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,tracks.content.effect==='none'?0:tracks.content.start+tracks.content.duration,.6);
  if(mystery.enabled)tracks.content=track('fade',mystery.chartAt,mystery.fade);
@@ -65,7 +65,7 @@ export function motionState(config,id){
  const mystery=mysteryFrame(config);
  if(mystery&&id!=='title')return id==='content'?mystery.chart:mystery.answer;
  if(!m?.enabled||!frame||config.editorPreview||config._typingCapture||id==='source'||isSequentialTyping(config)&&id!=='content'&&id!=='mark'&&!id.startsWith('sticker'))return {effect:'none',p:1,eased:1};
- const t=m.tracks[id]||(id.startsWith('sticker:')?m.tracks.stickers:null);
+ const t=m.tracks[id]||((id.startsWith('sticker:')||id.startsWith('overlay:'))?m.tracks.stickers:null);
  if(!t||t.effect==='none')return {effect:'none',p:1,eased:1};
  const p=clamp((frame.time/frame.duration-t.start)/t.duration);
  const eased=t.easing==='linear'?p:t.easing==='out'?1-(1-p)**3:p*p*(3-2*p);

@@ -5,6 +5,7 @@ import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill
 import {drawTextBlock,textStyleOf} from './reel-text.js';
 import {drawReelLogo} from './reel-logo.js';
 import {beginElement,textRect} from './reel-elements.js';
+import {drawReelOverlays} from './overlay-render.js';
 import {translate} from './translations.js';
 import {drawAiBrandComparison} from './ai-brand-render.js';
 import {aiValue as formatAiValue,frameAt} from './ai.js';
@@ -161,4 +162,5 @@ function drawAiReelFrame(canvas,config,progress,timeSeconds){
  wrap(ctx,dating,76,1700,928,22,2,muted,false,'source');wrap(ctx,warning,76,1760,928,22,2,muted,false,'source');wrap(ctx,`${b.source} · dane ${b.retrievedAt}`,76,1821,928,23,1,muted,false,'source');
  endSource();
  drawSignature(ctx,1080,1920,config.fontId,dark,config);
+ drawReelOverlays(ctx,1080,1920,config);
 }

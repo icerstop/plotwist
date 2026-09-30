@@ -18,7 +18,7 @@ export function normalizeSavedTheme(raw){
  const a=raw.appearance,b=a.background||{},design=normalizeDesign(a.design);
  // Data-specific captions and individual overlay tracks belong to the reel.
  design.preset=null;design.metricLabels={};
- design.motion.tracks=Object.fromEntries(Object.entries(design.motion.tracks).filter(([id])=>!id.startsWith('sticker:')));
+ design.motion.tracks=Object.fromEntries(Object.entries(design.motion.tracks).filter(([id])=>!id.startsWith('sticker:')&&!id.startsWith('overlay:')));
  const background={type:['theme','color','gradient','image'].includes(b.type)?b.type:'theme',color:color(b.color,'#142a35'),color2:color(b.color2,'#453375'),angle:number(b.angle,115,0,360),pattern:['none','grid','dots'].includes(b.pattern)?b.pattern:'none',animate:b.animate===true,veil:number(b.veil,0,0,.9),assetId:typeof b.assetId==='string'?b.assetId:null,fit:b.fit==='contain'?'contain':'cover',opacity:number(b.opacity,1,0,1),speed:number(b.speed,1,.25,2)};
  const logo=normalizeLogo(a.logo);
  if(b.source&&typeof b.source==='object')background.source={provider:String(b.source.provider||'').slice(0,100),id:String(b.source.id||'').slice(0,100),title:String(b.source.title||'').slice(0,200),url:/^https:\/\//.test(b.source.url||'')?b.source.url.slice(0,2000):'',providerUrl:/^https:\/\//.test(b.source.providerUrl||'')?b.source.providerUrl.slice(0,2000):''};
@@ -39,7 +39,7 @@ export function captureTheme({name,visuals,files={},fontId,id=crypto.randomUUID(
 }
 export function applySavedTheme(visuals,raw){
  const {appearance}=normalizeSavedTheme(raw),current=normalizeDesign(visuals.design);
- const overlayTracks=Object.fromEntries(Object.entries(current.motion.tracks).filter(([id])=>id.startsWith('sticker:')));
+ const overlayTracks=Object.fromEntries(Object.entries(current.motion.tracks).filter(([id])=>id.startsWith('sticker:')||id.startsWith('overlay:')));
  return {...visuals,...appearance,design:normalizeDesign({...appearance.design,metricLabels:current.metricLabels,motion:{...appearance.design.motion,tracks:{...appearance.design.motion.tracks,...overlayTracks}}})};
 }
 export function duplicateThemeName(themes,name,exceptId){const key=themeName(name).toLocaleLowerCase('pl');return themes.some(t=>t.id!==exceptId&&t.name.toLocaleLowerCase('pl')===key);}

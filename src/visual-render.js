@@ -4,6 +4,7 @@ import {registerElement} from './reel-elements.js';
 import {mediaFrame} from './reel-media.js';
 import {coverRect,stickerMotion} from './media-timeline.js';
 import {themeOf} from './reel-design.js';
+import {drawReelOverlays} from './overlay-render.js';
 
 export function drawVisualBackground(ctx,w,h,config,time=0){
  const v=config.visuals,b=v?.background;if(!b)return;
@@ -30,6 +31,7 @@ export function drawVisualBackground(ctx,w,h,config,time=0){
 }
 
 export function drawVisualOverlays(ctx,w,h,config,time=0,layer='front'){
+ if(layer==='behind')drawReelOverlays(ctx,w,h,config,layer);
  for(const sticker of config.visuals?.stickers||[]){
   if(!sticker.visible||sticker.layer!==layer)continue;
   const frame=mediaFrame(sticker.assetId,time,sticker.speed);if(!frame)continue;

@@ -1,4 +1,5 @@
 import React,{memo} from 'react';
+import {overlayName} from './reel-overlays.js';
 import {Play,RotateCcw} from 'lucide-react';
 import {useVisualStatus,Range} from './VisualSettings.jsx';
 import {motionPresets,motionRoles,motionEffects,motionEasings,motionPreset,normalizeMotion,textMotionRoles,textMotionEffects} from './reel-motion.js';
@@ -13,7 +14,7 @@ const PresetLibrary=memo(function PresetLibrary({selected,onSelect}){
 });
 export default function MotionEditor({config,playhead,onSeek,onReplay,target,setTarget,beforeChange}){
  const v=useVisualStatus(),{uiLanguage}=useLanguages(),m=v.visuals.design.motion,duration=config.duration||12,mystery=m.mystery.enabled;
- const choices=mystery?[['title','Tytuł']]:[...motionRoles,...v.visuals.stickers.map(s=>[`sticker:${s.id}`,s.name])],id=choices.some(([id])=>id===target)?target:'title',t=m.tracks[id]||m.tracks.stickers;
+ const choices=mystery?[['title','Tytuł']]:[...motionRoles,...v.visuals.stickers.map(s=>[`sticker:${s.id}`,s.name]),...v.visuals.overlays.map(o=>[`overlay:${o.id}`,overlayName(o,uiLanguage)])],id=choices.some(([id])=>id===target)?target:'title',t=m.tracks[id]||m.tracks.stickers;
  const seconds=n=>Math.round(n*duration*100)/100,format=n=>seconds(n).toLocaleString(uiLanguage==='en'?'en-GB':'pl-PL',{maximumFractionDigits:2})+' s';
  const update=patch=>v.design({motion:normalizeMotion({...m,...patch})});
  const track=patch=>update({preset:'custom',tracks:{...m.tracks,[id]:{...t,...patch}}});
@@ -54,7 +55,7 @@ export default function MotionEditor({config,playhead,onSeek,onReplay,target,set
   {!sequential&&<><details className="appearance-group" open><summary>Dopasuj animację elementu</summary>
    <label className="visual-field">Animowany element<select aria-label="Animowany element" value={id} onChange={e=>setTarget(e.target.value)}>{choices.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
    <fieldset disabled={!m.enabled} className="motion-track-settings" onFocusCapture={beforeChange} onPointerDownCapture={beforeChange}>
-    <label className="visual-field">Efekt wejścia<select aria-label="Efekt wejścia" value={t.effect} onChange={e=>track({effect:e.target.value})}>{motionEffects.filter(([effect])=>textMotionRoles.has(id)||!textMotionEffects.has(effect)).map(([effect,label])=><option key={effect} value={effect}>{label}</option>)}</select></label>
+    <label className="visual-field">Efekt wejścia<select aria-label="Efekt wejścia" value={t.effect} onChange={e=>track({effect:e.target.value})}>{motionEffects.filter(([effect])=>textMotionRoles.has(id)||v.visuals.overlays.some(o=>`overlay:${o.id}`===id&&o.kind==='text')||!textMotionEffects.has(effect)).map(([effect,label])=><option key={effect} value={effect}>{label}</option>)}</select></label>
     {t.effect!=='none'&&<>
      <Range label="Początek wejścia" min={0} max={seconds(id==='content'?.5:.8)} step={.01} suffix=" s" value={seconds(t.start)} onChange={n=>track({start:n/duration})}/>
      <Range label="Długość wejścia" min={seconds(.015)} max={seconds(Math.min(.3,(id==='content'?.6:.92)-t.start))} step={.01} suffix=" s" value={seconds(t.duration)} onChange={n=>track({duration:n/duration})}/>

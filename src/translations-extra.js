@@ -1,5 +1,47 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Dodaj element|Add element
+Tekst|Text
+Prostokąt|Rectangle
+Elipsa|Ellipse
+Linia|Line
+Strzałka|Arrow
+Obrazek / GIF|Image / GIF
+własnych elementów|custom elements
+Elementy na rolce|Reel elements
+Ukryty|Hidden
+Ukryj|Hide
+Pokaż|Show
+Usuń element|Delete element
+Przywróć na rolkę|Restore to reel
+Duplikuj|Duplicate
+Element jest usunięty z podglądu i eksportu. Możesz go przywrócić bez utraty tekstu i ustawień.|This element is removed from preview and export. Restore it without losing its text or settings.
+Treść własnego tekstu|Custom text content
+Własny tekst ma osobną treść dla polskiej i angielskiej wersji rolki. Enter zaczyna nowy wiersz; długie teksty zawijają się automatycznie.|Custom text has separate Polish and English content. Enter starts a new line; long text wraps automatically.
+Czcionka własnego tekstu|Custom text font
+Grubość własnego tekstu|Custom text weight
+Wielkość własnego tekstu|Custom text size
+Wyrównanie własnego tekstu|Custom text alignment
+Interlinia własnego tekstu|Custom text line spacing
+Kolor dodatku|Element color
+Szerokość dodatku|Element width
+Wysokość dodatku|Element height
+Wypełnienie kształtu|Shape fill
+Grubość linii dodatku|Element line thickness
+Zaokrąglenie dodatku|Element corner radius
+Pozycja X (%)|X position (%)
+Pozycja Y (%)|Y position (%)
+Pozycja X dodatku|Element X position
+Pozycja Y dodatku|Element Y position
+Skala dodatku|Element scale
+Obrót dodatku|Element rotation
+Widoczność dodatku|Element opacity
+Warstwa własnego elementu|Custom element layer
+Nad tekstem i wykresem|Above text and chart
+Przesuń niżej|Move backward
+Przesuń wyżej|Move forward
+Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.|Double-click or press Enter to edit text. Drag to move. The circle rotates; the corner scales. Arrows: 1 px, Shift: 10 px. Delete: remove. Ctrl/Cmd+Z: undo. Esc: deselect.
+
 Połącz różne wskaźniki|Combine different metrics
 zakres 0–100|0–100 range
 

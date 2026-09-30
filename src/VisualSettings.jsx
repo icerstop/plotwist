@@ -1,4 +1,5 @@
 import {normalizeCopies,updateCopy,copyScope} from './reel-copy.js';
+import {normalizeOverlays,normalizeHidden,newOverlay,overlayLimit,reorderOverlay} from './reel-overlays.js';
 import {seriesColor} from './chart-appearance.js';
 import {reelPresets,applyReelPreset} from './reel-presets.js';
 import {normalizeLogo,restoreLogo,reelLogoOptions} from './reel-logo.js';
@@ -16,7 +17,7 @@ import {downloadGif,gifError,GIF_PROVIDER,GIF_DOCS} from './gif-search.js';
 
 const defaultBackground={type:'theme',color:'#142a35',color2:'#453375',angle:115,pattern:'none',animate:false,veil:0,assetId:null,fit:'cover',opacity:1,speed:1};
 const validFont=id=>reelFonts.some(f=>f.id===id)?id:null;
-const emptyVisuals=()=>({copy:{},fontId:null,logo:normalizeLogo(),background:{...defaultBackground},stickers:[],design:normalizeDesign()});
+const emptyVisuals=()=>({copy:{},hidden:{},overlays:[],fontId:null,logo:normalizeLogo(),background:{...defaultBackground},stickers:[],design:normalizeDesign()});
 const VisualContext=createContext(null);
 export function VisualProvider({children}){
  const [visuals,setVisuals]=useState(emptyVisuals),[files,setFiles]=useState({}),[ready,setReady]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(''),[storage,setStorage]=useState('Wczytywanie dodatków…');
@@ -26,7 +27,7 @@ export function VisualProvider({children}){
   if(draft?.version===1){
    const restored={};let failed=false;
    for(const [id,file] of Object.entries(draft.files||{})){try{await decodeMedia(file,id);restored[id]=file;}catch{failed=true;}}
-   if(active){const v=draft.visuals;setFiles(restored);setVisuals({copy:normalizeCopies(v.copy),fontId:validFont(v.fontId),logo:restoreLogo(v.logo,restored),design:normalizeDesign(v.design),background:{...defaultBackground,...v.background,...(v.background?.assetId&&!restored[v.background.assetId]?{type:'theme',assetId:null}:{})},stickers:(v.stickers||[]).filter(s=>restored[s.assetId]).slice(0,3)});if(failed)setError('Nie udało się przywrócić jednego z plików. Wgraj go ponownie.');}
+   if(active){const v=draft.visuals;setFiles(restored);setVisuals({copy:normalizeCopies(v.copy),hidden:normalizeHidden(v.hidden),overlays:normalizeOverlays(v.overlays),fontId:validFont(v.fontId),logo:restoreLogo(v.logo,restored),design:normalizeDesign(v.design),background:{...defaultBackground,...v.background,...(v.background?.assetId&&!restored[v.background.assetId]?{type:'theme',assetId:null}:{})},stickers:(v.stickers||[]).filter(s=>restored[s.assetId]).slice(0,3)});if(failed)setError('Nie udało się przywrócić jednego z plików. Wgraj go ponownie.');}
   }
  }catch{if(active)setStorage('Zapis lokalny niedostępny. Dodatki działają w tej sesji.');}finally{if(active)setReady(true);}})();return()=>{active=false;};},[]);
  useEffect(()=>{if(!ready)return;let active=true;setStorage('Zapisywanie w przeglądarce…');const timer=setTimeout(()=>{saveVisualDraft({version:1,visuals,files}).then(()=>{if(active)setStorage('Zapisano w tej przeglądarce');}).catch(()=>{if(active)setStorage('Brak miejsca na zapis. Dodatki działają w tej sesji.');});},450);return()=>{active=false;clearTimeout(timer);};},[visuals,files,ready]);
@@ -50,14 +51,27 @@ export function VisualProvider({children}){
  }
  function importGif(item,target){return upload(()=>downloadGif(item),target,{provider:GIF_PROVIDER,id:item.id,title:item.title,url:item.url,providerUrl:GIF_DOCS});}
  function reorder(id,direction){setVisuals(v=>{const list=[...v.stickers],i=list.findIndex(s=>s.id===id),j=i+direction;if(j<0||j>=list.length)return v;[list[i],list[j]]=[list[j],list[i]];return {...v,stickers:list};});}
- function reset(){const keep=visuals.logo.assetId;for(const id of Object.keys(files))if(id!==keep)releaseMedia(id);setFiles(f=>keep&&f[keep]?{[keep]:f[keep]}:{});setVisuals(v=>({...emptyVisuals(),logo:v.logo,design:v.design,fontId:v.fontId,copy:v.copy}));setError('');}
+ function reset(){const keep=visuals.logo.assetId;for(const id of Object.keys(files))if(id!==keep)releaseMedia(id);setFiles(f=>keep&&f[keep]?{[keep]:f[keep]}:{});setVisuals(v=>({...emptyVisuals(),logo:v.logo,design:v.design,fontId:v.fontId,copy:v.copy,hidden:v.hidden,overlays:v.overlays}));setError('');}
  function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch,preset:null})}));}
  function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
  function element(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,elements:{...v.design.elements,[id]:{...v.design.elements[id],...patch}}})}));}
  function copy(key,value){setVisuals(v=>({...v,copy:updateCopy(v.copy,key,value)}));}
+ function hide(id,hidden){setVisuals(v=>({...v,hidden:normalizeHidden({...v.hidden,[id]:hidden})}));}
+ function addOverlay(kind){if(visuals.overlays.length>=overlayLimit)return null;const o=newOverlay(kind);if(!o)return null;setVisuals(v=>({...v,overlays:normalizeOverlays([...v.overlays,o])}));return o.id;}
+ function overlay(id,patch){setVisuals(v=>({...v,overlays:normalizeOverlays(v.overlays.map(o=>o.id===id?{...o,...patch}:o))}));}
+ function duplicateOverlay(id){if(visuals.overlays.length>=overlayLimit)return null;const original=visuals.overlays.find(o=>o.id===id);if(!original)return null;const o={...original,id:crypto.randomUUID(),x:Math.min(95,original.x+3),y:Math.min(95,original.y+3)};setVisuals(v=>{const motion=v.design.motion,track=motion.tracks[`overlay:${id}`];return {...v,overlays:normalizeOverlays([...v.overlays,o]),design:track?normalizeDesign({...v.design,motion:{...motion,tracks:{...motion.tracks,[`overlay:${o.id}`]:track}}}):v.design};});return o.id;}
+ function removeOverlay(id){setVisuals(v=>{const tracks={...v.design.motion.tracks};delete tracks[`overlay:${id}`];return {...v,overlays:v.overlays.filter(o=>o.id!==id),design:normalizeDesign({...v.design,motion:{...v.design.motion,tracks}})};});}
+ function orderOverlay(id,direction){setVisuals(v=>({...v,overlays:reorderOverlay(v.overlays,id,direction)}));}
  function textStyle(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,text:{...v.design.text,[id]:{...v.design.text[id],...patch}}})}));}
  function metricLabel(key,language,text){setVisuals(v=>({...v,design:normalizeDesign({...v.design,metricLabels:{...v.design.metricLabels,[key]:{...v.design.metricLabels[key],[language]:text}}})}));}
- function restoreComposition(saved){setVisuals(v=>({...v,copy:normalizeCopies(saved.copy),design:normalizeDesign(saved.design),stickers:v.stickers.map(s=>({...s,...saved.stickers.find(old=>old.id===s.id)}))}));}
+ async function restoreComposition(saved){
+  if(operation.current)return;
+  const media=saved.files||{},missing=Object.keys(media).filter(id=>!mediaAsset(id));
+  const apply=()=>{setFiles(f=>({...f,...media}));setVisuals(v=>({...v,copy:normalizeCopies(saved.copy),hidden:normalizeHidden(saved.hidden),overlays:normalizeOverlays(saved.overlays),design:normalizeDesign(saved.design),stickers:saved.stickers.filter(s=>mediaAsset(s.assetId))}));};
+  if(!missing.length){apply();return;}
+  operation.current=true;setBusy(true);setError('');
+  try{await Promise.all(missing.map(id=>decodeMedia(media[id],id)));apply();}catch(e){setError(e.message);}finally{operation.current=false;setBusy(false);}
+ }
  function applyPreset(id){setPresetUndo({design:visuals.design,fontId:visuals.fontId,background:visuals.background});setVisuals(v=>applyReelPreset(v,id));}
  function undoPreset(){if(presetUndo)setVisuals(v=>({...v,...presetUndo}));setPresetUndo(null);}
  async function applyTheme(raw){
@@ -74,7 +88,7 @@ export function VisualProvider({children}){
   }catch(error){for(const id of decoded)releaseMedia(id);throw error;}
   finally{operation.current=false;setBusy(false);}
  }
- const context={captureTheme:options=>captureTheme({...options,visuals,files}),applyTheme,applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>({...v,fontId:validFont(fontId),design:{...v.design,preset:null}})),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,copy,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
+ const context={mediaFiles:files,hide,addOverlay,overlay,duplicateOverlay,removeOverlay,orderOverlay,captureTheme:options=>captureTheme({...options,visuals,files}),applyTheme,applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>({...v,fontId:validFont(fontId),design:{...v.design,preset:null}})),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,copy,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,_copyScope:copyScope(config),fontId:visuals.fontId||config.fontId,visuals,duration}),[config,visuals,duration]);}

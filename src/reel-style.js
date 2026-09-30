@@ -58,4 +58,4 @@ export function drawSignature(ctx,width,height,fontId,dark,config={}){
  ctx.restore();end();
 }
 
-export const configFontIds=config=>[...new Set([config.fontId,...Object.values(designOf(config).text||{}).map(t=>t.fontId)].filter(Boolean))];
+export const configFontIds=config=>[...new Set([config.fontId,...Object.values(designOf(config).text||{}).map(t=>t.fontId),...(config.visuals?.overlays||[]).filter(o=>o.visible).map(o=>o.fontId)].filter(Boolean))];
