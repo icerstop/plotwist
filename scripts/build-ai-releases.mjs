@@ -1,0 +1,68 @@
+// Curated from dated first-party availability notices, never benchmark metadata.
+import {writeFile,mkdir} from 'node:fs/promises';
+import {releaseMonths,releaseCsv,validateReleases} from '../src/ai-releases.js';
+const anthropic='https://platform.claude.com/docs/en/release-notes/overview';
+const openai='https://developers.openai.com/api/docs/changelog';
+const post=slug=>`https://openai.com/index/${slug}/`;
+const rows=[];
+function add(date,publisher,names,sourceUrl,category='general',notes='',availability='public'){
+ for(const name of names.split('|'))rows.push({id:`${publisher}-${name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}-${date}`,date,publisher,name,category,availability,sourceUrl,notes,verifiedAt:'2026-09-30'});
+}
+add('2024-03-04','anthropic','Claude 3 Opus|Claude 3 Sonnet','https://www.anthropic.com/news/claude-3-family');
+add('2024-03-13','anthropic','Claude 3 Haiku','https://www.anthropic.com/news/claude-3-haiku');
+add('2024-05-13','openai','GPT-4o',openai);
+add('2024-06-20','anthropic','Claude 3.5 Sonnet',anthropic,'general','Availability notice: June 20. The current announcement page displays June 21; the API release notes explicitly confirm availability on June 20.');
+add('2024-07-18','openai','GPT-4o mini',openai);
+add('2024-09-12','openai','o1-preview|o1-mini',openai,'general','Public preview; not the December o1 release.');
+add('2024-10-22','anthropic','Claude 3.5 Sonnet v2','https://www.anthropic.com/news/3-5-models-and-computer-use','revision','Explicitly announced new revision under the same family name; can be excluded.');
+add('2024-11-04','anthropic','Claude 3.5 Haiku',anthropic,'general','October 22 was the announcement. API availability began November 4.');
+add('2024-12-05','openai','o1',post('introducing-chatgpt-pro'),'general','First customer availability in ChatGPT; December 17 was API availability. Pro mode is not a separate entry.');
+add('2025-01-31','openai','o3-mini',post('openai-o3-mini'));
+add('2025-02-24','anthropic','Claude 3.7 Sonnet',anthropic);
+add('2025-02-27','openai','GPT-4.5',openai,'general','Public research preview.');
+add('2025-04-14','openai','GPT-4.1|GPT-4.1 mini|GPT-4.1 nano',post('gpt-4-1'));
+add('2025-04-16','openai','o3|o4-mini',post('introducing-o3-and-o4-mini'));
+add('2025-05-16','openai','codex-1|codex-mini',post('introducing-codex'),'coding','Named coding models; separate from the Codex application. Public preview.');
+add('2025-05-22','anthropic','Claude Opus 4|Claude Sonnet 4',anthropic);
+add('2025-08-05','openai','gpt-oss-120b|gpt-oss-20b',post('introducing-gpt-oss'),'open-weight');
+add('2025-08-05','anthropic','Claude Opus 4.1',anthropic);
+add('2025-08-07','openai','GPT-5|GPT-5 mini|GPT-5 nano',openai,'general','Canonical named model entries; ChatGPT routing labels and Pro compute modes are not additional releases.');
+add('2025-09-15','openai','GPT-5-Codex',post('introducing-upgrades-to-codex'),'coding','Available in Codex September 15; API September 23.');
+add('2025-09-29','anthropic','Claude Sonnet 4.5',anthropic);
+add('2025-10-15','anthropic','Claude Haiku 4.5',anthropic);
+add('2025-11-12','openai','GPT-5.1',post('gpt-5-1'),'general','First ChatGPT rollout. Instant/Thinking/Pro product modes are not counted separately in this catalogue.');
+add('2025-11-13','openai','GPT-5.1-Codex|GPT-5.1-Codex mini',post('gpt-5-1-for-developers'),'coding');
+add('2025-11-19','openai','GPT-5.1-Codex-Max',post('gpt-5-1-codex-max'),'coding','A separately named trained model, not the Max effort setting. API followed December 4.');
+add('2025-11-24','anthropic','Claude Opus 4.5',anthropic);
+add('2025-12-11','openai','GPT-5.2',post('introducing-gpt-5-2'),'general','Instant/Thinking/Pro modes grouped as one named version, consistently with GPT-5.1.');
+add('2025-12-18','openai','GPT-5.2-Codex',post('introducing-gpt-5-2-codex'),'coding','Codex availability; API followed January 14, 2026.');
+add('2026-02-05','openai','GPT-5.3-Codex',post('introducing-gpt-5-3-codex'),'coding','Codex availability; API followed February 24.');
+add('2026-02-05','anthropic','Claude Opus 4.6',anthropic);
+add('2026-02-12','openai','GPT-5.3-Codex-Spark',post('introducing-gpt-5-3-codex-spark'),'coding','Research preview for Pro subscribers.');
+add('2026-02-17','anthropic','Claude Sonnet 4.6',anthropic);
+add('2026-03-03','openai','GPT-5.3 Instant',openai);
+add('2026-03-05','openai','GPT-5.4',openai);
+add('2026-03-17','openai','GPT-5.4 mini|GPT-5.4 nano',openai);
+add('2026-04-16','anthropic','Claude Opus 4.7',anthropic);
+add('2026-04-23','openai','GPT-5.5',post('introducing-gpt-5-5'),'general','First customer availability; API April 24.');
+add('2026-05-28','anthropic','Claude Opus 4.8',anthropic);
+add('2026-06-09','anthropic','Claude Fable 5',anthropic);
+add('2026-06-30','anthropic','Claude Sonnet 5',anthropic);
+add('2026-07-09','openai','GPT-5.6 Sol|GPT-5.6 Terra|GPT-5.6 Luna',openai);
+add('2026-07-24','anthropic','Claude Opus 5',anthropic);
+add('2026-09-01','anthropic','Claude Fable 5.1',anthropic);
+add('2026-09-03','openai','GPT-6 Astra',openai);
+add('2026-09-22','openai','GPT-6 Sol|GPT-6 Luna',openai);
+add('2026-09-22','anthropic','Claude Opus 5.5',anthropic);
+add('2026-09-28','anthropic','Claude Sonnet 5.5',anthropic);
+add('2026-09-29','openai','GPT-6.1 Sol',openai);
+rows.sort((a,b)=>a.date.localeCompare(b.date)||a.publisher.localeCompare(b.publisher)||a.name.localeCompare(b.name));
+const data={id:'ai-releases-v1',verifiedAt:'2026-09-30',coverage:{start:'2024-01-01',end:'2026-09-30',complete:false},publishers:['openai','anthropic'],
+ methodology:{pl:'Kuratorski katalog nazwanych wersji modeli językowych OpenAI i Anthropic. Data oznacza pierwsze potwierdzone udostępnienie klientom (także płatny preview), a nie datę testu lub późniejszej premiery API. Mini/nano i nazwane modele Codex są oddzielnymi pozycjami; Instant/Thinking/Pro dla GPT-5.1/5.2 są grupowane. Nie jest to pełny rejestr wszystkich premier AI. Zero oznacza brak pozycji w tym katalogu.',en:'Curated catalogue of named OpenAI and Anthropic language-model versions. Dates mark first confirmed customer availability (including paid previews), not benchmark dates or later API launches. Mini/nano and named Codex models are separate entries; GPT-5.1/5.2 Instant/Thinking/Pro are grouped. This is not an exhaustive AI release registry. Zero means no entry in this catalogue.'},
+ exclusions:{pl:'Poza licznikiem: zapowiedzi bez dostępności, zamknięte programy Mythos/Glasswing, obrazy/audio/wideo, embeddingi, moderacja, warianty deep research, tryby Pro/Fast/Ultrafast i poziomy effort, rutynowe snapshoty oraz ponowne udostępnienia na innych platformach. Sonnet 3.5 v2 jest jawną opcjonalną aktualizacją.',en:'Excluded: announcements without availability, restricted Mythos/Glasswing programmes, image/audio/video, embeddings, moderation, deep-research variants, Pro/Fast/Ultrafast modes and effort levels, routine snapshots and later platform rollouts. Sonnet 3.5 v2 is an explicit optional revision.'},rows};
+validateReleases(data);
+await mkdir('public/ai',{recursive:true});
+await writeFile('public/ai/releases.json',JSON.stringify(data,null,2)+'\n');
+await writeFile('public/ai/releases.csv',releaseCsv(rows));
+await writeFile('public/ai/release-months.json',JSON.stringify({coverage:data.coverage,scope:'All catalogue categories; counts are not an exhaustive measure of all AI releases.',months:releaseMonths(rows,data.coverage.start,data.coverage.end)},null,2)+'\n');
+console.log(JSON.stringify({entries:rows.length,launches:new Set(rows.map(r=>r.date+r.publisher)).size,september:rows.filter(r=>r.date.startsWith('2026-09')).map(r=>r.name)}));

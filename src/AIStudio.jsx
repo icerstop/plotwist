@@ -11,6 +11,7 @@ import {annotateAiBrands,aiBrandOptions,defaultAiBrands,aiBrandRuleVersion} from
 import {buildAiBrandHistory,brandLatestNote,brandRecordNote,aiModelLabel} from './ai-brand-history.js';
 import {preloadReelAssets} from './reel-assets.js';
 import './ai.css';
+import AIReleaseStudio from './AIReleaseStudio.jsx';
 const json=async(path,signal)=>{const r=await fetch(path,{signal});if(!r.ok)throw new Error('Nie udało się wczytać danych benchmarku. Odśwież stronę.');return r.json();};
 const safeUrl=url=>/^https:\/\//.test(url||'')?url:undefined;
 function TrackingInfo({data,onChoose}){
@@ -23,7 +24,11 @@ function TrackingInfo({data,onChoose}){
   {average?<div className="market-source-links"><button type="button" className="text-btn" onClick={()=>onChoose(`iq-${data.trackingTest}`)}>Pojedyncze próby · tekst</button><button type="button" className="text-btn" onClick={()=>onChoose(`iq-${data.trackingTest}-vision`)}>Pojedyncze próby · Vision</button></div>:<button type="button" className="secondary" onClick={()=>onChoose(`tracking-${data.trackingTest}-ranking`)}>Otwórz ranking jak w TrackingAI</button>}
  </div>;
 }
-export default function AIStudio({fontId='arial',onFontChange}){
+export default function AIStudio(props){
+ const [section,setSection]=useState('benchmarks');const {uiLanguage}=useLanguages();const en=uiLanguage==='en';
+ return <><nav className="ai-section-switch" aria-label={en?'AI studio section':'Sekcja studia AI'}><button className={section==='benchmarks'?'selected':''} aria-pressed={section==='benchmarks'} onClick={()=>setSection('benchmarks')}>{en?'Benchmarks':'Benchmarki'}</button><button className={section==='releases'?'selected':''} aria-pressed={section==='releases'} onClick={()=>setSection('releases')}>{en?'Model releases':'Premiery modeli'}</button></nav>{section==='releases'?<AIReleaseStudio {...props}/>:<AIBenchmarkStudio {...props}/>}</>;
+}
+function AIBenchmarkStudio({fontId='arial',onFontChange}){
  const {uiLanguage,reelLanguage}=useLanguages();const aiValue=value=>formatAiValue(value,uiLanguage,data?.scoreDecimals??1);
  const [titleIsCustom,setTitleIsCustom]=useState(false);
  const [format,setFormat]=useState(()=>{try{const saved=localStorage.getItem('plotwist-ai-format-v1');return ['9:16','4:5','1:1'].includes(saved)?saved:'9:16';}catch{return '9:16';}});

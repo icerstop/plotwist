@@ -7,6 +7,7 @@ import {drawReelLogo} from './reel-logo.js';
 import {resetElements,beginElement,textRect} from './reel-elements.js';
 import { timelineDate } from './observation-date.js';
 import { drawAiReel } from './ai-render.js';
+import {drawReleaseReel} from './ai-release-render.js';
 import { reelFont, reelTitleSize, drawSignature } from './reel-style.js';
 import { preloadReelAssets } from './reel-assets.js';
 import { drawVisualBackground, drawVisualOverlays } from './visual-render.js';
@@ -20,6 +21,7 @@ export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.d
 }
 function drawReelFrame(canvas,config,progress,timeSeconds){
  resetElements(canvas);resetReelCopy(canvas);
+ if(config.releases){drawReleaseReel(canvas,config,progress,timeSeconds);return;}
  if(config.ai){drawAiReel(canvas,config,progress,timeSeconds);return;}
  const motionFrame=reelMotionFrame(config,progress,timeSeconds);config=motionFrame.config;progress=motionFrame.progress;
  const ctx=canvas.getContext('2d'); const {series=[],theme='dark',format='9:16',chart='line',unit='',isCoffee=false,xType='year'}=config;

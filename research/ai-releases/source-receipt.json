@@ -1,0 +1,187 @@
+[
+  {
+    "id": "openai-changelog",
+    "url": "https://developers.openai.com/api/docs/changelog.md",
+    "retrievedAt": "2026-09-30T19:00:29.066539+00:00",
+    "sha256": "2720a98f3bb17da4a5571abf7cc0e98d9edcd5c7dde2f77a48f6d5a0bf415d30",
+    "textSha256": "2720a98f3bb17da4a5571abf7cc0e98d9edcd5c7dde2f77a48f6d5a0bf415d30",
+    "file": "openai-changelog.txt",
+    "chars": 72128
+  },
+  {
+    "id": "anthropic-changelog",
+    "url": "https://platform.claude.com/docs/en/release-notes/overview",
+    "retrievedAt": "2026-09-30T19:00:29.495451+00:00",
+    "sha256": "ec9644873fb93c90bfc57bd8140c78a3f1f40127be142e747b5d01ded31a56b5",
+    "textSha256": "260edac745e6f8a18da2136dbf0765730c1684fd720fa6af6b67801c85c338ac",
+    "file": "anthropic-changelog.txt",
+    "chars": 83264
+  },
+  {
+    "id": "anthropic-news",
+    "url": "https://www.anthropic.com/news",
+    "retrievedAt": "2026-09-30T19:00:29.256445+00:00",
+    "sha256": "c6bb9b82ac589eff25a49cdb21370c35b12f83e99a4b6d695c3227a7a90cd4cb",
+    "textSha256": "50b08180b146230a07aac6da0a9dcf0e3e49e9d58ab3702e72257264db0bc453",
+    "file": "anthropic-news.txt",
+    "chars": 3579
+  },
+  {
+    "id": "claude3",
+    "url": "https://www.anthropic.com/news/claude-3-family",
+    "retrievedAt": "2026-09-30T19:02:57.338320+00:00",
+    "sha256": "1c06c768ca114892a28eaba98f0aa068db485b109aad944c46d9e9848439abb0",
+    "textSha256": "64e29720edf395310dd5a4e56fa9d65659254b42dde2718a23f19440a17fb44b",
+    "file": "claude3.txt",
+    "chars": 13204
+  },
+  {
+    "id": "haiku3",
+    "url": "https://www.anthropic.com/news/claude-3-haiku",
+    "retrievedAt": "2026-09-30T19:02:57.219381+00:00",
+    "sha256": "d76b16a919e9512adf9aee7998bdbfbc4d3ceeef0cfde0ea7e5cb4ac5c53248d",
+    "textSha256": "2a5f426d2152509b31cc83009684d031bf75f23aa042c6996dd25f11470f6b45",
+    "file": "haiku3.txt",
+    "chars": 4808
+  },
+  {
+    "id": "sonnet35",
+    "url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+    "retrievedAt": "2026-09-30T19:02:57.509306+00:00",
+    "sha256": "5ba08429c6a0c90c8b2356b497569742b7686b64faee6229f5650520e36d2d65",
+    "textSha256": "81137cd12569fb6a74ce29e714d5d2f6c2c286763cb29ad8e665c5a481cf039e",
+    "file": "sonnet35.txt",
+    "chars": 8114
+  },
+  {
+    "id": "sonnet35v2",
+    "url": "https://www.anthropic.com/news/3-5-models-and-computer-use",
+    "retrievedAt": "2026-09-30T19:02:57.463562+00:00",
+    "sha256": "ddbea0c898b0282e4e320aacf6af3fa35fc9b191f02163d4ecf9ad874d45a8d6",
+    "textSha256": "9ddeea4f31c898a5ba29344ac45bc387fcf094b15b810f617ab530cce730b450",
+    "file": "sonnet35v2.txt",
+    "chars": 9460
+  },
+  {
+    "id": "sonnet37",
+    "url": "https://www.anthropic.com/news/claude-3-7-sonnet",
+    "retrievedAt": "2026-09-30T19:02:57.275457+00:00",
+    "sha256": "3c4fb28d5f3ee264736c4fe0926f2c4e15fb8c4439ae8c5406878371313372ac",
+    "textSha256": "6fd39d72b94042e3d86bd194391c3ffb741115672254277b1b3d4959a9495ad8",
+    "file": "sonnet37.txt",
+    "chars": 13489
+  },
+  {
+    "id": "fable51",
+    "url": "https://www.anthropic.com/claude-fable-and-mythos-5-1",
+    "retrievedAt": "2026-09-30T19:02:57.463562+00:00",
+    "sha256": "5296a546646026f595c08d030ec333b5c20fde209e57777cf41f71cedd394090",
+    "textSha256": "2435b1cd8e06ac645fcb9f52e28a5c04d3975763207db154934f53687b9299d1",
+    "file": "fable51.txt",
+    "chars": 37393
+  },
+  {
+    "id": "mythospreview",
+    "url": "https://www.anthropic.com/news/claude-mythos-preview",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "id": "o1",
+    "url": "https://openai.com/index/introducing-chatgpt-pro/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "o3mini",
+    "url": "https://openai.com/index/openai-o3-mini/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "gpt41",
+    "url": "https://openai.com/index/gpt-4-1/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "o3o4",
+    "url": "https://openai.com/index/introducing-o3-and-o4-mini/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "codex1",
+    "url": "https://openai.com/index/introducing-codex/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "oss",
+    "url": "https://openai.com/index/introducing-gpt-oss/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "gpt5",
+    "url": "https://openai.com/index/introducing-gpt-5-for-developers/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "codex5",
+    "url": "https://openai.com/index/introducing-upgrades-to-codex/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "gpt51",
+    "url": "https://openai.com/index/gpt-5-1/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "codex51",
+    "url": "https://openai.com/index/gpt-5-1-for-developers/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "codex51max",
+    "url": "https://openai.com/index/gpt-5-1-codex-max/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "gpt52",
+    "url": "https://openai.com/index/introducing-gpt-5-2/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "codex52",
+    "url": "https://openai.com/index/introducing-gpt-5-2-codex/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "codex53",
+    "url": "https://openai.com/index/introducing-gpt-5-3-codex/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "spark",
+    "url": "https://openai.com/index/introducing-gpt-5-3-codex-spark/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "gpt55",
+    "url": "https://openai.com/index/introducing-gpt-5-5/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "gpt55instant",
+    "url": "https://openai.com/index/gpt-5-5-instant/",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "chat-notes",
+    "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "claude-notes",
+    "url": "https://support.claude.com/en/articles/12138966-release-notes",
+    "retrievedAt": "2026-09-30T19:02:59.731664+00:00",
+    "sha256": "d1662d2ebb0638f4414f8c9548f9cf7e62e19144f02c13deaf5ef3217f9a6cf5",
+    "textSha256": "e8ec85ab0d27b39ff1e827faa40658696d580228679e03a1414bb058eaa77430",
+    "file": "claude-notes.txt",
+    "chars": 46532
+  }
+]

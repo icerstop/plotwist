@@ -1,0 +1,241 @@
+{
+  "coverage": {
+    "start": "2024-01-01",
+    "end": "2026-09-30",
+    "complete": false
+  },
+  "scope": "All catalogue categories; counts are not an exhaustive measure of all AI releases.",
+  "months": [
+    {
+      "month": "2024-01",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2024-02",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2024-03",
+      "count": 3,
+      "openai": 0,
+      "anthropic": 3,
+      "partial": false
+    },
+    {
+      "month": "2024-04",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2024-05",
+      "count": 1,
+      "openai": 1,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2024-06",
+      "count": 1,
+      "openai": 0,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2024-07",
+      "count": 1,
+      "openai": 1,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2024-08",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2024-09",
+      "count": 2,
+      "openai": 2,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2024-10",
+      "count": 1,
+      "openai": 0,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2024-11",
+      "count": 1,
+      "openai": 0,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2024-12",
+      "count": 1,
+      "openai": 1,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2025-01",
+      "count": 1,
+      "openai": 1,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2025-02",
+      "count": 2,
+      "openai": 1,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2025-03",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2025-04",
+      "count": 5,
+      "openai": 5,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2025-05",
+      "count": 4,
+      "openai": 2,
+      "anthropic": 2,
+      "partial": false
+    },
+    {
+      "month": "2025-06",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2025-07",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2025-08",
+      "count": 6,
+      "openai": 5,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2025-09",
+      "count": 2,
+      "openai": 1,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2025-10",
+      "count": 1,
+      "openai": 0,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2025-11",
+      "count": 5,
+      "openai": 4,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2025-12",
+      "count": 2,
+      "openai": 2,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2026-01",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2026-02",
+      "count": 4,
+      "openai": 2,
+      "anthropic": 2,
+      "partial": false
+    },
+    {
+      "month": "2026-03",
+      "count": 4,
+      "openai": 4,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2026-04",
+      "count": 2,
+      "openai": 1,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2026-05",
+      "count": 1,
+      "openai": 0,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2026-06",
+      "count": 2,
+      "openai": 0,
+      "anthropic": 2,
+      "partial": false
+    },
+    {
+      "month": "2026-07",
+      "count": 4,
+      "openai": 3,
+      "anthropic": 1,
+      "partial": false
+    },
+    {
+      "month": "2026-08",
+      "count": 0,
+      "openai": 0,
+      "anthropic": 0,
+      "partial": false
+    },
+    {
+      "month": "2026-09",
+      "count": 7,
+      "openai": 4,
+      "anthropic": 3,
+      "partial": false
+    }
+  ]
+}

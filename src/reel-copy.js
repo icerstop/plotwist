@@ -9,6 +9,7 @@ export function updateCopy(raw,key,value){
 }
 export function copyScope(config){
  if(config._copyScope)return config._copyScope;
+ if(config.releases)return JSON.stringify(['ai-releases']);
  return JSON.stringify(config.ai?['ai',config.ai.benchmark?.id]:['series',config.source,config.unit,config.isCoffee,config.series?.map(s=>s.id||s.key||s.symbol||s.countryCode||s.name).sort()]);
 }
 const labels={title:'Tytuł',subtitle:'Opis pod tytułem',metric:'Wspólny wskaźnik',date:'Data / rok',source:'Źródła i metodologia',signature:'Podpis autora',content:'Podpis wykresu'};

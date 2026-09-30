@@ -82,7 +82,7 @@ export function reelTextFont(config,role,size,fallback=400,family=reelFont(confi
 // Fit whole sections uniformly: charts, logos and type keep their proportions.
 // Positions are clamped to the content area; the attribution footer stays separate.
 export function sectionTransform(config,section,width,height){
- const ai=!!config.ai,short=height<1400,plot=['line','area','bar'].includes(config.chart||'line');
+ const ai=!!(config.ai||config.releases),short=height<1400,plot=['line','area','bar'].includes(config.chart||'line');
  const aiLayout=ai?aiFrameLayout(config.format):null;
  const start=ai?aiLayout.start:short?height*(plot ? .24 : .46):700,end=ai?aiLayout.end:height-(short?205:220);
  const base=section==='header'?{x:50,y:50,w:980,h:start-75}:{x:50,y:start,w:980,h:end-start};
