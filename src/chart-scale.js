@@ -79,7 +79,7 @@ export function createAxis(range,{log=false,dynamic=false,fixedDomain,includeZer
 }
 
 export function scaleCaption(config,scale=resolveScale(config)){
- if(!scale.hasAxis||!scale.dynamic&&!scale.log&&!scale.fallback)return '';
+ if(config.visuals?.design?.chart?.scaleCaption===false||!scale.hasAxis||!scale.dynamic&&!scale.log&&!scale.fallback)return '';
  const en=config.language==='en';
  return [scale.dynamic?(en?'Expanding range':'Zakres rosnący'):en?'Fixed range':'Zakres stały',scale.log?(en?'Log scale':'Skala logarytmiczna'):en?'Linear scale':'Skala liniowa'].join(' · ');
 }

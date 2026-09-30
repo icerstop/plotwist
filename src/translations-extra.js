@@ -909,6 +909,8 @@ Liczba poziomów osi Y|Y-axis tick count
 Liczba opisów osi X|X-axis label count
 W małym wykresie liczba opisów osi Y może być mniejsza, aby zachować czytelność.|Small charts may show fewer Y-axis labels to keep them readable.
 Pokaż opisy osi|Show axis labels
+Pokaż podpis zakresu i skali|Show range and scale caption
+Ustawienia skali są wspólne dla modułów i eksportu. Podpis zakresu i skali możesz wyłączyć w panelu Wygląd rolki → Wykres.|Scale settings are shared across modules and exports. You can hide the range and scale caption in Reel appearance → Chart.
 Kontrastowe tło pola wykresu|Contrasting plot background
 Pokaż legendę pod wykresem|Show legend below chart
 Wymiary wykresu zmienisz w zakładce Układ.|Change chart dimensions in the Layout tab.

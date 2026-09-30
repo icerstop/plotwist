@@ -25,7 +25,7 @@ export function PresentationPicker({family='series',value,onChange,hasBaseline=f
    <label className="field"><span className="field-label">Skala osi wartości</span><select aria-label="Skala osi wartości" value={logReason?'linear':axisScale} onChange={e=>setAxisScale(e.target.value)}><option value="linear">Liniowa</option><option value="log" disabled={!!logReason}>Logarytmiczna</option></select></label>
    <p>{logReason||'Na skali logarytmicznej taki sam odstęp oznacza taki sam mnożnik, np. 1 → 10 i 10 → 100. Wartości danych się nie zmieniają.'}</p>
    {axisScale==='log'&&logReason&&<small role="status">Dla tych danych lub tej prezentacji aktywna jest skala liniowa.</small>}
-   <small>Ustawienia skali są wspólne dla modułów i eksportu. Rodzaj skali jest oznaczony na rolce.</small>
+   <small>Ustawienia skali są wspólne dla modułów i eksportu. Podpis zakresu i skali możesz wyłączyć w panelu Wygląd rolki → Wykres.</small>
   </div>:<p>Ta prezentacja nie ma osi wartości. Skalowanie jest dostępne dla wykresów.</p>}
   <label className="field"><span className="field-label">Przejścia między danymi</span><select aria-label="Przejścia między danymi" value={transition} onChange={e=>setTransition(Number(e.target.value))}><option value={.65}>Płynne · 0,65 s</option><option value={1.1}>Spokojne · 1,1 s</option><option value={.3}>Dynamiczne · 0,3 s</option><option value={0}>Bez przejść</option></select></label>
   <small>Tempo przejść jest wspólne dla modułów. Liczby pozostają pomiarami ze źródła; wygładzamy ruch i przenikanie. Gęste dane mają krótsze przejścia.</small>
