@@ -11,7 +11,7 @@ import {sceneAt,aiMotionFrame,ease,lerp,clamp} from './presentation.js';
 import {crossText} from './series-render.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
 import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
-import {themeOf,textSize,textColor,setReelText,beginReelSection,chartTop,designOf} from './reel-design.js';
+import {themeOf,textSize,textColor,setReelText,reelTextFont,textWeight,beginReelSection,chartTop,designOf} from './reel-design.js';
 function typography(font,language,config){
 function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels'){
  if(!custom)text=translate(text,language);
@@ -21,7 +21,7 @@ function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels')
  return drawTextBlock(ctx,text,x,y,width,actual*1.22,max,true,config,role,title||role==='date');
 
 }
-function fit(ctx,text,width,size,min=26){const font=reelFont(designOf(config).text.values.fontId||config.fontId);size=textSize(config,'values',size);ctx.font=`bold ${size}px ${font}`;while(size>min&&ctx.measureText(text).width>width){size--;ctx.font=`bold ${size}px ${font}`;}ctx.fillStyle=textColor(config,'values',ctx.fillStyle);return size;}
+function fit(ctx,text,width,size,min=26){size=textSize(config,'values',size);ctx.font=reelTextFont(config,'values',size,'bold');while(size>min&&ctx.measureText(text).width>width){size--;ctx.font=reelTextFont(config,'values',size,'bold');}ctx.fillStyle=textColor(config,'values',ctx.fillStyle);return size;}
 return {wrap,fit};
 }
 export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
@@ -35,7 +35,7 @@ export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config
  drawVisualBackground(ctx,1080,1920,config,visualTime);
  const endHeader=beginReelSection(ctx,config,'header',1080,1920);
  drawReelLogo(ctx,config,visualTime,{x:76,y:73,h:50});
- wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270,textStyleOf(config,'title')),3,fg,true,'title');
+ wrap(ctx,title||b.name,76,304,928,reelTitleSize(ctx,title||b.name,designOf(config).text.title.fontId||config.fontId,textSize(config,'title',83),928,3,270,{...textStyleOf(config,'title'),weight:textWeight(config,'title','bold')}),3,fg,true,'title');
  const endSubtitle=beginElement(ctx,config,'subtitle',{x:76,y:508,w:928,h:168});
  const subtitleHeight=wrap(ctx,`${b.name}${b.unit?` (${b.unit})`:''}`,76,548,928,40,2,accent,false,'subtitle');
  if(scope)wrap(ctx,scope,76,548+subtitleHeight+18,928,28,1,muted,false,'subtitle');

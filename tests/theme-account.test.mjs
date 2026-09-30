@@ -7,7 +7,7 @@ import {captureTheme} from '../src/custom-themes.js';
 
 let mf;
 const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+Xb0sAAAAASUVORK5CYII=','base64');
-const theme=(name='My theme',id=crypto.randomUUID(),image=false)=>captureTheme({name,id,fontId:'caveat',visuals:{design:{theme:'paper'},logo:{type:'none'},background:image?{type:'image',assetId:'image'}:{type:'color',color:'#123456'}},files:image?{image:new File([png],'background.png',{type:'image/png'})}:{}});
+const theme=(name='My theme',id=crypto.randomUUID(),image=false)=>captureTheme({name,id,fontId:'caveat',visuals:{design:{theme:'paper',fontWeight:600,text:{title:{weight:700},signature:{weight:500}}},logo:{type:'none'},background:image?{type:'image',assetId:'image'}:{type:'color',color:'#123456'}},files:image?{image:new File([png],'background.png',{type:'image/png'})}:{}});
 const headers=owner=>({...owner?{'oai-authenticated-user-id':owner}:{},'X-Plotwist-Write':'1',Origin:'http://site.test'});
 const req=(path='',owner='alice',options={})=>mf.dispatchFetch('http://site.test/api/themes'+path,{...options,headers:{...headers(owner),...options.headers}});
 function save(t,revision=0,owner='alice'){
@@ -23,7 +23,7 @@ after(async()=>{await mf?.dispose();});
 test('account themes: identity, ownership, asset storage, conflicts, rename and delete',async()=>{
  assert.equal((await req('',null)).status,401);assert.equal((await mf.dispatchFetch('http://site.test/data/file.json')).status,200);
  const source=theme('Owned look',undefined,true),createdResponse=await save(source);assert.equal(createdResponse.status,201,await createdResponse.clone().text());const created=await createdResponse.json();assert.equal(created.revision,1);assert.equal(created.appearance.fontId,'caveat');assert.equal(created.assets[0].type,'image/png');assert.equal(created.assets[0].key,undefined);
- const alice=(await (await req()).json()).themes;assert.ok(alice.some(t=>t.id===source.id));assert.equal((await (await req('','bob')).json()).themes.length,0);
+ const alice=(await (await req()).json()).themes;assert.ok(alice.some(t=>t.id===source.id));assert.equal(alice[0].appearance.design.fontWeight,600);assert.equal(alice[0].appearance.design.text.title.weight,700);assert.equal(alice[0].appearance.design.text.signature.weight,500);assert.equal((await (await req('','bob')).json()).themes.length,0);
  assert.equal((await req('/'+source.id,'bob')).status,404);assert.equal((await req('/'+source.id+'/assets/image','bob')).status,404);assert.equal((await req('/'+source.id+'/assets/image',null)).status,401);
  const asset=await req('/'+source.id+'/assets/image');assert.equal(asset.headers.get('cache-control'),'private, no-store');assert.deepEqual(Buffer.from(await asset.arrayBuffer()),png);
  assert.equal((await save(theme('owned LOOK'))).status,409);assert.equal((await save(theme('Owned look'),0,'bob')).status,201);

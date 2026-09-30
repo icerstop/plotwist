@@ -74,5 +74,5 @@ test('subtitle units use explicit metadata and remain bilingual without rewritin
  assert.equal(localizeReelConfig({...cfg,subtitleParts:[{text:'My · label',custom:true},{text:'my unit',unit:true,custom:true}]},'en').subtitle,'My · label (my unit)');
  const custom='Do not · rewrite this caption';assert.equal(localizeReelConfig({subtitle:custom,subtitleIsCustom:true},'en').subtitle,custom);
  const {canvas,log}=recorder();drawReel(canvas,{title:'Title',subtitle:'Internet (%)',series:[{name:'A',points:[{x:2020,y:1},{x:2021,y:2}]}]},1,12);
- assert.ok(log.some(e=>e.type==='fill'&&e.args[0]==='Internet (%)'&&e.font==='38px Arial, Helvetica, sans-serif'));
+ assert.ok(log.some(e=>e.type==='fill'&&e.args[0]==='Internet (%)'&&e.font==='400 38px Arial, Helvetica, sans-serif'));
 });

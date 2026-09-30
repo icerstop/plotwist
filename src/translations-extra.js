@@ -932,6 +932,21 @@ Obrót tytułu, łagodne wejście wykresu|Title flips, chart enters gently
 Historia z finałem|Story with a finale
 Pisany tytuł, dane i podpis na końcu|Written title, data and a signature at the end
 Moje motywy|My themes
+Grubość czcionki rolki|Reel font weight
+Grubość czcionki elementu|Element font weight
+Z całej rolki / designu|From reel / design
+Automatyczna · z designu|Automatic · from design
+Cienka|Thin
+Bardzo lekka|Extra light
+Lekka|Light
+Średnia|Medium
+Półgruba|Semi bold
+Bardzo gruba|Extra bold
+Ciężka|Black
+Maksymalna|Extra black
+Ta czcionka ma jedną grubość. Wybierz inny krój, aby uzyskać więcej wariantów.|This font has one weight. Choose another font for more variants.
+Ten krój używa najbliższej dostępnej grubości. Zapisana wartość wróci po zmianie czcionki, jeśli będzie obsługiwana.|This font uses the nearest available weight. Your saved weight will return when you choose a font that supports it.
+Ustawienie wspólne. Elementy z własną grubością mają pierwszeństwo.|Shared setting. Elements with their own weight take priority.
 Usuń|Delete
 Odśwież motywy|Refresh themes
 Zapisz wygląd i korzystaj z niego na różnych urządzeniach po zalogowaniu na to samo konto.|Save your look and use it on different devices signed in to the same account.

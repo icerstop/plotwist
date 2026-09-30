@@ -12,3 +12,21 @@ export const reelFonts = [
 ];
 export const reelFont = id => (reelFonts.find(f=>f.id===id)||reelFonts[0]).family;
 
+export const fontWeightNames={100:'Cienka',200:'Bardzo lekka',300:'Lekka',400:'Zwykła',500:'Średnia',600:'Półgruba',700:'Pogrubiona',800:'Bardzo gruba',900:'Ciężka',1000:'Maksymalna'};
+export function normalizeFontWeight(value){
+ if(value==='normal')return 400;if(value==='bold')return 700;
+ if((typeof value==='number'||typeof value==='string'&&/^\d+$/.test(value))&&Number.isInteger(Number(value))&&Number(value)>=100&&Number(value)<=1000)return Number(value);
+ return 'auto';
+}
+// Offer only weights present in the bundled faces. System fonts use regular/bold.
+const weightsByFont=new Map(reelFonts.map(font=>{
+ const ranges=(font.files||[{weight:font.weight||'400 700'}]).map(file=>String(file.weight||400).split(/\s+/).map(Number));
+ const weights=font.file||font.files?.length?[...new Set(ranges.flatMap(([min,max=min])=>[min,...Object.keys(fontWeightNames).map(Number).filter(w=>w>=min&&w<=max),max]))].sort((a,b)=>a-b):[400,700];
+ return [font.id,weights];
+}));
+export const fontWeights=id=>weightsByFont.get(id)||weightsByFont.get('arial');
+export function nearestFontWeight(id,value){
+ const weight=normalizeFontWeight(value);if(weight==='auto')return weight;
+ return fontWeights(id).reduce((best,next)=>Math.abs(next-weight)<Math.abs(best-weight)?next:best);
+}
+

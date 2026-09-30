@@ -1,5 +1,5 @@
 import {normalizeMotion} from './reel-motion.js';
-import {reelFonts,reelFont} from './reel-fonts.js';
+import {reelFonts,reelFont,normalizeFontWeight,nearestFontWeight} from './reel-fonts.js';
 import {beginElement,elementIds} from './reel-elements.js';
 import {normalizeChart} from './chart-appearance.js';
 // Shared design contract for every preview, PNG and recorded video frame.
@@ -28,10 +28,10 @@ const number=(v,fallback,min,max)=>Number.isFinite(Number(v))?clamp(Number(v),mi
 export function normalizeDesign(raw={}){
  const metricLabels=Object.fromEntries(Object.entries(raw.metricLabels||{}).filter(([key,value])=>key.length<500&&value&&typeof value==='object').slice(0,200).map(([key,value])=>[key,{pl:typeof value.pl==='string'?value.pl.slice(0,160):'',en:typeof value.en==='string'?value.en.slice(0,160):''}]));
  const hex=(v,f=null)=>/^#[0-9a-f]{6}$/i.test(v||'')?v:f;
- const text={};for(const role of textRoles){const t=raw.text?.[role.id]||{};text[role.id]={size:number(t.size,100,role.min,role.max),fontId:reelFonts.some(f=>f.id===t.fontId)?t.fontId:null,color:hex(t.color),align:['left','center','right'].includes(t.align)?t.align:'auto',width:number(t.width??100,100,45,100),lineHeight:number(t.lineHeight??1,1,.85,1.65),maxLines:Math.round(number(t.maxLines??0,0,0,6)),wrap:t.wrap==='manual'?'manual':'auto',weight:['normal','bold'].includes(t.weight)?t.weight:'auto',italic:t.italic===true,opacity:number(t.opacity??100,100,20,100),shadow:['soft','hard','glow'].includes(t.shadow)?t.shadow:'none',shadowColor:hex(t.shadowColor,'#000000'),shadowBlur:number(t.shadowBlur??14,14,0,40),shadowX:number(t.shadowX??0,0,-30,30),shadowY:number(t.shadowY??6,6,-30,30),strokeWidth:number(t.strokeWidth??0,0,0,8),strokeColor:hex(t.strokeColor,'#000000'),boxColor:hex(t.boxColor),boxOpacity:number(t.boxOpacity??90,90,10,100),padding:number(t.padding??14,14,0,40),radius:number(t.radius??10,10,0,32)};}
+ const text={};for(const role of textRoles){const t=raw.text?.[role.id]||{};text[role.id]={size:number(t.size,100,role.min,role.max),fontId:reelFonts.some(f=>f.id===t.fontId)?t.fontId:null,color:hex(t.color),align:['left','center','right'].includes(t.align)?t.align:'auto',width:number(t.width??100,100,45,100),lineHeight:number(t.lineHeight??1,1,.85,1.65),maxLines:Math.round(number(t.maxLines??0,0,0,6)),wrap:t.wrap==='manual'?'manual':'auto',weight:normalizeFontWeight(t.weight),italic:t.italic===true,opacity:number(t.opacity??100,100,20,100),shadow:['soft','hard','glow'].includes(t.shadow)?t.shadow:'none',shadowColor:hex(t.shadowColor,'#000000'),shadowBlur:number(t.shadowBlur??14,14,0,40),shadowX:number(t.shadowX??0,0,-30,30),shadowY:number(t.shadowY??6,6,-30,30),strokeWidth:number(t.strokeWidth??0,0,0,8),strokeColor:hex(t.strokeColor,'#000000'),boxColor:hex(t.boxColor),boxOpacity:number(t.boxOpacity??90,90,10,100),padding:number(t.padding??14,14,0,40),radius:number(t.radius??10,10,0,32)};}
  const positions={};for(const id of ['header','content']){const p=raw.positions?.[id]||{};positions[id]={x:number(p.x,50,0,100),y:number(p.y,0,-20,20),scale:number(p.scale,100,65,100)};}
  const elements=Object.fromEntries(elementIds.map(id=>{const e=raw.elements?.[id]||{};return [id,{x:number(e.x,0,-100,100),y:number(e.y,0,-100,100),scale:number(e.scale,100,25,200),rotation:number(e.rotation,0,-180,180)}];}));
- return {elements,motion:normalizeMotion(raw.motion),chart:normalizeChart(raw.chart),preset:typeof raw.preset==='string'?raw.preset.slice(0,60):null,legendMode:raw.legendMode==='full'?'full':'auto',metricLabels,theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',chartHeight:number(raw.chartHeight??100,100,50,100),text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
+ return {fontWeight:normalizeFontWeight(raw.fontWeight),elements,motion:normalizeMotion(raw.motion),chart:normalizeChart(raw.chart),preset:typeof raw.preset==='string'?raw.preset.slice(0,60):null,legendMode:raw.legendMode==='full'?'full':'auto',metricLabels,theme:reelThemes.some(t=>t.id===raw.theme)?raw.theme:'dark',layout:reelLayouts.some(l=>l.id===raw.layout)?raw.layout:'classic',chartHeight:number(raw.chartHeight??100,100,50,100),text,positions,signatureAlign:['left','center','right'].includes(raw.signatureAlign)?raw.signatureAlign:'center'};
 }
 export const designOf=config=>config.visuals?.design||normalizeDesign({theme:config.theme});
 export const themeOf=config=>reelThemes.find(t=>t.id===designOf(config).theme)||reelThemes[0];
@@ -58,10 +58,18 @@ export function seriesPlotLayout(config,width,height,headerBottom,metricHeight=n
  return {top:chartTop(config,top,bottom),bottom,legendStep,headerScale};
 }
 export function setReelText(ctx,config,role,size,family,color,weight=''){
- family=designOf(config).text?.[role]?.fontId?reelFont(designOf(config).text[role].fontId):family;
- const style=designOf(config).text?.[role];weight=style?.weight==='auto'||!style?.weight?weight:style.weight;
- ctx.font=`${style?.italic?'italic ':''}${weight?weight+' ':''}${textSize(config,role,size)}px ${family}`;
+ ctx.font=reelTextFont(config,role,textSize(config,role,size),weight,family);
  if(color)ctx.fillStyle=textColor(config,role,color);
+}
+export function textWeight(config,role,fallback=400){
+ const design=designOf(config),style=design.text?.[role],own=normalizeFontWeight(style?.weight),global=normalizeFontWeight(design.fontWeight),requested=own==='auto'?global:own;
+ // Automatic weights preserve the original design hierarchy and legacy synthesis.
+ return requested==='auto'?(normalizeFontWeight(fallback)==='auto'?400:normalizeFontWeight(fallback)):nearestFontWeight(style?.fontId||config.fontId,requested);
+}
+// `size` is already scaled/fitted. Use this for both measuring and drawing text.
+export function reelTextFont(config,role,size,fallback=400,family=reelFont(config.fontId)){
+ const style=designOf(config).text?.[role];
+ return `${style?.italic?'italic ':''}${textWeight(config,role,fallback)} ${size}px ${style?.fontId?reelFont(style.fontId):family}`;
 }
 // Fit whole sections uniformly: charts, logos and type keep their proportions.
 // Positions are clamped to the content area; the attribution footer stays separate.

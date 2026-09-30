@@ -35,6 +35,8 @@ Na desktopie dane są po lewej, podgląd pośrodku, a **Wygląd rolki** po prawe
 
 Podgląd, PNG i wszystkie klatki filmu korzystają z tego samego renderera. Efekty nie zmieniają pomiarów, braków danych ani skokowego przebiegu rekordów AI. Ustawienia starych projektów dostają zgodne wartości domyślne.
 
+**Grubość czcionki:** zakładka Styl ustawia wspólną grubość, a Elementy pozwala ją nadpisać dla konkretnego tekstu, także podpisu autora, etykiet/osi i wartości liczbowych. Lista wynika z lokalnych plików fontu (np. Inter 100–900, Libre Baskerville 400–700, kroje statyczne tylko dostarczone warianty). „Automatyczna” zachowuje hierarchię designu. Jeśli po zmianie kroju zapisana grubość nie występuje w nowej czcionce, podgląd i lista używają najbliższej dostępnej, a ustawienie pozostaje zapamiętane. Grubości zapisują się w szkicu i własnych motywach na koncie. Pomiar tekstu, dopasowanie wierszy, podgląd i eksport stosują te same wartości.
+
 Wygląd i pliki mają wspólny szkic IndexedDB, niezależny od wybranego zbioru oraz modułu. Czcionka całej rolki również zapisuje się w tym szkicu; stare projekty zachowują dotychczasową czcionkę jako wartość początkową. Zapis głównego projektu nadal zawiera aktualną czcionkę. Zmiany danych i wariantów nie resetują wyglądu. Wyrównanie i skalowanie całych sekcji zachowuje wcześniejsze zakresy i jest odrębne od transformacji pojedynczych elementów.
 
 ## GIF-y z wyszukiwarki

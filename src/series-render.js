@@ -1,10 +1,9 @@
 import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill,plotGrid} from './chart-appearance.js';
-import {reelFont} from './reel-fonts.js';
 import {timelineDate,observationPeriod} from './observation-date.js';
 import {getReelLogo} from './reel-assets.js';
 import {seriesFrame,lerp,rankMotion} from './presentation.js';
 import {resolveScale,bounds,visibleSeriesBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
-import {textSize,textColor,setReelText,designOf} from './reel-design.js';
+import {textSize,textColor,setReelText,reelTextFont} from './reel-design.js';
 export function crossText(ctx,previous,current,x,y,mix=1,maxWidth=1000){
  if(previous===current||mix>=1){ctx.fillText(current,x,y,maxWidth);return;}
  ctx.save();ctx.globalAlpha*=Math.max(0,1-mix*2);ctx.fillText(previous,x,y-8*mix,maxWidth);ctx.restore();
@@ -45,7 +44,7 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
   if(chart==='cards'){
    const columns=count===1?1:2,rows=Math.ceil(count/columns),gap=20,w=(924-gap*(columns-1))/columns,h=(yEnd-yStart-gap*(rows-1))/rows;
    values.forEach((entry,i)=>{const x=78+i%columns*(w+gap),y=yStart+Math.floor(i/columns)*(h+gap);ctx.fillStyle=panel;roundFill(ctx,x,y,w,h,appearance.radius);ctx.fillStyle=color(i);ctx.fillRect(x,y,5,h);logoLabel(ctx,entry.series,x+22,y+Math.min(42,h*.34),font,fg,w-44,config,h*.3);
-    const now=rowText(entry),old=rowText(before[i]);let size=Math.min(textSize(config,'values',80),h*.34);ctx.font=`bold ${size}px ${reelFont(designOf(config).text.values.fontId||config.fontId)}`;while(size>20&&Math.max(ctx.measureText(now).width,ctx.measureText(old).width)>w-44){size--;ctx.font=`bold ${size}px ${reelFont(designOf(config).text.values.fontId||config.fontId)}`;}ctx.fillStyle=textColor(config,'values',color(i));crossText(ctx,old,now,x+22,y+h*(h<120?.8:.72),mix);
+    const now=rowText(entry),old=rowText(before[i]);let size=Math.min(textSize(config,'values',80),h*.34);ctx.font=reelTextFont(config,'values',size,'bold');while(size>20&&Math.max(ctx.measureText(now).width,ctx.measureText(old).width)>w-44){size--;ctx.font=reelTextFont(config,'values',size,'bold');}ctx.fillStyle=textColor(config,'values',color(i));crossText(ctx,old,now,x+22,y+h*(h<120?.8:.72),mix);
    });
   }else{
    const sorted=items=>items.toSorted((a,b)=>(b.value??-Infinity)-(a.value??-Infinity)||a.index-b.index);

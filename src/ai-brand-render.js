@@ -2,27 +2,25 @@ import {chartAppearance,seriesColor,plotSides,axisTicks,lineAppearance,roundFill
 import {aiBrandMotion,aiModelLabel} from './ai-brand-history.js';
 import {getReelLogo} from './reel-assets.js';
 import {resolveScale,bounds,visibleAiBounds,createAxis,scaleCaption,formatAxisTick} from './chart-scale.js';
-import {reelFont} from './reel-style.js';
 import {clamp,lerp,rankMotion} from './presentation.js';
 import {aiValue} from './ai.js';
-import {themeOf,textSize,textColor,chartTop,designOf} from './reel-design.js';
+import {themeOf,textSize,textColor,reelTextFont,chartTop} from './reel-design.js';
 
 function ellipsis(ctx,text,width){let value=String(text||'');if(ctx.measureText(value).width<=width)return value;while(value.length&&ctx.measureText(value+'…').width>width)value=value.slice(0,-1);return value+'…';}
 export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,grid,panel,wrap}){
  const {history,brands,mode,showBrandLogos=true,showLeaderNames=true}=config.ai;
- const {benchmark:b}=config.ai,duration=config.duration||20,transition=config.transition??.65,font=reelFont(config.fontId);
+ const {benchmark:b}=config.ai,duration=config.duration||20,transition=config.transition??.65;
  if(!history.frames.length)return;
  const motion=aiBrandMotion(history,progress,duration,transition,timeSeconds),{frame,before,mix,current}=motion;
  const date=new Date(current).toISOString().slice(0,10),score=l=>l?`${aiValue(l.score,config.language)} ${b.unit}`:'—';
  const byId=(f,id)=>f.leaders.find(l=>l.brand.id===id);
  const appearance=chartAppearance(config),color=brand=>seriesColor(config,brands.findIndex(b=>b.id===brand.id),themeOf(config).dark?brand.color:darken(brand.color));
  function text(value,x,y,width,size,fill=fg,bold=false,role='labels'){
-  const font=reelFont(designOf(config).text[role]?.fontId||config.fontId);
   ctx.fillStyle=textColor(config,role,fill);let px=textSize(config,role,size);
   // Dense brand rows have a fixed vertical rhythm; fit names and keep scores whole.
   if(role==='labels')px=Math.min(px,size+4);
-  ctx.font=`${bold?'bold ':''}${px}px ${font}`;
-  if(role==='values'){while(px>16&&ctx.measureText(String(value)).width>width){px--;ctx.font=`${bold?'bold ':''}${px}px ${font}`;}ctx.fillText(String(value),x,y,width);}
+  ctx.font=reelTextFont(config,role,px,bold?'bold':'normal');
+  if(role==='values'){while(px>16&&ctx.measureText(String(value)).width>width){px--;ctx.font=reelTextFont(config,role,px,bold?'bold':'normal');}ctx.fillText(String(value),x,y,width);}
   else ctx.fillText(ellipsis(ctx,value,width),x,y);
  }
  function badge(brand,x,y,size=40){if(!showBrandLogos)return 0;const logo=getReelLogo(brand.logo);if(!logo)return 0;ctx.fillStyle='#fff';ctx.fillRect(x,y,size,size);const pad=5,fit=Math.min((size-2*pad)/logo.width,(size-2*pad)/logo.height);ctx.drawImage(logo,x+(size-logo.width*fit)/2,y+(size-logo.height*fit)/2,logo.width*fit,logo.height*fit);return size+12;}

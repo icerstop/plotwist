@@ -9,6 +9,7 @@ import {normalizeDesign,reelThemes,reelLayouts} from './reel-design.js';
 import GifSearch from './GifSearch.jsx';
 import {reelFonts} from './reel-fonts.js';
 import CustomThemes from './CustomThemes.jsx';
+import FontWeightPicker from './FontWeightPicker.jsx';
 import {captureTheme,applySavedTheme,normalizeSavedTheme,remapThemeAssets} from './custom-themes.js';
 import {downloadGif,gifError,GIF_PROVIDER,GIF_DOCS} from './gif-search.js';
 
@@ -110,6 +111,8 @@ export function StyleEditor({children,fontId}){
 
  </details>
  {children}
+ <FontWeightPicker label="Grubość czcionki rolki" fontId={v.visuals.fontId||fontId} value={d.fontWeight} onChange={fontWeight=>v.design({fontWeight})}/>
+ <p className="visual-hint">Ustawienie wspólne. Elementy z własną grubością mają pierwszeństwo.</p>
  <LegendOptions/>
    <button type="button" className="text-btn visual-reset" onClick={()=>{v.theme('dark');v.design(normalizeDesign());v.logo({type:'none'});}}><RotateCcw size={14}/>Przywróć domyślny styl i układ</button>
 

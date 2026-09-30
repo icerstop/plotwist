@@ -1,7 +1,6 @@
 import {beginElement} from './reel-elements.js';
 import {mediaFrame} from './reel-media.js';
-import {themeOf} from './reel-design.js';
-import {reelFont} from './reel-fonts.js';
+import {themeOf,reelTextFont} from './reel-design.js';
 
 export const reelLogoOptions=[
  {id:'none',name:'Brak logo'},
@@ -33,7 +32,7 @@ export function drawReelLogo(ctx,config,time,{x=78,y=62,h=56}={}){
   ctx.lineWidth=h*.09;ctx.lineCap=ctx.lineJoin='round';ctx.beginPath();
   [[.05,.9],[.35,.55],[.6,.68],[.94,.12]].forEach(([a,b],i)=>ctx[i?'lineTo':'moveTo'](x+w*a,y+h*b));ctx.stroke();
  }else{
-  ctx.font=`bold ${h*.85}px ${reelFont(config.fontId)}`;ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText('JB',x,y+h*.84,w);
+  ctx.font=reelTextFont(config,'mark',h*.85,'bold');ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText('JB',x,y+h*.84,w);
  }
  end();
 }

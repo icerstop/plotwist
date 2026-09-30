@@ -43,7 +43,7 @@ export function TextEffects({role,config,beforeChange=()=>{}}){
    {range('width','Szerokość tekstu',45,100,'%')}{range('lineHeight','Interlinia',.85,1.65,'×',.05)}
    <Select label="Limit wierszy" value={s.maxLines} options={[[0,'Automatycznie'],...[1,2,3,4,5,6].map(n=>[n,String(n)])]} onChange={maxLines=>patch({maxLines:Number(maxLines)})}/>
   </details>}
-  {role!=='signature'&&<><Select label="Grubość tekstu" value={s.weight} options={[["auto","Z designu"],["normal","Zwykła"],["bold","Pogrubiona"]]} onChange={weight=>patch({weight})}/><label className="visual-check"><input type="checkbox" checked={s.italic} onChange={e=>patch({italic:e.target.checked})}/>Kursywa</label></>}
+  <label className="visual-check"><input type="checkbox" checked={s.italic} onChange={e=>patch({italic:e.target.checked})}/>Kursywa</label>
   <details className="appearance-group"><summary>Cień, obrys i tło tekstu</summary>
    {range('opacity','Widoczność tekstu',20,100,'%')}
    <Select label="Efekt cienia" value={s.shadow} options={[["none","Bez cienia"],["soft","Miękki cień"],["hard","Twardy cień"],["glow","Poświata"]]} onChange={shadow=>patch({shadow})}/>
