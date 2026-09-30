@@ -1190,4 +1190,21 @@ Własny tekst zastępuje automatycznie zmieniającą się treść na całej rolc
 Dzień tygodnia|Day of the week
 Dzień miesiąca|Day of the month
 Miesiąc na słupkach|Month on bars
+Historia kart|Card history
+Mapa aktywności|Activity map
+Odstępy między premierami|Time between releases
+Poprzednia karta|Previous card
+Wprowadzenie do kart|Card introduction
+Tytuł mapy|Map title
+Miesiąc mapy|Map month
+Rok mapy|Map year
+Liczba premier w miesiącu|Monthly release count
+Opis mapy|Map caption
+Tytuł odstępów|Interval title
+Podziałka odstępów|Interval axis
+Dni między premierami|Days between releases
+Data na słupku|Bar date
+Brak odstępu|No interval
+Opis odstępów|Interval caption
+Producent i dostępność|Publisher and availability
 `;

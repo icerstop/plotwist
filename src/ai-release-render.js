@@ -1,3 +1,4 @@
+import {drawReleaseVariant} from './ai-release-variant-render.js';
 import {RELEASE_PUBLISHERS,releaseDay,releaseDate,releaseFrame,releaseCount,groupReleases,releaseMonths,releaseEndingState} from './ai-releases.js';
 import {aiFrameLayout} from './ai-layout.js';
 import {reelMotionFrame} from './reel-motion.js';
@@ -53,6 +54,27 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  text(t('łącznie w wybranym okresie','total in selected period'),620,y(.105),390,26,'labels',muted,1,false,{id:'release.totalLabel',label:'Opis licznika łącznego'});
  text(`${countLabel} · ${r.rows.some(row=>row.category==='restricted')?t('także dostęp partnerski','includes partner access'):t('w katalogu','in catalogue')}`,76,y(.16),930,26,'labels',muted,1,false,{id:'release.countLabel',label:'Opis sposobu liczenia'});
  summaryEnd();
+ function detail(cardTop,cardBottom,hero=false){
+ const detailEnd=section('detail',{x:76,y:cardTop,w:928,h:cardBottom-cardTop});if(hero){const q=clamp(eventAge(frame.latest[0]?.date)/.4);ctx.translate((1-q)*(1-q)*55,0);}
+ ctx.fillStyle=panel;roundFill(ctx,76,cardTop,928,cardBottom-cardTop,style.radius);
+ const activeDate=frame.latest[0]?.date,titleY=cardTop+textSize(config,'labels',28)+16;
+ text(activeDate?dateLabel(activeDate):t('Czekamy na pierwszą premierę…','Waiting for the first release…'),98,titleY,880,28,'labels',muted,1,false,{id:'release.activeDate',label:'Data ostatniej premiery',dynamic:true});
+ const rows=frame.latest,columns=rows.length>4?2:1,rowCount=Math.ceil(rows.length/columns),rowStep=Math.min(hero?90:64,(cardBottom-titleY-45)/Math.max(2,rowCount)),nameSize=Math.min(columns>1?28:hero?52:35,rowStep/(1.19*textScale));
+ const age=activeDate?eventAge(activeDate):1,enter=clamp(age/.22);
+ ctx.save();ctx.globalAlpha*=enter;ctx.translate(0,12*(1-enter));
+ if(hero&&rows.length<=2){
+  const available=cardBottom-titleY-85,step=available/Math.max(1,rows.length);
+  rows.forEach((item,i)=>{const p=publishers.find(p=>p.id===item.publisher),top=titleY+20+i*step;
+   logo(p,108,top+12,48);text(p.name+(item.category==='restricted'?t(' · dostęp partnerski',' · partner access'):''),174,top+43,800,28,'labels',muted,1,false,{id:'release.cardPublisher',entity:item.id,label:'Producent i dostępność'});
+   text(item.name,108,top+43+Math.min(65,step*.38),866,Math.min(52,step*.32/textScale),'labels',fg,2,false,{id:'release.model',entity:item.id,label:'Nazwa modelu',context:item.name});
+  });
+ }else{
+ rows.forEach((item,i)=>{const p=publishers.find(p=>p.id===item.publisher),xx=98+(i%columns)*450,yy=titleY+12+(Math.floor(i/columns)+.5)*rowStep,icon=Math.min(32,rowStep-3);logo(p,xx,yy-icon/2,icon);text(item.name+(item.category==='restricted'?t(' · dostęp partnerski',' · partner access'):''),xx+icon+12,yy+8,columns>1?400:825,nameSize,'labels',fg,1,false,{id:'release.model',entity:item.id,label:'Nazwa modelu',context:item.name});}); }
+ctx.restore();
+ const gap=frame.gap===null?t('Pierwsza data w filtrze','First date in selection'):`${frame.gap} ${t('dni od poprzedniej daty premier','days since the preceding launch date')}`;
+ text(gap,98,cardBottom-17,880,23,'labels',muted,1,false,{id:'release.gap',label:'Odstęp między premierami',dynamic:true});detailEnd();
+ }
+ if(!drawReleaseVariant({ctx,r,frame,publishers,theme,style,y,h,text,section,line,dateLabel,t,eventAge,detail,locale})){
  const crowded=publishers.length>2,vt=y(crowded?.19:.21),vb=y(crowded?.60:.56),vh=vb-vt;
  const plotEnd=section('plot',{x:76,y:vt-30,w:928,h:vh+75});
  if(r.mode==='calendar'){
@@ -93,15 +115,8 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
   });
   distributionEnd();
  }
- const cardTop=y(crowded?.76:.64),cardBottom=end-4,detailEnd=section('detail',{x:76,y:cardTop,w:928,h:cardBottom-cardTop});ctx.fillStyle=panel;roundFill(ctx,76,cardTop,928,cardBottom-cardTop,style.radius);
- const activeDate=frame.latest[0]?.date,titleY=cardTop+textSize(config,'labels',28)+16;
- text(activeDate?dateLabel(activeDate):t('Czekamy na pierwszą premierę…','Waiting for the first release…'),98,titleY,880,28,'labels',muted,1,false,{id:'release.activeDate',label:'Data ostatniej premiery',dynamic:true});
- const rows=frame.latest,columns=rows.length>4?2:1,rowCount=Math.ceil(rows.length/columns),rowStep=Math.min(64,(cardBottom-titleY-45)/Math.max(2,rowCount)),nameSize=Math.min(columns>1?28:35,rowStep/(1.19*textScale));
- const age=activeDate?eventAge(activeDate):1,enter=clamp(age/.22);
- ctx.save();ctx.globalAlpha*=enter;ctx.translate(0,12*(1-enter));
- rows.forEach((item,i)=>{const p=publishers.find(p=>p.id===item.publisher),xx=98+(i%columns)*450,yy=titleY+12+(Math.floor(i/columns)+.5)*rowStep,icon=Math.min(32,rowStep-3);logo(p,xx,yy-icon/2,icon);text(item.name+(item.category==='restricted'?t(' · dostęp partnerski',' · partner access'):''),xx+icon+12,yy+8,columns>1?400:825,nameSize,'labels',fg,1,false,{id:'release.model',entity:item.id,label:'Nazwa modelu',context:item.name});});ctx.restore();
- const gap=frame.gap===null?t('Pierwsza data w filtrze','First date in selection'):`${frame.gap} ${t('dni od poprzedniej daty premier','days since the preceding launch date')}`;
- text(gap,98,cardBottom-17,880,23,'labels',muted,1,false,{id:'release.gap',label:'Odstęp między premierami',dynamic:true});detailEnd();stop();
+ detail(y(crowded?.76:.64),end-4);
+ }stop();
  drawVisualOverlays(ctx,1080,height,config,timeSeconds);
  ctx.textAlign='right';text(dateLabel(frame.date),1000,height-175,924,44,'date',fg,1,true);ctx.textAlign='left';
  text(t('Źródła: komunikaty producentów · katalog do ','Sources: publisher notices · catalogue through ')+r.verifiedAt,80,height-132,920,24,'source',muted,2,true);

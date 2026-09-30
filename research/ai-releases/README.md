@@ -47,3 +47,9 @@ First-access decisions are preserved per row. In particular, Gemini 1.5 Flash us
 `expanded/` preserves readable source snapshots used for the expansion; `receipts.json` records their hashes and URLs. Specific announcements and repository notices are linked per dataset row. Live source edits may change later; rerun source verification before moving the cutoff.
 
 Validation: 241 automated tests, 24 browser-rendered combinations across two modes and three aspect ratios, ten-publisher selection persistence, eight simultaneous Qwen entries, explicit Gemini 4 partner label, stable ending and a six-second MP4 export at 30 fps.
+
+## Additional reel views
+
+Three presentation modes reuse the existing event-pause clock and shared element/copy editor: `cards` (date-grouped card stack), `heatmap` (month counts with a rolling four-year window) and `gaps` (up to ten recent intervals between distinct dates). Simultaneous releases share a card and do not create zero gaps; no interval is inferred before the first selected event. The map uses the selected version/publisher-day counting unit, keeps its intensity scale fixed across playback, and shows future/out-of-range cells without counts. Gap bars retain a fixed scale based on the whole selection. The modes preserve publisher/date filters and appearance when switched and are saved with the existing browser preferences.
+
+Validation: 244 unit/integration tests; 36 new-view render combinations plus 24 existing-view regressions; editable captions, hidden sections, saved mode, stable ending; six-second 30 fps exports of all three new views.

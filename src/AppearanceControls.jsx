@@ -20,7 +20,7 @@ export function ChartEditor({config}){
    {range('opacity','Widoczność serii',30,100,'%')}{range('glow','Poświata linii',0,30,' px')}
    {mode==='area'&&<>{range('fillOpacity','Siła wypełnienia',0,65,'%')}<Select label="Wypełnienie obszaru" value={s.fillStyle} options={[["flat","Jednolity kolor"],["fade","Zanikający gradient"]]} onChange={fillStyle=>patch({fillStyle})}/></>}
   </details>}
-  {(bars||cards)&&<details className="appearance-group" open><summary>Słupki i karty</summary>{bars&&range('barWidth',mode==='bar'||mode==='pulse'?'Szerokość słupków':'Grubość słupków',25,95,'%')}{range('radius','Zaokrąglenie narożników',0,32,' px')}</details>}
+  {(bars||cards)&&<details className="appearance-group" open><summary>Słupki i karty</summary>{bars&&range('barWidth',['bar','pulse','gaps'].includes(mode)?'Szerokość słupków':'Grubość słupków',25,95,'%')}{range('radius','Zaokrąglenie narożników',0,32,' px')}</details>}
   {cap.modelLabels&&<details className="appearance-group" open><summary>Nazwy modeli i ustawienia</summary>
    <Select label="Opis modelu" value={s.aiLabelStyle} options={[["structured","Model + ustawienia w osobnym wierszu"],["source","Pełna etykieta źródłowa"]]} onChange={aiLabelStyle=>patch({aiLabelStyle})}/>
    {mode==='ranking'&&range('aiRankCount','Maksymalna liczba pozycji',2,6)}
