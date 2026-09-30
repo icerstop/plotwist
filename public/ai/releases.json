@@ -8,15 +8,23 @@
   },
   "publishers": [
     "openai",
-    "anthropic"
+    "anthropic",
+    "google",
+    "deepseek",
+    "zai",
+    "mistral",
+    "moonshot",
+    "meta",
+    "xai",
+    "alibaba"
   ],
   "methodology": {
-    "pl": "Kuratorski katalog nazwanych wersji modeli językowych OpenAI i Anthropic. Data oznacza pierwsze potwierdzone udostępnienie wag lub dostęp klientom (także ograniczona beta i płatny preview), a nie datę testu lub późniejszej premiery API. Mini/nano i nazwane modele Codex są oddzielnymi pozycjami; Instant/Thinking/Pro dla GPT-5.1/5.2 są grupowane. Nie jest to pełny rejestr wszystkich premier AI. Zero oznacza brak pozycji w tym katalogu.",
-    "en": "Curated catalogue of named OpenAI and Anthropic language-model versions. Dates mark first confirmed downloadable weights or customer access (including limited betas and paid previews), not benchmark dates or later API launches. Mini/nano and named Codex models are separate entries; GPT-5.1/5.2 Instant/Thinking/Pro are grouped. This is not an exhaustive AI release registry. Zero means no entry in this catalogue."
+    "pl": "Kuratorski katalog nazwanych wersji modeli językowych dziesięciu producentów. Dla premier publicznych data oznacza pierwsze potwierdzone udostępnienie wag lub dostęp klientom (także ograniczona beta i płatny preview), a nie datę testu lub późniejszej premiery API. Mini/nano i nazwane modele Codex są oddzielnymi pozycjami; Instant/Thinking/Pro dla GPT-5.1/5.2 są grupowane. Nie jest to pełny rejestr wszystkich premier AI. Zero oznacza brak pozycji w tym katalogu.",
+    "en": "Curated catalogue of named language-model versions from ten publishers. For public releases, dates mark first confirmed downloadable weights or customer access (including limited betas and paid previews), not benchmark dates or later API launches. Mini/nano and named Codex models are separate entries; GPT-5.1/5.2 Instant/Thinking/Pro are grouped. This is not an exhaustive AI release registry. Zero means no entry in this catalogue."
   },
   "exclusions": {
-    "pl": "Poza licznikiem: zapowiedzi bez dostępności, zamknięte programy Mythos/Glasswing, obrazy/audio/wideo, embeddingi, moderacja, warianty deep research, tryby Pro/Fast/Ultrafast i poziomy effort, rutynowe snapshoty oraz ponowne udostępnienia na innych platformach. Sonnet 3.5 v2 jest jawną opcjonalną aktualizacją.",
-    "en": "Excluded: announcements without availability, restricted Mythos/Glasswing programmes, image/audio/video, embeddings, moderation, deep-research variants, Pro/Fast/Ultrafast modes and effort levels, routine snapshots and later platform rollouts. Sonnet 3.5 v2 is an explicit optional revision."
+    "pl": "Poza licznikiem: zapowiedzi bez dostępności, zamknięte programy Mythos/Glasswing, obrazy/audio/wideo, embeddingi, moderacja, warianty deep research, tryby Pro/Fast/Ultrafast i poziomy effort, rutynowe snapshoty oraz ponowne udostępnienia na innych platformach. Jawnie nazwane aktualizacje są opcjonalne. Osobna kategoria dostępu partnerskiego obejmuje Gemini 4 Argon (Fairwind); nie oznacza publicznej dostępności.",
+    "en": "Excluded: announcements without availability, restricted Mythos/Glasswing programmes, image/audio/video, embeddings, moderation, deep-research variants, Pro/Fast/Ultrafast modes and effort levels, routine snapshots and later platform rollouts. Explicit named revisions are optional. A separate partner-access category includes Gemini 4 Argon (Fairwind); it does not mean public availability."
   },
   "rows": [
     {
@@ -108,6 +116,50 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "meta-llama-13b-2023-02-24",
+      "date": "2023-02-24",
+      "publisher": "meta",
+      "name": "LLaMA 13B",
+      "category": "open-weight",
+      "availability": "gated-weights",
+      "sourceUrl": "https://ai.meta.com/blog/large-language-model-llama-meta-ai/",
+      "notes": "Research access by application under a noncommercial licence.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-33b-2023-02-24",
+      "date": "2023-02-24",
+      "publisher": "meta",
+      "name": "LLaMA 33B",
+      "category": "open-weight",
+      "availability": "gated-weights",
+      "sourceUrl": "https://ai.meta.com/blog/large-language-model-llama-meta-ai/",
+      "notes": "Research access by application under a noncommercial licence.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-65b-2023-02-24",
+      "date": "2023-02-24",
+      "publisher": "meta",
+      "name": "LLaMA 65B",
+      "category": "open-weight",
+      "availability": "gated-weights",
+      "sourceUrl": "https://ai.meta.com/blog/large-language-model-llama-meta-ai/",
+      "notes": "Research access by application under a noncommercial licence.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-7b-2023-02-24",
+      "date": "2023-02-24",
+      "publisher": "meta",
+      "name": "LLaMA 7B",
+      "category": "open-weight",
+      "availability": "gated-weights",
+      "sourceUrl": "https://ai.meta.com/blog/large-language-model-llama-meta-ai/",
+      "notes": "Research access by application under a noncommercial licence.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-3-5-turbo-2023-03-01",
       "date": "2023-03-01",
       "publisher": "openai",
@@ -152,6 +204,28 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "google-bard-lamda--2023-03-21",
+      "date": "2023-03-21",
+      "publisher": "google",
+      "name": "Bard (LaMDA)",
+      "category": "general",
+      "availability": "limited-beta",
+      "sourceUrl": "https://blog.google/innovation-and-ai/products/try-bard/",
+      "notes": "First consumer rollout in the US/UK, with a waitlist. February 6 was an announcement. Bard is the service; LaMDA was its underlying model.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-palm-2-bard--2023-05-10",
+      "date": "2023-05-10",
+      "publisher": "google",
+      "name": "PaLM 2 (Bard)",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://blog.google/innovation-and-ai/products/google-palm-2-ai-large-language-model/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-3-5-turbo-16k-2023-06-13",
       "date": "2023-06-13",
       "publisher": "openai",
@@ -160,6 +234,17 @@
       "availability": "public",
       "sourceUrl": "https://openai.com/index/function-calling-and-other-api-updates/",
       "notes": "New named longer-context variant; routine 0613 snapshots are not separate entries.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-chatglm2-6b-2023-06-25",
+      "date": "2023-06-25",
+      "publisher": "zai",
+      "name": "ChatGLM2-6B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/zai-org/ChatGLM-6B",
+      "notes": "Dated upstream release notice; earlier ChatGLM releases are not exhaustively covered.",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -174,6 +259,50 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "meta-llama-2-13b-2023-07-18",
+      "date": "2023-07-18",
+      "publisher": "meta",
+      "name": "Llama 2 13B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-2/",
+      "notes": "Base/chat variants grouped per size; no unreleased 34B.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-2-70b-2023-07-18",
+      "date": "2023-07-18",
+      "publisher": "meta",
+      "name": "Llama 2 70B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-2/",
+      "notes": "Base/chat variants grouped per size; no unreleased 34B.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-2-7b-2023-07-18",
+      "date": "2023-07-18",
+      "publisher": "meta",
+      "name": "Llama 2 7B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-2/",
+      "notes": "Base/chat variants grouped per size; no unreleased 34B.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen-7b-2023-08-03",
+      "date": "2023-08-03",
+      "publisher": "alibaba",
+      "name": "Qwen 7B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen/",
+      "notes": "Date from release table, not January 2024 retrospective blog date.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "anthropic-claude-instant-1-2-2023-08-09",
       "date": "2023-08-09",
       "publisher": "anthropic",
@@ -182,6 +311,39 @@
       "availability": "public",
       "sourceUrl": "https://www.anthropic.com/news/releasing-claude-instant-1-2",
       "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen-14b-2023-09-25",
+      "date": "2023-09-25",
+      "publisher": "alibaba",
+      "name": "Qwen 14B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-7b-2023-09-27",
+      "date": "2023-09-27",
+      "publisher": "mistral",
+      "name": "Mistral 7B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://mistral.ai/news/announcing-mistral-7b/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-1-2023-11-03",
+      "date": "2023-11-03",
+      "publisher": "xai",
+      "name": "Grok-1",
+      "category": "general",
+      "availability": "limited-beta",
+      "sourceUrl": "https://x.ai/news/grok",
+      "notes": "Early beta for a limited set of US users; open-weight release March 2024 not counted twice.",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -203,6 +365,138 @@
       "category": "general",
       "availability": "public",
       "sourceUrl": "https://www.anthropic.com/news/claude-2-1",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen-1-8b-2023-11-30",
+      "date": "2023-11-30",
+      "publisher": "alibaba",
+      "name": "Qwen 1.8B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen-72b-2023-11-30",
+      "date": "2023-11-30",
+      "publisher": "alibaba",
+      "name": "Qwen 72B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-1-0-pro-2023-12-06",
+      "date": "2023-12-06",
+      "publisher": "google",
+      "name": "Gemini 1.0 Pro",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://blog.google/innovation-and-ai/technology/ai/google-gemini-ai/",
+      "notes": "First access through Bard; API followed December 13. Ultra was not available yet.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen1-5-0-5b-2024-02-04",
+      "date": "2024-02-04",
+      "publisher": "alibaba",
+      "name": "Qwen1.5 0.5B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen1.5/",
+      "notes": "Initial six sizes from the original release summary; later 32B/110B not backdated.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen1-5-1-8b-2024-02-04",
+      "date": "2024-02-04",
+      "publisher": "alibaba",
+      "name": "Qwen1.5 1.8B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen1.5/",
+      "notes": "Initial six sizes from the original release summary; later 32B/110B not backdated.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen1-5-14b-2024-02-04",
+      "date": "2024-02-04",
+      "publisher": "alibaba",
+      "name": "Qwen1.5 14B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen1.5/",
+      "notes": "Initial six sizes from the original release summary; later 32B/110B not backdated.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen1-5-4b-2024-02-04",
+      "date": "2024-02-04",
+      "publisher": "alibaba",
+      "name": "Qwen1.5 4B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen1.5/",
+      "notes": "Initial six sizes from the original release summary; later 32B/110B not backdated.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen1-5-72b-2024-02-04",
+      "date": "2024-02-04",
+      "publisher": "alibaba",
+      "name": "Qwen1.5 72B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen1.5/",
+      "notes": "Initial six sizes from the original release summary; later 32B/110B not backdated.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen1-5-7b-2024-02-04",
+      "date": "2024-02-04",
+      "publisher": "alibaba",
+      "name": "Qwen1.5 7B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen1.5/",
+      "notes": "Initial six sizes from the original release summary; later 32B/110B not backdated.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-1-0-ultra-2024-02-08",
+      "date": "2024-02-08",
+      "publisher": "google",
+      "name": "Gemini 1.0 Ultra",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://blog.google/intl/es-419/actualizaciones-de-producto/informacion/bard-se-convierte-en-gemini-ultra-10-y-una-nueva-aplicacion-movil/",
+      "notes": "Gemini Advanced launch. Bard rename is not an additional model.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-1-5-pro-2024-02-15",
+      "date": "2024-02-15",
+      "publisher": "google",
+      "name": "Gemini 1.5 Pro",
+      "category": "general",
+      "availability": "limited-beta",
+      "sourceUrl": "https://blog.google/innovation-and-ai/products/google-gemini-next-generation-model-february-2024/",
+      "notes": "Limited developer preview with sign-up; broader API preview followed April 9.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-large-2024-02-26",
+      "date": "2024-02-26",
+      "publisher": "mistral",
+      "name": "Mistral Large",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://mistral.ai/news/mistral-large/",
       "notes": "",
       "verifiedAt": "2026-09-30"
     },
@@ -240,6 +534,50 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "meta-llama-3-70b-2024-04-18",
+      "date": "2024-04-18",
+      "publisher": "meta",
+      "name": "Llama 3 70B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/meta-llama-3",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-3-8b-2024-04-18",
+      "date": "2024-04-18",
+      "publisher": "meta",
+      "name": "Llama 3 8B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/meta-llama-3",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v2-2024-05-06",
+      "date": "2024-05-06",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V2",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/deepseek-ai/DeepSeek-V2",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-1-5-flash-2024-05-10",
+      "date": "2024-05-10",
+      "publisher": "google",
+      "name": "Gemini 1.5 Flash",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "API changelog dates preview availability May 10; Google I/O announcement followed May 14.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-4o-2024-05-13",
       "date": "2024-05-13",
       "publisher": "openai",
@@ -248,6 +586,127 @@
       "availability": "public",
       "sourceUrl": "https://developers.openai.com/api/docs/changelog",
       "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v2-lite-2024-05-16",
+      "date": "2024-05-16",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V2-Lite",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/deepseek-ai/DeepSeek-V2",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-codestral-2024-05-29",
+      "date": "2024-05-29",
+      "publisher": "mistral",
+      "name": "Codestral",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-9b-2024-06-05",
+      "date": "2024-06-05",
+      "publisher": "zai",
+      "name": "GLM-4-9B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/zai-org/GLM-4",
+      "notes": "Base/chat implementation formats are grouped; 1M and vision are separate named variants.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-9b-chat-1m-2024-06-05",
+      "date": "2024-06-05",
+      "publisher": "zai",
+      "name": "GLM-4-9B-Chat-1M",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/zai-org/GLM-4",
+      "notes": "Base/chat implementation formats are grouped; 1M and vision are separate named variants.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4v-9b-2024-06-05",
+      "date": "2024-06-05",
+      "publisher": "zai",
+      "name": "GLM-4V-9B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/zai-org/GLM-4",
+      "notes": "Base/chat implementation formats are grouped; 1M and vision are separate named variants.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-0-5b-2024-06-07",
+      "date": "2024-06-07",
+      "publisher": "alibaba",
+      "name": "Qwen2 0.5B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-1-5b-2024-06-07",
+      "date": "2024-06-07",
+      "publisher": "alibaba",
+      "name": "Qwen2 1.5B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-57b-a14b-2024-06-07",
+      "date": "2024-06-07",
+      "publisher": "alibaba",
+      "name": "Qwen2 57B-A14B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-72b-2024-06-07",
+      "date": "2024-06-07",
+      "publisher": "alibaba",
+      "name": "Qwen2 72B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-7b-2024-06-07",
+      "date": "2024-06-07",
+      "publisher": "alibaba",
+      "name": "Qwen2 7B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-coder-v2-2024-06-14",
+      "date": "2024-06-14",
+      "publisher": "deepseek",
+      "name": "DeepSeek-Coder-V2",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "API availability precedes the June 17 open-weight announcement.",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -262,6 +721,28 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "mistral-codestral-mamba-2024-07-16",
+      "date": "2024-07-16",
+      "publisher": "mistral",
+      "name": "Codestral Mamba",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-nemo-2024-07-18",
+      "date": "2024-07-18",
+      "publisher": "mistral",
+      "name": "Mistral NeMo",
+      "category": "open-weight",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-4o-mini-2024-07-18",
       "date": "2024-07-18",
       "publisher": "openai",
@@ -269,6 +750,94 @@
       "category": "general",
       "availability": "public",
       "sourceUrl": "https://developers.openai.com/api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-3-1-405b-2024-07-23",
+      "date": "2024-07-23",
+      "publisher": "meta",
+      "name": "Llama 3.1 405B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/meta-llama-3-1/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-3-1-70b-2024-07-23",
+      "date": "2024-07-23",
+      "publisher": "meta",
+      "name": "Llama 3.1 70B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/meta-llama-3-1/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-3-1-8b-2024-07-23",
+      "date": "2024-07-23",
+      "publisher": "meta",
+      "name": "Llama 3.1 8B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/meta-llama-3-1/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-large-2-2024-07-24",
+      "date": "2024-07-24",
+      "publisher": "mistral",
+      "name": "Mistral Large 2",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-2-2024-08-13",
+      "date": "2024-08-13",
+      "publisher": "xai",
+      "name": "Grok-2",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://x.ai/news/grok-2",
+      "notes": "Beta rollout on X.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-2-mini-2024-08-13",
+      "date": "2024-08-13",
+      "publisher": "xai",
+      "name": "Grok-2 mini",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://x.ai/news/grok-2",
+      "notes": "Beta rollout on X.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-1-5-flash-8b-2024-08-27",
+      "date": "2024-08-27",
+      "publisher": "google",
+      "name": "Gemini 1.5 Flash-8B",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "Experimental preview; October GA is not counted again.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v2-5-2024-09-05",
+      "date": "2024-09-05",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V2.5",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
       "notes": "",
       "verifiedAt": "2026-09-30"
     },
@@ -295,6 +864,127 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "alibaba-qwen2-5-0-5b-2024-09-19",
+      "date": "2024-09-19",
+      "publisher": "alibaba",
+      "name": "Qwen2.5 0.5B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2.5/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-5-1-5b-2024-09-19",
+      "date": "2024-09-19",
+      "publisher": "alibaba",
+      "name": "Qwen2.5 1.5B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2.5/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-5-14b-2024-09-19",
+      "date": "2024-09-19",
+      "publisher": "alibaba",
+      "name": "Qwen2.5 14B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2.5/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-5-32b-2024-09-19",
+      "date": "2024-09-19",
+      "publisher": "alibaba",
+      "name": "Qwen2.5 32B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2.5/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-5-3b-2024-09-19",
+      "date": "2024-09-19",
+      "publisher": "alibaba",
+      "name": "Qwen2.5 3B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2.5/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-5-72b-2024-09-19",
+      "date": "2024-09-19",
+      "publisher": "alibaba",
+      "name": "Qwen2.5 72B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2.5/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen2-5-7b-2024-09-19",
+      "date": "2024-09-19",
+      "publisher": "alibaba",
+      "name": "Qwen2.5 7B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen2.5/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-3-2-11b-2024-09-25",
+      "date": "2024-09-25",
+      "publisher": "meta",
+      "name": "Llama 3.2 11B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-3-2-1b-2024-09-25",
+      "date": "2024-09-25",
+      "publisher": "meta",
+      "name": "Llama 3.2 1B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-3-2-3b-2024-09-25",
+      "date": "2024-09-25",
+      "publisher": "meta",
+      "name": "Llama 3.2 3B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-3-2-90b-2024-09-25",
+      "date": "2024-09-25",
+      "publisher": "meta",
+      "name": "Llama 3.2 90B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "anthropic-claude-3-5-sonnet-v2-2024-10-22",
       "date": "2024-10-22",
       "publisher": "anthropic",
@@ -317,6 +1007,39 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "mistral-mistral-large-2-1-2024-11-18",
+      "date": "2024-11-18",
+      "publisher": "mistral",
+      "name": "Mistral Large 2.1",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-pixtral-large-2024-11-18",
+      "date": "2024-11-18",
+      "publisher": "mistral",
+      "name": "Pixtral Large",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-r1-lite-preview-2024-11-20",
+      "date": "2024-11-20",
+      "publisher": "deepseek",
+      "name": "DeepSeek-R1-Lite-Preview",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://api-docs.deepseek.com/news/news1120",
+      "notes": "Web reasoning preview.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-o1-2024-12-05",
       "date": "2024-12-05",
       "publisher": "openai",
@@ -328,6 +1051,72 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "meta-llama-3-3-70b-2024-12-06",
+      "date": "2024-12-06",
+      "publisher": "meta",
+      "name": "Llama 3.3 70B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct",
+      "notes": "Release date from official model card.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-2-0-flash-2024-12-11",
+      "date": "2024-12-11",
+      "publisher": "google",
+      "name": "Gemini 2.0 Flash",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "First experimental preview; February GA is not counted again.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v3-2024-12-26",
+      "date": "2024-12-26",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V3",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-r1-2025-01-20",
+      "date": "2025-01-20",
+      "publisher": "deepseek",
+      "name": "DeepSeek-R1",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/news/news250120/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "moonshot-kimi-k1-5-2025-01-20",
+      "date": "2025-01-20",
+      "publisher": "moonshot",
+      "name": "Kimi K1.5",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://www.kimi.com/en/blog/",
+      "notes": "Dated official research index; article: https://www.kimi.com/en/blog/kimi-k1-5.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-small-3-2025-01-30",
+      "date": "2025-01-30",
+      "publisher": "mistral",
+      "name": "Mistral Small 3",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-o3-mini-2025-01-31",
       "date": "2025-01-31",
       "publisher": "openai",
@@ -335,6 +1124,39 @@
       "category": "general",
       "availability": "public",
       "sourceUrl": "https://openai.com/index/openai-o3-mini/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-2-0-flash-lite-2025-02-05",
+      "date": "2025-02-05",
+      "publisher": "google",
+      "name": "Gemini 2.0 Flash-Lite",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "First public experimental previews.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-2-0-pro-2025-02-05",
+      "date": "2025-02-05",
+      "publisher": "google",
+      "name": "Gemini 2.0 Pro",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "First public experimental previews.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-saba-2025-02-17",
+      "date": "2025-02-17",
+      "publisher": "mistral",
+      "name": "Mistral Saba",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
       "notes": "",
       "verifiedAt": "2026-09-30"
     },
@@ -358,6 +1180,61 @@
       "availability": "public",
       "sourceUrl": "https://developers.openai.com/api/docs/changelog",
       "notes": "Public research preview.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-small-3-1-2025-03-17",
+      "date": "2025-03-17",
+      "publisher": "mistral",
+      "name": "Mistral Small 3.1",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v3-0324-2025-03-24",
+      "date": "2025-03-24",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V3-0324",
+      "category": "revision",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "Explicit model upgrade; optional revision category.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-2-5-pro-2025-03-25",
+      "date": "2025-03-25",
+      "publisher": "google",
+      "name": "Gemini 2.5 Pro",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "Experimental first availability; April paid preview and June GA are not new entries.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-4-maverick-2025-04-05",
+      "date": "2025-04-05",
+      "publisher": "meta",
+      "name": "Llama 4 Maverick",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
+      "notes": "Behemoth was previewed but not released, so is omitted.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "meta-llama-4-scout-2025-04-05",
+      "date": "2025-04-05",
+      "publisher": "meta",
+      "name": "Llama 4 Scout",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
+      "notes": "Behemoth was previewed but not released, so is omitted.",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -394,6 +1271,28 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "zai-glm-4-32b-0414-2025-04-14",
+      "date": "2025-04-14",
+      "publisher": "zai",
+      "name": "GLM-4-32B-0414",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/zai-org/GLM-4",
+      "notes": "Rumination/deep-research variant excluded.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-z1-32b-0414-2025-04-14",
+      "date": "2025-04-14",
+      "publisher": "zai",
+      "name": "GLM-Z1-32B-0414",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/zai-org/GLM-4",
+      "notes": "Rumination/deep-research variant excluded.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-o3-2025-04-16",
       "date": "2025-04-16",
       "publisher": "openai",
@@ -412,6 +1311,116 @@
       "category": "general",
       "availability": "public",
       "sourceUrl": "https://openai.com/index/introducing-o3-and-o4-mini/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-2-5-flash-2025-04-17",
+      "date": "2025-04-17",
+      "publisher": "google",
+      "name": "Gemini 2.5 Flash",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-0-6b-2025-04-29",
+      "date": "2025-04-29",
+      "publisher": "alibaba",
+      "name": "Qwen3 0.6B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen3/",
+      "notes": "Thinking/non-thinking modes grouped; base/instruct exports grouped per size.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-1-7b-2025-04-29",
+      "date": "2025-04-29",
+      "publisher": "alibaba",
+      "name": "Qwen3 1.7B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen3/",
+      "notes": "Thinking/non-thinking modes grouped; base/instruct exports grouped per size.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-14b-2025-04-29",
+      "date": "2025-04-29",
+      "publisher": "alibaba",
+      "name": "Qwen3 14B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen3/",
+      "notes": "Thinking/non-thinking modes grouped; base/instruct exports grouped per size.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-235b-a22b-2025-04-29",
+      "date": "2025-04-29",
+      "publisher": "alibaba",
+      "name": "Qwen3 235B-A22B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen3/",
+      "notes": "Thinking/non-thinking modes grouped; base/instruct exports grouped per size.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-30b-a3b-2025-04-29",
+      "date": "2025-04-29",
+      "publisher": "alibaba",
+      "name": "Qwen3 30B-A3B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen3/",
+      "notes": "Thinking/non-thinking modes grouped; base/instruct exports grouped per size.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-32b-2025-04-29",
+      "date": "2025-04-29",
+      "publisher": "alibaba",
+      "name": "Qwen3 32B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen3/",
+      "notes": "Thinking/non-thinking modes grouped; base/instruct exports grouped per size.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-4b-2025-04-29",
+      "date": "2025-04-29",
+      "publisher": "alibaba",
+      "name": "Qwen3 4B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen3/",
+      "notes": "Thinking/non-thinking modes grouped; base/instruct exports grouped per size.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-8b-2025-04-29",
+      "date": "2025-04-29",
+      "publisher": "alibaba",
+      "name": "Qwen3 8B",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://qwenlm.github.io/blog/qwen3/",
+      "notes": "Thinking/non-thinking modes grouped; base/instruct exports grouped per size.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-medium-3-2025-05-07",
+      "date": "2025-05-07",
+      "publisher": "mistral",
+      "name": "Mistral Medium 3",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
       "notes": "",
       "verifiedAt": "2026-09-30"
     },
@@ -438,6 +1447,17 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "mistral-devstral-small-2025-05-21",
+      "date": "2025-05-21",
+      "publisher": "mistral",
+      "name": "Devstral Small",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "anthropic-claude-opus-4-2025-05-22",
       "date": "2025-05-22",
       "publisher": "anthropic",
@@ -456,6 +1476,149 @@
       "category": "general",
       "availability": "public",
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-r1-0528-2025-05-28",
+      "date": "2025-05-28",
+      "publisher": "deepseek",
+      "name": "DeepSeek-R1-0528",
+      "category": "revision",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "Explicit model upgrade; optional revision category.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-magistral-medium-2025-06-10",
+      "date": "2025-06-10",
+      "publisher": "mistral",
+      "name": "Magistral Medium",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-magistral-small-2025-06-10",
+      "date": "2025-06-10",
+      "publisher": "mistral",
+      "name": "Magistral Small",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-2-5-flash-lite-2025-06-17",
+      "date": "2025-06-17",
+      "publisher": "google",
+      "name": "Gemini 2.5 Flash-Lite",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "First preview, before July GA.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "moonshot-kimi-dev-2025-06-17",
+      "date": "2025-06-17",
+      "publisher": "moonshot",
+      "name": "Kimi-Dev",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://www.kimi.com/en/blog/",
+      "notes": "Dated official research index; article: https://www.kimi.com/en/blog/kimi-dev.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-small-3-2-2025-06-20",
+      "date": "2025-06-20",
+      "publisher": "mistral",
+      "name": "Mistral Small 3.2",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-1v-9b-thinking-2025-07-02",
+      "date": "2025-07-02",
+      "publisher": "zai",
+      "name": "GLM-4.1V-9B-Thinking",
+      "category": "open-weight",
+      "availability": "open-weights",
+      "sourceUrl": "https://github.com/zai-org/GLM-4",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-4-2025-07-09",
+      "date": "2025-07-09",
+      "publisher": "xai",
+      "name": "Grok 4",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://x.ai/news/grok-4",
+      "notes": "Heavy inference mode is not counted separately.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-devstral-medium-2025-07-10",
+      "date": "2025-07-10",
+      "publisher": "mistral",
+      "name": "Devstral Medium",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-devstral-small-1-1-2025-07-10",
+      "date": "2025-07-10",
+      "publisher": "mistral",
+      "name": "Devstral Small 1.1",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "moonshot-kimi-k2-2025-07-11",
+      "date": "2025-07-11",
+      "publisher": "moonshot",
+      "name": "Kimi K2",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://www.kimi.com/en/blog/",
+      "notes": "Dated official research index; article: https://www.kimi.com/en/blog/kimi-k2.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-5-2025-07-28",
+      "date": "2025-07-28",
+      "publisher": "zai",
+      "name": "GLM-4.5",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://z.ai/blog/glm-4.5",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-5-air-2025-07-28",
+      "date": "2025-07-28",
+      "publisher": "zai",
+      "name": "GLM-4.5-Air",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://z.ai/blog/glm-4.5",
       "notes": "",
       "verifiedAt": "2026-09-30"
     },
@@ -526,6 +1689,61 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "zai-glm-4-5v-2025-08-11",
+      "date": "2025-08-11",
+      "publisher": "zai",
+      "name": "GLM-4.5V",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-medium-3-1-2025-08-12",
+      "date": "2025-08-12",
+      "publisher": "mistral",
+      "name": "Mistral Medium 3.1",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v3-1-2025-08-21",
+      "date": "2025-08-21",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V3.1",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-code-fast-1-2025-08-28",
+      "date": "2025-08-28",
+      "publisher": "xai",
+      "name": "Grok Code Fast 1",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://x.ai/news/grok-code-fast-1",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "moonshot-kimi-k2-instruct-0905-2025-09-05",
+      "date": "2025-09-05",
+      "publisher": "moonshot",
+      "name": "Kimi K2 Instruct 0905",
+      "category": "revision",
+      "availability": "public",
+      "sourceUrl": "https://www.kimi.com/en/blog/",
+      "notes": "Dated official research index; article: https://www.kimi.com/en/blog/kimi-k2-instruct-0905.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-5-codex-2025-09-15",
       "date": "2025-09-15",
       "publisher": "openai",
@@ -534,6 +1752,28 @@
       "availability": "public",
       "sourceUrl": "https://openai.com/index/introducing-upgrades-to-codex/",
       "notes": "Available in Codex September 15; API September 23.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-4-fast-2025-09-19",
+      "date": "2025-09-19",
+      "publisher": "xai",
+      "name": "Grok 4 Fast",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://x.ai/news/grok-4-fast",
+      "notes": "Distinct smaller trained model, not merely faster serving.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v3-1-terminus-2025-09-22",
+      "date": "2025-09-22",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V3.1-Terminus",
+      "category": "revision",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -548,6 +1788,28 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "deepseek-deepseek-v3-2-exp-2025-09-29",
+      "date": "2025-09-29",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V3.2-Exp",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-6-2025-09-30",
+      "date": "2025-09-30",
+      "publisher": "zai",
+      "name": "GLM-4.6",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "anthropic-claude-haiku-4-5-2025-10-15",
       "date": "2025-10-15",
       "publisher": "anthropic",
@@ -556,6 +1818,17 @@
       "availability": "public",
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
       "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "moonshot-kimi-k2-thinking-2025-11-06",
+      "date": "2025-11-06",
+      "publisher": "moonshot",
+      "name": "Kimi K2 Thinking",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://www.kimi.com/en/blog/",
+      "notes": "Dated official research index; article: https://www.kimi.com/en/blog/kimi-k2-thinking.",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -592,6 +1865,28 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "xai-grok-4-1-2025-11-17",
+      "date": "2025-11-17",
+      "publisher": "xai",
+      "name": "Grok 4.1",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://x.ai/news/grok-4-1",
+      "notes": "Named selectable release. Anonymous preliminary builds were silently tested November 1–14; that interval is not assigned a fabricated single launch day.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-3-pro-2025-11-18",
+      "date": "2025-11-18",
+      "publisher": "google",
+      "name": "Gemini 3 Pro",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-5-1-codex-max-2025-11-19",
       "date": "2025-11-19",
       "publisher": "openai",
@@ -614,6 +1909,105 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "deepseek-deepseek-v3-2-2025-12-01",
+      "date": "2025-12-01",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V3.2",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "Speciale is a separate named checkpoint, with a temporary API endpoint.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v3-2-speciale-2025-12-01",
+      "date": "2025-12-01",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V3.2-Speciale",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "Speciale is a separate named checkpoint, with a temporary API endpoint.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-ministral-3-14b-2025-12-02",
+      "date": "2025-12-02",
+      "publisher": "mistral",
+      "name": "Ministral 3 14B",
+      "category": "open-weight",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-ministral-3-3b-2025-12-02",
+      "date": "2025-12-02",
+      "publisher": "mistral",
+      "name": "Ministral 3 3B",
+      "category": "open-weight",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-ministral-3-8b-2025-12-02",
+      "date": "2025-12-02",
+      "publisher": "mistral",
+      "name": "Ministral 3 8B",
+      "category": "open-weight",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-large-3-2025-12-02",
+      "date": "2025-12-02",
+      "publisher": "mistral",
+      "name": "Mistral Large 3",
+      "category": "open-weight",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-6v-2025-12-08",
+      "date": "2025-12-08",
+      "publisher": "zai",
+      "name": "GLM-4.6V",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-devstral-2-2025-12-09",
+      "date": "2025-12-09",
+      "publisher": "mistral",
+      "name": "Devstral 2",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-devstral-small-2-2025-12-09",
+      "date": "2025-12-09",
+      "publisher": "mistral",
+      "name": "Devstral Small 2",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-5-2-2025-12-11",
       "date": "2025-12-11",
       "publisher": "openai",
@@ -625,6 +2019,17 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "google-gemini-3-flash-2025-12-17",
+      "date": "2025-12-17",
+      "publisher": "google",
+      "name": "Gemini 3 Flash",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-5-2-codex-2025-12-18",
       "date": "2025-12-18",
       "publisher": "openai",
@@ -633,6 +2038,39 @@
       "availability": "public",
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-2-codex/",
       "notes": "Codex availability; API followed January 14, 2026.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-7-2025-12-22",
+      "date": "2025-12-22",
+      "publisher": "zai",
+      "name": "GLM-4.7",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-4-7-flash-2026-01-19",
+      "date": "2026-01-19",
+      "publisher": "zai",
+      "name": "GLM-4.7-Flash",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "moonshot-kimi-k2-5-2026-01-27",
+      "date": "2026-01-27",
+      "publisher": "moonshot",
+      "name": "Kimi K2.5",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://www.kimi.com/en/blog/",
+      "notes": "Dated official research index; article: https://www.kimi.com/en/blog/kimi-k2-5.",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -669,6 +2107,39 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "zai-glm-5-2026-02-12",
+      "date": "2026-02-12",
+      "publisher": "zai",
+      "name": "GLM-5",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-5-397b-a17b-2026-02-15",
+      "date": "2026-02-15",
+      "publisher": "alibaba",
+      "name": "Qwen3.5 397B-A17B",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://qwen.ai/blog?id=qwen3.5",
+      "notes": "Original blog date; open checkpoint and distinct hosted Plus variant.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-5-plus-2026-02-15",
+      "date": "2026-02-15",
+      "publisher": "alibaba",
+      "name": "Qwen3.5 Plus",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://qwen.ai/blog?id=qwen3.5",
+      "notes": "Original blog date; open checkpoint and distinct hosted Plus variant.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "anthropic-claude-sonnet-4-6-2026-02-17",
       "date": "2026-02-17",
       "publisher": "anthropic",
@@ -676,6 +2147,28 @@
       "category": "general",
       "availability": "public",
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-3-1-pro-2026-02-19",
+      "date": "2026-02-19",
+      "publisher": "google",
+      "name": "Gemini 3.1 Pro",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-3-1-flash-lite-2026-03-03",
+      "date": "2026-03-03",
+      "publisher": "google",
+      "name": "Gemini 3.1 Flash-Lite",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
       "notes": "",
       "verifiedAt": "2026-09-30"
     },
@@ -702,6 +2195,28 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "mistral-leanstral-2026-03-16",
+      "date": "2026-03-16",
+      "publisher": "mistral",
+      "name": "Leanstral",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-small-4-2026-03-16",
+      "date": "2026-03-16",
+      "publisher": "mistral",
+      "name": "Mistral Small 4",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-5-4-mini-2026-03-17",
       "date": "2026-03-17",
       "publisher": "openai",
@@ -724,6 +2239,17 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "zai-glm-5-1-2026-04-07",
+      "date": "2026-04-07",
+      "publisher": "zai",
+      "name": "GLM-5.1",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "anthropic-claude-opus-4-7-2026-04-16",
       "date": "2026-04-16",
       "publisher": "anthropic",
@@ -735,6 +2261,17 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "moonshot-kimi-k2-6-2026-04-20",
+      "date": "2026-04-20",
+      "publisher": "moonshot",
+      "name": "Kimi K2.6",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://www.kimi.com/en/blog/",
+      "notes": "Dated official research index; article: https://www.kimi.com/en/blog/kimi-k2-6.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-5-5-2026-04-23",
       "date": "2026-04-23",
       "publisher": "openai",
@@ -743,6 +2280,50 @@
       "availability": "public",
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-5/",
       "notes": "First customer availability; API April 24.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v4-flash-2026-04-24",
+      "date": "2026-04-24",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V4-Flash",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "First preview; July/August GA upgrades are not counted as new model families.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v4-pro-2026-04-24",
+      "date": "2026-04-24",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V4-Pro",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "First preview; July/August GA upgrades are not counted as new model families.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-mistral-medium-3-5-2026-04-28",
+      "date": "2026-04-28",
+      "publisher": "mistral",
+      "name": "Mistral Medium 3.5",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-3-5-flash-2026-05-19",
+      "date": "2026-05-19",
+      "publisher": "google",
+      "name": "Gemini 3.5 Flash",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -768,6 +2349,17 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "zai-glm-5-2-2026-06-16",
+      "date": "2026-06-16",
+      "publisher": "zai",
+      "name": "GLM-5.2",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "anthropic-claude-sonnet-5-2026-06-30",
       "date": "2026-06-30",
       "publisher": "anthropic",
@@ -776,6 +2368,28 @@
       "availability": "public",
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
       "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "mistral-leanstral-1-5-2026-06-30",
+      "date": "2026-06-30",
+      "publisher": "mistral",
+      "name": "Leanstral 1.5",
+      "category": "coding",
+      "availability": "public",
+      "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-4-5-2026-07-08",
+      "date": "2026-07-08",
+      "publisher": "xai",
+      "name": "Grok 4.5",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.x.ai/developers/release-notes",
+      "notes": "API changelog availability July 8 precedes later July consumer/marketing announcements.",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -812,6 +2426,39 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "moonshot-kimi-k3-2026-07-16",
+      "date": "2026-07-16",
+      "publisher": "moonshot",
+      "name": "Kimi K3",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://www.kimi.com/en/blog/",
+      "notes": "Dated official research index; article: https://www.kimi.com/en/blog/kimi-k3. K3 was available in the app/API before its July 27 weights release.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-3-5-flash-lite-2026-07-21",
+      "date": "2026-07-21",
+      "publisher": "google",
+      "name": "Gemini 3.5 Flash-Lite",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-3-6-flash-2026-07-21",
+      "date": "2026-07-21",
+      "publisher": "google",
+      "name": "Gemini 3.6 Flash",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "anthropic-claude-opus-5-2026-07-24",
       "date": "2026-07-24",
       "publisher": "anthropic",
@@ -819,6 +2466,72 @@
       "category": "general",
       "availability": "public",
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "alibaba-qwen3-8-max-2026-08-02",
+      "date": "2026-08-02",
+      "publisher": "alibaba",
+      "name": "Qwen3.8 Max",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://qwen.ai/blog?id=qwen3.8",
+      "notes": "Official Qwen launch video dated August 2 confirms app and API access: https://www.youtube.com/watch?v=CKlK-KDFKjM.",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-4-6-2026-08-12",
+      "date": "2026-08-12",
+      "publisher": "xai",
+      "name": "Grok 4.6",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://x.ai/news/grok-4-6",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-3-7-flash-2026-08-13",
+      "date": "2026-08-13",
+      "publisher": "google",
+      "name": "Gemini 3.7 Flash",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-5-3-2026-08-18",
+      "date": "2026-08-18",
+      "publisher": "zai",
+      "name": "GLM-5.3",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v4-flash-vision-exp-2026-08-21",
+      "date": "2026-08-21",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V4-Flash-Vision-Exp",
+      "category": "general",
+      "availability": "public-preview",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "zai-glm-5-3-flash-2026-08-26",
+      "date": "2026-08-26",
+      "publisher": "zai",
+      "name": "GLM-5.3-Flash",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://docs.z.ai/release-notes/new-released",
       "notes": "",
       "verifiedAt": "2026-09-30"
     },
@@ -834,6 +2547,17 @@
       "verifiedAt": "2026-09-30"
     },
     {
+      "id": "google-gemini-3-8-flash-2026-09-02",
+      "date": "2026-09-02",
+      "publisher": "google",
+      "name": "Gemini 3.8 Flash",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
       "id": "openai-gpt-6-astra-2026-09-03",
       "date": "2026-09-03",
       "publisher": "openai",
@@ -842,6 +2566,28 @@
       "availability": "public",
       "sourceUrl": "https://developers.openai.com/api/docs/changelog",
       "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "deepseek-deepseek-v4-1-flash-2026-09-10",
+      "date": "2026-09-10",
+      "publisher": "deepseek",
+      "name": "DeepSeek-V4.1-Flash",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://api-docs.deepseek.com/updates/",
+      "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "xai-grok-4-7-2026-09-20",
+      "date": "2026-09-20",
+      "publisher": "xai",
+      "name": "Grok 4.7",
+      "category": "general",
+      "availability": "public",
+      "sourceUrl": "https://x.ai/build/changelog",
+      "notes": "Grok Build v1.0.40 dated September 20 confirms access before the September 21 API announcement. Fast serving is not another model.",
       "verifiedAt": "2026-09-30"
     },
     {
@@ -897,6 +2643,17 @@
       "availability": "public",
       "sourceUrl": "https://developers.openai.com/api/docs/changelog",
       "notes": "",
+      "verifiedAt": "2026-09-30"
+    },
+    {
+      "id": "google-gemini-4-argon-2026-09-30",
+      "date": "2026-09-30",
+      "publisher": "google",
+      "name": "Gemini 4 Argon",
+      "category": "restricted",
+      "availability": "partner-access",
+      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+      "notes": "Announcement and rollout to trusted cyber defenders in Fairwind. NOT a public API/consumer release. Public availability is not dated in this snapshot.",
       "verifiedAt": "2026-09-30"
     }
   ]

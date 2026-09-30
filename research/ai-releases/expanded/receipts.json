@@ -1,0 +1,56 @@
+[
+  {
+    "file": "chatglm.txt",
+    "sourceUrl": "https://github.com/zai-org/ChatGLM-6B/blob/main/UPDATE.md",
+    "retrievedDate": "2026-09-30",
+    "sha256": "7e9bdf7e8433046f920af57f7a06c61e31555b092ebf9434d973a2ab9c3ee226"
+  },
+  {
+    "file": "deepseek.txt",
+    "sourceUrl": "https://api-docs.deepseek.com/updates/",
+    "retrievedDate": "2026-09-30",
+    "sha256": "71f0b3556ec33248a87ef62e69be2e6d9db82eec2056f8b9a56480295cbfeb64"
+  },
+  {
+    "file": "gemini4.txt",
+    "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+    "retrievedDate": "2026-09-30",
+    "sha256": "47b728c49f8a4b3489fbaa5ec01a6ca8639c52d1db8ee393e8f8e530a8432f54"
+  },
+  {
+    "file": "glm.txt",
+    "sourceUrl": "https://docs.z.ai/release-notes/new-released",
+    "retrievedDate": "2026-09-30",
+    "sha256": "4f0b366dcfec50beb5715904ae6e56b72c6a6d73ee3073fd89dc2ee5ad74b23c"
+  },
+  {
+    "file": "google.txt",
+    "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog",
+    "retrievedDate": "2026-09-30",
+    "sha256": "bd6c60b765cccf6f6de932b29f35da2344978d08948b79e712c8d77f96e77960"
+  },
+  {
+    "file": "kimi.txt",
+    "sourceUrl": "https://www.kimi.com/en/blog/",
+    "retrievedDate": "2026-09-30",
+    "sha256": "657614babdf91a8adf7cfaf681a615e81ed7736d8c8b99dcf0b9bf499c072f79"
+  },
+  {
+    "file": "kimik2.txt",
+    "sourceUrl": "https://github.com/MoonshotAI/Kimi-K2",
+    "retrievedDate": "2026-09-30",
+    "sha256": "f4b590d4f6b892418d629abcd2244998f231f898157e5690d44ff65f8c82b9fc"
+  },
+  {
+    "file": "mistral.txt",
+    "sourceUrl": "https://docs.mistral.ai/getting-started/changelog",
+    "retrievedDate": "2026-09-30",
+    "sha256": "cac21fc925ab27f02b96b3bee584db4745c44adaca95da2f8bee727e713f31dd"
+  },
+  {
+    "file": "xai.txt",
+    "sourceUrl": "https://docs.x.ai/developers/release-notes",
+    "retrievedDate": "2026-09-30",
+    "sha256": "42333a39f55a6e7f91823e4a5e24a72779ef7c72c4ad88d7c940c9d0721b183b"
+  }
+]

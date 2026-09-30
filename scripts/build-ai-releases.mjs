@@ -1,6 +1,7 @@
 // Curated from dated first-party availability notices, never benchmark metadata.
 import {writeFile,mkdir} from 'node:fs/promises';
-import {releaseMonths,releaseCsv,validateReleases} from '../src/ai-releases.js';
+import {addOtherPublishers} from './ai-release-expansion.mjs';
+import {RELEASE_PUBLISHERS,releaseMonths,releaseCsv,validateReleases} from '../src/ai-releases.js';
 const anthropic='https://platform.claude.com/docs/en/release-notes/overview';
 const openai='https://developers.openai.com/api/docs/changelog';
 const post=slug=>`https://openai.com/index/${slug}/`;
@@ -72,10 +73,11 @@ add('2026-09-22','openai','GPT-6 Sol|GPT-6 Luna',openai);
 add('2026-09-22','anthropic','Claude Opus 5.5',anthropic);
 add('2026-09-28','anthropic','Claude Sonnet 5.5',anthropic);
 add('2026-09-29','openai','GPT-6.1 Sol',openai);
+addOtherPublishers(add);
 rows.sort((a,b)=>a.date.localeCompare(b.date)||a.publisher.localeCompare(b.publisher)||a.name.localeCompare(b.name));
-const data={id:'ai-releases-v1',verifiedAt:'2026-09-30',coverage:{start:'2018-06-11',end:'2026-09-30',complete:false},publishers:['openai','anthropic'],
- methodology:{pl:'Kuratorski katalog nazwanych wersji modeli językowych OpenAI i Anthropic. Data oznacza pierwsze potwierdzone udostępnienie wag lub dostęp klientom (także ograniczona beta i płatny preview), a nie datę testu lub późniejszej premiery API. Mini/nano i nazwane modele Codex są oddzielnymi pozycjami; Instant/Thinking/Pro dla GPT-5.1/5.2 są grupowane. Nie jest to pełny rejestr wszystkich premier AI. Zero oznacza brak pozycji w tym katalogu.',en:'Curated catalogue of named OpenAI and Anthropic language-model versions. Dates mark first confirmed downloadable weights or customer access (including limited betas and paid previews), not benchmark dates or later API launches. Mini/nano and named Codex models are separate entries; GPT-5.1/5.2 Instant/Thinking/Pro are grouped. This is not an exhaustive AI release registry. Zero means no entry in this catalogue.'},
- exclusions:{pl:'Poza licznikiem: zapowiedzi bez dostępności, zamknięte programy Mythos/Glasswing, obrazy/audio/wideo, embeddingi, moderacja, warianty deep research, tryby Pro/Fast/Ultrafast i poziomy effort, rutynowe snapshoty oraz ponowne udostępnienia na innych platformach. Sonnet 3.5 v2 jest jawną opcjonalną aktualizacją.',en:'Excluded: announcements without availability, restricted Mythos/Glasswing programmes, image/audio/video, embeddings, moderation, deep-research variants, Pro/Fast/Ultrafast modes and effort levels, routine snapshots and later platform rollouts. Sonnet 3.5 v2 is an explicit optional revision.'},rows};
+const data={id:'ai-releases-v1',verifiedAt:'2026-09-30',coverage:{start:'2018-06-11',end:'2026-09-30',complete:false},publishers:RELEASE_PUBLISHERS.map(p=>p.id),
+ methodology:{pl:'Kuratorski katalog nazwanych wersji modeli językowych dziesięciu producentów. Dla premier publicznych data oznacza pierwsze potwierdzone udostępnienie wag lub dostęp klientom (także ograniczona beta i płatny preview), a nie datę testu lub późniejszej premiery API. Mini/nano i nazwane modele Codex są oddzielnymi pozycjami; Instant/Thinking/Pro dla GPT-5.1/5.2 są grupowane. Nie jest to pełny rejestr wszystkich premier AI. Zero oznacza brak pozycji w tym katalogu.',en:'Curated catalogue of named language-model versions from ten publishers. For public releases, dates mark first confirmed downloadable weights or customer access (including limited betas and paid previews), not benchmark dates or later API launches. Mini/nano and named Codex models are separate entries; GPT-5.1/5.2 Instant/Thinking/Pro are grouped. This is not an exhaustive AI release registry. Zero means no entry in this catalogue.'},
+ exclusions:{pl:'Poza licznikiem: zapowiedzi bez dostępności, zamknięte programy Mythos/Glasswing, obrazy/audio/wideo, embeddingi, moderacja, warianty deep research, tryby Pro/Fast/Ultrafast i poziomy effort, rutynowe snapshoty oraz ponowne udostępnienia na innych platformach. Jawnie nazwane aktualizacje są opcjonalne. Osobna kategoria dostępu partnerskiego obejmuje Gemini 4 Argon (Fairwind); nie oznacza publicznej dostępności.',en:'Excluded: announcements without availability, restricted Mythos/Glasswing programmes, image/audio/video, embeddings, moderation, deep-research variants, Pro/Fast/Ultrafast modes and effort levels, routine snapshots and later platform rollouts. Explicit named revisions are optional. A separate partner-access category includes Gemini 4 Argon (Fairwind); it does not mean public availability.'},rows};
 validateReleases(data);
 await mkdir('public/ai',{recursive:true});
 await writeFile('public/ai/releases.json',JSON.stringify(data,null,2)+'\n');

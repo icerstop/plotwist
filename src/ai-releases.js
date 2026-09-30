@@ -1,12 +1,25 @@
-export const RELEASE_PUBLISHERS=[{id:'openai',name:'OpenAI',color:'#137b70',logo:'/logos/ai/openai.svg'},{id:'anthropic',name:'Anthropic',color:'#c86d46',logo:'/logos/ai/anthropic.svg'}];
-export const RELEASE_CATEGORIES=['general','coding','open-weight','revision'];
+export const RELEASE_PUBLISHERS=[
+ {id:'openai',name:'OpenAI',family:'GPT / o / Codex',color:'#137b70'},
+ {id:'anthropic',name:'Anthropic',family:'Claude',color:'#c86d46'},
+ {id:'google',name:'Google',family:'Bard / Gemini',color:'#4285f4'},
+ {id:'deepseek',name:'DeepSeek',family:'V2 / V3 / R1 / V4',color:'#536dce'},
+ {id:'zai',name:'Z.ai',family:'Zhipu / ChatGLM / GLM',color:'#805ad5'},
+ {id:'mistral',name:'Mistral',family:'Mixtral / Magistral / Devstral',color:'#e88919'},
+ {id:'moonshot',name:'Moonshot',family:'Kimi',color:'#297eab'},
+ {id:'meta',name:'Meta',family:'Llama',color:'#0866ff'},
+ {id:'xai',name:'xAI',family:'Grok / SpaceXAI',color:'#6b7280'},
+ {id:'alibaba',name:'Alibaba',family:'Qwen',color:'#b343ab'}
+].map(p=>({...p,logo:`/logos/ai/${p.id}.svg`}));
+export const RELEASE_CATEGORIES=['general','coding','open-weight','revision','restricted'];
+const SOURCE_HOSTS=['openai.com','www.openai.com','anthropic.com','www.anthropic.com','platform.claude.com','developers.openai.com','blog.google','ai.google.dev','deepmind.google','api-docs.deepseek.com','z.ai','docs.z.ai','mistral.ai','docs.mistral.ai','www.kimi.com','x.ai','docs.x.ai','ai.meta.com','qwen.ai','qwenlm.github.io'];
+export function releaseSourceAllowed(url){try{const u=new URL(url);return u.protocol==='https:'&&(SOURCE_HOSTS.includes(u.hostname)||(u.hostname==='github.com'&&/^\/(openai|zai-org|THUDM|deepseek-ai|MoonshotAI)\//i.test(u.pathname))||(u.hostname==='huggingface.co'&&u.pathname.startsWith('/meta-llama/'))||(u.hostname==='github.blog'&&u.pathname==='/news-insights/product-news/introducing-github-copilot-ai-pair-programmer/'));}catch{return false;}}
 const DAY=86400000;
 export const releaseDay=date=>Date.parse(`${date}T00:00:00Z`)/DAY;
 export const releaseDate=day=>new Date(Math.floor(day+1e-9)*DAY).toISOString().slice(0,10);
 export function validateReleases(data){
  const ids=new Set();let previous='';
  for(const r of data.rows){
-  if(ids.has(r.id)||!Number.isFinite(releaseDay(r.date))||releaseDate(releaseDay(r.date))!==r.date||r.date<previous||r.date<data.coverage.start||r.date>data.coverage.end||!RELEASE_PUBLISHERS.some(p=>p.id===r.publisher)||!RELEASE_CATEGORIES.includes(r.category)||!r.name||!/^https:\/\/(?:(?:www\.)?(?:openai\.com|anthropic\.com|platform\.claude\.com|developers\.openai\.com)\/|github\.com\/openai\/gpt-2\/commit\/|github\.blog\/news-insights\/product-news\/introducing-github-copilot-ai-pair-programmer\/)/.test(r.sourceUrl))throw new Error(`Invalid release: ${r.id}`);
+  if(ids.has(r.id)||!Number.isFinite(releaseDay(r.date))||releaseDate(releaseDay(r.date))!==r.date||r.date<previous||r.date<data.coverage.start||r.date>data.coverage.end||!RELEASE_PUBLISHERS.some(p=>p.id===r.publisher)||!RELEASE_CATEGORIES.includes(r.category)||!r.name||!releaseSourceAllowed(r.sourceUrl)||(r.category==='restricted'&&r.availability!=='partner-access'))throw new Error(`Invalid release: ${r.id}`);
   ids.add(r.id);previous=r.date;
  }
  return true;
@@ -23,7 +36,7 @@ export function releaseMonths(rows,start,end,mode='versions'){
  if(!start||!end||start>end)return [];
  const months=[];let date=start.slice(0,7)+'-01';
  while(date<=end){const month=date.slice(0,7),next=new Date(`${date}T00:00:00Z`);next.setUTCMonth(next.getUTCMonth()+1);const nextDate=next.toISOString().slice(0,10),items=rows.filter(r=>r.date>=start&&r.date<=end&&r.date.startsWith(month));
-  months.push({month,count:releaseCount(items,mode),openai:releaseCount(items.filter(r=>r.publisher==='openai'),mode),anthropic:releaseCount(items.filter(r=>r.publisher==='anthropic'),mode),partial:start>date||end<releaseDate(releaseDay(nextDate)-1)});date=nextDate;
+  months.push({month,count:releaseCount(items,mode),...Object.fromEntries(RELEASE_PUBLISHERS.map(p=>[p.id,releaseCount(items.filter(r=>r.publisher===p.id),mode)])),partial:start>date||end<releaseDate(releaseDay(nextDate)-1)});date=nextDate;
  }
  return months;
 }
