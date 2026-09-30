@@ -56,20 +56,20 @@ export function aiIdentityLayouts(ctx,config,owner,rows,options={}){
  if(cache.size>20)cache.clear();const result={layouts,height};cache.set(key,result);return result;
 }
 const rankingCache=new WeakMap();
-export function aiRankingLayout(ctx,config,frames){
+export function aiRankingLayout(ctx,config,frames,availableHeight=814){
  const max=Math.max(2,Math.min(6,chartAppearance(config).aiRankCount??6));
  // Include font metrics in the key: a font finishing loading invalidates the
  // fallback layout. Measuring once per style keeps video export inexpensive.
  ctx.save();ctx.font=reelTextFont(config,'labels',textSize(config,'labels',36),'bold');
- const key=JSON.stringify([copyCacheKey(config),max,ctx.font,ctx.measureText('Claude Adaptive Reasoning').width,reelTextFont(config,'labels',textSize(config,'labels',28)),textStyleOf(config,'labels').lineHeight,textSize(config,'values',40),chartAppearance(config).aiLabelStyle,chartAppearance(config).barWidth]);ctx.restore();
+ const key=JSON.stringify([copyCacheKey(config),max,availableHeight,ctx.font,ctx.measureText('Claude Adaptive Reasoning').width,reelTextFont(config,'labels',textSize(config,'labels',28)),textStyleOf(config,'labels').lineHeight,textSize(config,'values',40),chartAppearance(config).aiLabelStyle,chartAppearance(config).barWidth]);ctx.restore();
  let cache=rankingCache.get(frames);if(!cache){cache=new Map();rankingCache.set(frames,cache);}if(cache.has(key))return cache.get(key);
  let result;
  for(let count=max;count>=1;count--){
   const candidates=[...new Set(frames.flatMap(f=>f.rank.slice(0,count)))],layouts=new Map(candidates.map(r=>[r,layoutAiIdentity(ctx,config,r,{nameWidth:700})]));
   const titleOffset=Math.max(0,textSize(config,'values',40)-textSize(config,'labels',36)),labelHeight=titleOffset+Math.max(0,...[...layouts.values()].map(l=>l.height));
   const dateSize=textSize(config,'labels',23),barHeight=Math.max(3,chartAppearance(config).barWidth*.2),required=labelHeight+14+barHeight+12+dateSize*1.2+20;
-  result={count,layouts,titleOffset,labelHeight,dateSize,barHeight,stride:Math.max(required,814/count)};
-  if(required*count<=814)break;
+  result={count,layouts,titleOffset,labelHeight,dateSize,barHeight,stride:Math.max(required,availableHeight/count)};
+  if(required*count<=availableHeight)break;
  }
  if(cache.size>20)cache.clear();cache.set(key,result);return result;
 }

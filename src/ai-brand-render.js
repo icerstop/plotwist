@@ -10,9 +10,11 @@ import {aiValue} from './ai.js';
 import {themeOf,textSize,textColor,reelTextFont,chartTop} from './reel-design.js';
 import {lineLabelGeometry,drawLineLabels} from './line-labels.js';
 import {mysteryRole} from './reel-mystery.js';
+import {aiFrameLayout} from './ai-layout.js';
 
 function ellipsis(ctx,text,width){let value=String(text||'');if(ctx.measureText(value).width<=width)return value;while(value.length&&ctx.measureText(value+'…').width>width)value=value.slice(0,-1);return value+'…';}
 export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,grid,panel,wrap}){
+ const {y:Y,gap:G,compact,start,end}=aiFrameLayout(config.format);
  const {history,brands,mode,showBrandLogos=true,showLeaderNames=true}=config.ai;
  const {benchmark:b}=config.ai,duration=config.duration||20,transition=config.transition??.65;
  if(!history.frames.length)return;
@@ -20,13 +22,13 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  const date=new Date(current).toISOString().slice(0,10),score=l=>l?`${aiValue(l.score,config.language,b.scoreDecimals??1)} ${b.unit}`:'—';
  const byId=(f,id)=>f.leaders.find(l=>l.brand.id===id);
  const appearance=chartAppearance(config),color=brand=>seriesColor(config,brands.findIndex(b=>b.id===brand.id),themeOf(config).dark?brand.color:darken(brand.color));
- const singleColumn=brands.length<=4,wide=mode==='ranking'||mode==='records'&&singleColumn;
+ const singleColumn=brands.length<=4&&!compact,wide=mode==='ranking'||mode==='records'&&singleColumn;
  let names=aiIdentityLayouts(ctx,config,history,()=>[...new Set(history.frames.flatMap(f=>f.leaders.map(l=>l.winner)))],{width:wide?925:402,size:wide?28:26,detailSize:wide?25:23});
  // Cards reserve the score in the header and a date below the measured label.
  // At large user font sizes use the available card area before adding space.
  if(mode==='timeline'&&showLeaderNames){
-  const available=828/Math.ceil(brands.length/2)-129;
-  for(let factor=.95;names.height>available&&factor>=.5;factor-=.05)names=aiIdentityLayouts(ctx,config,history,()=>[...new Set(history.frames.flatMap(f=>f.leaders.map(l=>l.winner)))],{width:402,size:26*factor,detailSize:23*factor});
+  const available=G(828)/Math.ceil(brands.length/2)-(compact?82:129);
+  for(let factor=.95;names.height>available&&factor>=.4;factor-=.05)names=aiIdentityLayouts(ctx,config,history,()=>[...new Set(history.frames.flatMap(f=>f.leaders.map(l=>l.winner)))],{width:402,size:26*factor,detailSize:23*factor});
  }
  const nameHeight=showLeaderNames?names.height:0;
  function text(value,x,y,width,size,fill=fg,bold=false,role='labels',fit=false){
@@ -55,15 +57,18 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   if(changed&&mix<1){ctx.save();ctx.globalAlpha*=1-mix;text(score(old),x,y,width,size,muted,true,'values');ctx.restore();}
   ctx.save();ctx.globalAlpha*=changed?mix:1;text(score(now),x,y,width,size,now?color(now.brand):muted,true,'values');ctx.restore();
  }
- wrap(ctx,date,76,733,928,44,1,fg,false,'date');
- wrap(ctx,history.method==='record'?'Rekord marki do tej daty':'Najlepszy z ostatnich wyników marki',76,767,928,24,1,muted);
+ wrap(ctx,date,76,Y(733),928,compact?36:44,1,fg,false,'date');
+ wrap(ctx,history.method==='record'?'Rekord marki do tej daty':'Najlepszy z ostatnich wyników marki',76,Y(767),928,compact?20:24,1,muted);
  const scale=resolveScale(config),caption=scaleCaption(config,scale),raw=history.plotRows;
  const range=scale.dynamic?visibleAiBounds(raw,current,history.times[0],history.times.at(-1),duration,transition):bounds(raw.map(r=>r.score));
  const axis=createAxis(range,{log:scale.log,dynamic:scale.dynamic,includeZero:!scale.log,fixedDomain:[Math.min(0,range.min),b.max||Math.max(1,range.max)]});
  if(mode==='records'){
-  const legendStride=Math.max(singleColumn?62:84,nameHeight+(singleColumn?62:101));
-  const legendHeight=(singleColumn?brands.length:Math.ceil(brands.length/2))*legendStride-40;
-  const legendTop=1615-legendHeight,bottom=appearance.legend?legendTop-97:1575,top=chartTop(config,840,bottom);const [left,baseRight]=plotSides(config,144,962);
+  const legendStride=Math.max(singleColumn?62:84,nameHeight+(compact?54:singleColumn?62:101));
+  const legendHeight=(singleColumn?brands.length:Math.ceil(brands.length/2))*legendStride-(compact?20:40);
+  // Reserve a real plotting area in shorter formats. A dense legend is fitted
+  // uniformly, so text and brand marks keep their original proportions.
+  const legendScale=compact?Math.min(1,(end-start)*.43/legendHeight):1;
+  const legendTop=(compact?end-60:Y(1615))-legendHeight*legendScale,bottom=appearance.legend?legendTop-(compact?85:97):Y(1575),top=chartTop(config,compact?start+120:840,bottom);const [left,baseRight]=plotSides(config,144,962);
   const labelGeometry=appearance.endLabels?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:brands.length,hasIcons:brands.some(b=>b.logo)}):null,right=labelGeometry?.right??baseRight;
   const first=history.times[0],last=history.times.at(-1),x=t=>left+(t-first)/(last-first||1)*(right-left),y=v=>bottom-axis.position(v)*(bottom-top),currentX=x(current);
   const ticks=axisTicks(config,axis,scale.log,bottom-top,textSize(config,'labels',24)),numbers=axisNumberFormat(config,bounds(raw.map(r=>r.score)),ticks);
@@ -83,19 +88,19 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   }
   if(appearance.axisLabels){text(history.start,left,bottom+39,390,24,muted);ctx.textAlign='right';text(history.end,right,bottom+39,390,24,muted);ctx.textAlign='left';}
   const legend=rankMotion(brands.map(brand=>byId(before,brand.id)?.score),brands.map(brand=>byId(frame,brand.id)?.score),mix);
-  if(appearance.legend)brands.forEach((brand,i)=>{const {from,to,position}=legend[i];
-   const x=76+(singleColumn?0:lerp(from%2,to%2,mix)*482),y=legendTop+(singleColumn?position*legendStride:lerp(Math.floor(from/2),Math.floor(to/2),mix)*legendStride),now=byId(frame,brand.id),old=byId(before,brand.id);
+  if(appearance.legend){ctx.save();ctx.translate(76,legendTop);ctx.scale(legendScale,legendScale);ctx.translate(-76,0);brands.forEach((brand,i)=>{const {from,to,position}=legend[i];
+   const x=76+(singleColumn?0:lerp(from%2,to%2,mix)*482),y=singleColumn?position*legendStride:lerp(Math.floor(from/2),Math.floor(to/2),mix)*legendStride,now=byId(frame,brand.id),old=byId(before,brand.id);
    identity(brand,now?.winner,old?.winner,x,y,singleColumn?660:430,!singleColumn);
-   exactScore(now,old,singleColumn?776:x,singleColumn?y:y+nameHeight+54,singleColumn?225:430,singleColumn?34:29);
-  });
+   exactScore(now,old,compact?x+275:singleColumn?776:x,compact||singleColumn?y:y+nameHeight+54,compact?150:singleColumn?225:430,compact?24:singleColumn?34:29);
+  });ctx.restore();}
  }else if(mode==='ranking'){
-  const stride=Math.max(108,nameHeight+80),count=Math.max(1,Math.min(appearance.aiRankCount??6,brands.length,Math.floor(805/stride)));
+  const stride=Math.max(G(108),nameHeight+80),count=Math.max(1,Math.min(appearance.aiRankCount??6,brands.length,Math.floor(G(805)/stride)));
   const ranked=frame.rank.slice(0,count),oldRank=before.rank.slice(0,count),ids=[...new Set([...oldRank,...ranked].map(l=>l.brand.id))];
-  if(caption)wrap(ctx,caption,76,801,928,21,1,muted);
-  ctx.textAlign='right';wrap(ctx,`TOP ${count}`,1000,801,150,21,1,muted);ctx.textAlign='left';
-  ctx.save();ctx.beginPath();ctx.rect(65,813,950,817);ctx.clip();
+  if(caption)wrap(ctx,caption,76,Y(801),928,21,1,muted);
+  ctx.textAlign='right';wrap(ctx,`TOP ${count}`,1000,Y(801),150,21,1,muted);ctx.textAlign='left';
+  ctx.save();ctx.beginPath();ctx.rect(65,Y(813),950,G(817));ctx.clip();
   for(const id of ids){const ni=ranked.findIndex(l=>l.brand.id===id),oi=oldRank.findIndex(l=>l.brand.id===id),now=ranked[ni],old=oldRank[oi],brand=(now||old).brand;
-   const y=844+lerp(oi<0?count:oi,ni<0?count:ni,mix)*stride;
+   const y=Y(813)+31+lerp(oi<0?count:oi,ni<0?count:ni,mix)*stride;
    ctx.save();ctx.globalAlpha*=ni<0?1-mix:oi<0?mix:1;
    identity(brand,now?.winner,old?.winner,76,y,640,true);exactScore(now,old,762,y,240,34);
    const v=lerp(old?.score??0,now?.score??0,mix),zero=76+axis.position(0)*925,xx=76+axis.position(v)*925;
@@ -103,13 +108,13 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
   }
   ctx.restore();
  }else{
-  const cardHeight=Math.max(222,nameHeight+111),stride=cardHeight+18;
-  brands.forEach((brand,i)=>{const x=76+(i%2)*482,y=809+Math.floor(i/2)*stride,now=byId(frame,brand.id),old=byId(before,brand.id);
-   ctx.fillStyle=panel;roundFill(ctx,x,y,446,cardHeight,appearance.radius);identity(brand,now?.winner,old?.winner,x+22,y+42,235,true);
-   exactScore(now,old,x+275,y+42,149,29);
-   if(now)text(now.winner.date,x+22,y+cardHeight-20,402,22,muted);
+  const cardHeight=Math.max(G(222),nameHeight+(compact?76:111)),stride=cardHeight+G(18);
+  brands.forEach((brand,i)=>{const x=76+(i%2)*482,y=Y(809)+Math.floor(i/2)*stride,now=byId(frame,brand.id),old=byId(before,brand.id);
+   ctx.fillStyle=panel;roundFill(ctx,x,y,446,cardHeight,appearance.radius);identity(brand,now?.winner,old?.winner,x+22,y+(compact?32:42),235,true);
+   exactScore(now,old,x+275,y+(compact?32:42),149,29);
+   if(now)text(now.winner.date,x+22,y+cardHeight-(compact?10:20),402,compact?18:22,muted);
   });
  }
- wrap(ctx,'Wynik i model zmieniają się tylko według danych źródłowych.',76,1661,928,22,1,muted);
+ wrap(ctx,'Wynik i model zmieniają się tylko według danych źródłowych.',76,Y(1661),928,22,1,muted);
 }
 function darken(hex){return '#'+hex.slice(1).match(/../g).map(v=>Math.round(parseInt(v,16)*.63).toString(16).padStart(2,'0')).join('');}

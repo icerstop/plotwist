@@ -1,4 +1,5 @@
 import {normalizeMotion} from './reel-motion.js';
+import {aiFrameLayout} from './ai-layout.js';
 import {reelFonts,reelFont,normalizeFontWeight,nearestFontWeight} from './reel-fonts.js';
 import {beginElement,elementIds} from './reel-elements.js';
 import {normalizeChart} from './chart-appearance.js';
@@ -42,7 +43,7 @@ export function applyReelFont(visuals,fontId){
  return {...visuals,fontId,design:{...design,preset:null,text:Object.fromEntries(Object.entries(design.text).map(([role,style])=>[role,{...style,fontId:null}]))},overlays:(visuals.overlays||[]).map(o=>o.kind==='text'?{...o,fontId:null}:o)};
 }
 export const themeOf=config=>reelThemes.find(t=>t.id===designOf(config).theme)||reelThemes[0];
-export const textSize=(config,role,size)=>size*(designOf(config).text?.[role]?.size??100)/100;
+export const textSize=(config,role,size)=>size*(designOf(config).text?.[role]?.size??100)/100*(config._aiTextScale??1);
 export const textColor=(config,role,fallback)=>designOf(config).text?.[role]?.color||fallback;
 // Resize only the plot, anchored above the legend. Old saved designs fill the space.
 export const chartTop=(config,top,bottom)=>bottom-(bottom-top)*number(designOf(config).chartHeight??100,100,50,100)/100;
@@ -82,7 +83,8 @@ export function reelTextFont(config,role,size,fallback=400,family=reelFont(confi
 // Positions are clamped to the content area; the attribution footer stays separate.
 export function sectionTransform(config,section,width,height){
  const ai=!!config.ai,short=height<1400,plot=['line','area','bar'].includes(config.chart||'line');
- const start=ai?690:short?height*(plot ? .24 : .46):700,end=ai?1690:height-(short?205:220);
+ const aiLayout=ai?aiFrameLayout(config.format):null;
+ const start=ai?aiLayout.start:short?height*(plot ? .24 : .46):700,end=ai?aiLayout.end:height-(short?205:220);
  const base=section==='header'?{x:50,y:50,w:980,h:start-75}:{x:50,y:start,w:980,h:end-start};
  const d=designOf(config),p=d.positions?.[section]||{x:50,y:0,scale:100};
  let scale=1,targetY=base.y;

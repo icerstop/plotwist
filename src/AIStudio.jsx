@@ -26,6 +26,8 @@ function TrackingInfo({data,onChoose}){
 export default function AIStudio({fontId='arial',onFontChange}){
  const {uiLanguage,reelLanguage}=useLanguages();const aiValue=value=>formatAiValue(value,uiLanguage,data?.scoreDecimals??1);
  const [titleIsCustom,setTitleIsCustom]=useState(false);
+ const [format,setFormat]=useState(()=>{try{const saved=localStorage.getItem('plotwist-ai-format-v1');return ['9:16','4:5','1:1'].includes(saved)?saved:'9:16';}catch{return '9:16';}});
+ useEffect(()=>{try{localStorage.setItem('plotwist-ai-format-v1',format);}catch{}},[format]);
  const [groupBy,setGroupBy]=useState('model'),[selectedBrands,setSelectedBrands]=useState([]),[brandMethod,setBrandMethod]=useState('latest'),[brandSearch,setBrandSearch]=useState('');
  const [showBrandLogos,setShowBrandLogos]=useState(true),[showLeaderNames,setShowLeaderNames]=useState(true),[assetsReady,setAssetsReady]=useState(false),[assetError,setAssetError]=useState('');
  const [manifest,setManifest]=useState(null),[data,setData]=useState(null),[id,setId]=useState('eci'),[error,setError]=useState('');
@@ -51,7 +53,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
  const chosen=ranked.find(r=>r.modelId===comparison)||ranked[0];
  const chartRows=groupBy==='brand'?brandRows:mode==='timeline'?timeline:rows;
  const scope=[groupBy==='brand'?'Porównanie marek':organization,query?`Filtr: ${query}`:'',protocol].filter(Boolean).join(' · ');
- const config=useMemo(()=>({format:'9:16',title,titleIsCustom,theme,fontId,ai:{rows:chartRows,benchmark:data,basis,mode,scope,comparison:chosen?.modelId,groupBy,history,brands:chosenBrands,showBrandLogos,showLeaderNames}}),[chartRows,data,basis,mode,title,titleIsCustom,theme,fontId,scope,chosen?.modelId,groupBy,history,chosenBrands,showBrandLogos,showLeaderNames]);
+ const config=useMemo(()=>({format,title,titleIsCustom,theme,fontId,ai:{rows:chartRows,benchmark:data,basis,mode,scope,comparison:chosen?.modelId,groupBy,history,brands:chosenBrands,showBrandLogos,showLeaderNames}}),[format,chartRows,data,basis,mode,title,titleIsCustom,theme,fontId,scope,chosen?.modelId,groupBy,history,chosenBrands,showBrandLogos,showLeaderNames]);
  useEffect(()=>{let active=true;setAssetsReady(false);setAssetError('');preloadReelAssets(config).then(()=>{if(active)setAssetsReady(true);}).catch(e=>{if(active)setAssetError(e.message);});return()=>{active=false;};},[config]);
  const hasResults=groupBy==='brand'?history.frames.some(f=>f.leaders.length):rows.length>0;
  const valid=!!data&&hasResults&&assetsReady&&(!start||!end||start<=end)&&(groupBy==='brand'||mode!=='duel'||!!data.baseline);
@@ -69,7 +71,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
      const headers=['id','model','modelId','organization','brandId','brandMethod','date','releaseDate','observedAt','dateKind','effort','score','sourceValue','stderr','low','high','rawScore','validScore','total','elo','protocol','sourceUrl','notes',...(data.id.startsWith('arc3')?['harness','sourceModelId','sourceReleaseDate','releaseDateSourceUrl','evaluationCostUsd']:[])];
      if(data.aggregation==='tracking-last-n')headers.push('sourceAlias','sampleCount','windowLimit','latestScore','recordScore','lastRunAt','firstRunInAverage','modality','modelVersionUnverified','runs');
      downloadBlob(new Blob([marketCsv(rows.map(r=>headers.map(h=>h==='runs'?JSON.stringify(r.runs):r[h]??'')),headers)],{type:'text/csv;charset=utf-8'}),`plotwist-ai-${id}.csv`);
-   } else downloadBlob(new Blob([JSON.stringify({benchmark:{...data,rows:undefined},selection:{basis,start,end,organization,query,protocol,mode,groupBy,selectedBrands,brandMethod,showBrandLogos,showLeaderNames},brandRules:aiBrandRuleVersion,storyIds:chartRows.map(r=>r.id),rows,contextRows:groupBy==='brand'?brandRows.filter(r=>start&&r.date<start):undefined,brandHistory:groupBy==='brand'?history:undefined},null,2)],{type:'application/json'}),`plotwist-ai-${id}-zrodla.json`);
+   } else downloadBlob(new Blob([JSON.stringify({benchmark:{...data,rows:undefined},selection:{format,basis,start,end,organization,query,protocol,mode,groupBy,selectedBrands,brandMethod,showBrandLogos,showLeaderNames},brandRules:aiBrandRuleVersion,storyIds:chartRows.map(r=>r.id),rows,contextRows:groupBy==='brand'?brandRows.filter(r=>start&&r.date<start):undefined,brandHistory:groupBy==='brand'?history:undefined},null,2)],{type:'application/json'}),`plotwist-ai-${id}-zrodla.json`);
  }
  return <div className="ai-page">
    <div className="ai-heading"><div><span className="ai-eyebrow"><BrainCircuit size={16}/> ARCHIWUM MOŻLIWOŚCI AI</span><h1>Każdy model ma swój moment.</h1><p>Znajdź przełom. Wybierz formę. Opowiedz historię.</p></div><button className="primary" disabled={!valid} onClick={()=>setExporting(true)}><Download size={17}/>Eksportuj rolkę</button></div>
@@ -95,7 +97,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
        {groupBy==='model'&&orgs.length>1&&<Field label="Organizacja"><select value={organization} onChange={e=>setOrganization(e.target.value)}><option value="">Wszystkie organizacje</option>{orgs.map(o=><option key={o}>{o}</option>)}</select></Field>}
        <div className="search-field ai-search"><Search size={17}/><input aria-label="Filtr modeli AI" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Filtruj, np. GPT, Claude, Gemini…"/></div>
        <Field label="Tytuł rolki"><textarea maxLength="75" rows="2" value={titleIsCustom?title:translate(title,reelLanguage)} onChange={e=>{setTitleIsCustom(true);setTitle(e.target.value);}}/>{titleIsCustom&&<button type="button" className="text-btn" onClick={()=>{setTitleIsCustom(false);setTitle(id.startsWith('tracking-')?data.name:id==='eci'?'Jak szybko rozwija się AI?':id.startsWith('iq-')?'Jak modele rozwiązują test „IQ”?':id==='codeforces2024'?'AI na zawodach programistycznych.':`${data?.name||''}. Kolejne modele.`);}}>Przywróć tytuł automatyczny</button>}</Field>
-       <div className="field-pair"><Field label="Długość rolki AI"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(d=><option key={d} value={d}>{d} s</option>)}</select></Field></div>
+       <div className="field-pair"><Field label="Format wideo"><select aria-label="Format wideo" value={format} onChange={e=>setFormat(e.target.value)}>{['9:16','4:5','1:1'].map(f=><option key={f} value={f}>{f}</option>)}</select></Field><Field label="Długość rolki AI"><select value={duration} onChange={e=>setDuration(Number(e.target.value))}>{[6,12,20,30].map(d=><option key={d} value={d}>{d} s</option>)}</select></Field></div>
        {(error||assetError)&&<p role="alert" className="error">{error||assetError}</p>}{!data&&!error&&<p role="status">Wczytywanie wyników…</p>}{data&&!hasResults&&<p role="status" className="error">Brak pomiarów dla tego filtra. Zmień daty, nazwę lub protokół.</p>}
      </section>
 
