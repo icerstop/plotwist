@@ -1,4 +1,6 @@
 import {ReelEditor} from './ReelEditor.jsx';
+import {FontPicker} from './FontPicker.jsx';
+export {FontPicker} from './FontPicker.jsx';
 import storyCatalog from './story-catalog.json' with {type:'json'};
 import {translate} from './translations.js';
 import {useReelLanguage,useLanguages} from './language-context.js';
@@ -9,7 +11,7 @@ import {ideas,matchIdeas,sources} from './catalog.js';
 import {drawReel,recordReel} from './render.js';
 import {preloadReelAssets} from './reel-assets.js';
 import {downloadBlob} from './data.js';
-import {reelFonts,reelFontGroups,reelFont,isReelFontReady,preloadReelFont,configFontIds} from './reel-style.js';
+import {isReelFontReady,preloadReelFont,configFontIds} from './reel-style.js';
 import {useVisualConfig,useVisualStatus} from './VisualSettings.jsx';
 
 function useReelFontStatus(config){
@@ -21,7 +23,6 @@ function useReelFontStatus(config){
 
 export function Brand(){return <span className="brand"><span className="brand-bars"><i/><i/><i/></span>plotwist<span className="brand-dot">.</span></span>;}
 export function Field({label,children,hint}){return <label className="field"><span className="field-label">{label}</span>{children}{hint&&<small>{hint}</small>}</label>;}
-export function FontPicker({value,onChange}){return <Field label="Czcionka rolki"><select aria-label="Czcionka rolki" value={value} onChange={e=>onChange(e.target.value)} style={{fontFamily:reelFont(value)}}>{reelFontGroups.map(group=><optgroup key={group.id} label={group.name}>{reelFonts.filter(f=>f.group===group.id).map(f=><option key={f.id} value={f.id} style={{fontFamily:f.family}}>{f.name}</option>)}</optgroup>)}</select><span className="font-sample" style={{fontFamily:reelFont(value)}}>Zażółć gęślą jaźń.<br/>0123456789 · 1 234,56 zł · +12,5%</span></Field>;}
 export function Modal({title,onClose,children}){
  const ref=useRef();useEffect(()=>{const el=ref.current;el.showModal();return ()=>el.close();},[]);
  return <dialog ref={ref} onCancel={onClose} onClick={e=>{if(e.target===ref.current)onClose();}}><header><h2>{title}</h2><button className="icon-btn" onClick={onClose} aria-label="Zamknij"><X size={21}/></button></header>{children}</dialog>;

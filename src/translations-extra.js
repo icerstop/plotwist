@@ -1,5 +1,17 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Porównaj kroje przed wyborem.|Compare typefaces before choosing.
+Zamknij wybór czcionki|Close font picker
+Szukaj czcionki|Search fonts
+Szukaj czcionki…|Search fonts…
+Rodzaj czcionki|Font category
+Wszystkie kroje|All typefaces
+Dostępne czcionki|Available fonts
+Wczytywanie podglądu…|Loading preview…
+Podgląd niedostępny|Preview unavailable
+Ponów wczytanie podglądu|Retry font preview
+Nie znaleziono czcionki. Zmień nazwę lub kategorię.|No fonts found. Change the name or category.
+Podglądy wczytują się podczas przewijania listy.|Previews load as you scroll through the list.
 Interaktywne zadania ARC-AGI-3, zbiór Semi-Private. RHAE mierzy efektywność działań względem człowieka. Standard przenosi notatki wybrane przez model.|Interactive ARC-AGI-3 tasks, Semi-Private set. RHAE measures action efficiency relative to humans. Standard carries forward model-selected notes.
 Interaktywne zadania ARC-AGI-3, zbiór Semi-Private. Provider Adapter zachowuje stan rozumowania i skraca długie rozmowy. Osobno od Standard.|Interactive ARC-AGI-3 tasks, Semi-Private set. Provider Adapter preserves reasoning state and compacts long conversations. Kept separate from Standard.
 RHAE nie jest odsetkiem rozwiązanych zadań ani IQ. Standard i Provider Adapter mają różne warunki i pozostają osobnymi zestawami. Data obserwacji to dzień pobrania; dat testów brak. Oś premier jest retrospektywą. Developer Preview, Public Demo i konkurs Kaggle nie są dołączone.|RHAE is neither the percentage of solved tasks nor IQ. Standard and Provider Adapter use different conditions and remain separate datasets. Observation dates are capture dates; test dates are unavailable. The release axis is retrospective. Developer Preview, Public Demo and the Kaggle competition are excluded.
