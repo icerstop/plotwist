@@ -91,8 +91,10 @@ topic('solar','Słońce i inne źródła odnawialne','LCOE nowych elektrowni, ce
 owid('solar','levelized-cost-of-energy',unit='USD 2025 / kWh',unitKey='usd2025-kwh-lcoe',notes='LCOE nowych elektrowni. Ceny stałe 2025. Nie uwzględnia pełnego kosztu integracji z siecią.')
 topic('storage','Terabajt za grosze','Najniższa historyczna cena odnotowana do danego roku; nie średnia cena rynkowa. Serie HDD, SSD, RAM i flash są rozdzielone.')
 owid('storage','historical-cost-of-computer-memory-and-storage',unit='USD 2020 / TB',unitKey='usd2020-tb',notes='Najniższa cena historyczna według OWID/McCallum; ceny stałe 2020. TB, nie GB. Luki pozostają puste.')
-topic('chips','Moore w liczbach','Zestaw OWID/Rupp pokazuje historyczny trend mikroprocesorów; nie identyfikuje pojedynczych chipów ani GPU. Ułamkowe liczby pozostawiono tak, jak publikuje źródło.','partial')
-owid('chips','transistors-per-microprocessor',unit='tranzystory',unitKey='transistors',notes='Opracowany trend OWID/Rupp, nie katalog modeli CPU/GPU. Wartości nie są zaokrąglane do fikcyjnych liczb fizycznych tranzystorów.')
+topic('chips','Moore w liczbach','Zestaw OWID/Rupp pokazuje historyczny trend mikroprocesorów; nie identyfikuje pojedynczych chipów ani GPU. Ułamkowe liczby pozostawiono tak, jak publikuje źródło. Linia łączy nieregularne obserwacje; odcinki pomiędzy nimi są interpolacją wizualną, nie dodatkowymi pomiarami.','partial')
+# Year precision is not annual frequency: this source supplies 39 selected years,
+# so the chart should connect those observations without inserting empty years.
+owid('chips','transistors-per-microprocessor',unit='tranzystory',unitKey='transistors',frequency='irregular',notes='Opracowany trend OWID/Rupp, nie katalog modeli CPU/GPU. Nieregularne obserwacje z dokładnością do roku, połączone linią. Wartości nie są zaokrąglane do fikcyjnych liczb fizycznych tranzystorów.')
 topic('ev','Elektryczna zmiana warty','Dostępny udział BEV + PHEV łącznie. To nie jest udział samych BEV; brak prognoz. Metadane źródła mają niespójne oznaczenie edycji 2025/2026, zachowane w pakiecie.','partial')
 owid('ev','electric-car-sales-share',unit='% nowych aut',unitKey='ev-bev-phev-sales-share',notes='BEV + PHEV. Nowa sprzedaż, nie udział w całej flocie. Źródło: IEA przez OWID.')
 topic('work','Mniej godzin, więcej wartości?','Produktywność PPP i godziny pochodzą z Penn World Table 11.0. Godziny przed 1950 r. z Huberman/Minns dotyczą innej populacji, dlatego zachowano je jako osobne serie.')

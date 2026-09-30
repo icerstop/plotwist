@@ -31,7 +31,8 @@ export function buildStoryChart(series,settings){
   const first=observed[0],last=observed.at(-1),base=first.value;
   if(settings.mode==='index'&&base<=0)throw Error('Indeks 100 wymaga dodatniej wartości początkowej. Zmień zakres dat.');
   bases.push({id:s.id,date:first.date,period:first.period,datePrecision:first.datePrecision,fiscalYear:first.fiscalYear,value:base,unit:s.unit});
-  // A missing annual observation is a gap, never a made-up zero or measurement.
+  // Regular annual series retain missing-year gaps. Irregular, year-precision
+  // observations connect at their actual dates, without adding measurements.
   let trimmed=s.includeEmptyPeriods?points:points.filter(p=>p.date>=first.date&&p.date<=last.date);
   if(s.frequency==='annual'&&s.datePrecisions.every(p=>p==='year')){
    const byYear=new Map(trimmed.map(p=>[p.date.slice(0,4),p]));trimmed=[];

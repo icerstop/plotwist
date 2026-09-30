@@ -78,6 +78,32 @@ test('thresholds cannot masquerade as exact growth rates and MAU is distinct fro
  assert.notEqual(byId.get('adoption--facebook-mau').unitKey,byId.get('adoption--chatgpt-wau').unitKey);
  assert.equal(byId.get('adoption--facebook-mau').count,13);
 });
+
+test('Moore history connects every irregular observation without fabricating annual measurements',()=>{
+ const s=read('chips').series[0],original=structuredClone(s);
+ assert.equal(s.frequency,'irregular');assert.deepEqual(s.datePrecisions,['year']);
+ const metadata=manifest.series.find(item=>item.id===s.id);assert.equal(metadata.frequency,s.frequency);
+ const result=buildStoryChart([s],config([s.id])),line=result.series[0];
+ assert.equal(line.points.length,39);assert.ok(line.points.every(p=>Number.isFinite(p.y)));
+ assert.deepEqual(line.points.map(p=>[p.date,p.y]),s.points.map(p=>[p.date,p.value]));
+ // Formerly broken 1974–1979 segment now has a visible partial line in 1977.
+ const before=line.points.find(p=>p.period==='1974'),after=line.points.find(p=>p.period==='1979');
+ const during=Date.parse('1977-12-31')/86400000;
+ for(const log of [false,true]){
+  const max=visibleSeriesBounds([line],during,log).max;
+  assert.ok(max>before.y&&max<after.y);
+ }
+ const progress=(during-line.points[0].x)/(line.points.at(-1).x-line.points[0].x);
+ const frame=seriesFrame([line],progress,12,.65,progress*12);
+ assert.equal(frame.values[0].point.period,'1974');assert.equal(frame.values[0].value,before.y);
+ assert.equal(storyRows([s]).length,39);assert.deepEqual(s,original);
+ const ranged=buildStoryChart([s],config([s.id],{start:'1974-01-01',end:'1982-12-31',mode:'index'})).series[0];
+ assert.deepEqual(ranged.points.map(p=>p.period),['1974','1979','1982']);assert.equal(ranged.points[0].y,100);
+ // An explicit missing value still breaks a line, even for irregular series.
+ const missing={date:'1977-12-31',period:'1977',datePrecision:'year',value:null};
+ const withGap={...s,points:[s.points[2],missing,s.points[3]]};
+ assert.deepEqual(buildStoryChart([withGap],config([s.id])).series[0].points.map(p=>p.y),[before.y,null,after.y]);
+});
 test('step series never expands the axis using a future milestone',()=>{
  const points=[{x:0,y:10,valueQualifier:'>'},{x:10,y:100}],series=[{interpolation:'step',points}];
  assert.equal(visibleSeriesBounds(series,5).max,10);

@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-29T15:12:43.229640+00:00",
+  "builtAt": "2026-09-30T11:24:18.873303+00:00",
   "topics": 31,
   "series": 1111,
   "observations": 42001,
@@ -122,7 +122,7 @@
       "observations": 39,
       "start": "1971-12-31",
       "end": "2021-12-31",
-      "limitations": "Zestaw OWID/Rupp pokazuje historyczny trend mikroprocesorów; nie identyfikuje pojedynczych chipów ani GPU. Ułamkowe liczby pozostawiono tak, jak publikuje źródło."
+      "limitations": "Zestaw OWID/Rupp pokazuje historyczny trend mikroprocesorów; nie identyfikuje pojedynczych chipów ani GPU. Ułamkowe liczby pozostawiono tak, jak publikuje źródło. Linia łączy nieregularne obserwacje; odcinki pomiędzy nimi są interpolacją wizualną, nie dodatkowymi pomiarami."
     },
     {
       "id": "ev",

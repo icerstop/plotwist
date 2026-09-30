@@ -114,7 +114,7 @@ Najniższa historyczna cena odnotowana do danego roku; nie średnia cena rynkowa
 
 1 serii; 39 obserwacji; 1971-12-31 → 2021-12-31. Status: partial.
 
-Zestaw OWID/Rupp pokazuje historyczny trend mikroprocesorów; nie identyfikuje pojedynczych chipów ani GPU. Ułamkowe liczby pozostawiono tak, jak publikuje źródło.
+Zestaw OWID/Rupp pokazuje historyczny trend mikroprocesorów; nie identyfikuje pojedynczych chipów ani GPU. Ułamkowe liczby pozostawiono tak, jak publikuje źródło. Linia łączy nieregularne obserwacje; odcinki pomiędzy nimi są interpolacją wizualną, nie dodatkowymi pomiarami.
 
 - Historyczny trend liczby tranzystorów, najlepiej ze skalą logarytmiczną.
 - Karty pokazujące rzędy wielkości. Zbiór nie pozwala podpisać każdego punktu konkretnym modelem procesora.
