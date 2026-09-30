@@ -63,9 +63,9 @@ test('Nintendo sheet formatting is respected and multi-year tails are not assign
  assert.equal(byId.get('gaming--nintendo-switch-annual').points[0].value,2.74);
  assert.ok(!byId.has('gaming--family-computer-nes-cumulative'));
 });
-test('incompatible units are rejected; index bases follow the selected range and preserve gaps',()=>{
+test('mixed units keep separate native axes; index bases follow the selected range and preserve gaps',()=>{
  const a=byId.get('apple--iphone-revenue'),b=byId.get('apple--stock-fiscal-close'),ids=[a.id,b.id];
- assert.throws(()=>buildStoryChart([a,b],config(ids)),/różne jednostki/);
+ const native=buildStoryChart([a,b],config(ids));assert.equal(native.independentAxes,true);assert.equal(native.unit,'');assert.equal(native.series[0].points[0].y,a.points[0].value);assert.equal(native.series[1].unit,b.unit);
  const result=buildStoryChart([a,b],config(ids,{mode:'index',start:'2014-01-01'}));
  assert.equal(result.bases[0].date,'2014-09-27');assert.deepEqual(result.bases.map(b=>b.date),['2014-09-27','2014-09-27']);assert.ok(result.series.every(s=>s.points[0].y===100));
  const sparse={...a,datePrecisions:['year'],points:[{date:'2000-12-31',value:10},{date:'2002-12-31',value:20}]};

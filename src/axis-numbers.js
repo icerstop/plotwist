@@ -10,7 +10,7 @@ export function axisSourceUnit(unit=''){
  return {power:sourcePowers[match[2].toLowerCase()],base:[match[1],text.slice(match[0].length)].filter(Boolean).join(' '),original:text};
 }
 
-export function axisNumberFormat(config={},reference={min:0,max:1},ticks=[]){
+export function axisNumberFormat(config={},reference={min:0,max:1},ticks=[],{minimumAutoDecimals=0}={}){
  const s=config.visuals?.design?.chart||{},language=config.language==='en'?'en':'pl',locale=language==='en'?'en-GB':'pl-PL';
  const source=axisSourceUnit(config.ai?.benchmark?.unit??config.unit),mode=s.axisNumbers||'auto',placement=s.axisUnitPosition||'caption';
  const magnitude=Math.max(Math.abs(reference.min||0),Math.abs(reference.max||0));
@@ -20,7 +20,7 @@ export function axisNumberFormat(config={},reference={min:0,max:1},ticks=[]){
  const unit=mode==='full'||mode==='scientific'?source.original:[prefix,source.base].filter(Boolean).join(' ');
  const scaled=ticks.map(v=>v/divisor).filter(Number.isFinite).sort((a,b)=>a-b),gaps=scaled.slice(1).map((v,i)=>v-scaled[i]).filter(v=>v>0);
  const step=gaps.length?Math.min(...gaps):Math.abs(magnitude/divisor)||1;
- const autoDecimals=mode==='scientific'?2:Math.min(20,Math.max(0,2-Math.floor(Math.log10(step))));
+ const autoDecimals=mode==='scientific'?2:Math.min(20,Math.max(minimumAutoDecimals,2-Math.floor(Math.log10(step))));
  const decimals=s.axisDecimals==='auto'||s.axisDecimals==null?autoDecimals:Number(s.axisDecimals);
  const number=new Intl.NumberFormat(locale,{notation:mode==='scientific'?'scientific':'standard',useGrouping:s.axisGrouping!==false,maximumFractionDigits:Math.min(20,Math.max(0,decimals))});
  const threshold=10**-decimals;

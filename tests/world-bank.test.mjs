@@ -42,7 +42,7 @@ test('Maddison is separate from WDI and preserves earlier Poland and gaps',()=>{
  const topic=read('public/stories/maddison-gdp.json'),pol=topic.series.find(s=>s.entity==='Poland'),wdi=read('public/stories/NY.GDP.PCAP.PP.KD.json').series.find(s=>s.entity==='POL');
  assert.equal(pol.start,'1400-12-31');assert.equal(pol.end,'2022-12-31');assert.equal(pol.kind,'estimate');assert.notEqual(pol.unitKey,wdi.unitKey);
  assert.ok(pol.observationYears.includes(1950)&&pol.observationYears.includes(1989));assert.ok(!pol.observationYears.includes(1401));
- assert.throws(()=>buildStoryChart([pol,wdi],{...storyDefaults,selected:[{id:pol.id},{id:wdi.id}],mode:'native'}),/różne jednostki/);
+ const mixed=buildStoryChart([pol,wdi],{...storyDefaults,selected:[{id:pol.id},{id:wdi.id}],mode:'native'});assert.equal(mixed.independentAxes,true);assert.deepEqual(mixed.series.map(s=>s.unit),[pol.unit,wdi.unit]);
  assert.equal(topic.topic.defaultStart,'1950-01-01');assert.ok(pol.metricLabels.en.includes('Maddison'));
  assert.equal(topic.series.find(s=>s.entity==='Taiwan').region,'EAS');
  for(const g of comparisonGroups){const selected=g.codes.map(c=>topic.series.find(s=>s.countryCode===c)).filter(Boolean);assert.ok(selected.length>=4);assert.equal(buildStoryChart(selected,{...storyDefaults,start:'1950-01-01',selected:selected.map(s=>({id:s.id}))}).series.length,selected.length);}

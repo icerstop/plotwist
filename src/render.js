@@ -52,7 +52,7 @@ function drawReelFrame(canvas,config,progress,timeSeconds){
  endHeader();
  const contentTop=(height<1400?height*.48:730)+(metric?metricHeight+26:0);
  const contentY=(hasPlot?plot.top:contentTop)-(metric?metricHeight+76:hasPlot?40:50);
- const endContent=beginReelSection(ctx,config,'content',width,height,{x:70,y:contentY,w:940,h:(hasPlot?plot.bottom+(designOf(config).chart?.legend!==false?125+(series.length-1)*plot.legendStep:65):height-210)-contentY});
+ const endContent=beginReelSection(ctx,config,'content',width,height,{x:70,y:contentY,w:940,h:(hasPlot?plot.bottom+(!config.independentAxes&&designOf(config).chart?.legend!==false?125+(series.length-1)*plot.legendStep:65):height-210)-contentY});
  const {top,bottom,legendStep}=plot;
  if(metric){setReelText(ctx,config,'metric',32,font,fg,'bold');wrap(ctx,metric,hasPlot?135:78,(hasPlot?top:contentTop)-metricHeight-30,hasPlot?765:924,metricStep,2,true,config,'metric');}
  const current=drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue:n=>formatValue(n,config.language),timeSeconds:motionFrame.dataTime});

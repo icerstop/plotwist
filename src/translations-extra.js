@@ -1,5 +1,8 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Połącz różne wskaźniki|Combine different metrics
+zakres 0–100|0–100 range
+
 Zagadka|Mystery
 Sam tytuł → wykres bez opisów → odpowiedź|Title only → unlabelled chart → answer
 Tryb zagadki · ukryj odpowiedź|Mystery mode · hide the answer

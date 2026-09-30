@@ -52,7 +52,7 @@ test('chip aggregate uses spending weights and all 57 source rows',()=>{
  const chart=buildStoryChart([a100,h100],{...storyDefaults,selected:[{id:a100.id},{id:h100.id}]});
  assert.equal(chart.series[0].points.at(-1).y,null,'A100 must not be carried beyond its last separate source row');
  assert.equal(seriesFrame(chart.series,1,12,.65,12).values[0].value,null);
- assert.throws(()=>buildStoryChart([avg,totals],{...storyDefaults,selected:[{id:avg.id},{id:totals.id}]}),/różne jednostki/);
+ const mixed=buildStoryChart([avg,totals],{...storyDefaults,selected:[{id:avg.id},{id:totals.id}]});assert.equal(mixed.independentAxes,true);assert.deepEqual(mixed.series.map(s=>s.unit),[avg.unit,totals.unit]);
 });
 
 test('NHGRI retains monthly precision, nominal dollars and original sheet references',()=>{

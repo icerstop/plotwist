@@ -42,7 +42,7 @@ export const chartTop=(config,top,bottom)=>bottom-(bottom-top)*number(designOf(c
 export function seriesPlotLayout(config,width,height,headerBottom,metricHeight=null){
  const short=height<1400,header=sectionTransform(config,'header',width,height),content=sectionTransform(config,'content',width,height);
  const legendStep=Math.max(config.compactTitle?52:43,textSize(config,'labels',27)+16,textSize(config,'values',27)+16);
- const bottom=height-(short?235:285)-(designOf(config).chart?.legend!==false?100+(Math.max(1,config.series?.length||0)-1)*legendStep:30);
+ const bottom=height-(short?235:285)-(!config.independentAxes&&designOf(config).chart?.legend!==false?100+(Math.max(1,config.series?.length||0)-1)*legendStep:30);
  const gap=48,minPlot=Math.min(280,height*.18),captionSpace=config.metricCaption?(metricHeight??textSize(config,'metric',38)*2)+26:0;
  let headerScale=1,top=content.base.y+32;
  if(designOf(config).layout!=='chart-first'){

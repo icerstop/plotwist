@@ -9,6 +9,7 @@ import {lineEndpoint,lineLabelGeometry,endpointLabelText,drawLineLabels} from '.
 import {seriesBadge} from './series-identity.js';
 import {mysteryRole} from './reel-mystery.js';
 import {copyText} from './reel-copy.js';
+import {drawIndependentSeries} from './independent-series.js';
 export function crossText(ctx,previous,current,x,y,mix=1,maxWidth=1000){
  if(previous===current||mix>=1){ctx.fillText(current,x,y,maxWidth);return;}
  ctx.save();ctx.globalAlpha*=Math.max(0,1-mix*2);ctx.fillText(previous,x,y-8*mix,maxWidth);ctx.restore();
@@ -26,6 +27,7 @@ const extentCache=new WeakMap();
 export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue,timeSeconds}){
  const {series=[],chart='line',unit='',xType='year'}=config;
  const state=seriesFrame(series,progress,config.duration||12,config.transition??.65,timeSeconds),{values,before,mix,current}=state;
+ if(config.independentAxes&&chart!=='cards')return drawIndependentSeries(ctx,config,progress,state,{top,bottom,height,legendStep,font,fg,muted,colors,dark,panel,grid,contentTop,formatValue,timeSeconds});
  let all=extentCache.get(series);
  if(!all){all={minX:Infinity,maxX:-Infinity,minY:0,rawMax:0,range:bounds([])};
   for(const s of series)for(const p of s.points){all.minX=Math.min(all.minX,p.x);all.maxX=Math.max(all.maxX,p.x);if(Number.isFinite(p.y)){all.minY=Math.min(all.minY,p.y);all.rawMax=Math.max(all.rawMax,p.y);all.range.min=Math.min(all.range.min,p.y);all.range.max=Math.max(all.range.max,p.y);}}
@@ -42,8 +44,8 @@ export function drawSeriesContent(ctx,config,progress,{top,bottom,height,legendS
  const unitCaption=chartAppearance(config).axisLabels&&['line','area','bar'].includes(chart)?copyText(ctx,config,'axis.unit',numbers.caption,{element:'content',label:'Opis jednostki osi',multiline:false}):'',autoCaption=scaleCaption(config,scale),caption=autoCaption?copyText(ctx,config,'axis.scale',autoCaption,{element:'content',label:'Podpis zakresu i skali',multiline:false}):'';
  if(unitCaption||caption){setReelText(ctx,config,'labels',unitCaption?28:23,font,muted);drawAxisCaption(ctx,unitCaption,caption,chart==='ranking'?78:135,chart==='ranking'?contentTop-22:top-22,860);}
  const appearance=chartAppearance(config),color=i=>seriesColor(config,i,series[i].customColor?series[i].color:colors[i%colors.length]);
- const text=v=>v===null?(config.language==='en'?'no data':'brak danych'):`${formatValue(v)} ${unit}`;
- const rowText=row=>(row.value!==null&&row.point?.valueQualifier?(row.point.valueQualifier==='approximately'?'≈ ':row.point.valueQualifier+' '):'')+text(row.value)+(config.showObservationDates&&row.value!==null&&row.point?.date?` · ${observationPeriod(row.point,config.language)}`:'');
+ const text=(v,rowUnit)=>v===null?(config.language==='en'?'no data':'brak danych'):`${formatValue(v)} ${rowUnit}`;
+ const rowText=row=>(row.value!==null&&row.point?.valueQualifier?(row.point.valueQualifier==='approximately'?'≈ ':row.point.valueQualifier+' '):'')+text(row.value,config.independentAxes?row.series.unit:unit)+(config.showObservationDates&&row.value!==null&&row.point?.date?` · ${observationPeriod(row.point,config.language)}`:'');
  const moving=i=>values[i].value===null?null:lerp(before[i].value??values[i].value,values[i].value,mix);
  const [left,baseRight]=plotSides(config,135,900),labelsEnabled=appearance.endLabels&&['line','area'].includes(chart);
  const labelGeometry=labelsEnabled?lineLabelGeometry(config,{left,right:baseRight,top,bottom,count:series.length,hasIcons:series.some(s=>seriesBadge(s)),hasDates:series.some(s=>s.points.at(-1)?.x<maxX)}):null;
