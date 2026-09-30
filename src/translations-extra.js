@@ -1163,4 +1163,12 @@ Nieprawidłowy plik motywu.|Invalid theme file.
 Brakuje pliku tła lub logo w motywie.|The theme's background or logo file is missing.
 Wybierz plik motywu JSON do 34 MB.|Choose a theme JSON file up to 34 MB.
 Poczekaj na zakończenie wczytywania dodatków.|Wait for the media to finish loading.
+Niepewność wyniku (CI / SE)|Uncertainty (CI / SE)
+Data ustanowienia rekordu|Record date
+Wartość rekordu|Record value
+Szczegóły pomiaru|Measurement details
+Data i szczegóły pomiaru|Measurement date and details
+Metodologia osi czasu|Timeline methodology
+Objaśnienie benchmarku|Benchmark explanation
+Źródło i data pobrania|Source and retrieval date
 `;

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {describeCopy,normalizeCopies,updateCopy,reelCopyFields} from '../src/reel-copy.js';
+import {describeCopy,normalizeCopies,updateCopy,reelCopyFields,normalizeCopyHidden,updateCopyHidden} from '../src/reel-copy.js';
 import {drawReel} from '../src/render.js';
 import {normalizeDesign} from '../src/reel-design.js';
 import {motionPreset} from '../src/reel-motion.js';
@@ -12,6 +12,31 @@ function recorder(){
  const canvas={width:1080,height:1920,getContext:()=>ctx};ctx.canvas=canvas;return {canvas,text,stack};
 }
 const base=()=>({duration:12,language:'pl',title:'Original title',subtitle:'Original subtitle',source:'Original source',metricCaption:'Original metric',unit:'years',axisRange:'dynamic',series:[{name:'Polska',countryCode:'POL',points:[{x:2000,y:50},{x:2025,y:80}]}],visuals:{copy:{},design:normalizeDesign({chart:{endLabels:true,endLabelNames:true}})}});
+
+test('visibility preserves authored text, restores without data loss and isolates language/data',()=>{
+ const c=base(),field=describeCopy(c,'subtitle',c.subtitle);c.visuals.copy=updateCopy({},field.key,'Keep my caption');c.visuals.copyHidden=updateCopyHidden({},field.visibilityKey,true);
+ assert.equal(describeCopy(c,'subtitle',c.subtitle).value,'');assert.equal(c.visuals.copy[field.key],'Keep my caption');
+ assert.equal(describeCopy({...c,language:'en'},'subtitle',c.subtitle).hidden,false);
+ assert.equal(describeCopy({...c,unit:'USD'},'subtitle',c.subtitle).hidden,false);
+ const theme=captureTheme({name:'Test',visuals:c.visuals,fontId:'arial'});assert.ok(!JSON.stringify(theme).includes('copyHidden'));assert.deepEqual(applySavedTheme(c.visuals,theme).copyHidden,c.visuals.copyHidden);
+ assert.deepEqual(normalizeCopyHidden(JSON.parse(JSON.stringify(c.visuals.copyHidden))),c.visuals.copyHidden);
+ assert.deepEqual(normalizeCopyHidden({'[a]':true,'[b]':false,'bad':true,'[c]':'true'}),{'[a]':true});
+ c.visuals.copyHidden=updateCopyHidden(c.visuals.copyHidden,field.visibilityKey,false);assert.equal(describeCopy(c,'subtitle',c.subtitle).value,'Keep my caption');
+});
+
+test('one uncertainty switch hides every changing CI, keeps other captions and remains restorable',()=>{
+ const c=base();c.ai={mode:'records',basis:'release',rows:[{id:'a',modelId:'a',model:'First',date:'2025-01-01',score:40,low:38,high:42},{id:'b',modelId:'b',model:'Second',date:'2026-01-01',score:60,low:57,high:63}],benchmark:{id:'example',name:'Example',unit:'pts',source:'Publisher',caveat:'Methodology',retrievedAt:'2026-09-30'}};
+ const {canvas,text}=recorder();drawReel(canvas,c,1,12);const fields=reelCopyFields(canvas),ci=fields.find(f=>f.label==='Niepewność wyniku (CI / SE)'),value=fields.find(f=>f.id==='ai.record.value');assert.ok(ci&&value);
+ c.visuals.copyHidden=updateCopyHidden({},ci.visibilityKey,true);
+ for(const p of [0,.2,.5,.95,1]){text.length=0;drawReel(canvas,c,p,p*12);assert.ok(!text.some(t=>t.startsWith('90% CI:')));assert.ok(text.includes('Methodology'));const hidden=reelCopyFields(canvas).find(f=>f.visibilityKey===ci.visibilityKey);assert.ok(hidden?.hidden);}
+ c.visuals.copyHidden=updateCopyHidden(c.visuals.copyHidden,ci.visibilityKey,false);text.length=0;drawReel(canvas,c,0,0);assert.ok(text.some(t=>t==='90% CI: 38–42'));
+});
+
+test('visibility invalidates cached AI identities and restores exactly the chosen model',()=>{
+ const c=base();c.ai={mode:'ranking',basis:'release',rows:[{id:'a',modelId:'a',model:'First (High)',date:'2025-01-01',score:40},{id:'b',modelId:'b',model:'Second (High)',date:'2026-01-01',score:60}],benchmark:{id:'example',name:'Example',unit:'pts',source:'Publisher',caveat:'Methodology',retrievedAt:'2026-09-30'}};
+ const {canvas,text}=recorder();drawReel(canvas,c,1,12);const field=reelCopyFields(canvas).find(f=>f.id==='ai.model.name'&&f.original==='Second');c.visuals.copyHidden=updateCopyHidden({},field.visibilityKey,true);text.length=0;drawReel(canvas,c,1,12);assert.ok(!text.includes('Second'));assert.ok(text.includes('First'));assert.ok(text.includes('60'));assert.ok(reelCopyFields(canvas).some(f=>f.key===field.key&&f.hidden));
+ c.visuals.copyHidden=updateCopyHidden(c.visuals.copyHidden,field.visibilityKey,false);text.length=0;drawReel(canvas,c,1,12);assert.ok(text.includes('Second'));
+});
 
 test('copy isolates data and language, restores automatic text, and survives theme changes without contaminating themes',()=>{
  const c=base(),field=describeCopy(c,'source',c.source);c.visuals.copy=updateCopy(c.visuals.copy,field.key,'My methodology');

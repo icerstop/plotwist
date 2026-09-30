@@ -19,9 +19,9 @@ import {axisNumberFormat,drawAxisNumber,drawAxisCaption} from './axis-numbers.js
 import {layoutAiIdentity,drawAiIdentity,aiRankingLayout,aiIdentityLayouts} from './ai-labels.js';
 import {themeOf,textSize,textColor,setReelText,reelTextFont,textWeight,beginReelSection,chartTop,designOf} from './reel-design.js';
 function typography(font,language,config){
-function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels'){
+function wrap(ctx,text,x,y,width,size=34,max=3,color,custom=false,role='labels',copyOptions={}){
  if(!custom)text=translate(text,language);
- if(role!=='values')text=copyText(ctx,config,role==='labels'?'ai.note':role,text,{element:role==='labels'?'content':role,dynamic:role==='date',multiline:role!=='date'});
+ if(role!=='values')text=copyText(ctx,config,role==='labels'?'ai.note':role,text,{element:role==='labels'?'content':role,dynamic:role==='date',multiline:role!=='date',...copyOptions});
  const title=role==='title';
  setReelText(ctx,config,role,title?size/textSize(config,role,1):size,font,color,title||size>=60?'bold':'');
  const actual=title?size:textSize(config,role,size);
@@ -78,7 +78,7 @@ function drawAiReelFrame(canvas,config,progress,timeSeconds){
     drawAiIdentity(ctx,config,layoutAiIdentity(ctx,config,r,{width:920,size:layout.compact?44:58,detailSize:layout.compact?28:34}),76,Y(775),fg,muted);
     ctx.fillStyle=accent;fit(ctx,score(r),930,layout.compact?96:147,55);ctx.fillText(score(r),76,Y(1190));
     const detail=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`Błąd standardowy: ±${aiValue(r.stderr)} p.p.`:r.rawScore!==undefined?`Surowy wynik: ${r.rawScore}/${r.total}`:r.elo?`Rating Codeforces: ${r.elo}`:'Wynik odnotowany w źródle';
-    wrap(ctx,detail,76,Y(1260),920,31,2,muted);
+    wrap(ctx,detail,76,Y(1260),920,31,2,muted,false,'labels',{visibilityId:'ai.timeline.detail',label:'Szczegóły pomiaru'});
     const recent=rows.slice(Math.max(0,index-1),index+1).map(p=>({row:p,layout:layoutAiIdentity(ctx,config,p,{width:920,nameWidth:700,size:28,detailSize:24})}));
     while(recent.length>1&&recent.reduce((h,p)=>h+p.layout.height+46,0)>G(268))recent.shift();
     let recentY=Y(1370);for(const {row:p,layout} of recent){wrap(ctx,p.date,76,recentY+23,920,22,1,muted);drawAiIdentity(ctx,config,layout,76,recentY+31,fg,muted);ctx.textAlign='right';wrap(ctx,aiValue(p.score),999,recentY+31+layout.blocks[0].baseline,220,31,1,fg,false,'values');ctx.textAlign='left';recentY+=layout.height+G(46);}
@@ -108,7 +108,7 @@ function drawAiReelFrame(canvas,config,progress,timeSeconds){
     ctx.fillStyle=grid;roundFill(ctx,76,barY,925,barHeight,appearance.radius);ctx.fillStyle=ni===0?accent:purple;const v=lerp(prev.score,r.score,mix);roundFill(ctx,Math.min(barX(0),barX(v)),barY,Math.abs(barX(v)-barX(0)),barHeight,appearance.radius);
     const uncertainty=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`SE: ±${aiValue(r.stderr)} p.p.`:'';
     const detail=trackingAverage?`Średnia z ${r.sampleCount} prób · ostatni test ${r.lastRunAt.slice(0,10)}`:`${r.date}${uncertainty?' · '+uncertainty:''}`;
-    wrap(ctx,detail,76,barY+barHeight+12+dateSize,920,23,1,muted);ctx.restore();
+    wrap(ctx,detail,76,barY+barHeight+12+dateSize,920,23,1,muted,false,'labels',{visibilityId:`ai.ranking.detail:${id}`,label:'Data i szczegóły pomiaru'});ctx.restore();
    }
    ctx.restore();wrap(ctx,trackingAverage?'TrackingAI · średnia z ostatnich maks. 7 prób':`${b.unit} · ostatni dostępny pomiar każdego wariantu`,76,Y(1650),920,26,1,muted);
  } else if(mode==='records'){
@@ -126,11 +126,11 @@ function drawAiReelFrame(canvas,config,progress,timeSeconds){
    if(appearance.axisLabels){wrap(ctx,first.date,left,bottom+55,400,27,1,muted);ctx.textAlign='right';wrap(ctx,last.date,right,bottom+55,400,27,1,muted);ctx.textAlign='left';}
    function recordLabel(r,alpha){
     if(alpha<=0)return;ctx.save();ctx.globalAlpha*=alpha;
-    setReelText(ctx,config,'values',43,reelFont(config.fontId),accent,'bold');ctx.fillText(score(r),76,valueY);
+    setReelText(ctx,config,'values',43,reelFont(config.fontId),accent,'bold');ctx.fillText(copyText(ctx,config,'ai.record.value',score(r),{element:'content',label:'Wartość rekordu',visibilityId:'ai.record.value'}),76,valueY);
     const uncertainty=r.low!=null?`90% CI: ${aiValue(r.low)}–${aiValue(r.high)}`:r.stderr!=null?`SE: ±${aiValue(r.stderr)} p.p.`:'';
-    if(uncertainty)wrap(ctx,uncertainty,76,nameTop-16,920,24,1,muted);
+    if(uncertainty)wrap(ctx,uncertainty,76,nameTop-16,920,24,1,muted,false,'labels',{visibilityId:'ai.record.uncertainty',label:'Niepewność wyniku (CI / SE)'});
     drawAiIdentity(ctx,config,names.layouts.get(r),76,nameTop,fg,muted);
-    wrap(ctx,`Rekord z ${r.date}`,76,layout.compact?layout.end-50:Y(1634),920,24,1,muted);ctx.restore();
+    wrap(ctx,`Rekord z ${r.date}`,76,layout.compact?layout.end-50:Y(1634),920,24,1,muted,false,'labels',{visibilityId:'ai.record.date',label:'Data ustanowienia rekordu'});ctx.restore();
    }
    if(now.record.id!==old.record.id&&mix<1){recordLabel(old.record,clamp(1-mix*2));recordLabel(now.record,clamp(mix*2-1));}else recordLabel(now.record,1);
    wrap(ctx,new Date(current).toISOString().slice(0,10),76,layout.compact?layout.end-15:Y(1669),920,27,1,muted,false,'date');
@@ -167,7 +167,7 @@ function drawAiReelFrame(canvas,config,progress,timeSeconds){
  const dating=basis==='release'?'Wg premier · retrospektywa, pomiary mogły być późniejsze':b.dateKind==='snapshot'?'Stan rankingu na dzień pobrania':'Wg dat testu / publikacji · bez interpolacji';
  const warning=trackingAverage?b.caveat:b.id.startsWith('iq-')?'Quiz TrackingAI ≠ psychometryczne IQ człowieka':b.id==='eci'?'ECI ≠ IQ · aktualne przeliczenie historii':b.id==='codeforces2024'?'Percentyl wśród uczestników · 10 zgłoszeń':b.id.startsWith('swe-')?'Wynik systemu z narzędziami; wersje środowiska rozdzielone':b.id==='gpqa'&&mode==='duel'?'Eksperci dziedzinowi; różne protokoły ewaluacji':['frontiermath','frontiermath4'].includes(b.id)?'Od 13.11.2025 budżet tokenów 10× większy; porównanie orientacyjne':b.caveat;
  const endSource=beginElement(ctx,config,'source',{x:76,y:height-(layout.compact?203:247),w:928,h:layout.compact?114:158});
- wrap(ctx,dating,76,height-(layout.compact?188:220),928,layout.compact?19:22,2,muted,false,'source');wrap(ctx,warning,76,height-(layout.compact?145:160),928,layout.compact?19:22,2,muted,false,'source');wrap(ctx,`${b.source} · dane ${b.retrievedAt}`,76,height-99,928,23,1,muted,false,'source');
+ wrap(ctx,dating,76,height-(layout.compact?188:220),928,layout.compact?19:22,2,muted,false,'source',{visibilityId:'ai.method.dating',label:'Metodologia osi czasu'});wrap(ctx,warning,76,height-(layout.compact?145:160),928,layout.compact?19:22,2,muted,false,'source',{visibilityId:'ai.method.warning',label:'Objaśnienie benchmarku'});wrap(ctx,`${b.source} · dane ${b.retrievedAt}`,76,height-99,928,23,1,muted,false,'source',{visibilityId:'ai.method.source',label:'Źródło i data pobrania'});
  endSource();
  drawSignature(ctx,1080,height,config.fontId,dark,config);
  drawReelOverlays(ctx,1080,height,config);
