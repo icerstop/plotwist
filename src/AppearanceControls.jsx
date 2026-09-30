@@ -1,3 +1,4 @@
+import ReleaseAppearanceControls from './ReleaseAppearanceControls.jsx';
 import {reelCapabilities} from './reel-capabilities.js';
 import React from 'react';
 import {useVisualStatus,Range,Color} from './VisualSettings.jsx';
@@ -11,6 +12,7 @@ export function ChartEditor({config}){
  const patch=p=>v.design({chart:{...s,...p}}),range=(key,label,min,max,suffix='')=><Range label={label} value={s[key]} min={min} max={max} suffix={suffix} onChange={n=>patch({[key]:n})}/>;
  return <div className="visual-editor chart-editor"><fieldset disabled={!v.ready||v.busy}>
   <p className="visual-hint">Styl dopasowuje się do wybranego sposobu prezentacji danych. Typ wykresu wybierzesz w panelu danych.</p>
+  {config.releases&&<ReleaseAppearanceControls config={config}/>}
   {cap.scaleCaption&&<label className="visual-check"><input type="checkbox" checked={s.scaleCaption} onChange={e=>patch({scaleCaption:e.target.checked})}/>Pokaż podpis zakresu i skali</label>}
   <div className="palette-grid" role="group" aria-label="Paleta wykresu">{chartPalettes.map(p=><button type="button" key={p.id} aria-pressed={s.palette===p.id} className={s.palette===p.id?'selected':''} onClick={()=>patch({palette:p.id})}><span aria-hidden="true">{(p.colors.length?(themeOf(config).dark?p.dark:p.colors):themeOf(config).colors).map((c,i)=><i key={i} style={{background:c}}/>)}</span><b>{p.name}</b></button>)}</div>
   {s.palette!=='original'&&<p className="visual-hint">Paleta zastępuje kolory serii. Wybierz „Kolory z danych i motywu”, aby wrócić do własnych kolorów i kolorów marek.</p>}
@@ -20,7 +22,8 @@ export function ChartEditor({config}){
    {range('opacity','Widoczność serii',30,100,'%')}{range('glow','Poświata linii',0,30,' px')}
    {mode==='area'&&<>{range('fillOpacity','Siła wypełnienia',0,65,'%')}<Select label="Wypełnienie obszaru" value={s.fillStyle} options={[["flat","Jednolity kolor"],["fade","Zanikający gradient"]]} onChange={fillStyle=>patch({fillStyle})}/></>}
   </details>}
-  {(bars||cards)&&<details className="appearance-group" open><summary>Słupki i karty</summary>{bars&&range('barWidth',['bar','pulse','gaps'].includes(mode)?'Szerokość słupków':'Grubość słupków',25,95,'%')}{range('radius','Zaokrąglenie narożników',0,32,' px')}</details>}
+  {(bars||cards&&!config.releases)&&<details className="appearance-group" open><summary>Słupki i karty</summary>{bars&&range('barWidth',['bar','pulse','gaps'].includes(mode)?'Szerokość słupków':'Grubość słupków',25,95,'%')}{(!config.releases||mode==='gaps')&&range('radius',config.releases?'Zaokrąglenie słupków':'Zaokrąglenie narożników',0,32,' px')}</details>}
+  {config.releases&&['calendar','heatmap'].includes(mode)&&<details className="appearance-group"><summary>Pola kalendarza i mapy</summary>{range('radius','Zaokrąglenie pól',0,32,' px')}</details>}
   {cap.modelLabels&&<details className="appearance-group" open><summary>Nazwy modeli i ustawienia</summary>
    <Select label="Opis modelu" value={s.aiLabelStyle} options={[["structured","Model + ustawienia w osobnym wierszu"],["source","Pełna etykieta źródłowa"]]} onChange={aiLabelStyle=>patch({aiLabelStyle})}/>
    {mode==='ranking'&&range('aiRankCount','Maksymalna liczba pozycji',2,6)}

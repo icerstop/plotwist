@@ -1207,4 +1207,57 @@ Data na słupku|Bar date
 Brak odstępu|No interval
 Opis odstępów|Interval caption
 Producent i dostępność|Publisher and availability
+Rozmieszczenie osi czasu|Timeline layout
+Rozstaw torów (wysokość osi)|Lane spacing (timeline height)
+Szerokość osi czasu|Timeline width
+Okno czasu|Time window
+Cały wybrany okres|Entire selected period
+Rozstaw nie powiększa tekstu. Wyłączenie liczników lub słupków miesięcznych oddaje miejsce osi czasu. Okno czasu przybliża daty bez zmiany wybranych danych.|Spacing does not enlarge text. Hiding counters or monthly bars frees space for the timeline. The time window zooms dates without changing the selected data.
+Rozmiar punktów premier|Release marker size
+Rozbłysk przy premierze|Release pulse
+Nazwy przy torach|Lane names
+Logotypy przy torach|Lane logos
+Daty na krańcach osi|Timeline endpoint dates
+Pokaż liczniki|Show counters
+Pokaż słupki miesięczne|Show monthly bars
+Karta premiery · tło i obramowanie|Release card · background and border
+Pokaż kartę premiery|Show release card
+Tło karty premiery|Release card background
+Bez tła|No background
+Z motywu|From theme
+Własny kolor|Custom colour
+Kolor tła karty|Card background colour
+Widoczność tła karty|Card background opacity
+Cień karty|Card shadow
+Grubość obramowania karty|Card border width
+Kolor obramowania karty|Card border colour
+Zaokrąglenie karty premiery|Release card corners
+Karta premiery · układ i zawartość|Release card · layout and content
+Szerokość karty premiery|Release card width
+Wysokość karty premiery|Release card height
+Margines wewnętrzny karty|Card padding
+Odstępy między modelami|Model spacing
+Data w karcie|Card date
+Modele w karcie|Card models
+Odstęp w karcie|Card interval
+Nazwy modeli w karcie|Model names in card
+Logotypy w karcie|Logos in card
+Dni od poprzedniej premiery|Days since previous release
+Datę, modele i odstęp możesz osobno zaznaczyć na podglądzie: przesuwać, obracać, zmieniać czcionkę i kolor. Treść zmienisz w polu „Treść tekstu”.|Select the date, models and interval separately in the preview to move, rotate, or change their font and colour. Edit wording under Text content.
+Zaokrąglenie słupków|Bar corners
+Pola kalendarza i mapy|Calendar and map cells
+Zaokrąglenie pól|Cell corners
+30 dni · podążaj za premierami|30 days · follow releases
+90 dni · podążaj za premierami|90 days · follow releases
+180 dni · podążaj za premierami|180 days · follow releases
+365 dni · podążaj za premierami|365 days · follow releases
+730 dni · podążaj za premierami|730 days · follow releases
+Format daty w karcie|Card date format
+Dzień, miesiąc słownie, rok|Day, month name, year
+Data liczbowa|Numeric date
+ISO · RRRR-MM-DD|ISO · YYYY-MM-DD
+Opis odstępu w karcie|Card interval format
+Pełny opis odstępu|Full interval caption
+Liczba i dni|Number and days
+Sama liczba|Number only
 `;

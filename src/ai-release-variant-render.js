@@ -1,3 +1,4 @@
+import {normalizeReleaseAppearance,paintReleasePanel} from './release-appearance.js';
 import {releaseIntervals,releaseActivity} from './ai-release-views.js';
 import {roundFill} from './chart-appearance.js';
 const smooth=n=>{n=Math.max(0,Math.min(1,n));return n*n*(3-2*n);};
@@ -5,14 +6,15 @@ const smooth=n=>{n=Math.max(0,Math.min(1,n));return n*n*(3-2*n);};
 // card. No DOM animation or wall-clock state: seeking and export are identical.
 export function drawReleaseVariant({ctx,r,frame,publishers,theme,style,y,h,text,section,line,dateLabel,t,eventAge,detail,locale}){
  if(!['cards','heatmap','gaps'].includes(r.mode))return false;
+ const appearance=normalizeReleaseAppearance(style.release);
  const {fg,muted,panel,grid}=theme,accent=publishers[0]?.color||fg;
  const active=frame.latest[0]?.date,enter=active?smooth(eventAge(active)/.4):1;
  const finish=section('plot',{x:76,y:y(.20),w:928,h:h*(r.mode==='cards'?.16:.44)});
  if(r.mode==='cards'){
   const dates=[...new Set(frame.visible.map(r=>r.date))],previous=dates.slice(-3,-1);
   previous.forEach((date,i)=>{
-   const depth=previous.length-i,top=y(.36)-depth*34-(1-enter)*10,x=98+depth*18,w=884-depth*36;
-   ctx.save();ctx.globalAlpha*=.55+(2-depth)*.15;ctx.fillStyle=panel;roundFill(ctx,x,top,w,100,Math.max(12,style.radius));
+   const baseTop=y(.995)-(y(.995)-y(.36))*appearance.cardHeight/100,baseWidth=928*appearance.cardWidth/100,depth=previous.length-i,top=baseTop-depth*34-(1-enter)*10,x=540-baseWidth/2+depth*18,w=baseWidth-depth*36;
+   ctx.save();ctx.globalAlpha*=.55+(2-depth)*.15;paintReleasePanel(ctx,{x,y:top,w,h:100},appearance,theme);
    const models=frame.visible.filter(r=>r.date===date),color=publishers.find(p=>p.id===models[0].publisher)?.color||accent;
    ctx.fillStyle=color;roundFill(ctx,x,top,5,32,2);
    text(`${dateLabel(date)} · ${t('wersje','versions')}: ${models.length}`,x+18,top+24,w-36,23,'labels',muted,1,false,{id:'release.previousCard',entity:depth,dynamic:true,label:'Poprzednia karta'});ctx.restore();

@@ -45,7 +45,7 @@ export function applyReelFont(visuals,fontId){
  return {...visuals,fontId,design:{...design,preset:null,text:Object.fromEntries(Object.entries(design.text).map(([role,style])=>[role,{...style,fontId:null}]))},overlays:(visuals.overlays||[]).map(o=>o.kind==='text'?{...o,fontId:null}:o)};
 }
 export const themeOf=config=>reelThemes.find(t=>t.id===designOf(config).theme)||reelThemes[0];
-export const textStyle=(config,role)=>designOf(config).text?.[`${config._textElement}:${role}`]||designOf(config).text?.[role];
+export const textStyle=(config,role)=>designOf(config).text?.[`${config._textElement}:${role}`]||(['detailDate','detailModels','detailGap'].includes(config._textElement)?designOf(config).text?.[`detail:${role}`]:null)||designOf(config).text?.[role];
 export const textSize=(config,role,size)=>size*(textStyle(config,role)?.size??100)/100*(config._aiTextScale??1);
 export const textColor=(config,role,fallback)=>textStyle(config,role)?.color||fallback;
 // Resize only the plot, anchored above the legend. Old saved designs fill the space.

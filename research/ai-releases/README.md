@@ -53,3 +53,11 @@ Validation: 241 automated tests, 24 browser-rendered combinations across two mod
 Three presentation modes reuse the existing event-pause clock and shared element/copy editor: `cards` (date-grouped card stack), `heatmap` (month counts with a rolling four-year window) and `gaps` (up to ten recent intervals between distinct dates). Simultaneous releases share a card and do not create zero gaps; no interval is inferred before the first selected event. The map uses the selected version/publisher-day counting unit, keeps its intensity scale fixed across playback, and shows future/out-of-range cells without counts. Gap bars retain a fixed scale based on the whole selection. The modes preserve publisher/date filters and appearance when switched and are saved with the existing browser preferences.
 
 Validation: 244 unit/integration tests; 36 new-view render combinations plus 24 existing-view regressions; editable captions, hidden sections, saved mode, stable ending; six-second 30 fps exports of all three new views.
+
+## Release appearance controls (2026-10-01)
+
+Timeline height/width, a following 30/90/180/365/730-day window, marker size, pulses, names, logos and endpoint dates are stored under the shared chart appearance contract. Hiding summary/histogram sections frees lane space. Layout reserves card and histogram room; increasing spacing stops at the available space instead of overlapping those sections. Zoom filters only rendered timeline marks, preserving catalogue selection, counts and event pauses.
+
+Release cards now default to no background. Theme/custom fills, opacity, border, corner radius, shadow, padding, dimensions, model spacing, date/interval formats and logos are configurable across the five release views. Date, models and interval are registered as individual children of the card in the common editor, with independent transforms, hidden state and typography. Parent card typography remains the fallback until a child override is saved. The previous per-caption manual text editing remains available.
+
+Validation: 248 unit/integration tests; 30 browser render cases across five modes, three formats and default/custom styling; independent child movement, typography, hiding and manual date text; ISO date and numeric interval; saved appearance reload; custom six-second MP4 with 180 frames at 30 fps.

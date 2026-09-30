@@ -4,12 +4,13 @@ export const reelElementDefinitions={
  mark:{name:'Logo rolki'},title:{name:'Tytuł'},subtitle:{name:'Opis pod tytułem'},metric:{name:'Wspólny wskaźnik'},
  content:{name:'Wykres i legenda'},date:{name:'Data / rok'},source:{name:'Źródła i metodologia'},signature:{name:'Podpis autora'},
  summary:{name:'Liczniki i podsumowanie',textRole:'values',textRoles:['labels','values']},plot:{name:'Oś czasu / kalendarz',textRole:'labels',textRoles:['labels']},
+ detailDate:{name:'Data w karcie',textRole:'labels',textRoles:['labels']},detailModels:{name:'Modele w karcie',textRole:'labels',textRoles:['labels']},detailGap:{name:'Odstęp w karcie',textRole:'labels',textRoles:['labels']},
  distribution:{name:'Słupki miesięczne',textRole:'labels',textRoles:['labels']},detail:{name:'Karta ostatniego zdarzenia',textRole:'labels',textRoles:['labels']}
 };
 export function reelCapabilities(config={}){
  const release=!!config.releases,mode=release?config.releases.mode:config.ai?.mode||config.chart||'line';
  const plot=!release&&['line','area','bar','records','scatter'].includes(mode);
- const ids=[...(config.visuals?.logo?.type&&config.visuals.logo.type!=='none'?['mark']:[]),'title','subtitle',...(!release&&config.metricCaption?['metric']:[]),'content','date','source','signature',...(release?['summary','plot',...(mode==='pulse'?['distribution']:[]),'detail']:[])];
+ const ids=[...(config.visuals?.logo?.type&&config.visuals.logo.type!=='none'?['mark']:[]),'title','subtitle',...(!release&&config.metricCaption?['metric']:[]),'content','date','source','signature',...(release?['summary','plot',...(mode==='pulse'?['distribution']:[]),'detail','detailDate','detailModels','detailGap']:[])];
  return {
   elements:ids.map(id=>({id,...reelElementDefinitions[id],...(release&&id==='plot'?{name:({cards:'Historia kart',heatmap:'Mapa aktywności',gaps:'Odstępy między premierami'})[mode]||reelElementDefinitions.plot.name}:{})})),
   motionElements:ids.filter(id=>id!=='source'&&(id!=='mark'||config.visuals?.logo?.type&&config.visuals.logo.type!=='none')),
