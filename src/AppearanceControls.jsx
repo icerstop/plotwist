@@ -18,6 +18,11 @@ export function ChartEditor({config}){
    {mode==='area'&&<>{range('fillOpacity','Siła wypełnienia',0,65,'%')}<Select label="Wypełnienie obszaru" value={s.fillStyle} options={[["flat","Jednolity kolor"],["fade","Zanikający gradient"]]} onChange={fillStyle=>patch({fillStyle})}/></>}
   </details>}
   {(bars||cards)&&<details className="appearance-group" open><summary>Słupki i karty</summary>{bars&&range('barWidth',mode==='bar'?'Szerokość słupków':'Grubość słupków',25,95,'%')}{range('radius','Zaokrąglenie narożników',0,32,' px')}</details>}
+  {config.ai&&<details className="appearance-group" open><summary>Nazwy modeli i ustawienia</summary>
+   <Select label="Opis modelu" value={s.aiLabelStyle} options={[["structured","Model + ustawienia w osobnym wierszu"],["source","Pełna etykieta źródłowa"]]} onChange={aiLabelStyle=>patch({aiLabelStyle})}/>
+   {mode==='ranking'&&range('aiRankCount','Maksymalna liczba pozycji',2,6)}
+   <p className="visual-hint">Długie opisy zawijają się. „Max Effort” skracamy do „Max”. Ranking może pokazać mniej pozycji, aby zmieścić pełne ustawienia. Układ pozostaje stały przez całą rolkę.</p>
+  </details>}
   {plot&&<><details className="appearance-group" open><summary>Siatka i podziałka</summary>
    <Select label="Siatka wykresu" value={s.grid} options={[["horizontal","Pozioma"],["both","Pozioma i pionowa"],["none","Bez siatki"]]} onChange={grid=>patch({grid})}/>
    {s.grid!=='none'&&<><Select label="Styl siatki" value={s.gridStyle} options={[["solid","Ciągła"],["dashed","Kreskowana"],["dotted","Kropkowana"]]} onChange={gridStyle=>patch({gridStyle})}/>{range('gridOpacity','Widoczność siatki',0,100,'%')}{range('gridWidth','Grubość siatki',1,4,' px')}</>}

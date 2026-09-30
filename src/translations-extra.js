@@ -1,5 +1,12 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Nazwy modeli i ustawienia|Model names and settings
+Opis modelu|Model label
+Model + ustawienia w osobnym wierszu|Model + settings on a separate line
+Pełna etykieta źródłowa|Full source label
+Maksymalna liczba pozycji|Maximum ranking entries
+Długie opisy zawijają się. „Max Effort” skracamy do „Max”. Ranking może pokazać mniej pozycji, aby zmieścić pełne ustawienia. Układ pozostaje stały przez całą rolkę.|Long labels wrap. “Max Effort” becomes “Max”. The ranking may show fewer entries to fit all settings. The layout stays fixed throughout the reel.
+Najwyższe ostatnio odnotowane wyniki; liczba pozycji dopasowana do etykiet.|Highest latest recorded scores; entry count adapts to label length.
 Liczby na osi|Axis numbers
 Zapis liczb na osi|Axis number format
 Automatyczny · czytelne liczby|Automatic · readable numbers

@@ -8,7 +8,7 @@ export const seriesFormats = [
 ];
 export const aiFormats = [
  {id:'timeline',name:'Karty na osi czasu',note:'Kolejne rekordy jako sceny z łagodnymi przejściami.'},
- {id:'ranking',name:'Wyścig rankingu',note:'Sześć najwyższych ostatnio odnotowanych wyników; płynne zmiany pozycji.'},
+ {id:'ranking',name:'Wyścig rankingu',note:'Najwyższe ostatnio odnotowane wyniki; liczba pozycji dopasowana do etykiet.'},
  {id:'scatter',name:'Mapa pomiarów',note:'Punkty z datami i niepewnością. Bez łączenia różnych modeli linią.'},
  {id:'records',name:'Schody rekordów',note:'Najwyższy dotąd wynik w wybranym zbiorze. Zmiana tylko w dniu pomiaru.'},
  {id:'duel',name:'AI vs punkt odniesienia',note:'Wynik modelu i udokumentowany punkt odniesienia.'},

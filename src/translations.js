@@ -555,6 +555,7 @@ const templates=[
  [/^Surowy wynik: (.+)$/,s=>`Raw score: ${s}`],
  [/^Błąd standardowy: (.+)$/,s=>`Standard error: ${s}`],
  [/^Ostatnio: (.+)$/,s=>`Latest: ${s}`],
+ [/^Rekord z (.+)$/,s=>`Record on ${s}`],
  [/^Punkt odniesienia: (.+)$/,s=>`Reference: ${s}`],
  [/^(.+) · rekord z (.+)$/,(a,b)=>`${a} · record on ${b}`],
  [/^(.+) · różnica (.+)$/,(a,b)=>`${a} · difference ${b.replace('punktów percentylowych','percentile points')}`],
