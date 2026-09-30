@@ -1,6 +1,16 @@
 # Dane do rolek o możliwościach AI
 
-Zaktualizowano 29.09.2026. To historyczne obserwacje zawarte w obecnym snapshotcie źródeł, nie zbiór dawnych zrzutów leaderboardów.
+Zaktualizowano 30.09.2026. To historyczne obserwacje zawarte w obecnym snapshotcie źródeł, nie zbiór dawnych zrzutów leaderboardów.
+
+## ARC-AGI-3 — 30.09.2026
+
+Dodano 69 konfiguracji z oficjalnego [pliku ARC Prize](https://arcprize.org/media/data/leaderboard/v3.json), wygenerowanego 29.09.2026. Zbiór Semi-Private rozdzielono na **Standard (48)** i **Provider Adapter (21)**. Różnice środowisk opisuje [ARC Prize](https://arcprize.org/blog/astra). Nie dołączamy Developer Preview, Public Demo ani wyników konkursu Kaggle. Sonnet 5.5, Opus 5.5 i GPT-6.1 Sol nie mają w tym pliku wyników ARC-AGI-3; braków nie uzupełniamy zerami ani innymi testami.
+
+Skala to 100 × źródłowy RHAE (0–1), a nie procent ukończonych zadań. [Raport techniczny, sekcja 4](https://arcprize.org/media/ARC_AGI_3_Technical_Report.pdf) definiuje odniesienie do liczby działań człowieka na każdym poziomie, z agregacją na środowiska. Punkt odniesienia 100% nie jest średnim wynikiem populacji ani pomiarem IQ. UI i film pokazują do dwóch miejsc po przecinku; eksport zachowuje pełną precyzję. Pole `cost` zapisujemy jako `evaluationCostUsd` (koszt ewaluacji), nie cenę za pojedyncze zadanie.
+
+Domyślny widok to ranking **na dzień pobrania**. Źródło nie podaje dat testów, a `generatedAt` jest datą wygenerowania pliku, nie publikacji każdego wyniku. Oś premier pozostaje opcjonalną retrospektywą; nie odtwarza historycznych stanów wiedzy. Skorygowano daty Opus 4.6 i Gemini 3.1 Pro według ogłoszeń producentów. Niejednoznaczna data Grok 4.20 beta pozostaje pusta (rekord jest dostępny w rankingu snapshotu). Oryginalne daty i źródła korekt zachowano w eksporcie oraz `arc-agi-3-receipt.json`.
+
+Plik źródłowy pozostaje bez zmian w `arc-agi-3-2026-09-30.json`. `scripts/arc3-datasets.mjs` sprawdza zakres wyników, identyfikatory i daty; `npm run data:ai` zapisuje dane aplikacji i SHA-256 wejść. Aktualizacja: `node scripts/fetch-arc3-data.mjs`, następnie `npm run data:ai` i `node scripts/audit-ai-brands.mjs`. Przed publikacją sprawdź zmiany źródła oraz korekty dat. Pobieranie nie uruchamia benchmarków ani płatnego API.
 
 ## Źródła
 

@@ -147,7 +147,9 @@ Publiczny dostęp nie nadaje automatycznie prawa do komercyjnej redystrybucji da
 
 ## AI / LLM — historia wyników i nowe formaty rolek
 
-Moduł zawiera 5886 obserwacji w 19 zestawach i wersjach testów (snapshot 28.09.2026): ECI, GPQA Diamond, MATH Level 5, OTIS Mock AIME, SWE-bench Verified v1/v2, cztery zestawy FrontierMath, MMLU 5-shot, ARC-AGI-1/2, HLE, cztery kombinacje quizów TrackingAI (Offline/Mensa × tekst/Vision) i Codeforces 2024. Zakres każdego źródła jest niezależny; nie każdy benchmark ma najnowsze modele.
+Moduł zawiera 7943 obserwacje w 42 zestawach i wersjach testów (snapshot 30.09.2026): benchmarki Epoch i ECI, eksperymentalne quizy TrackingAI, Codeforces 2024, raport Sonnet 5.5, zestawy Artificial Analysis oraz ARC-AGI-3. Zakres każdego źródła jest niezależny; nie każdy benchmark ma najnowsze modele.
+
+ARC-AGI-3: 69 konfiguracji z oficjalnego rankingu ARC Prize, rozdzielonych na Standard (48) i Provider Adapter (21). Domyślnie ranking na dzień pobrania, opcjonalnie retrospektywa premier, grupowanie według producentów i porównanie z ludzkim punktem odniesienia 100% RHAE. Małe wyniki pokazujemy do dwóch miejsc po przecinku. ARC-AGI-1/2, Public Demo, Developer Preview i konkurs Kaggle pozostają odrębne. Źródła, korekty dat i odtwarzalny import: `research/ai/README.md`.
 
 Cztery formy: karty na osi czasu (do 8 wybranych rekordów), zmieniający się ranking, mapa punktowa postępu, porównanie AI z opisanym punktem odniesienia dla GPQA i Codeforces. Dostępny eksport 1080×1920 MP4/WebM/PNG, CSV wszystkich przefiltrowanych danych i JSON z metodologią oraz identyfikatorami scen. Renderer podglądu i eksportu jest wspólny.
 

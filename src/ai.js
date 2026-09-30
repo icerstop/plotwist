@@ -1,5 +1,5 @@
 export const aiDate = (row,basis) => basis==='release'?row.releaseDate:row.observedAt?.slice(0,10);
-export const aiValue = (value,language='pl') => Number(value).toLocaleString(language==='en'?'en-GB':'pl-PL',{maximumFractionDigits:1});
+export const aiValue = (value,language='pl',decimals=1) => Number(value).toLocaleString(language==='en'?'en-GB':'pl-PL',{maximumFractionDigits:decimals});
 export function selectAiRows(rows,{basis='release',start='',end='9999',organization='',query='',protocol='',separateProtocols=false}={}) {
   let selected=rows.filter(r=>(!organization||r.organization===organization)&&(!protocol||r.protocol===protocol)&&`${r.model} ${r.modelId}`.toLowerCase().includes(query.toLowerCase()));
   // A release view is a retrospective: choose the latest measured run, never the best run.

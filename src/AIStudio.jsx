@@ -14,7 +14,7 @@ import './ai.css';
 const json=async(path,signal)=>{const r=await fetch(path,{signal});if(!r.ok)throw new Error('Nie udało się wczytać danych benchmarku. Odśwież stronę.');return r.json();};
 const safeUrl=url=>/^https:\/\//.test(url||'')?url:undefined;
 export default function AIStudio({fontId='arial',onFontChange}){
- const {uiLanguage,reelLanguage}=useLanguages();const aiValue=value=>formatAiValue(value,uiLanguage);
+ const {uiLanguage,reelLanguage}=useLanguages();const aiValue=value=>formatAiValue(value,uiLanguage,data?.scoreDecimals??1);
  const [titleIsCustom,setTitleIsCustom]=useState(false);
  const [groupBy,setGroupBy]=useState('model'),[selectedBrands,setSelectedBrands]=useState([]),[brandMethod,setBrandMethod]=useState('latest'),[brandSearch,setBrandSearch]=useState('');
  const [showBrandLogos,setShowBrandLogos]=useState(true),[showLeaderNames,setShowLeaderNames]=useState(true),[assetsReady,setAssetsReady]=useState(false),[assetError,setAssetError]=useState('');
@@ -56,7 +56,7 @@ export default function AIStudio({fontId='arial',onFontChange}){
     downloadBlob(new Blob([marketCsv(records,['frame_date','brand_id','publisher','model','model_id','score','source_date','release_date','observed_at','date_kind','effort','protocol','source_url'])],{type:'text/csv;charset=utf-8'}),`plotwist-ai-${id}-marki.csv`);return;
    }
    if(type==='csv'){
-     const headers=['id','model','modelId','organization','brandId','brandMethod','date','releaseDate','observedAt','dateKind','effort','score','sourceValue','stderr','low','high','rawScore','validScore','total','elo','protocol','sourceUrl','notes'];
+     const headers=['id','model','modelId','organization','brandId','brandMethod','date','releaseDate','observedAt','dateKind','effort','score','sourceValue','stderr','low','high','rawScore','validScore','total','elo','protocol','sourceUrl','notes',...(data.id.startsWith('arc3')?['harness','sourceModelId','sourceReleaseDate','releaseDateSourceUrl','evaluationCostUsd']:[])];
      downloadBlob(new Blob([marketCsv(rows.map(r=>headers.map(h=>r[h]??'')),headers)],{type:'text/csv;charset=utf-8'}),`plotwist-ai-${id}.csv`);
    } else downloadBlob(new Blob([JSON.stringify({benchmark:{...data,rows:undefined},selection:{basis,start,end,organization,query,protocol,mode,groupBy,selectedBrands,brandMethod,showBrandLogos,showLeaderNames},brandRules:aiBrandRuleVersion,storyIds:chartRows.map(r=>r.id),rows,contextRows:groupBy==='brand'?brandRows.filter(r=>start&&r.date<start):undefined,brandHistory:groupBy==='brand'?history:undefined},null,2)],{type:'application/json'}),`plotwist-ai-${id}-zrodla.json`);
  }

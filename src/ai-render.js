@@ -27,7 +27,7 @@ return {wrap,fit};
 export function drawAiReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
  const visualTime=timeSeconds,motionFrame=reelMotionFrame(config,progress,timeSeconds);config=motionFrame.config;progress=motionFrame.progress;timeSeconds=motionFrame.dataTime;
  const {wrap,fit}=typography(reelFont(config.fontId),config.language,config);
- const aiValue=value=>formatAiValue(value,config.language);
+ const aiValue=value=>formatAiValue(value,config.language,config.ai.benchmark.scoreDecimals??1);
  const {ai:{rows,benchmark:b,basis,mode,comparison,scope},title,theme='dark'}=config;
  const ctx=canvas.getContext('2d');if(canvas.width!==1080||canvas.height!==1920){canvas.width=1080;canvas.height=1920;}
  const {dark,bg,fg,muted,panel,grid,colors}=themeOf(config),appearance=chartAppearance(config),[accent,purple]=colors.map((c,i)=>seriesColor(config,i,c));

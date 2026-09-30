@@ -1,5 +1,11 @@
 // English descriptions for the bundled catalogue and benchmark metadata.
 export const extraPairs = `
+Interaktywne zadania ARC-AGI-3, zbiór Semi-Private. RHAE mierzy efektywność działań względem człowieka. Standard przenosi notatki wybrane przez model.|Interactive ARC-AGI-3 tasks, Semi-Private set. RHAE measures action efficiency relative to humans. Standard carries forward model-selected notes.
+Interaktywne zadania ARC-AGI-3, zbiór Semi-Private. Provider Adapter zachowuje stan rozumowania i skraca długie rozmowy. Osobno od Standard.|Interactive ARC-AGI-3 tasks, Semi-Private set. Provider Adapter preserves reasoning state and compacts long conversations. Kept separate from Standard.
+RHAE nie jest odsetkiem rozwiązanych zadań ani IQ. Standard i Provider Adapter mają różne warunki i pozostają osobnymi zestawami. Data obserwacji to dzień pobrania; dat testów brak. Oś premier jest retrospektywą. Developer Preview, Public Demo i konkurs Kaggle nie są dołączone.|RHAE is neither the percentage of solved tasks nor IQ. Standard and Provider Adapter use different conditions and remain separate datasets. Observation dates are capture dates; test dates are unavailable. The release axis is retrospective. Developer Preview, Public Demo and the Kaggle competition are excluded.
+Publiczne wyniki ARC Prize Foundation; przypisanie do źródła. Nie redystrybuujemy zadań ani logów. Sprawdź warunki dalszego wykorzystania.|Public ARC Prize Foundation results, with source attribution. Tasks and logs are not redistributed. Check terms for further reuse.
+Człowiek · punkt odniesienia|Human reference level
+100% to poziom odniesienia RHAE wyznaczony z liczby działań ludzi na każdym poziomie. Nie jest średnią wyniku dowolnego człowieka ani miarą ogólnej inteligencji.|100% is the RHAE reference derived from human action counts per level. It is not the average score of an arbitrary person or a measure of general intelligence.
 Cały tekst po kolei|Type all text in sequence
 Klasyczne|Classic
 Naturalne z pauzami|Natural with pauses

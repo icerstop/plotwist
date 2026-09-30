@@ -1,7 +1,7 @@
 {
   "retrievedAt": "2026-09-30",
   "sourceArchive": "https://epoch.ai/data/benchmark_data.zip",
-  "totalObservations": 7874,
+  "totalObservations": 7943,
   "benchmarks": [
     {
       "id": "gpqa",
@@ -530,6 +530,86 @@
       "models": 4,
       "firstDate": "2024-09-12",
       "lastDate": "2024-09-12"
+    },
+    {
+      "id": "arc3",
+      "name": "ARC-AGI-3 · Standard",
+      "category": "Rozumowanie",
+      "unit": "%",
+      "max": 100,
+      "scoreDecimals": 2,
+      "dateKind": "snapshot",
+      "defaultBasis": "observed",
+      "defaultMode": "ranking",
+      "source": "ARC Prize",
+      "sourceUrl": "https://arcprize.org/leaderboard",
+      "retrievedAt": "2026-09-30",
+      "sourceGeneratedAt": "2026-09-29T16:59:12.162Z",
+      "dataUrl": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "description": "Interaktywne zadania ARC-AGI-3, zbiór Semi-Private. RHAE mierzy efektywność działań względem człowieka. Standard przenosi notatki wybrane przez model.",
+      "caveat": "RHAE nie jest odsetkiem rozwiązanych zadań ani IQ. Standard i Provider Adapter mają różne warunki i pozostają osobnymi zestawami. Data obserwacji to dzień pobrania; dat testów brak. Oś premier jest retrospektywą. Developer Preview, Public Demo i konkurs Kaggle nie są dołączone.",
+      "license": "Publiczne wyniki ARC Prize Foundation; przypisanie do źródła. Nie redystrybuujemy zadań ani logów. Sprawdź warunki dalszego wykorzystania.",
+      "baseline": {
+        "name": "Człowiek · punkt odniesienia",
+        "score": 100,
+        "unit": "%",
+        "note": "100% to poziom odniesienia RHAE wyznaczony z liczby działań ludzi na każdym poziomie. Nie jest średnią wyniku dowolnego człowieka ani miarą ogólnej inteligencji.",
+        "sourceUrl": "https://arcprize.org/media/ARC_AGI_3_Technical_Report.pdf"
+      },
+      "provenance": [
+        {
+          "file": "arc-agi-3-2026-09-30.json",
+          "sha256": "57701968f68d0837cca7f4771d9793cea0b6618b2aca389912fca51aee1193bf"
+        },
+        {
+          "file": "arc-agi-3-receipt.json",
+          "sha256": "7cf6fc1b8edcb682383fafdbc82ec3b8a571b713758c5dd396d5c6911aaab5da"
+        }
+      ],
+      "count": 48,
+      "models": 48,
+      "firstDate": "2026-02-05",
+      "lastDate": "2026-09-30"
+    },
+    {
+      "id": "arc3-provider-adapter",
+      "name": "ARC-AGI-3 · Provider Adapter",
+      "category": "Rozumowanie",
+      "unit": "%",
+      "max": 100,
+      "scoreDecimals": 2,
+      "dateKind": "snapshot",
+      "defaultBasis": "observed",
+      "defaultMode": "ranking",
+      "source": "ARC Prize",
+      "sourceUrl": "https://arcprize.org/leaderboard",
+      "retrievedAt": "2026-09-30",
+      "sourceGeneratedAt": "2026-09-29T16:59:12.162Z",
+      "dataUrl": "https://arcprize.org/media/data/leaderboard/v3.json",
+      "description": "Interaktywne zadania ARC-AGI-3, zbiór Semi-Private. Provider Adapter zachowuje stan rozumowania i skraca długie rozmowy. Osobno od Standard.",
+      "caveat": "RHAE nie jest odsetkiem rozwiązanych zadań ani IQ. Standard i Provider Adapter mają różne warunki i pozostają osobnymi zestawami. Data obserwacji to dzień pobrania; dat testów brak. Oś premier jest retrospektywą. Developer Preview, Public Demo i konkurs Kaggle nie są dołączone.",
+      "license": "Publiczne wyniki ARC Prize Foundation; przypisanie do źródła. Nie redystrybuujemy zadań ani logów. Sprawdź warunki dalszego wykorzystania.",
+      "baseline": {
+        "name": "Człowiek · punkt odniesienia",
+        "score": 100,
+        "unit": "%",
+        "note": "100% to poziom odniesienia RHAE wyznaczony z liczby działań ludzi na każdym poziomie. Nie jest średnią wyniku dowolnego człowieka ani miarą ogólnej inteligencji.",
+        "sourceUrl": "https://arcprize.org/media/ARC_AGI_3_Technical_Report.pdf"
+      },
+      "provenance": [
+        {
+          "file": "arc-agi-3-2026-09-30.json",
+          "sha256": "57701968f68d0837cca7f4771d9793cea0b6618b2aca389912fca51aee1193bf"
+        },
+        {
+          "file": "arc-agi-3-receipt.json",
+          "sha256": "7cf6fc1b8edcb682383fafdbc82ec3b8a571b713758c5dd396d5c6911aaab5da"
+        }
+      ],
+      "count": 21,
+      "models": 21,
+      "firstDate": "2026-09-02",
+      "lastDate": "2026-09-30"
     },
     {
       "id": "terminal4-report",
@@ -1180,6 +1260,11 @@
       "input": 54,
       "accepted": 54,
       "invalid": 0
+    },
+    {
+      "id": "arc3-snapshot",
+      "input": 69,
+      "accepted": 69
     },
     {
       "id": "aa-snapshot",

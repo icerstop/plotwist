@@ -12,7 +12,7 @@ export function drawAiBrandComparison(ctx,config,progress,timeSeconds,{fg,muted,
  const {benchmark:b}=config.ai,duration=config.duration||20,transition=config.transition??.65;
  if(!history.frames.length)return;
  const motion=aiBrandMotion(history,progress,duration,transition,timeSeconds),{frame,before,mix,current}=motion;
- const date=new Date(current).toISOString().slice(0,10),score=l=>l?`${aiValue(l.score,config.language)} ${b.unit}`:'—';
+ const date=new Date(current).toISOString().slice(0,10),score=l=>l?`${aiValue(l.score,config.language,b.scoreDecimals??1)} ${b.unit}`:'—';
  const byId=(f,id)=>f.leaders.find(l=>l.brand.id===id);
  const appearance=chartAppearance(config),color=brand=>seriesColor(config,brands.findIndex(b=>b.id===brand.id),themeOf(config).dark?brand.color:darken(brand.color));
  function text(value,x,y,width,size,fill=fg,bold=false,role='labels'){

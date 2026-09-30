@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {parseCsv,numeric,trackingDate,trackingIq} from './ai-csv.mjs';
 import {aaDatasets} from './aa-datasets.mjs';
+import {arc3Datasets} from './arc3-datasets.mjs';
 const raw='research/ai',out='public/ai';
 const {retrievedAt}=JSON.parse(await fs.readFile(`${raw}/source-receipt.json`,'utf8'));
 const epochUrl='https://epoch.ai/benchmarks/use-this-data';
@@ -61,6 +62,10 @@ for(const source of ['Offline Test','Mensa Norway'])for(const vision of [false,t
 }
 await save({id:'codeforces2024',name:'Codeforces · raport OpenAI 2024',category:'AI vs człowiek',description:'Symulowane konkursy, maksymalnie 10 zgłoszeń. Percentyl odnosi się do uczestników Codeforces, nie wszystkich programistów.',unit:'percentyl',max:100,defaultBasis:'observed',source:'OpenAI · 12.09.2024',sourceUrl:'https://openai.com/index/learning-to-reason-with-llms/',license:'Wartości z opublikowanego raportu; przypisanie do źródła.',caveat:'Wspólna data publikacji, nie chronologia premier. o1 z raportu nie jest tym samym co publiczne o1-preview. Specjalistyczny wariant do IOI jest odrębnym systemem.',baseline:{name:'Mediana uczestników',score:50,unit:'percentyl',note:'50. percentyl z definicji skali; to uczestnicy konkursów, nie populacja ludzi.',sourceUrl:'https://openai.com/index/learning-to-reason-with-llms/'},rows:[['GPT-4o',11,808],['o1-preview',62,1258],['o1 (raport badawczy)',89,1673],['o1 dostrojony do IOI',93,1807]].map(([model,score,elo],i)=>({id:`cf-${i}`,modelId:model,model,organization:'OpenAI',releaseDate:null,observedAt:'2024-09-12',score,elo,protocol:'Symulacja · 10 zgłoszeń',sourceUrl:'https://openai.com/index/learning-to-reason-with-llms/',notes:`Rating Codeforces: ${elo}. Data publikacji raportu.`}))},[]);
 const releaseReport=JSON.parse(await fs.readFile(`${raw}/sonnet-5-5-report.json`,'utf8'));
+const arcReceipt=JSON.parse(await fs.readFile(`${raw}/arc-agi-3-receipt.json`,'utf8'));
+const arcSnapshot=JSON.parse(await fs.readFile(`${raw}/${arcReceipt.file}`,'utf8'));
+for(const benchmark of arc3Datasets(arcSnapshot,arcReceipt))await save(benchmark,[arcReceipt.file,'arc-agi-3-receipt.json']);
+audit.push({id:'arc3-snapshot',input:arcSnapshot.evaluations.length,accepted:datasets.filter(d=>d.id==='arc3'||d.id==='arc3-provider-adapter').reduce((n,d)=>n+d.count,0)});
 for(const benchmark of releaseReport.benchmarks)await save({...benchmark,retrievedAt:releaseReport.retrievedAt},['sonnet-5-5-report.json','epoch/model_metadata.csv']);
 const sonnetRelease={model:'Claude Sonnet 5.5',releaseDate:'2026-09-28',sourceUrl:releaseReport.sourceUrl,benchmarkId:'terminal4-report',benchmarkIds:releaseReport.benchmarks.map(b=>b.id),missingBenchmarks:['eci',...datasets.filter(d=>d.id.startsWith('iq-')).map(d=>d.id)].filter(id=>!sonnet55Coverage.get(id))};
 const aaSnapshot=JSON.parse(await fs.readFile(`${raw}/aa-2026-09-30.json`,'utf8'));

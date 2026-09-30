@@ -1,6 +1,6 @@
 {
   "rulesVersion": "2026-09-30.1",
-  "generatedAt": "2026-09-30T09:03:27.115Z",
+  "generatedAt": "2026-09-30T10:54:54.708Z",
   "policy": "Source organizations take precedence. Explicit family aliases only fill missing organizations. Third-party fine-tunes and joint publishers remain separate. Unknown names remain unresolved. Brand attribution does not verify the version behind an API alias.",
   "references": [
     "https://github.com/deepseek-ai/DeepSeek-R1",
@@ -21236,6 +21236,641 @@
           "publisher": "OpenAI",
           "method": "source-organization",
           "sourceUrl": "https://openai.com/index/learning-to-reason-with-llms/"
+        }
+      ]
+    },
+    {
+      "id": "arc3",
+      "observations": 48,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "arc3:anthropic-claude-opus-5-high",
+          "model": "Claude Opus 5 (High)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/anthropic-claude-opus-5"
+        },
+        {
+          "modelId": "arc3:anthropic-opus-4-6-max-effort",
+          "model": "Anthropic Opus 4.6 (Max)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/leaderboard"
+        },
+        {
+          "modelId": "arc3:anthropic-opus-4-7-high",
+          "model": "Opus 4.7 (High)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/leaderboard"
+        },
+        {
+          "modelId": "arc3:anthropic-opus-4-8-high",
+          "model": "Claude Opus 4.8 (High)",
+          "sourceOrganization": "Anthropic",
+          "brandId": "anthropic",
+          "publisher": "Anthropic",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/leaderboard"
+        },
+        {
+          "modelId": "arc3:google-gemini-3-1-pro-preview",
+          "model": "Gemini 3.1 Pro (Preview)",
+          "sourceOrganization": "Google",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/leaderboard"
+        },
+        {
+          "modelId": "arc3:google-gemini-3-8-flash-high",
+          "model": "Gemini 3.8 Flash (High)",
+          "sourceOrganization": "Google",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/google-gemini-3-8-flash"
+        },
+        {
+          "modelId": "arc3:google-gemini-3-8-flash-low",
+          "model": "Gemini 3.8 Flash (Low)",
+          "sourceOrganization": "Google",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/google-gemini-3-8-flash"
+        },
+        {
+          "modelId": "arc3:google-gemini-3-8-flash-medium",
+          "model": "Gemini 3.8 Flash (Medium)",
+          "sourceOrganization": "Google",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/google-gemini-3-8-flash"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-4-2026-03-05-high",
+          "model": "GPT-5.4 (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/leaderboard"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-5-2026-04-23-high",
+          "model": "GPT-5.5 (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/leaderboard"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-luna-high",
+          "model": "GPT-5.6 Luna (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-luna-low",
+          "model": "GPT-5.6 Luna (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-luna-max",
+          "model": "GPT-5.6 Luna (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-luna-medium",
+          "model": "GPT-5.6 Luna (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-luna-xhigh",
+          "model": "GPT-5.6 Luna (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-sol-high",
+          "model": "GPT-5.6 Sol (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-sol-low",
+          "model": "GPT-5.6 Sol (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-sol-max",
+          "model": "GPT-5.6 Sol (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-sol-medium",
+          "model": "GPT-5.6 Sol (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-sol-xhigh",
+          "model": "GPT-5.6 Sol (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-terra-high",
+          "model": "GPT-5.6 Terra (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-terra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-terra-low",
+          "model": "GPT-5.6 Terra (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-terra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-terra-max",
+          "model": "GPT-5.6 Terra (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-terra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-terra-medium",
+          "model": "GPT-5.6 Terra (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-terra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-5-6-terra-xhigh",
+          "model": "GPT-5.6 Terra (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-5-6-terra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-high",
+          "model": "GPT-6 Astra (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-low",
+          "model": "GPT-6 Astra (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-max",
+          "model": "GPT-6 Astra (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-medium",
+          "model": "GPT-6 Astra (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-none",
+          "model": "GPT-6 Astra (None)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-xhigh",
+          "model": "GPT-6 Astra (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-high",
+          "model": "GPT-6 Luna (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-low",
+          "model": "GPT-6 Luna (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-max",
+          "model": "GPT-6 Luna (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-medium",
+          "model": "GPT-6 Luna (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-none",
+          "model": "GPT-6 Luna (None)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-xhigh",
+          "model": "GPT-6 Luna (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-high",
+          "model": "GPT-6 Sol (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-low",
+          "model": "GPT-6 Sol (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-max",
+          "model": "GPT-6 Sol (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-medium",
+          "model": "GPT-6 Sol (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-none",
+          "model": "GPT-6 Sol (None)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-xhigh",
+          "model": "GPT-6 Sol (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:xai-grok-4-20-beta-0309-reasoning",
+          "model": "Grok 4.20 (Beta Reasoning)",
+          "sourceOrganization": "xAI",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/leaderboard"
+        },
+        {
+          "modelId": "arc3:xai-grok-4-5-high",
+          "model": "Grok 4.5 (High)",
+          "sourceOrganization": "xAI",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/xai-grok-4-5"
+        },
+        {
+          "modelId": "arc3:xai-grok-4-5-low",
+          "model": "Grok 4.5 (Low)",
+          "sourceOrganization": "xAI",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/xai-grok-4-5"
+        },
+        {
+          "modelId": "arc3:xai-grok-4-5-medium",
+          "model": "Grok 4.5 (Medium)",
+          "sourceOrganization": "xAI",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/xai-grok-4-5"
+        },
+        {
+          "modelId": "arc3:xai-grok-4-6-xhigh",
+          "model": "Grok 4.6 (XHigh)",
+          "sourceOrganization": "xAI",
+          "brandId": "xai",
+          "publisher": "xAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/xai-grok-4-6"
+        }
+      ]
+    },
+    {
+      "id": "arc3-provider-adapter",
+      "observations": 21,
+      "unassigned": 0,
+      "models": [
+        {
+          "modelId": "arc3:google-gemini-3-8-flash-high-provider-adapter",
+          "model": "Gemini 3.8 Flash - Provider Adapter (High)",
+          "sourceOrganization": "Google",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/google-gemini-3-8-flash"
+        },
+        {
+          "modelId": "arc3:google-gemini-3-8-flash-low-provider-adapter",
+          "model": "Gemini 3.8 Flash - Provider Adapter (Low)",
+          "sourceOrganization": "Google",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/google-gemini-3-8-flash"
+        },
+        {
+          "modelId": "arc3:google-gemini-3-8-flash-medium-provider-adapter",
+          "model": "Gemini 3.8 Flash - Provider Adapter (Medium)",
+          "sourceOrganization": "Google",
+          "brandId": "google",
+          "publisher": "Google DeepMind",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/google-gemini-3-8-flash"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-high-provider-adapter",
+          "model": "GPT-6 Astra - Provider Adapter (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-low-provider-adapter",
+          "model": "GPT-6 Astra - Provider Adapter (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-max-provider-adapter",
+          "model": "GPT-6 Astra - Provider Adapter (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-medium-provider-adapter",
+          "model": "GPT-6 Astra - Provider Adapter (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-none-provider-adapter",
+          "model": "GPT-6 Astra - Provider Adapter (None)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-astra-xhigh-provider-adapter",
+          "model": "GPT-6 Astra - Provider Adapter (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-astra"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-high-provider-adapter",
+          "model": "GPT-6 Luna - Provider Adapter (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-low-provider-adapter",
+          "model": "GPT-6 Luna - Provider Adapter (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-max-provider-adapter",
+          "model": "GPT-6 Luna - Provider Adapter (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-medium-provider-adapter",
+          "model": "GPT-6 Luna - Provider Adapter (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-none-provider-adapter",
+          "model": "GPT-6 Luna - Provider Adapter (None)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-luna-xhigh-provider-adapter",
+          "model": "GPT-6 Luna - Provider Adapter (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-luna"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-high-provider-adapter",
+          "model": "GPT-6 Sol - Provider Adapter (High)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-low-provider-adapter",
+          "model": "GPT-6 Sol - Provider Adapter (Low)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-max-provider-adapter",
+          "model": "GPT-6 Sol - Provider Adapter (Max)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-medium-provider-adapter",
+          "model": "GPT-6 Sol - Provider Adapter (Medium)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-none-provider-adapter",
+          "model": "GPT-6 Sol - Provider Adapter (None)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
+        },
+        {
+          "modelId": "arc3:openai-gpt-6-sol-xhigh-provider-adapter",
+          "model": "GPT-6 Sol - Provider Adapter (XHigh)",
+          "sourceOrganization": "OpenAI",
+          "brandId": "openai",
+          "publisher": "OpenAI",
+          "method": "source-organization",
+          "sourceUrl": "https://arcprize.org/results/openai-gpt-6-sol"
         }
       ]
     },

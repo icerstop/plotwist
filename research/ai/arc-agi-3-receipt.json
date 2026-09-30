@@ -1,0 +1,24 @@
+{
+  "file": "arc-agi-3-2026-09-30.json",
+  "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+  "retrievedAt": "2026-09-30",
+  "methodologyUrl": "https://arcprize.org/media/ARC_AGI_3_Technical_Report.pdf",
+  "harnessSourceUrl": "https://arcprize.org/blog/astra",
+  "releaseDateReviews": {
+    "anthropic-opus-4-6-max-effort": {
+      "releaseDate": "2026-02-05",
+      "sourceUrl": "https://www.anthropic.com/news/claude-opus-4-6",
+      "note": "Premiera skorygowana według ogłoszenia Anthropic: 2026-02-05. Oryginalne pole ARC: 2025-12-17."
+    },
+    "google-gemini-3-1-pro-preview": {
+      "releaseDate": "2026-02-19",
+      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/",
+      "note": "Premiera skorygowana według ogłoszenia Google: 2026-02-19. Oryginalne pole ARC: 2026-03-05."
+    },
+    "xai-grok-4-20-beta-0309-reasoning": {
+      "releaseDate": null,
+      "sourceUrl": "https://docs.x.ai/developers/release-notes",
+      "note": "Niepotwierdzona data premiery dokładnie tego wariantu beta. ARC podaje 2026-03-05, identyfikator wariantu zawiera 0309, a changelog API ogłasza Grok 4.20 dnia 2026-03-10. Pozostaje w rankingu snapshotu, ale jest pomijany w osi premier."
+    }
+  }
+}
