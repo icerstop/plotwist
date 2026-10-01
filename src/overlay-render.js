@@ -12,7 +12,7 @@ export function drawReelOverlays(ctx,w,h,config,layer='front'){
   ctx.font=`${o.italic?'italic ':''}${nearestFontWeight(font,o.weight==='auto'?700:o.weight)} ${o.fontSize}px ${reelFont(font)}`;
   const head=Math.min(width*.3,Math.max(20,o.strokeWidth*4));
   const lines=o.kind==='text'?textLines(ctx,o.text[config.language==='en'?'en':'pl'],width):[],step=o.fontSize*o.lineHeight,height=o.kind==='text'?Math.max(o.fontSize,lines.length*step):o.kind==='line'?Math.max(24,o.strokeWidth+16):o.kind==='arrow'?head*1.3+16:h*o.height/100;
-  const rect={x:-width/2,y:-height/2,w:width,h:height},end=beginElement(ctx,config,id,rect);
+  const rect={x:-width/2,y:-height/2,w:width,h:height},end=beginElement(ctx,config,id,rect,o.kind==='text'?{textBox:{overlay:true,font:ctx.font,text:o.text[config.language==='en'?'en':'pl'],step,baseWidth:w}}:undefined);
   ctx.fillStyle=ctx.strokeStyle=o.color||(o.kind==='text'?theme.fg:theme.colors[0]);ctx.lineWidth=o.strokeWidth;ctx.lineJoin=ctx.lineCap='round';ctx.setLineDash([]);
   if(o.shadow){ctx.shadowColor='#00000066';ctx.shadowBlur=20;ctx.shadowOffsetY=8;}
   if(o.kind==='text'){

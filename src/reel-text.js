@@ -3,6 +3,9 @@ import {typingRole} from './reel-typing.js';
 import {mysteryRole} from './reel-mystery.js';
 import {beginElement,textRect} from './reel-elements.js';
 import {roundFill} from './chart-appearance.js';
+const titleFits=new WeakMap();
+export function rememberTitleFit(ctx,size,preferred){titleFits.set(ctx,size/preferred);return size;}
+export const resizableTextRoles=new Set(['title','subtitle','metric','source']);
 
 export const textStyleOf=(config,role)=>config?.visuals?.design?.text?.[`${config._textElement}:${role}`]||config?.visuals?.design?.text?.[role]||{};
 export function textLines(ctx,value,width,manual=false){
@@ -26,7 +29,7 @@ export function textLayout(ctx,text,x,y,width,step,maxLines,config,role){
  const align=s.align&&s.align!=='auto'?s.align:config?.visuals?.design?.layout==='centered'&&['title','subtitle'].includes(role)?'center':(ctx.textAlign||'left');
  const inherited=(!s.align||s.align==='auto')&&!['title','subtitle','metric','source'].includes(role);
  const left=x+(align==='center'?(width-w)/2:align==='right'?width-w:0),anchor=inherited?x:left+(align==='center'?w/2:align==='right'?w:0);
- const all=text?textLines(ctx,text,w,s.wrap==='manual'):[],limit=s.maxLines||maxLines;
+ const all=text?textLines(ctx,text,w,s.wrap==='manual'):[],limit=s.autoHeight?Math.max(1,all.length):s.maxLines||maxLines;
  const lines=all.slice(0,limit).map((line,i)=>ctx.measureText(line).width>w||i===limit-1&&all.length>limit?ellipsis(ctx,line,w):line);
  return {lines,width:w,x:anchor,y,step:lineHeight,align,height:lines.length*lineHeight};
 }
@@ -52,8 +55,22 @@ export function drawTextBlock(ctx,text,x,y,width,step,maxLines=3,draw=true,confi
  const layout=textLayout(ctx,text,x,y,width,step,maxLines,config,role);
  if(draw&&layout.lines.length){ctx.save();ctx.textAlign=layout.align;
   const rect=textRect(ctx,layout.lines,layout.x,y,layout.step,layout.width),s=textStyleOf(config,role),p=s.boxColor?s.padding??14:0;
-  const end=register&&role?beginElement(ctx,config,role,{x:rect.x-p,y:rect.y-p,w:rect.w+p*2,h:rect.h+p*2}):()=>{};
+  const box=register&&resizableTextRoles.has(role)?{text,x,y,baseWidth:width,step,maxLines,font:ctx.font,align:ctx.textAlign,style:{...s},layout:config?.visuals?.design?.layout,role,headerScale:config?._headerScale,format:config?.format,fitRatio:role==='title'?titleFits.get(ctx)??1:null}:null;
+  const area=box&&s.autoHeight?textBoxRect(ctx,layout,p):{x:rect.x-p,y:rect.y-p,w:rect.w+p*2,h:rect.h+p*2};
+  if(box)box.percent=(area.w-12-p*2)/width*100;
+  const end=register&&role?beginElement(ctx,config,role,area,box?{textBox:box}:undefined):()=>{};
   paintText(ctx,config,role,layout.lines,layout.x,y,layout.step,layout.width);end();ctx.restore();
  }
  return layout.height;
+}
+
+export function textBoxRect(ctx,layout,p=0){
+ const r=textRect(ctx,layout.lines,layout.x,layout.y,layout.step,layout.width);
+ return {x:layout.x-(layout.align==='right'?layout.width:layout.align==='center'?layout.width/2:0)-6-p,y:r.y-p,w:layout.width+12+p*2,h:r.h+p*2};
+}
+export function resizedTextRect(ctx,box,width){
+ ctx.save();ctx.font=box.font;ctx.textAlign=box.align;
+ const style={...box.style,width,autoHeight:true,wrap:'auto'},config={visuals:{design:{layout:box.layout,text:{[box.role]:style}}}};
+ const layout=textLayout(ctx,box.text,box.x,box.y,box.baseWidth,box.step,box.maxLines,config,box.role);
+ const rect=textBoxRect(ctx,layout,style.boxColor?style.padding??14:0);ctx.restore();return rect;
 }

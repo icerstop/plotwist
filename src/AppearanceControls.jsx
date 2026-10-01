@@ -74,7 +74,7 @@ export function TextEffects({role,config,beforeChange=()=>{}}){
    <Select label="Zawijanie tekstu" value={s.wrap} options={[["auto","Automatycznie + ręczne podziały"],["manual","Tylko ręczne podziały"]]} onChange={wrap=>patch({wrap})}/>
    <p className="visual-hint">Enter w polu tekstu zaczyna nowy wiersz. Dłuższe opisy dopasujesz limitem wierszy, szerokością i rozmiarem tekstu.</p>
    <Select label="Wyrównanie tekstu" value={s.align} options={[["auto","Z układu"],["left","Do lewej"],["center","Na środku"],["right","Do prawej"]]} onChange={align=>patch({align})}/>
-   {range('width','Szerokość tekstu',45,100,'%')}{range('lineHeight','Interlinia',.85,1.65,'×',.05)}
+   {range('width','Szerokość tekstu',10,200,'%')}<label className="visual-check"><input type="checkbox" checked={s.autoHeight} onChange={e=>patch({autoHeight:e.target.checked})}/>Automatyczna wysokość pola tekstowego</label>{role==='title'&&s.fitRatio!=null&&<button type="button" className="text-btn" onClick={()=>patch({fitRatio:null,headerScales:{}})}>Przywróć automatyczne dopasowanie tytułu</button>}{range('lineHeight','Interlinia',.85,1.65,'×',.05)}
    <Select label="Limit wierszy" value={s.maxLines} options={[[0,'Automatycznie'],...[1,2,3,4,5,6].map(n=>[n,String(n)])]} onChange={maxLines=>patch({maxLines:Number(maxLines)})}/>
   </details>}
   <label className="visual-check"><input type="checkbox" checked={s.italic} onChange={e=>patch({italic:e.target.checked})}/>Kursywa</label>

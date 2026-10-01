@@ -1,3 +1,5 @@
+import {resizedTextRect,textLines} from './reel-text.js';
+import {draggedTextWidth,textResizeTranslation} from './reel-text-resize.js';
 import {reelCapabilities,reelElementDefinitions} from './reel-capabilities.js';
 import OverlayControls from './OverlayControls.jsx';
 import {overlayKinds,overlayLimit,overlayName} from './reel-overlays.js';
@@ -79,12 +81,23 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   if(e.button!==0)return;const p=point(e),hit=kind==='move'?hitElement(regions,p):region;
   if(!hit){setSelected(null);return;}e.preventDefault();onPause();setSelected(hit.id);setChartRole(reelElementDefinitions[hit.id]?.textRole||'labels');setPanel('elements');remember();
   const s=hit.stickerId?v.visuals.stickers.find(s=>s.id===hit.stickerId):null,o=v.visuals.overlays.find(o=>`overlay:${o.id}`===hit.id);
-  gesture.current={id:hit.id,kind,start:p,center:hit.center,sticker:s,overlay:o,original:o?{...o}:s?{...s}:{...v.visuals.design.elements[hit.id]},before:snapshot(v.visuals,v.mediaFiles),distance:Math.hypot(p.x-hit.center.x,p.y-hit.center.y),angle:Math.atan2(p.y-hit.center.y,p.x-hit.center.x),pointerId:e.pointerId,pointer:{clientX:e.clientX,clientY:e.clientY},bounds:elementBounds(hit),targets:alignmentTargets(regions,hit.id,canvas.current.width,canvas.current.height),locks:{}};
+  gesture.current={region:hit,id:hit.id,kind,start:p,center:hit.center,sticker:s,overlay:o,original:o?{...o}:s?{...s}:{...v.visuals.design.elements[hit.id]},before:snapshot(v.visuals,v.mediaFiles),distance:Math.hypot(p.x-hit.center.x,p.y-hit.center.y),angle:Math.atan2(p.y-hit.center.y,p.x-hit.center.x),pointerId:e.pointerId,pointer:{clientX:e.clientX,clientY:e.clientY},bounds:elementBounds(hit),targets:alignmentTargets(regions,hit.id,canvas.current.width,canvas.current.height),locks:{}};
   setAlignment({active:kind==='move'&&snapping&&!e.altKey,guides:[]});
   svg.current.setPointerCapture(e.pointerId);svg.current.focus();
  }
  function move(e){
   const g=gesture.current;if(!g)return;const p=point(e),o=g.original,w=canvas.current.width,h=canvas.current.height;let patch;
+  if(g.kind==='width-left'||g.kind==='width-right'){
+   const side=g.kind.slice(6),box=g.region.textBox;if(!box)return;
+   const width=draggedTextWidth(g.region,g.start,p,side,box.baseWidth,g.overlay?o.width:box.percent,g.overlay?5:10,g.overlay?100:200);
+   const ctx=canvas.current.getContext('2d');let rect;
+   if(g.overlay){ctx.save();ctx.font=box.font;const height=Math.max(o.fontSize,textLines(ctx,box.text,w*width/100).length*box.step);ctx.restore();rect={x:-w*width/200,y:-height/2,w:w*width/100,h:height};}
+   else rect=resizedTextRect(ctx,box,width);
+   const position=textResizeTranslation(g.region,rect,o,side,w,h,!!g.overlay);
+   if(g.overlay)v.overlay(g.overlay.id,{width,...position});
+   else {v.textStyle(box.role,{width,autoHeight:true,wrap:'auto',...(box.headerScale!=null&&['title','subtitle'].includes(box.role)?{headerScales:{...box.style.headerScales,[box.format]:box.headerScale}}:{}),...(box.role==='title'?{fitRatio:box.fitRatio}: {})});v.element(g.id,position);}
+   return;
+  }
   if(g.kind==='rotate')patch={rotation:angle(o.rotation+(Math.atan2(p.y-g.center.y,p.x-g.center.x)-g.angle)*180/Math.PI)};
   else if(g.kind==='scale'){const scale=(g.sticker?o.size:o.scale)*Math.hypot(p.x-g.center.x,p.y-g.center.y)/Math.max(1,g.distance);patch=g.sticker?{size:clamp(scale,5,100)}:{scale:clamp(scale,25,200)};}
   else {
@@ -117,7 +130,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   {enabled&&valid&&viewport&&canvas.current&&createPortal(<svg ref={svg} className="reel-edit-overlay" style={{left:viewport.left,top:viewport.top,width:viewport.width,height:viewport.height}} viewBox={`0 0 ${canvas.current.width} ${canvas.current.height}`} tabIndex="0" role="application" aria-label="Edytor elementów rolki" onPointerDown={start} onPointerMove={move} onPointerUp={finish} onPointerCancel={e=>finish(e,true)} onLostPointerCapture={e=>finish(e,true)} onKeyDown={keys} onKeyUp={altKey} onDoubleClick={e=>{const hit=hitElement(regions,point(e));if(hit){selectElement(hit.id);setTextFocus(n=>n+1);}}}>
    {regions.map(r=><polygon key={r.id} className="reel-hit-region" points={r.corners.map(p=>`${p.x},${p.y}`).join(' ')}><title>{translate(label(r),uiLanguage)}</title></polygon>)}
    {alignment.active&&<AlignmentGuides guides={alignment.guides} width={canvas.current.width} height={canvas.current.height} scale={unit} language={uiLanguage}/>}
-   {region&&<g className="reel-selection"><polygon points={corners.map(p=>`${p.x},${p.y}`).join(' ')}/><line x1={top.x} y1={top.y} x2={handle.x} y2={handle.y}/><circle className="reel-rotate-handle" data-handle="rotate" cx={handle.x} cy={handle.y} r={7/unit} onPointerDown={e=>{e.stopPropagation();start(e,'rotate');}}><title>Obróć element</title></circle><rect className="reel-scale-handle" data-handle="scale" x={corners[2].x-6/unit} y={corners[2].y-6/unit} width={12/unit} height={12/unit} onPointerDown={e=>{e.stopPropagation();start(e,'scale');}}><title>Zmień rozmiar elementu</title></rect></g>}
+   {region&&<g className="reel-selection"><polygon points={corners.map(p=>`${p.x},${p.y}`).join(' ')}/><line x1={top.x} y1={top.y} x2={handle.x} y2={handle.y}/><circle className="reel-rotate-handle" data-handle="rotate" cx={handle.x} cy={handle.y} r={7/unit} onPointerDown={e=>{e.stopPropagation();start(e,'rotate');}}><title>Obróć element</title></circle>{region.textBox&&['left','right'].map((side,i)=>{const a=corners[i===0?0:1],b=corners[i===0?3:2],x=(a.x+b.x)/2,y=(a.y+b.y)/2;return <rect key={side} className="reel-width-handle" data-handle={`width-${side}`} aria-label={translate(side==='left'?'Szerokość tekstu · lewy bok':'Szerokość tekstu · prawy bok',uiLanguage)} x={x-5/unit} y={y-10/unit} width={10/unit} height={20/unit} rx={3/unit} onPointerDown={e=>{e.stopPropagation();start(e,`width-${side}`);}}><title>{translate('Zmień szerokość pola bez zmiany czcionki',uiLanguage)}</title></rect>;})}<rect className="reel-scale-handle" data-handle="scale" x={corners[2].x-6/unit} y={corners[2].y-6/unit} width={12/unit} height={12/unit} onPointerDown={e=>{e.stopPropagation();start(e,'scale');}}><title>Zmień rozmiar elementu</title></rect></g>}
   </svg>,canvas.current.parentElement)}
   <section className="reel-edit-controls reel-appearance" aria-label="Wygląd rolki">
    <header className="reel-appearance-heading"><h2>Wygląd rolki</h2><p>Wspólny styl zostaje przy zmianie danych.</p></header>
@@ -145,7 +158,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
      <div className="reel-inspector-pair"><label>Skala elementu<input aria-label="Skala elementu" type="number" min={sticker?5:25} max={sticker?100:200} step="1" value={Math.round(transform.scale)} onFocus={remember} onChange={e=>changeTransform({scale:clamp(Number(e.target.value),sticker?5:25,sticker?100:200)})}/></label><label>Obrót elementu<input aria-label="Obrót elementu" type="number" min="-180" max="180" step="1" value={Math.round(transform.rotation)} onFocus={remember} onChange={e=>changeTransform({rotation:clamp(Number(e.target.value),-180,180)})}/></label></div>
      <button type="button" className="text-btn" onClick={()=>{remember();for(const f of copyFields.filter(f=>f.element===selected||selected==='content'&&reelElementDefinitions[f.element]?.textRole)){v.copy(f.key,null);v.hideCopy(f.visibilityKey,false);}if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,groupRoles?null:normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
     </>:sticker?<StickerControls sticker={sticker} index={v.visuals.stickers.indexOf(sticker)} beforeChange={remember}/>:null}
-    <p>Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.</p>
+    <p>Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Boczne uchwyty zmieniają szerokość tekstu bez powiększania liter. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.</p>
    </fieldset>}
    </div>
   </section>

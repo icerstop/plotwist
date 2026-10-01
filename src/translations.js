@@ -3,6 +3,12 @@ import wbCountries from './world-bank-countries.json' with {type:'json'};
 import {extraPairs} from './translations-extra.js';
 // Audited, local translations. No paid API and no automatic rewriting of user input.
 const pairs = `
+Automatyczna wysokość pola tekstowego|Automatic text box height
+Przywróć automatyczne dopasowanie tytułu|Restore automatic title fitting
+Szerokość tekstu · lewy bok|Text width · left side
+Szerokość tekstu · prawy bok|Text width · right side
+Zmień szerokość pola bez zmiany czcionki|Resize the text box without changing font size
+
 Cena NVIDIA|NVIDIA price
 Pokaż linię ceny NVIDIA|Show NVIDIA price line
 Kolor linii NVIDIA|NVIDIA line colour

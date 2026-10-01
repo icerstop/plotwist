@@ -16,7 +16,7 @@ function recorder(){
 test('old drafts retain chart defaults and new settings clamp and round-trip safely',()=>{
  const old=normalizeDesign({theme:'paper',text:{title:{color:'#112233'}}});assert.deepEqual(old.chart,normalizeChart());assert.equal(old.text.title.shadow,'none');assert.equal(old.text.title.wrap,'auto');
  const normalized=normalizeDesign({chart:{lineWidth:999,ticks:1,xTicks:99,width:NaN,palette:'invalid'},text:{title:{width:3,lineHeight:9,shadow:'invalid',boxColor:'red',maxLines:100}}});
- assert.equal(normalized.chart.lineWidth,18);assert.equal(normalized.chart.ticks,3);assert.equal(normalized.chart.xTicks,8);assert.equal(normalized.chart.width,100);assert.equal(normalized.chart.palette,'original');assert.equal(normalized.text.title.width,45);assert.equal(normalized.text.title.lineHeight,1.65);assert.equal(normalized.text.title.maxLines,6);assert.equal(normalized.text.title.boxColor,null);
+ assert.equal(normalized.chart.lineWidth,18);assert.equal(normalized.chart.ticks,3);assert.equal(normalized.chart.xTicks,8);assert.equal(normalized.chart.width,100);assert.equal(normalized.chart.palette,'original');assert.equal(normalized.text.title.width,10);assert.equal(normalized.text.title.lineHeight,1.65);assert.equal(normalized.text.title.maxLines,6);assert.equal(normalized.text.title.boxColor,null);
  assert.deepEqual(normalizeDesign(JSON.parse(JSON.stringify(normalized))),normalized);
 });
 test('design presets change appearance without changing data, media, captions or language',()=>{

@@ -24,7 +24,7 @@ export const hitElement=(regions,p)=>[...regions].reverse().find(r=>containsPoin
 export function registerElement(ctx,id,rect,extra){
  const list=frames.get(ctx.canvas);if(list&&!suppressed.get(ctx))list.push(regionFromMatrix(id,rect,ctx.getTransform(),extra));
 }
-export function beginElement(ctx,config,id,rect){
+export function beginElement(ctx,config,id,rect,extra){
  const endRole=typingRole(ctx,id),endMystery=mysteryRole(ctx,id);
  const t=config.visuals?.design?.elements?.[id]||identityElement(),m=ctx.getTransform();ctx.save();
  const parent=suppressed.get(ctx),hidden=parent||config.visuals?.hidden?.[id]===true;
@@ -33,7 +33,7 @@ export function beginElement(ctx,config,id,rect){
  // Store translation as a percentage of the full reel, independent of nested layout scale.
  ctx.setTransform(m.a,m.b,m.c,m.d,m.e+t.x*ctx.canvas.width/100,m.f+t.y*ctx.canvas.height/100);
  ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);ctx.rotate(t.rotation*Math.PI/180);ctx.scale(t.scale/100,t.scale/100);ctx.translate(-rect.x-rect.w/2,-rect.y-rect.h/2);
- applyElementMotion(ctx,config,id,rect);registerElement(ctx,id,rect);return ()=>{ctx.restore();if(parent==null)suppressed.delete(ctx);else suppressed.set(ctx,parent);endMystery();endRole();};
+ applyElementMotion(ctx,config,id,rect);registerElement(ctx,id,rect,extra);return ()=>{ctx.restore();if(parent==null)suppressed.delete(ctx);else suppressed.set(ctx,parent);endMystery();endRole();};
 }
 export function textRect(ctx,lines,x,y,step,maxWidth=Infinity){
  const metrics=lines.map(s=>ctx.measureText(s)),width=Math.min(maxWidth,Math.max(1,...metrics.map(m=>m.width))),size=parseFloat(ctx.font.match(/([\d.]+)px/)?.[1]||30);

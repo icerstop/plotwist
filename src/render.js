@@ -49,6 +49,7 @@ function drawReelFrame(canvas,config,progress,timeSeconds){
  const plot=seriesPlotLayout({...config,metricCaption:metric},width,height,headerEnd,metricHeight);
  // Only a crowded small frame needs a more compact header; the height slider
  // itself never scales text, logos, the legend or the attribution footer.
+ if(hasPlot)config={...config,_headerScale:plot.headerScale};
  if(hasPlot){ctx.translate(50,50);ctx.scale(plot.headerScale,plot.headerScale);ctx.translate(-50,-50);}
  drawReelLogo(ctx,config,timeSeconds);
  ctx.fillStyle=textColor(config,'title',fg);ctx.font=reelTextFont(config,'title',titleSize,'bold');wrap(ctx,title,78,headingY,920,titleSize*1.08,maxLines,true,config,'title');

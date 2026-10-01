@@ -1,4 +1,4 @@
-import {textLines,paintText} from './reel-text.js';
+import {textLines,paintText,rememberTitleFit} from './reel-text.js';
 import {copyText} from './reel-copy.js';
 import {reelFonts,reelFont,normalizeFontWeight,fontWeights} from './reel-fonts.js';
 export {reelFonts,reelFont,reelFontGroups} from './reel-fonts.js';
@@ -7,8 +7,9 @@ import {themeOf,designOf,setReelText} from './reel-design.js';
 // Keep titles in frame when a bundled font has different text metrics.
 const titleFits=new WeakMap();
 export function reelTitleSize(ctx,text,fontId,preferred,width,maxLines,maxHeight=Infinity,style={}){
+ if(Number.isFinite(style.fitRatio))return rememberTitleFit(ctx,preferred*style.fitRatio,preferred);
  const key=JSON.stringify([text,fontId,preferred,width,maxLines,maxHeight,style]),cached=titleFits.get(ctx);
- if(cached?.key===key)return cached.size;
+ if(cached?.key===key)return rememberTitleFit(ctx,cached.size,preferred);
  width*=((style.width??100)/100);maxLines=style.maxLines||maxLines;
  let size=preferred;
  for(;size>24;size--){
@@ -17,7 +18,7 @@ export function reelTitleSize(ctx,text,fontId,preferred,width,maxLines,maxHeight
   const lines=textLines(ctx,text,width,style.wrap==='manual');
   if(lines.length<=maxLines&&lines.length*size*1.22*(style.lineHeight??1)<=maxHeight&&lines.every(line=>ctx.measureText(line).width<=width))break;
  }
- titleFits.set(ctx,{key,size});return size;
+ titleFits.set(ctx,{key,size});return rememberTitleFit(ctx,size,preferred);
 }
 
 const fontLoads=new Map(),loadedFonts=new Set();
