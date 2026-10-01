@@ -11,7 +11,7 @@ test('native plot resizing expands around its centre without changing typography
  const saved=normalizeDesign(JSON.parse(JSON.stringify(config.visuals.design)));
  assert.equal(saved.elements.plot.heightScale,300);
  assert.equal(normalizeDesign({chart:{release:{stockLabelPosition:'above'}}}).chart.release.stockLabelPosition,'above');
- assert.equal(normalizeDesign({chart:{release:{stockLabelPosition:'unknown'}}}).chart.release.stockLabelPosition,'side');
+ assert.equal(normalizeDesign({chart:{release:{stockLabelPosition:'unknown'}}}).chart.release.stockLabelPosition,'above');
 });
 test('above-line labels stay within the horizontal plot for first and last observations',()=>{
  for(const names of [false,true])for(const values of [false,true])for(const dates of [false,true]){

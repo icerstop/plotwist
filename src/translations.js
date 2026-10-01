@@ -3,6 +3,10 @@ import wbCountries from './world-bank-countries.json' with {type:'json'};
 import {extraPairs} from './translations-extra.js';
 // Audited, local translations. No paid API and no automatic rewriting of user input.
 const pairs = `
+Wspólna długość i położenie osi NVIDIA i premier|Link NVIDIA and release axis width and position
+Wspólna długość osi|Shared axis length
+Odstęp nazw i logo od osi|Name and logo gap from axis
+Pozycja nad linią zwalnia prawy margines. Długość i wysokość pola zmieniają osie bez rozciągania czcionek i logo. Przy połączonych osiach zmiana ich długości lub położenia poziomego działa na oba wykresy.|Placing the label above the line frees the right margin. Plot width and height change without stretching fonts or logos. Linked axes share changes to their width and horizontal position.
 Pozycja etykiety ceny|Price label position
 Obok linii|Beside the line
 Nad linią|Above the line

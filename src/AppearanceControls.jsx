@@ -1,3 +1,4 @@
+import {releaseStockLabels} from './release-appearance.js';
 import ReleaseAppearanceControls from './ReleaseAppearanceControls.jsx';
 import {reelCapabilities} from './reel-capabilities.js';
 import React from 'react';
@@ -8,8 +9,8 @@ import {lineLabelPresets} from './line-labels.js';
 
 function Select({label,value,options,onChange}){return <label className="visual-field">{label}<select aria-label={label} value={value} onChange={e=>onChange(e.target.value)}>{options.map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label>;}
 export function ChartEditor({config}){
- const v=useVisualStatus(),s=v.visuals.design.chart,cap=reelCapabilities(config),{mode,plot,line,bars,cards}=cap;
- const patch=p=>v.design({chart:{...s,...p}}),range=(key,label,min,max,suffix='')=><Range label={label} value={s[key]} min={min} max={max} suffix={suffix} onChange={n=>patch({[key]:n})}/>;
+ const v=useVisualStatus(),base=v.visuals.design.chart,s=config.releases?.stock?{...base,...releaseStockLabels(base.release.stockLabels)}:base,cap=reelCapabilities(config),{mode,plot,line,bars,cards}=cap;
+ const patch=p=>{const labels=config.releases?.stock&&Object.keys(p).every(key=>key.startsWith('endLabel'));v.design({chart:labels?{...base,release:{...base.release,stockLabels:{...base.release.stockLabels,...p}}}:{...base,...p}});},range=(key,label,min,max,suffix='')=><Range label={label} value={s[key]} min={min} max={max} suffix={suffix} onChange={n=>patch({[key]:n})}/>;
  return <div className="visual-editor chart-editor"><fieldset disabled={!v.ready||v.busy}>
   <p className="visual-hint">Styl dopasowuje się do wybranego sposobu prezentacji danych. Typ wykresu wybierzesz w panelu danych.</p>
   {config.releases&&<ReleaseAppearanceControls config={config}/>}

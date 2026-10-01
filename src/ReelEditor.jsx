@@ -1,3 +1,4 @@
+import {releaseElementTransform} from './release-axis-link.js';
 import {resizedTextRect,textLines} from './reel-text.js';
 import {draggedTextWidth,textResizeTranslation} from './reel-text-resize.js';
 import {resizeEdge,dimensionScale} from './reel-resize.js';
@@ -65,11 +66,12 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
  const overlay=v.visuals.overlays.find(o=>`overlay:${o.id}`===selected),hidden=!!v.visuals.hidden[selected];
  const region=regions.find(r=>r.id===selected),sticker=v.visuals.stickers.find(s=>`sticker:${s.id}`===selected);
  const groupRoles=reelElementDefinitions[selected]?.textRoles,baseRole=groupRoles?(groupRoles.includes(chartRole)?chartRole:groupRoles[0]):selected==='content'?chartRole:textRoles.some(r=>r.id===selected)?selected:null,role=groupRoles?`${selected}:${baseRole}`:baseRole,t=role?(v.visuals.design.text[role]||(['detailDate','detailModels','detailGap'].includes(selected)?v.visuals.design.text[`detail:${baseRole}`]:null)||v.visuals.design.text[baseRole]):null;
- const transform=overlay?{rotation:overlay.rotation,scale:overlay.scale}:sticker?{rotation:sticker.rotation,scale:sticker.size}:v.visuals.design.elements[selected]||identityElement();
+ const transform=overlay?{rotation:overlay.rotation,scale:overlay.scale}:sticker?{rotation:sticker.rotation,scale:sticker.size}:{...identityElement(),...releaseElementTransform({...config,visuals:v.visuals},selected)};
  const label=r=>r?.id?.startsWith('overlay:')?overlayName(v.visuals.overlays.find(o=>`overlay:${o.id}`===r.id)||{},reelLanguage):r?.stickerId?v.visuals.stickers.find(s=>s.id===r.stickerId)?.name||'Obrazek / GIF':names[r?.id]||'';
  function remember(){const s=snapshot(v.visuals,v.mediaFiles);if(JSON.stringify(history.current.at(-1))!==JSON.stringify(s)){history.current.push(s);if(history.current.length>40)history.current.shift();}setUndoCount(history.current.length);}
  function undo(){if(v.busy)return;clearGesture();const current=JSON.stringify(snapshot(v.visuals,v.mediaFiles));let previous=history.current.pop();while(previous&&JSON.stringify(previous)===current)previous=history.current.pop();if(previous)v.restoreComposition(previous);setUndoCount(history.current.length);}
- function changeTransform(patch){if(overlay)v.overlay(overlay.id,patch);else if(sticker)v.sticker(sticker.id,{...(patch.scale!==undefined?{size:patch.scale}:{}),...(patch.rotation!==undefined?{rotation:patch.rotation}:{})});else v.element(selected,patch);}
+ function editElement(id,patch){v.element(id,patch,config);}
+ function changeTransform(patch){if(overlay)v.overlay(overlay.id,patch);else if(sticker)v.sticker(sticker.id,{...(patch.scale!==undefined?{size:patch.scale}:{}),...(patch.rotation!==undefined?{rotation:patch.rotation}:{})});else editElement(selected,patch);}
  function selectElement(id){setChartRole(reelElementDefinitions[id]?.textRole||'labels');setSelected(id||null);setPanel('elements');onPause();setEnabled(true);}
  function addElement(kind){remember();const id=v.addOverlay(kind);if(id){selectElement(`overlay:${id}`);setTextFocus(n=>n+1);}}
  function removeElement(){if(!selected)return;remember();clearGesture();if(overlay){v.removeOverlay(overlay.id);setSelected(null);}else if(sticker){v.remove(sticker.id);setSelected(null);}else v.hide(selected,true);}
@@ -82,7 +84,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   if(e.button!==0)return;const p=point(e),hit=kind==='move'?hitElement(regions,p):region;
   if(!hit){setSelected(null);return;}e.preventDefault();onPause();setSelected(hit.id);setChartRole(reelElementDefinitions[hit.id]?.textRole||'labels');setPanel('elements');remember();
   const s=hit.stickerId?v.visuals.stickers.find(s=>s.id===hit.stickerId):null,o=v.visuals.overlays.find(o=>`overlay:${o.id}`===hit.id);
-  gesture.current={region:hit,id:hit.id,kind,start:p,center:hit.center,sticker:s,overlay:o,original:o?{...o}:s?{...s}:{...v.visuals.design.elements[hit.id]},before:snapshot(v.visuals,v.mediaFiles),distance:Math.hypot(p.x-hit.center.x,p.y-hit.center.y),angle:Math.atan2(p.y-hit.center.y,p.x-hit.center.x),pointerId:e.pointerId,pointer:{clientX:e.clientX,clientY:e.clientY},bounds:elementBounds(hit),targets:alignmentTargets(regions,hit.id,canvas.current.width,canvas.current.height),locks:{}};
+  gesture.current={region:hit,id:hit.id,kind,start:p,center:hit.center,sticker:s,overlay:o,original:o?{...o}:s?{...s}:{...identityElement(),...releaseElementTransform({...config,visuals:v.visuals},hit.id)},before:snapshot(v.visuals,v.mediaFiles),distance:Math.hypot(p.x-hit.center.x,p.y-hit.center.y),angle:Math.atan2(p.y-hit.center.y,p.x-hit.center.x),pointerId:e.pointerId,pointer:{clientX:e.clientX,clientY:e.clientY},bounds:elementBounds(hit),targets:alignmentTargets(regions,hit.id,canvas.current.width,canvas.current.height),locks:{}};
   setAlignment({active:kind==='move'&&snapping&&!e.altKey,guides:[]});
   svg.current.setPointerCapture(e.pointerId);svg.current.focus();
  }
@@ -94,7 +96,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
    const min=g.overlay?(horizontal?5:1):10,max=g.overlay?(horizontal?100:80):300;
    const resized=resizeEdge(g.region,g.start,p,edge,min/current,max/current),moveHeight=g.sticker?h-(config.ai?260:195):h;
    patch={[field]:current*resized.ratio,x:o.x+resized.dx/w*100,y:o.y+resized.dy/moveHeight*100};
-   if(g.overlay)v.overlay(g.overlay.id,patch);else if(g.sticker)v.sticker(g.sticker.id,patch);else v.element(g.id,patch);
+   if(g.overlay)v.overlay(g.overlay.id,patch);else if(g.sticker)v.sticker(g.sticker.id,patch);else editElement(g.id,patch);
    return;
   }
   if(g.kind==='width-left'||g.kind==='width-right'){
@@ -105,7 +107,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
    else rect=resizedTextRect(ctx,box,width);
    const position=textResizeTranslation(g.region,rect,o,side,w,h,!!g.overlay);
    if(g.overlay)v.overlay(g.overlay.id,{width,...position});
-   else {v.textStyle(box.role,{width,autoHeight:true,wrap:'auto',...(box.headerScale!=null&&['title','subtitle'].includes(box.role)?{headerScales:{...box.style.headerScales,[box.format]:box.headerScale}}:{}),...(box.role==='title'?{fitRatio:box.fitRatio}: {})});v.element(g.id,position);}
+   else {v.textStyle(box.role,{width,autoHeight:true,wrap:'auto',...(box.headerScale!=null&&['title','subtitle'].includes(box.role)?{headerScales:{...box.style.headerScales,[box.format]:box.headerScale}}:{}),...(box.role==='title'?{fitRatio:box.fitRatio}: {})});editElement(g.id,position);}
    return;
   }
   if(g.kind==='rotate')patch={rotation:angle(o.rotation+(Math.atan2(p.y-g.center.y,p.x-g.center.x)-g.angle)*180/Math.PI)};
@@ -117,7 +119,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
    g.locks=result.locks;g.pointer={clientX:e.clientX,clientY:e.clientY};setAlignment({active,guides:result.guides});
    patch={x:o.x+result.delta.x/w*100,y:o.y+result.delta.y/moveHeight*100};
   }
-  if(g.overlay)v.overlay(g.overlay.id,patch);else if(g.sticker)v.sticker(g.sticker.id,patch);else v.element(g.id,patch);
+  if(g.overlay)v.overlay(g.overlay.id,patch);else if(g.sticker)v.sticker(g.sticker.id,patch);else editElement(g.id,patch);
  }
  function clearGesture(){const g=gesture.current;gesture.current=null;setAlignment(emptyGuides);if(g&&svg.current?.hasPointerCapture(g.pointerId))svg.current.releasePointerCapture(g.pointerId);}
  function finish(e,cancel=false){const g=gesture.current;if(!g)return;if(cancel)v.restoreComposition(g.before);clearGesture();}
@@ -130,8 +132,8 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   if(e.key==='Enter'){e.preventDefault();setTextFocus(n=>n+1);return;}
   if(!region||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
   e.preventDefault();remember();const step=e.shiftKey?10:1,dx=e.key==='ArrowLeft'?-step:e.key==='ArrowRight'?step:0,dy=e.key==='ArrowUp'?-step:e.key==='ArrowDown'?step:0;
-  const o=overlay||sticker||v.visuals.design.elements[selected];const patch={x:clamp(o.x+dx/canvas.current.width*100,sticker||overlay?0:-100,100),y:clamp(o.y+dy/(canvas.current.height-(sticker?(config.ai?260:195):0))*100,sticker||overlay?0:-100,100)};
-  if(overlay)v.overlay(overlay.id,patch);else if(sticker)v.sticker(sticker.id,patch);else v.element(selected,patch);
+  const o=overlay||sticker||transform;const patch={x:clamp(o.x+dx/canvas.current.width*100,sticker||overlay?0:-100,100),y:clamp(o.y+dy/(canvas.current.height-(sticker?(config.ai?260:195):0))*100,sticker||overlay?0:-100,100)};
+  if(overlay)v.overlay(overlay.id,patch);else if(sticker)v.sticker(sticker.id,patch);else editElement(selected,patch);
  }
  const corners=region?.corners,top=corners?{x:(corners[0].x+corners[1].x)/2,y:(corners[0].y+corners[1].y)/2}:null;
  const unit=viewport?.scale||1,handle=top?{x:top.x+(top.x-region.center.x)/Math.max(1,Math.hypot(top.x-region.center.x,top.y-region.center.y))*26/unit,y:top.y+(top.y-region.center.y)/Math.max(1,Math.hypot(top.x-region.center.x,top.y-region.center.y))*26/unit}:null;
@@ -172,7 +174,7 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
      {t&&<><FontPicker label="Czcionka elementu" value={t.fontId||''} inheritFontId={config.fontId} onChange={fontId=>{remember();v.textStyle(role,{fontId:fontId||null});}}/><FontWeightPicker label="Grubość czcionki elementu" fontId={t.fontId||config.fontId} value={t.weight} element onChange={weight=>{remember();v.textStyle(role,{weight});}}/><div onFocusCapture={remember} onPointerDownCapture={remember}><Range label="Rozmiar tekstu" value={t.size} min={textRoles.find(r=>r.id===baseRole).min} max={textRoles.find(r=>r.id===baseRole).max} onChange={size=>v.textStyle(role,{size})}/><Color label="Kolor elementu" value={color} onChange={color=>v.textStyle(role,{color})}/></div><button type="button" className="text-btn" onClick={()=>{remember();v.textStyle(role,groupRoles?null:normalizeDesign().text[role]);}}>Przywróć styl tego tekstu</button>{!['labels','values'].includes(baseRole)&&<TextEffects role={role} config={config} beforeChange={remember}/>}<p>100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p></>}
      <div className="reel-inspector-pair"><label>Skala elementu<input aria-label="Skala elementu" type="number" min={sticker?5:25} max={sticker?100:200} step="1" value={Math.round(transform.scale)} onFocus={remember} onChange={e=>changeTransform({scale:clamp(Number(e.target.value),sticker?5:25,sticker?100:200)})}/></label><label>Obrót elementu<input aria-label="Obrót elementu" type="number" min="-180" max="180" step="1" value={Math.round(transform.rotation)} onFocus={remember} onChange={e=>changeTransform({rotation:clamp(Number(e.target.value),-180,180)})}/></label></div>
      {!region?.textBox&&<><div className="reel-inspector-pair">{[['widthScale','Szerokość elementu (%)'],['heightScale','Wysokość elementu (%)']].map(([key,name])=><label key={key}>{name}<input aria-label={name} type="number" min="10" max="300" step="1" value={Math.round(dimensionScale(transform[key]))} onFocus={remember} onChange={e=>changeTransform({[key]:dimensionScale(e.target.value)})}/></label>)}</div><p>{region?.geometryResize?'Uchwyty zmieniają długość osi i odstępy bez rozciągania czcionek i logo. Narożnik nadal skaluje cały element.':'Wymiary zmieniają proporcje całego elementu, razem z jego zawartością. Narożnik zachowuje ustawione proporcje.'}</p></>}
-     <button type="button" className="text-btn" onClick={()=>{remember();for(const f of copyFields.filter(f=>f.element===selected||selected==='content'&&reelElementDefinitions[f.element]?.textRole)){v.copy(f.key,null);v.hideCopy(f.visibilityKey,false);}if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,groupRoles?null:normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
+     <button type="button" className="text-btn" onClick={()=>{remember();for(const f of copyFields.filter(f=>f.element===selected||selected==='content'&&reelElementDefinitions[f.element]?.textRole)){v.copy(f.key,null);v.hideCopy(f.visibilityKey,false);}if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{editElement(selected,identityElement());if(role)v.textStyle(role,groupRoles?null:normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
     </>:sticker?<StickerControls sticker={sticker} index={v.visuals.stickers.indexOf(sticker)} beforeChange={remember}/>:null}
     <p>Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Boczne uchwyty zmieniają szerokość, a górny i dolny — wysokość. W polach tekstowych boki zmieniają zawijanie bez powiększania liter; wysokość dopasowuje się do tekstu. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.</p>
    </fieldset>}

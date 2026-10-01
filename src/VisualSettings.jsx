@@ -1,3 +1,4 @@
+import {patchReleaseElement} from './release-axis-link.js';
 import {reelCapabilities} from './reel-capabilities.js';
 import {normalizeCopies,updateCopy,copyScope,normalizeCopyHidden,updateCopyHidden} from './reel-copy.js';
 import {normalizeOverlays,normalizeHidden,newOverlay,overlayLimit,reorderOverlay} from './reel-overlays.js';
@@ -55,7 +56,7 @@ export function VisualProvider({children}){
  function reset(){const keep=visuals.logo.assetId;for(const id of Object.keys(files))if(id!==keep)releaseMedia(id);setFiles(f=>keep&&f[keep]?{[keep]:f[keep]}:{});setVisuals(v=>({...emptyVisuals(),logo:v.logo,design:v.design,fontId:v.fontId,copy:v.copy,copyHidden:v.copyHidden,hidden:v.hidden,overlays:v.overlays}));setError('');}
  function design(patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,...patch,preset:null})}));}
  function theme(id){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,theme:id,text:Object.fromEntries(Object.entries(v.design.text).map(([key,t])=>[key,{...t,color:null}]))}),background:{...v.background,type:'theme',veil:0,pattern:'none'}}));}
- function element(id,patch){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,elements:{...v.design.elements,[id]:{...v.design.elements[id],...patch}}})}));}
+ function element(id,patch,config={}){setVisuals(v=>({...v,design:normalizeDesign({...v.design,preset:null,elements:patchReleaseElement({...config,visuals:v},id,patch)})}));}
  function copy(key,value){setVisuals(v=>({...v,copy:updateCopy(v.copy,key,value)}));}
  function hideCopy(key,hidden){setVisuals(v=>({...v,copyHidden:updateCopyHidden(v.copyHidden,key,hidden)}));}
  function hide(id,hidden){setVisuals(v=>({...v,hidden:normalizeHidden({...v.hidden,[id]:hidden})}));}

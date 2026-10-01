@@ -1,4 +1,5 @@
 import {resizedPlotRect} from './reel-resize.js';
+import {releaseRenderConfig} from './release-axis-link.js';
 import {releaseStockPulseLayout} from './release-stock.js';
 import {drawReleaseStock} from './release-stock-render.js';
 import {drawReleaseDetail} from './ai-release-detail.js';
@@ -10,7 +11,7 @@ import {reelMotionFrame} from './reel-motion.js';
 import {themeOf,textSize,setReelText,beginReelSection,designOf} from './reel-design.js';
 import {reelFont,reelTitleSize,drawSignature} from './reel-style.js';
 import {drawTextBlock,textStyleOf} from './reel-text.js';
-import {copyText} from './reel-copy.js';
+import {copyText,describeCopy} from './reel-copy.js';
 import {drawReelLogo} from './reel-logo.js';
 import {drawVisualBackground,drawVisualOverlays} from './visual-render.js';
 import {drawReelOverlays} from './overlay-render.js';
@@ -21,7 +22,7 @@ import {datedEvents,eventPausePlan,eventPauseFrame} from './event-timing.js';
 const clamp=n=>Math.max(0,Math.min(1,n));
 export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  const motion=reelMotionFrame(initial,progress,timeSeconds),layout=aiFrameLayout(initial.format),{height,start,end,textScale}=layout;
- const config={...motion.config,_aiTextScale:textScale},r=config.releases;
+ const config=releaseRenderConfig({...motion.config,_aiTextScale:textScale}),r=config.releases;
  const plan=eventPausePlan(config.timelineEvents||datedEvents(r.rows,r.start,r.end),(config.duration||24)*.9,config.visuals?.design?.motion?.eventPauses);
  const playback=eventPauseFrame(plan,motion.dataTime),frame=releaseFrame(r.rows,r.start,r.end,playback.progress,r.count);
  const ending=releaseEndingState(timeSeconds,initial.duration||24);
@@ -88,7 +89,11 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
   const left=rect.x,right=rect.x+rect.w,window=releaseWindow(releaseDay(r.start),releaseDay(r.end),frame.current,appearance.windowDays),a=window.first,b=window.last,x=day=>left+(day-a)/(b-a||1)*(right-left),groups=groupReleases(frame.visible).filter(g=>releaseDay(g.date)>=a);
   publishers.forEach((p,i)=>{
    const pitch=vh*.83/publishers.length,basePitch=baseHeight*.83/publishers.length,yy=vt+pitch*(i+.5),icon=Math.max(5,Math.min(36,basePitch-3)),laneFont=stockVisible?Math.min(25,basePitch*.8/textScale):25;
-   if(appearance.laneLogos)logo(p,left-149,yy-icon/2,icon);if(appearance.laneNames)text(p.name,appearance.laneLogos?left-149+icon+7:left-149,yy+laneFont*textScale*.3,appearance.laneLogos?138-icon:145,laneFont,'labels',muted,1,false,{id:'release.publisher',entity:p.id,label:'Nazwa producenta'});
+   const labelRight=left-appearance.laneLabelGap,nameWidth=145-(appearance.laneLogos?icon+7:0),labelConfig={...config,_textElement:'plot'};
+   setReelText(ctx,labelConfig,'labels',laneFont,font,muted);
+   const name=describeCopy(config,'release.publisher',p.name,{entity:p.id,element:'plot'}).value,measured=appearance.laneNames?Math.min(nameWidth,ctx.measureText(name).width):0;
+   if(appearance.laneLogos)logo(p,labelRight-measured-(measured?7:0)-icon,yy-icon/2,icon);
+   if(appearance.laneNames){ctx.textAlign='right';text(p.name,labelRight,yy+laneFont*textScale*.3,nameWidth,laneFont,'labels',muted,1,false,{id:'release.publisher',entity:p.id,label:'Nazwa producenta'});ctx.textAlign='left';}
    line(left,yy,right,yy);ctx.save();lineAppearance(ctx,config,p.color);line(left,yy,x(frame.current),yy,p.color,stockVisible?Math.min(style.lineWidth,basePitch*.3):style.lineWidth);ctx.setLineDash([]);ctx.shadowBlur=0;
    for(const group of groups.filter(g=>g.publisher===p.id)){
     const px=x(releaseDay(group.date));if(appearance.pointSize>0)dot(px,yy,p.color,Math.min(appearance.pointSize+Math.min(3,group.models.length),stockVisible?basePitch*.4:Infinity));

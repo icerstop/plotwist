@@ -13,13 +13,13 @@ export default function ReleaseAppearanceControls({config}){
   <Color label="Kolor linii NVIDIA" value={s.stockColor} onChange={stockColor=>patch({stockColor})}/>
   {range('stockHeight','Miejsce na wykres ceny NVIDIA',20,40)}
   <label className="visual-field">Pozycja etykiety ceny<select aria-label="Pozycja etykiety ceny" value={s.stockLabelPosition} onChange={e=>patch({stockLabelPosition:e.target.value})}><option value="side">Obok linii</option><option value="above">Nad linią</option></select></label>
-  {dimension('stock','widthScale','Długość osi NVIDIA')}{dimension('stock','heightScale','Wysokość pola ceny NVIDIA')}
-  <p className="visual-hint">Pozycja nad linią zwalnia prawy margines. Długość i wysokość pola zmieniają osie bez rozciągania czcionek i logo. Długość osi NVIDIA wyznacza też bazową długość torów premier.</p>
+  {config.releases.mode==='pulse'&&check('linkAxes','Wspólna długość i położenie osi NVIDIA i premier')}{dimension('stock','widthScale',s.linkAxes&&config.releases.mode==='pulse'?'Wspólna długość osi':'Długość osi NVIDIA')}{dimension('stock','heightScale','Wysokość pola ceny NVIDIA')}
+  <p className="visual-hint">Pozycja nad linią zwalnia prawy margines. Długość i wysokość pola zmieniają osie bez rozciągania czcionek i logo. Przy połączonych osiach zmiana ich długości lub położenia poziomego działa na oba wykresy.</p>
   <label className="visual-field">Zakres cen NVIDIA<select aria-label="Zakres cen NVIDIA" value={s.stockScale} onChange={e=>patch({stockScale:e.target.value})}><option value="growing">Rosnący · widoczne notowania</option><option value="fixed">Stały · cały wybrany okres</option></select></label>
   <p className="visual-hint">Grubość, styl linii, podziałkę i etykiety zmienisz w tych samych sekcjach poniżej co na innych wykresach. Etykieta ceny pokazuje zamknięcie ostatniej sesji. Datę notowania można włączyć osobno.</p>
  </details>}
  {config.releases.mode==='pulse'&&<details className="appearance-group" open><summary>Rozmieszczenie osi czasu</summary>
-  {dimension('plot','heightScale','Rozstaw torów (wysokość osi)')}{dimension('plot','widthScale','Długość osi premier')}
+  {dimension('plot','heightScale','Rozstaw torów (wysokość osi)')}{(!config.releases.stock||!s.linkAxes)&&dimension('plot','widthScale','Długość osi premier')}{range('laneLabelGap','Odstęp nazw i logo od osi',0,100,' px')}
   <label className="visual-field">Okno czasu<select aria-label="Okno czasu" value={s.windowDays} onChange={e=>patch({windowDays:Number(e.target.value)})}><option value={0}>Cały wybrany okres</option>{[30,90,180,365,730].map(n=><option key={n} value={n}>{n} dni · podążaj za premierami</option>)}</select></label>
   <p className="visual-hint">Uchwyty osi i te suwaki zmieniają geometrię, nie czcionki ani logo. Rozstaw do 300% pozwala szerzej rozsunąć tory. Przy dużym rozstawie przesuń pozostałe elementy lub ukryj kartę i słupki. Okno czasu przybliża daty bez zmiany danych.</p>
   {range('pointSize','Rozmiar punktów premier',0,18,' px')}{check('pulses','Rozbłysk przy premierze')}{check('laneNames','Nazwy przy torach')}{check('laneLogos','Logotypy przy torach')}{check('axisDates','Daty na krańcach osi')}

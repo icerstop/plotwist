@@ -12,9 +12,9 @@ export function drawReleaseStock({ctx,config,frame,style,appearance,theme,top,bo
  const r=config.releases,series=r.stock,above=appearance.stockLabelPosition==='above';
  const base={x:225,y:top,w:775*appearance.timelineWidth/100,h:bottom-top},rect=resizedPlotRect(config,'stock',base);
  const left=rect.x,baseRight=rect.x+rect.w;top=rect.y;bottom=rect.y+rect.h;
- const c={...config,unit:'USD',xType:'date',_textElement:'stock'};
+ const c={...config,unit:'USD',xType:'date',_textElement:'stock',visuals:{...config.visuals,design:{...config.visuals.design,chart:{...style,...appearance.stockLabels}}}};
  const window=releaseWindow(releaseDay(r.start),releaseDay(r.end),frame.current,appearance.windowDays);
- const geometry=style.endLabels?lineLabelGeometry(c,{left,right:above?baseRight:Math.min(900,baseRight),top,bottom:above?top+rect.h*.5:bottom,count:1,hasDates:true}):null;
+ const geometry=appearance.stockLabels.endLabels?lineLabelGeometry(c,{left,right:above?baseRight:Math.min(900,baseRight),top,bottom:above?top+rect.h*.5:bottom,count:1,hasDates:true}):null;
  const right=above||!geometry?baseRight:Math.max(left+20,baseRight-geometry.columnWidth-20),x=day=>left+(day-window.first)/(window.last-window.first||1)*(right-left);
  const stop=section('stock',rect,{geometryResize:true,hitRect:{x:left-149,y:top-36,w:rect.w+149,h:rect.h+75}});
  const plotTop=top+(above&&geometry?geometry.height+Math.min(14,rect.h*.1):0);
