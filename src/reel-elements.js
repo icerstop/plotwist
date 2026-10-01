@@ -17,7 +17,7 @@ export function regionFromMatrix(id,rect,m,extra={}){
 export function containsPoint(region,p){
  if(region.clip&&(p.x<region.clip.x||p.y<region.clip.y||p.x>region.clip.x+region.clip.w||p.y>region.clip.y+region.clip.h))return false;
  const m=region.matrix,det=m.a*m.d-m.b*m.c;if(!det)return false;
- const x=(m.d*(p.x-m.e)-m.c*(p.y-m.f))/det,y=(-m.b*(p.x-m.e)+m.a*(p.y-m.f))/det,r=region.rect;
+ const x=(m.d*(p.x-m.e)-m.c*(p.y-m.f))/det,y=(-m.b*(p.x-m.e)+m.a*(p.y-m.f))/det,r=region.hitRect||region.rect;
  return x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h;
 }
 export const hitElement=(regions,p)=>[...regions].reverse().find(r=>containsPoint(r,p));
@@ -32,7 +32,7 @@ export function beginElement(ctx,config,id,rect,extra){
  if(hidden){ctx.globalAlpha=0;ctx.beginPath();ctx.rect(0,0,0,0);ctx.clip();}
  // Store translation as a percentage of the full reel, independent of nested layout scale.
  ctx.setTransform(m.a,m.b,m.c,m.d,m.e+t.x*ctx.canvas.width/100,m.f+t.y*ctx.canvas.height/100);
- ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);ctx.rotate(t.rotation*Math.PI/180);ctx.scale(t.scale/100*(t.widthScale??100)/100,t.scale/100*(t.heightScale??100)/100);ctx.translate(-rect.x-rect.w/2,-rect.y-rect.h/2);
+ ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);ctx.rotate(t.rotation*Math.PI/180);ctx.scale(t.scale/100*(extra?.geometryResize?1:(t.widthScale??100)/100),t.scale/100*(extra?.geometryResize?1:(t.heightScale??100)/100));ctx.translate(-rect.x-rect.w/2,-rect.y-rect.h/2);
  applyElementMotion(ctx,config,id,rect);registerElement(ctx,id,rect,extra);return ()=>{ctx.restore();if(parent==null)suppressed.delete(ctx);else suppressed.set(ctx,parent);endMystery();endRole();};
 }
 export function textRect(ctx,lines,x,y,step,maxWidth=Infinity){

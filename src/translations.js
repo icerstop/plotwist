@@ -3,6 +3,16 @@ import wbCountries from './world-bank-countries.json' with {type:'json'};
 import {extraPairs} from './translations-extra.js';
 // Audited, local translations. No paid API and no automatic rewriting of user input.
 const pairs = `
+Pozycja etykiety ceny|Price label position
+Obok linii|Beside the line
+Nad linią|Above the line
+Długość osi NVIDIA|NVIDIA axis length
+Wysokość pola ceny NVIDIA|NVIDIA price plot height
+Długość osi premier|Release axis length
+Pozycja nad linią zwalnia prawy margines. Długość i wysokość pola zmieniają osie bez rozciągania czcionek i logo. Długość osi NVIDIA wyznacza też bazową długość torów premier.|Placing the label above the line frees the right margin. Plot width and height change the axes without stretching fonts or logos. The NVIDIA axis also sets the base length of release lanes.
+Uchwyty osi i te suwaki zmieniają geometrię, nie czcionki ani logo. Rozstaw do 300% pozwala szerzej rozsunąć tory. Przy dużym rozstawie przesuń pozostałe elementy lub ukryj kartę i słupki. Okno czasu przybliża daty bez zmiany danych.|Axis handles and these sliders change geometry, keeping fonts and logos unchanged. Spacing up to 300% spreads lanes further apart. For wide spacing, move other elements or hide the card and bars. The time window zooms into dates without changing the data.
+Uchwyty zmieniają długość osi i odstępy bez rozciągania czcionek i logo. Narożnik nadal skaluje cały element.|Handles change axis length and spacing without stretching fonts or logos. The corner still scales the entire element.
+
 Zmień szerokość elementu|Resize element width
 Zmień wysokość elementu|Resize element height
 Szerokość elementu (%)|Element width (%)

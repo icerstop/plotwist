@@ -78,6 +78,11 @@ export function arrangeLineLabels(items,geometry,{top,bottom,x}){
  return result;
 }
 
+export function aboveLineLabel(item,geometry,{top,bottom,left,right}){
+ const width=Math.min(geometry.columnWidth-6,right-left),height=geometry.height;
+ return {...item,width,height,x:Math.max(left,Math.min(right-width,item.anchorX-width/2)),y:Math.max(top+height/2,Math.min(bottom-height/2,item.anchorY-14-height/2))};
+}
+
 const ellipsis=(ctx,text,width)=>{let value=String(text);if(ctx.measureText(value).width<=width)return value;while(value.length&&ctx.measureText(value+'…').width>width)value=value.slice(0,-1);return value+'…';};
 export function endpointLabelText(tip,config,formatValue){
  const s=chartAppearance(config),interpolated=s.endLabelValue!=='observed'&&tip.estimated;
@@ -87,7 +92,7 @@ export function endpointLabelText(tip,config,formatValue){
  return {value:prefix+formatValue(value),date};
 }
 
-export function drawLineLabels(ctx,config,items,geometry,{top,bottom,x,fg,background}){
+export function drawLineLabels(ctx,config,items,geometry,{top,bottom,x,right,placement='side',fg,background}){
  if(!items.length||!geometry)return [];
  const endMystery=mysteryRole(ctx,'labels');
  // Explicit switches always win, even with duplicate flags or a missing image.
@@ -95,10 +100,10 @@ export function drawLineLabels(ctx,config,items,geometry,{top,bottom,x,fg,backgr
   const badge=geometry.icons?(item.badge||seriesBadge(item.series)):null,logo=badge&&getReelLogo(badge.path);
   const name=geometry.names?copyText(ctx,config,'series.name',item.series.name,{element:config._textElement||'content',label:'Nazwa serii',multiline:false}):'',value=geometry.values?item.value:'',date=geometry.dates?item.date:'';
   return logo||name||value||date?[{...item,badge,logo,name,value,date}]:[];
- }),layout=arrangeLineLabels(visible,geometry,{top,bottom,x});
+ }),layout=placement==='above'?visible.map(item=>aboveLineLabel(item,geometry,{top,bottom,left:x,right})):arrangeLineLabels(visible,geometry,{top,bottom,x});
  ctx.save();ctx.shadowBlur=0;ctx.shadowOffsetX=ctx.shadowOffsetY=0;ctx.setLineDash([]);ctx.lineWidth=2;ctx.textAlign='left';ctx.textBaseline='middle';
  // Paint connectors first, then all opaque cards; no connector crosses a label.
- for(const item of layout){ctx.strokeStyle=item.color;ctx.beginPath();ctx.moveTo(item.anchorX,item.anchorY);ctx.lineTo(item.x-10,item.y);ctx.lineTo(item.x,item.y);ctx.stroke();}
+ for(const item of layout){ctx.strokeStyle=item.color;ctx.beginPath();ctx.moveTo(item.anchorX,item.anchorY);if(placement==='above'){const x=Math.max(item.x+6,Math.min(item.x+item.width-6,item.anchorX));ctx.lineTo(x,item.y+item.height/2);}else{ctx.lineTo(item.x-10,item.y);ctx.lineTo(item.x,item.y);}ctx.stroke();}
  for(const item of layout){
   const y=item.y-item.height/2,pad=8;
   ctx.fillStyle=background||themeOf(config).bg;roundFill(ctx,item.x,y,item.width,item.height,7);

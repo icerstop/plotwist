@@ -12,6 +12,12 @@ export function resizeEdge(region,start,current,edge,minRatio=.1,maxRatio=3){
  return {ratio,dx:(horizontal?m.a:m.c)*half,dy:(horizontal?m.b:m.d)*half};
 }
 export const dimensionScale=value=>Number.isFinite(Number(value))&&value!=null?Math.max(10,Math.min(300,Number(value))):100;
+// Resize the coordinate space allocated to a chart, not its drawing context.
+// Typography, logos, strokes and dots retain their own sizes.
+export function resizedPlotRect(config,id,rect){
+ const t=config.visuals?.design?.elements?.[id],w=rect.w*dimensionScale(t?.widthScale)/100,h=rect.h*dimensionScale(t?.heightScale)/100;
+ return {x:rect.x+(rect.w-w)/2,y:rect.y+(rect.h-h)/2,w,h};
+}
 export function stickerDimensions(sticker,frame,canvasWidth,motionScale=1){
  const base=canvasWidth*sticker.size/100*motionScale;
  return {width:base*dimensionScale(sticker.widthScale)/100,height:base*frame.height/frame.width*dimensionScale(sticker.heightScale)/100};

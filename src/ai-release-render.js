@@ -1,3 +1,4 @@
+import {resizedPlotRect} from './reel-resize.js';
 import {releaseStockPulseLayout} from './release-stock.js';
 import {drawReleaseStock} from './release-stock-render.js';
 import {drawReleaseDetail} from './ai-release-detail.js';
@@ -38,7 +39,7 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
   value=copyText(ctx,config,options.id||(editable?role:`${textElement}.${role}.${value}`),value,{dynamic:role==='date',element:editable?role:textElement,...options});
   return drawTextBlock(ctx,value,x,y,width,textSize(textConfig,role,size)*1.19,max,true,textConfig,role,editable);
  }
- function section(id,rect){const previous=textElement;textElement=id;const end=beginElement(ctx,config,id,rect);return ()=>{end();textElement=previous;};}
+ function section(id,rect,extra){const previous=textElement;textElement=id;const end=beginElement(ctx,config,id,rect,extra);return ()=>{end();textElement=previous;};}
  function line(x1,y1,x2,y2,color=grid,width=2){ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=width;ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
  function dot(x,y,color,radius=7){ctx.beginPath();ctx.fillStyle=color;ctx.arc(x,y,radius,0,Math.PI*2);ctx.fill();}
  function logo(p,x,y,size){const image=r.logos&&getReelLogo(p.logo);if(image){ctx.fillStyle='#fff';roundFill(ctx,x,y,size,size,8);const inset=Math.min(5,size*.15);ctx.drawImage(image,x+inset,y+inset,size-inset*2,size-inset*2);}else dot(x+size/2,y+size/2,p.color,7);}
@@ -64,8 +65,12 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  const bodyStart=stockVisible?start+summaryHeight+stockHeight+16:start;h=end-bodyStart;y=f=>stockVisible?bodyStart+h*(f-.2)/.8:bodyStart+h*f;
  const detail=(top,bottom,hero)=>drawReleaseDetail({ctx,config,s:appearance,theme,frame,publishers,text,section,logo,dateLabel,t,eventAge,textScale},top,bottom,hero);
  if(!drawReleaseVariant({ctx,r,frame,publishers,theme,style,y,h,text,section,line,dateLabel,t,eventAge,detail,locale})){
- const crowded=publishers.length>2,pulse=stockVisible?releaseStockPulseLayout(bodyStart,end,appearance,config.visuals?.hidden):releasePulseLayout(bodyStart,end,appearance,config.visuals?.hidden),vt=r.mode==='pulse'?pulse.top:y(crowded?.19:.21),vb=r.mode==='pulse'?pulse.bottom:y(crowded?.60:.56),vh=vb-vt;
- const plotEnd=section('plot',{x:76,y:vt-30,w:928,h:vh+75});
+ const crowded=publishers.length>2,pulse=stockVisible?releaseStockPulseLayout(bodyStart,end,appearance,config.visuals?.hidden):releasePulseLayout(bodyStart,end,appearance,config.visuals?.hidden);
+ const baseTop=r.mode==='pulse'?pulse.top:y(crowded?.19:.21),baseBottom=r.mode==='pulse'?pulse.bottom:y(crowded?.60:.56),baseHeight=baseBottom-baseTop;
+ const baseLeft=stockPlot?.left??225,baseRight=stockPlot?.right??baseLeft+775*appearance.timelineWidth/100;
+ const rect=r.mode==='pulse'?resizedPlotRect(config,'plot',{x:baseLeft,y:baseTop,w:baseRight-baseLeft,h:baseHeight}):{x:76,y:baseTop-30,w:928,h:baseHeight+75};
+ const vt=r.mode==='pulse'?rect.y:baseTop,vh=r.mode==='pulse'?rect.h:baseHeight,vb=vt+vh,flowOffset=r.mode==='pulse'?Math.max(0,vb-baseBottom):0;
+ const plotEnd=section('plot',rect,r.mode==='pulse'?{geometryResize:true,hitRect:{x:rect.x-149,y:vt-30,w:rect.w+149,h:vh+75}}:undefined);
  if(r.mode==='calendar'){
   const month=frame.date.slice(0,7),first=releaseDay(`${month}-01`),d=new Date(`${month}-01T00:00:00Z`),offset=(d.getUTCDay()+6)%7;d.setUTCMonth(d.getUTCMonth()+1);const days=releaseDay(d.toISOString().slice(0,10))-first;
   const labels=en?['M','T','W','T','F','S','S']:['Pn','Wt','Śr','Cz','Pt','So','Nd'],cw=132,ch=(vh-30)/6;
@@ -80,13 +85,13 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
   }
   publishers.forEach((p,i)=>{const lx=85+(i%4)*232,ly=vb+18+Math.floor(i/4)*23;dot(lx,ly,p.color,5);text(p.name,lx+15,ly+7,210,23,'labels',muted,1,false,{id:'release.publisher',entity:p.id,label:'Nazwa producenta'});});
  }else{
-  const left=225,right=stockPlot?.right??left+775*appearance.timelineWidth/100,window=releaseWindow(releaseDay(r.start),releaseDay(r.end),frame.current,appearance.windowDays),a=window.first,b=window.last,x=day=>left+(day-a)/(b-a||1)*(right-left),groups=groupReleases(frame.visible).filter(g=>releaseDay(g.date)>=a);
+  const left=rect.x,right=rect.x+rect.w,window=releaseWindow(releaseDay(r.start),releaseDay(r.end),frame.current,appearance.windowDays),a=window.first,b=window.last,x=day=>left+(day-a)/(b-a||1)*(right-left),groups=groupReleases(frame.visible).filter(g=>releaseDay(g.date)>=a);
   publishers.forEach((p,i)=>{
-   const pitch=vh*.83/publishers.length,yy=vt+pitch*(i+.5),icon=Math.max(5,Math.min(36,pitch-3)),laneFont=stockVisible?Math.min(25,pitch*.8/textScale):25;
-   if(appearance.laneLogos)logo(p,76,yy-icon/2,icon);if(appearance.laneNames)text(p.name,appearance.laneLogos?76+icon+7:76,yy+laneFont*textScale*.3,appearance.laneLogos?138-icon:145,laneFont,'labels',muted,1,false,{id:'release.publisher',entity:p.id,label:'Nazwa producenta'});
-   line(left,yy,right,yy);ctx.save();lineAppearance(ctx,config,p.color);line(left,yy,x(frame.current),yy,p.color,stockVisible?Math.min(style.lineWidth,pitch*.3):style.lineWidth);ctx.setLineDash([]);ctx.shadowBlur=0;
+   const pitch=vh*.83/publishers.length,basePitch=baseHeight*.83/publishers.length,yy=vt+pitch*(i+.5),icon=Math.max(5,Math.min(36,basePitch-3)),laneFont=stockVisible?Math.min(25,basePitch*.8/textScale):25;
+   if(appearance.laneLogos)logo(p,left-149,yy-icon/2,icon);if(appearance.laneNames)text(p.name,appearance.laneLogos?left-149+icon+7:left-149,yy+laneFont*textScale*.3,appearance.laneLogos?138-icon:145,laneFont,'labels',muted,1,false,{id:'release.publisher',entity:p.id,label:'Nazwa producenta'});
+   line(left,yy,right,yy);ctx.save();lineAppearance(ctx,config,p.color);line(left,yy,x(frame.current),yy,p.color,stockVisible?Math.min(style.lineWidth,basePitch*.3):style.lineWidth);ctx.setLineDash([]);ctx.shadowBlur=0;
    for(const group of groups.filter(g=>g.publisher===p.id)){
-    const px=x(releaseDay(group.date));if(appearance.pointSize>0)dot(px,yy,p.color,Math.min(appearance.pointSize+Math.min(3,group.models.length),stockVisible?pitch*.4:Infinity));
+    const px=x(releaseDay(group.date));if(appearance.pointSize>0)dot(px,yy,p.color,Math.min(appearance.pointSize+Math.min(3,group.models.length),stockVisible?basePitch*.4:Infinity));
     const age=eventAge(group.date),life=ending.pulseDuration;if(appearance.pulses&&age>=0&&age<life){const phase=age/life;ctx.save();ctx.globalAlpha*=(1-phase)**2;ctx.strokeStyle=p.color;ctx.lineWidth=3;ctx.beginPath();ctx.arc(px,yy,10+30*phase,0,Math.PI*2);ctx.stroke();ctx.restore();}
    }ctx.restore();
   });
@@ -97,13 +102,13 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  if(r.mode!=='calendar'){
   const distributionEnd=section('distribution',{x:76,y:vb+8,w:928,h:100});
   // Monthly bars use a fixed maximum for the whole selection. Future bars stay blank.
-  const months=releaseMonths(r.rows,r.start,r.end,r.count),max=Math.max(1,...months.map(m=>m.count)),step=924/months.length,barBase=pulse.histogramBase;
+  const months=releaseMonths(r.rows,r.start,r.end,r.count),max=Math.max(1,...months.map(m=>m.count)),step=924/months.length,barBase=pulse.histogramBase+flowOffset;
   months.forEach((m,i)=>{const items=frame.visible.filter(v=>v.date.startsWith(m.month));let bottom=barBase;publishers.forEach(p=>{const size=releaseCount(items.filter(v=>v.publisher===p.id),r.count)/max*Math.min(crowded?35:60,h*.07),width=Math.max(2,step*style.barWidth/100);ctx.fillStyle=p.color;ctx.fillRect(76+i*step+(step-width)/2,bottom-size,width,size);bottom-=size;});
    if(i%Math.ceil(months.length/8)===0){const label=months.length>12?m.month:m.month.slice(5);text(label,76+i*step,barBase+textSize(config,'labels',21)+5,Math.max(110,step-8),21,'labels',muted,1,false,{id:'release.histogramMonth',entity:m.month,label:'Miesiąc na słupkach'});}
   });
   distributionEnd();
  }
- detail(r.mode==='pulse'?pulse.cardTop:y(crowded?.76:.64),end-4);
+ detail(r.mode==='pulse'?pulse.cardTop+flowOffset:y(crowded?.76:.64),end-4+flowOffset);
  }stop();
  drawVisualOverlays(ctx,1080,height,config,timeSeconds);
  ctx.textAlign='right';text(dateLabel(frame.date),1000,height-175,924,44,'date',fg,1,true);ctx.textAlign='left';
