@@ -3,6 +3,16 @@ import wbCountries from './world-bank-countries.json' with {type:'json'};
 import {extraPairs} from './translations-extra.js';
 // Audited, local translations. No paid API and no automatic rewriting of user input.
 const pairs = `
+Cena NVIDIA|NVIDIA price
+Pokaż linię ceny NVIDIA|Show NVIDIA price line
+Kolor linii NVIDIA|NVIDIA line colour
+Miejsce na wykres ceny NVIDIA|Space for NVIDIA price chart
+Zakres cen NVIDIA|NVIDIA price range
+Rosnący · widoczne notowania|Expanding · visible quotes
+Stały · cały wybrany okres|Fixed · entire selected period
+Data sesji przy cenie|Trading date beside price
+Grubość, styl linii, podziałkę i etykiety zmienisz w tych samych sekcjach poniżej co na innych wykresach. Etykieta ceny pokazuje zamknięcie ostatniej sesji. Datę notowania można włączyć osobno.|Use the shared sections below to change line weight, style, axes and labels. The price label shows the latest trading close. Its trading date can be toggled separately.
+
 Język menu|Menu language
 Język rolki|Reel language
 Ustawienia języka|Language settings

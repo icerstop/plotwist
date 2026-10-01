@@ -93,7 +93,7 @@ export function drawLineLabels(ctx,config,items,geometry,{top,bottom,x,fg,backgr
  // Explicit switches always win, even with duplicate flags or a missing image.
  const visible=items.flatMap(item=>{
   const badge=geometry.icons?(item.badge||seriesBadge(item.series)):null,logo=badge&&getReelLogo(badge.path);
-  const name=geometry.names?copyText(ctx,config,'series.name',item.series.name,{element:'content',label:'Nazwa serii',multiline:false}):'',value=geometry.values?item.value:'',date=geometry.dates?item.date:'';
+  const name=geometry.names?copyText(ctx,config,'series.name',item.series.name,{element:config._textElement||'content',label:'Nazwa serii',multiline:false}):'',value=geometry.values?item.value:'',date=geometry.dates?item.date:'';
   return logo||name||value||date?[{...item,badge,logo,name,value,date}]:[];
  }),layout=arrangeLineLabels(visible,geometry,{top,bottom,x});
  ctx.save();ctx.shadowBlur=0;ctx.shadowOffsetX=ctx.shadowOffsetY=0;ctx.setLineDash([]);ctx.lineWidth=2;ctx.textAlign='left';ctx.textBaseline='middle';

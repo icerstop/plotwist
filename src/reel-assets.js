@@ -13,7 +13,7 @@ export const getReelLogo=path=>images.get(path)?.image;
 export const isReelLogoReady=path=>!!getReelLogo(path);
 export function reelAssetPaths(config){
  const chart=config.visuals?.design?.chart;
- return [...new Set([...(config.releases?.logos?config.releases.publishers.map(id=>`/logos/ai/${id}.svg`):[]),...(config.series||[]).map(s=>s.logo),...(chart?.endLabels&&chart.endLabelIcons!==false?(config.series||[]).map(s=>seriesBadge(s)?.path):[]),...(config.ai?.groupBy==='brand'&&(config.ai.showBrandLogos!==false||config.ai.mode==='records'&&chart?.endLabels&&chart.endLabelIcons!==false)?config.ai.brands.map(b=>b.logo):[])].filter(Boolean))];
+ return [...new Set([...(config.releases?.stock?[config.releases.stock.logo]:[]),...(config.releases?.logos?config.releases.publishers.map(id=>`/logos/ai/${id}.svg`):[]),...(config.series||[]).map(s=>s.logo),...(chart?.endLabels&&chart.endLabelIcons!==false?(config.series||[]).map(s=>seriesBadge(s)?.path):[]),...(config.ai?.groupBy==='brand'&&(config.ai.showBrandLogos!==false||config.ai.mode==='records'&&chart?.endLabels&&chart.endLabelIcons!==false)?config.ai.brands.map(b=>b.logo):[])].filter(Boolean))];
 }
 export async function preloadReelAssets(config){
  await Promise.all([...configFontIds(config).map(preloadReelFont),...reelAssetPaths(config).map(loadImage)]);

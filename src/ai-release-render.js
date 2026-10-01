@@ -1,3 +1,5 @@
+import {releaseStockPulseLayout} from './release-stock.js';
+import {drawReleaseStock} from './release-stock-render.js';
 import {drawReleaseDetail} from './ai-release-detail.js';
 import {normalizeReleaseAppearance,releasePulseLayout,releaseWindow} from './release-appearance.js';
 import {drawReleaseVariant} from './ai-release-variant-render.js';
@@ -47,18 +49,22 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  // Fitting already includes both the user's size and the compact-frame scale.
  const titleHeight=text(title,76,layout.titleY,928,size/textSize(config,'title',1),'title',fg,3,true);
  text(publishers.map(p=>p.name).join(' × '),76,layout.compact?layout.titleY+titleHeight+20:548,928,38,'subtitle',muted,2,true);headerEnd();
- const stop=beginReelSection(ctx,config,'content',1080,height),h=end-start,y=f=>start+h*f;
- const summaryEnd=section('summary',{x:76,y:start,w:928,h:h*.18});
+ const stop=beginReelSection(ctx,config,'content',1080,height);let h=end-start,y=f=>start+h*f;
+ const stockVisible=r.stock&&!config.visuals?.hidden?.stock,summaryHeight=config.visuals?.hidden?.summary?0:stockVisible?Math.min(100,h*.14):h*.18,sy=f=>stockVisible?start+summaryHeight*f/.18:y(f);
+ const summaryEnd=section('summary',{x:76,y:start,w:928,h:summaryHeight});
  const countLabel=r.count==='launches'?t('premiery producentów','publisher launches'):t('wersje modeli','model versions');
- text(String(frame.monthTotal),76,y(.058),400,72,'values',fg,1,false,{id:'release.monthCount',label:'Licznik w miesiącu',dynamic:true});
- text(monthLabel(frame.date),76,y(.105),470,28,'labels',muted,1,false,{id:'release.month',label:'Aktualny miesiąc',dynamic:true});
- text(`${frame.total}`,620,y(.058),380,72,'values',fg,1,false,{id:'release.total',label:'Licznik łączny',dynamic:true});
- text(t('łącznie w wybranym okresie','total in selected period'),620,y(.105),390,26,'labels',muted,1,false,{id:'release.totalLabel',label:'Opis licznika łącznego'});
- text(`${countLabel} · ${r.rows.some(row=>row.category==='restricted')?t('także dostęp partnerski','includes partner access'):t('w katalogu','in catalogue')}`,76,y(.16),930,26,'labels',muted,1,false,{id:'release.countLabel',label:'Opis sposobu liczenia'});
+ text(String(frame.monthTotal),76,sy(.058),400,72,'values',fg,1,false,{id:'release.monthCount',label:'Licznik w miesiącu',dynamic:true});
+ text(monthLabel(frame.date),76,sy(.105),470,28,'labels',muted,1,false,{id:'release.month',label:'Aktualny miesiąc',dynamic:true});
+ text(`${frame.total}`,620,sy(.058),380,72,'values',fg,1,false,{id:'release.total',label:'Licznik łączny',dynamic:true});
+ text(t('łącznie w wybranym okresie','total in selected period'),620,sy(.105),390,26,'labels',muted,1,false,{id:'release.totalLabel',label:'Opis licznika łącznego'});
+ text(`${countLabel} · ${r.rows.some(row=>row.category==='restricted')?t('także dostęp partnerski','includes partner access'):t('w katalogu','in catalogue')}`,76,sy(.16),930,26,'labels',muted,1,false,{id:'release.countLabel',label:'Opis sposobu liczenia'});
  summaryEnd();
+ const stockHeight=stockVisible?h*appearance.stockHeight/100:0;
+ const stockPlot=stockVisible?drawReleaseStock({ctx,config,frame,style,appearance,theme,top:start+summaryHeight+30,bottom:start+summaryHeight+stockHeight-32,text,section,dateLabel,t}):null;
+ const bodyStart=stockVisible?start+summaryHeight+stockHeight+16:start;h=end-bodyStart;y=f=>stockVisible?bodyStart+h*(f-.2)/.8:bodyStart+h*f;
  const detail=(top,bottom,hero)=>drawReleaseDetail({ctx,config,s:appearance,theme,frame,publishers,text,section,logo,dateLabel,t,eventAge,textScale},top,bottom,hero);
  if(!drawReleaseVariant({ctx,r,frame,publishers,theme,style,y,h,text,section,line,dateLabel,t,eventAge,detail,locale})){
- const crowded=publishers.length>2,pulse=releasePulseLayout(start,end,appearance,config.visuals?.hidden),vt=r.mode==='pulse'?pulse.top:y(crowded?.19:.21),vb=r.mode==='pulse'?pulse.bottom:y(crowded?.60:.56),vh=vb-vt;
+ const crowded=publishers.length>2,pulse=stockVisible?releaseStockPulseLayout(bodyStart,end,appearance,config.visuals?.hidden):releasePulseLayout(bodyStart,end,appearance,config.visuals?.hidden),vt=r.mode==='pulse'?pulse.top:y(crowded?.19:.21),vb=r.mode==='pulse'?pulse.bottom:y(crowded?.60:.56),vh=vb-vt;
  const plotEnd=section('plot',{x:76,y:vt-30,w:928,h:vh+75});
  if(r.mode==='calendar'){
   const month=frame.date.slice(0,7),first=releaseDay(`${month}-01`),d=new Date(`${month}-01T00:00:00Z`),offset=(d.getUTCDay()+6)%7;d.setUTCMonth(d.getUTCMonth()+1);const days=releaseDay(d.toISOString().slice(0,10))-first;
@@ -74,13 +80,13 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
   }
   publishers.forEach((p,i)=>{const lx=85+(i%4)*232,ly=vb+18+Math.floor(i/4)*23;dot(lx,ly,p.color,5);text(p.name,lx+15,ly+7,210,23,'labels',muted,1,false,{id:'release.publisher',entity:p.id,label:'Nazwa producenta'});});
  }else{
-  const left=225,right=left+775*appearance.timelineWidth/100,window=releaseWindow(releaseDay(r.start),releaseDay(r.end),frame.current,appearance.windowDays),a=window.first,b=window.last,x=day=>left+(day-a)/(b-a||1)*(right-left),groups=groupReleases(frame.visible).filter(g=>releaseDay(g.date)>=a);
+  const left=225,right=stockPlot?.right??left+775*appearance.timelineWidth/100,window=releaseWindow(releaseDay(r.start),releaseDay(r.end),frame.current,appearance.windowDays),a=window.first,b=window.last,x=day=>left+(day-a)/(b-a||1)*(right-left),groups=groupReleases(frame.visible).filter(g=>releaseDay(g.date)>=a);
   publishers.forEach((p,i)=>{
-   const yy=vt+vh*.83*(i+.5)/publishers.length,icon=Math.max(10,Math.min(36,vh*.83/publishers.length-3));
-   if(appearance.laneLogos)logo(p,76,yy-icon/2,icon);if(appearance.laneNames)text(p.name,appearance.laneLogos?76+icon+7:76,yy+7,appearance.laneLogos?138-icon:145,25,'labels',muted,1,false,{id:'release.publisher',entity:p.id,label:'Nazwa producenta'});
-   line(left,yy,right,yy);ctx.save();lineAppearance(ctx,config,p.color);line(left,yy,x(frame.current),yy,p.color,style.lineWidth);ctx.setLineDash([]);ctx.shadowBlur=0;
+   const pitch=vh*.83/publishers.length,yy=vt+pitch*(i+.5),icon=Math.max(5,Math.min(36,pitch-3)),laneFont=stockVisible?Math.min(25,pitch*.8/textScale):25;
+   if(appearance.laneLogos)logo(p,76,yy-icon/2,icon);if(appearance.laneNames)text(p.name,appearance.laneLogos?76+icon+7:76,yy+laneFont*textScale*.3,appearance.laneLogos?138-icon:145,laneFont,'labels',muted,1,false,{id:'release.publisher',entity:p.id,label:'Nazwa producenta'});
+   line(left,yy,right,yy);ctx.save();lineAppearance(ctx,config,p.color);line(left,yy,x(frame.current),yy,p.color,stockVisible?Math.min(style.lineWidth,pitch*.3):style.lineWidth);ctx.setLineDash([]);ctx.shadowBlur=0;
    for(const group of groups.filter(g=>g.publisher===p.id)){
-    const px=x(releaseDay(group.date));if(appearance.pointSize>0)dot(px,yy,p.color,appearance.pointSize+Math.min(3,group.models.length));
+    const px=x(releaseDay(group.date));if(appearance.pointSize>0)dot(px,yy,p.color,Math.min(appearance.pointSize+Math.min(3,group.models.length),stockVisible?pitch*.4:Infinity));
     const age=eventAge(group.date),life=ending.pulseDuration;if(appearance.pulses&&age>=0&&age<life){const phase=age/life;ctx.save();ctx.globalAlpha*=(1-phase)**2;ctx.strokeStyle=p.color;ctx.lineWidth=3;ctx.beginPath();ctx.arc(px,yy,10+30*phase,0,Math.PI*2);ctx.stroke();ctx.restore();}
    }ctx.restore();
   });
@@ -101,6 +107,6 @@ export function drawReleaseReel(canvas,initial,progress,timeSeconds){
  }stop();
  drawVisualOverlays(ctx,1080,height,config,timeSeconds);
  ctx.textAlign='right';text(dateLabel(frame.date),1000,height-175,924,44,'date',fg,1,true);ctx.textAlign='left';
- text(t('Źródła: komunikaty producentów · katalog do ','Sources: publisher notices · catalogue through ')+r.verifiedAt,80,height-132,920,24,'source',muted,2,true);
+ text(t('Źródła: komunikaty producentów · katalog do ','Sources: publisher notices · catalogue through ')+r.verifiedAt+(r.stock?' · NVIDIA: Yahoo Finance · USD':''),80,height-132,920,24,'source',muted,2,true);
  drawSignature(ctx,1080,height,config.fontId,dark,config);drawReelOverlays(ctx,1080,height,config);
 }

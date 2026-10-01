@@ -33,7 +33,7 @@ export function ChartEditor({config}){
    <Select label="Siatka wykresu" value={s.grid} options={[["horizontal","Pozioma"],["both","Pozioma i pionowa"],["none","Bez siatki"]]} onChange={grid=>patch({grid})}/>
    {s.grid!=='none'&&<><Select label="Styl siatki" value={s.gridStyle} options={[["solid","Ciągła"],["dashed","Kreskowana"],["dotted","Kropkowana"]]} onChange={gridStyle=>patch({gridStyle})}/>{range('gridOpacity','Widoczność siatki',0,100,'%')}{range('gridWidth','Grubość siatki',1,4,' px')}</>}
    {range('ticks','Liczba poziomów osi Y',3,9)}
-   {!config.ai&&mode!=='bar'&&range('xTicks','Liczba opisów osi X',2,8)}
+   {!config.ai&&!config.releases&&mode!=='bar'&&range('xTicks','Liczba opisów osi X',2,8)}
    <p className="visual-hint">W małym wykresie liczba opisów osi Y może być mniejsza, aby zachować czytelność.</p>
    <label className="visual-check"><input type="checkbox" checked={s.axisLabels} onChange={e=>patch({axisLabels:e.target.checked})}/>Pokaż opisy osi</label>
    <label className="visual-check"><input type="checkbox" checked={s.plotPanel} onChange={e=>patch({plotPanel:e.target.checked})}/>Kontrastowe tło pola wykresu</label>
@@ -54,12 +54,12 @@ export function ChartEditor({config}){
     <label className="visual-check"><input type="checkbox" checked={s.endLabelIcons} onChange={e=>patch({endLabelIcons:e.target.checked})}/>Flagi i logotypy</label>
     <label className="visual-check"><input type="checkbox" checked={s.endLabelNames} onChange={e=>patch({endLabelNames:e.target.checked})}/>Nazwy serii</label>
     <label className="visual-check"><input type="checkbox" checked={s.endLabelValues} onChange={e=>patch({endLabelValues:e.target.checked})}/>Wartości liczbowe</label>
-    {!config.ai&&<label className="visual-check"><input type="checkbox" checked={s.endLabelDates} onChange={e=>patch({endLabelDates:e.target.checked})}/>Data ostatniego pomiaru zakończonej serii</label>}
+    {!config.ai&&<label className="visual-check"><input type="checkbox" checked={s.endLabelDates} onChange={e=>patch({endLabelDates:e.target.checked})}/>{config.releases?'Data sesji przy cenie':'Data ostatniego pomiaru zakończonej serii'}</label>}
     {range('endLabelSize','Rozmiar etykiet przy liniach',75,140,'%')}
-    {!config.ai&&s.endLabelValues&&<Select label="Wartość na etykiecie" value={s.endLabelValue} options={[["interpolated","W punkcie animacji · interpolowana ≈"],["observed","Ostatni pomiar ze źródła"]]} onChange={endLabelValue=>patch({endLabelValue})}/>}
+    {!config.ai&&!config.releases&&s.endLabelValues&&<Select label="Wartość na etykiecie" value={s.endLabelValue} options={[["interpolated","W punkcie animacji · interpolowana ≈"],["observed","Ostatni pomiar ze źródła"]]} onChange={endLabelValue=>patch({endLabelValue})}/>}
     <p className="visual-hint">Każdy element włączasz osobno. Nazwy nie pojawią się automatycznie przy braku logo ani powtarzających się flagach. Wariant z samą ikoną pomija serie bez dostępnej flagi lub logo.</p>
     <p className="visual-hint">Etykiety rozsuwają się, aby nie nachodziły na siebie. Wyłączenie wszystkich elementów usuwa etykiety i oddaje miejsce wykresowi.</p>
-    {!config.ai&&s.endLabelValues&&<p className="visual-hint">≈ oznacza wartość pomiędzy pomiarami. Luki nie są uzupełniane. Datę ostatniej wartości zakończonej serii możesz włączyć osobno.</p>}
+    {!config.ai&&!config.releases&&s.endLabelValues&&<p className="visual-hint">≈ oznacza wartość pomiędzy pomiarami. Luki nie są uzupełniane. Datę ostatniej wartości zakończonej serii możesz włączyć osobno.</p>}
    </>}
   </details>}
   <p className="visual-hint">Wymiary wykresu zmienisz w zakładce Układ.</p></>}

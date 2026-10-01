@@ -7,6 +7,13 @@ export default function ReleaseAppearanceControls({config}){
  const check=(key,label)=><label className="visual-check"><input type="checkbox" checked={s[key]} onChange={e=>patch({[key]:e.target.checked})}/>{label}</label>;
  const layer=(id,label)=><label className="visual-check"><input type="checkbox" checked={!v.visuals.hidden[id]} onChange={e=>v.hide(id,!e.target.checked)}/>{label}</label>;
  return <>
+ {config.releases.stock&&<details className="appearance-group" open><summary>Cena NVIDIA</summary>
+  {layer('stock','Pokaż linię ceny NVIDIA')}
+  <Color label="Kolor linii NVIDIA" value={s.stockColor} onChange={stockColor=>patch({stockColor})}/>
+  {range('stockHeight','Miejsce na wykres ceny NVIDIA',20,40)}
+  <label className="visual-field">Zakres cen NVIDIA<select aria-label="Zakres cen NVIDIA" value={s.stockScale} onChange={e=>patch({stockScale:e.target.value})}><option value="growing">Rosnący · widoczne notowania</option><option value="fixed">Stały · cały wybrany okres</option></select></label>
+  <p className="visual-hint">Grubość, styl linii, podziałkę i etykiety zmienisz w tych samych sekcjach poniżej co na innych wykresach. Etykieta ceny pokazuje zamknięcie ostatniej sesji. Datę notowania można włączyć osobno.</p>
+ </details>}
  {config.releases.mode==='pulse'&&<details className="appearance-group" open><summary>Rozmieszczenie osi czasu</summary>
   {range('timelineHeight','Rozstaw torów (wysokość osi)',50,240)}{range('timelineWidth','Szerokość osi czasu',55,100)}
   <label className="visual-field">Okno czasu<select aria-label="Okno czasu" value={s.windowDays} onChange={e=>patch({windowDays:Number(e.target.value)})}><option value={0}>Cały wybrany okres</option>{[30,90,180,365,730].map(n=><option key={n} value={n}>{n} dni · podążaj za premierami</option>)}</select></label>
