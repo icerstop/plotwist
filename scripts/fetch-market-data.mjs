@@ -32,7 +32,20 @@ for(const item of marketUniverse.filter(s=>!only||s.symbol===only)){
   await atomic(`${item.symbol}.json`,data);items.push({...item,exchange:data.exchange,firstDate:rows[0][0],lastDate:rows.at(-1)[0],observations:rows.length,splitCount:splits.length});console.log(`${item.symbol}: ${rows.length} closes, ${rows[0][0]} – ${rows.at(-1)[0]}`);
  }catch(e){failed.push({symbol:item.symbol,error:e.message});console.error(`${item.symbol}: ${e.message}`);}
 }
-if(only){console.log('Single-symbol refresh done; full refresh regenerates manifest.');process.exit(failed.length?1:0);}
+if(only){
+ if(items.length){
+  const manifest=JSON.parse(await readFile(`${dir}/manifest.json`,'utf8'));
+  const updated=new Map(items.map(item=>[item.symbol,{...item,retrievedAt}]));
+  manifest.stocks=manifest.stocks.map(item=>updated.get(item.symbol)||item);
+  for(const item of updated.values())if(!manifest.stocks.some(s=>s.symbol===item.symbol))manifest.stocks.push(item);
+  manifest.failed=(manifest.failed||[]).filter(item=>!updated.has(item.symbol));
+  manifest.totalObservations=manifest.stocks.reduce((sum,item)=>sum+item.observations,0);
+  // The full-catalogue/FX snapshot date must not imply unrelated data was refreshed.
+  manifest.lastPartialRefreshAt=retrievedAt;
+  await atomic('manifest.json',manifest);
+ }
+ console.log('Single-symbol refresh done; matching manifest entries updated.');process.exit(failed.length?1:0);
+}
 // One table request supplies all seven currencies; no need for seven separate calls.
 const reuseFx=process.argv.includes('--reuse-fx')?JSON.parse(await readFile(`${dir}/fx-pln.json`,'utf8')):null;
 const chunks=[];if(!reuseFx)for(let t=Date.parse('2002-01-02');t<Date.parse(today);t+=90*day){chunks.push([iso(t),iso(Math.min(t+89*day,Date.parse(today)-day))]);}
