@@ -14,6 +14,7 @@ export function normalizeCopyHidden(raw){
 export function updateCopyHidden(raw,key,hidden){const next={...raw};delete next[key];if(hidden)next[key]=true;return normalizeCopyHidden(next);}
 export function copyScope(config){
  if(config._copyScope)return config._copyScope;
+ if(config.graphic)return JSON.stringify(['graphic','fertility-conscription',config.graphic.year]);
  if(config.releases)return JSON.stringify(['ai-releases']);
  return JSON.stringify(config.ai?['ai',config.ai.benchmark?.id]:['series',config.source,config.unit,config.isCoffee,config.series?.map(s=>s.id||s.key||s.symbol||s.countryCode||s.name).sort()]);
 }

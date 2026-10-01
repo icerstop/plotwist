@@ -3,6 +3,11 @@ import wbCountries from './world-bank-countries.json' with {type:'json'};
 import {extraPairs} from './translations-extra.js';
 // Audited, local translations. No paid API and no automatic rewriting of user input.
 const pairs = `
+Grafiki|Graphics
+Grafika|Image
+Wygląd grafiki|Image appearance
+Porównania i infografiki|Comparisons and infographics
+Wniosek / zastrzeżenie|Conclusion / caveat
 Polska gromadzi złoto|Poland builds its gold reserves
 tony|tonnes
 tony / miesiąc|tonnes / month

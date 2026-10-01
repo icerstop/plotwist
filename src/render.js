@@ -1,3 +1,5 @@
+import {drawGraphic} from './graphic-render.js';
+import {staticFrameConfig} from './static-frame.js';
 import {releaseSoundPlan} from './reel-audio.js';
 import {copyText,resetReelCopy} from './reel-copy.js';
 import {drawReelOverlays} from './overlay-render.js';
@@ -16,12 +18,14 @@ import {drawSeriesContent} from './series-render.js';
 import {themeOf,textSize,textColor,setReelText,reelTextFont,textWeight,beginReelSection,seriesPlotLayout,designOf} from './reel-design.js';
 import {drawTextBlock as wrap,paintText,textStyleOf} from './reel-text.js';
 export function drawReel(canvas,config,progress=1,timeSeconds=progress*(config.duration||12)){
+ if(config.outputMode==='image')config=staticFrameConfig(config);
  if(renderMysteryFrame(canvas,config,progress,timeSeconds,drawReelFrame))return;
  if(renderTypingFrame(canvas,config,progress,timeSeconds,drawReelFrame))return;
  drawReelFrame(canvas,config,progress,timeSeconds);
 }
 function drawReelFrame(canvas,config,progress,timeSeconds){
  resetElements(canvas);resetReelCopy(canvas);
+ if(config.graphic){drawGraphic(canvas,config);return;}
  if(config.releases){drawReleaseReel(canvas,config,progress,timeSeconds);return;}
  if(config.ai){drawAiReel(canvas,config,progress,timeSeconds);return;}
  const motionFrame=reelMotionFrame(config,progress,timeSeconds);config=motionFrame.config;progress=motionFrame.progress;

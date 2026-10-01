@@ -88,7 +88,7 @@ export function reelTextFont(config,role,size,fallback=400,family=reelFont(confi
 export function sectionTransform(config,section,width,height){
  const ai=!!(config.ai||config.releases),short=height<1400,plot=['line','area','bar'].includes(config.chart||'line');
  const aiLayout=ai?aiFrameLayout(config.format):null;
- const start=ai?aiLayout.start:short?height*(plot ? .24 : .46):700,end=ai?aiLayout.end:height-(short?205:220);
+ const start=config.graphic?(height===1080?270:height===1350?315:395):ai?aiLayout.start:short?height*(plot ? .24 : .46):700,end=ai?aiLayout.end:height-(short?205:220);
  const base=section==='header'?{x:50,y:50,w:980,h:start-75}:{x:50,y:start,w:980,h:end-start};
  const d=designOf(config),p=d.positions?.[section]||{x:50,y:0,scale:100};
  let scale=1,targetY=base.y;

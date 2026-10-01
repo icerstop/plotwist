@@ -1,0 +1,527 @@
+{
+  "id": "fertility-conscription-eu-2024",
+  "version": 1,
+  "year": 2024,
+  "universe": "EU27",
+  "indicator": "SP.DYN.TFRT.IN",
+  "unit": {
+    "pl": "dzieci na kobietę",
+    "en": "births per woman"
+  },
+  "retrievedAt": "2026-10-01T20:33:09.625400+00:00",
+  "lastUpdated": "2026-07-13",
+  "rows": [
+    {
+      "id": "AUT",
+      "countryCode": "AUT",
+      "name": {
+        "pl": "Austria",
+        "en": "Austria"
+      },
+      "value": 1.31,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    },
+    {
+      "id": "BEL",
+      "countryCode": "BEL",
+      "name": {
+        "pl": "Belgia",
+        "en": "Belgium"
+      },
+      "value": 1.44,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "BGR",
+      "countryCode": "BGR",
+      "name": {
+        "pl": "Bułgaria",
+        "en": "Bulgaria"
+      },
+      "value": 1.72,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "HRV",
+      "countryCode": "HRV",
+      "name": {
+        "pl": "Chorwacja",
+        "en": "Croatia"
+      },
+      "value": 1.46,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "CYP",
+      "countryCode": "CYP",
+      "name": {
+        "pl": "Cypr",
+        "en": "Cyprus"
+      },
+      "value": 1.38,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    },
+    {
+      "id": "CZE",
+      "countryCode": "CZE",
+      "name": {
+        "pl": "Czechy",
+        "en": "Czechia"
+      },
+      "value": 1.36,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "DNK",
+      "countryCode": "DNK",
+      "name": {
+        "pl": "Dania",
+        "en": "Denmark"
+      },
+      "value": 1.47,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    },
+    {
+      "id": "EST",
+      "countryCode": "EST",
+      "name": {
+        "pl": "Estonia",
+        "en": "Estonia"
+      },
+      "value": 1.18,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    },
+    {
+      "id": "FIN",
+      "countryCode": "FIN",
+      "name": {
+        "pl": "Finlandia",
+        "en": "Finland"
+      },
+      "value": 1.25,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    },
+    {
+      "id": "FRA",
+      "countryCode": "FRA",
+      "name": {
+        "pl": "Francja",
+        "en": "France"
+      },
+      "value": 1.61,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "DEU",
+      "countryCode": "DEU",
+      "name": {
+        "pl": "Niemcy",
+        "en": "Germany"
+      },
+      "value": 1.36,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "GRC",
+      "countryCode": "GRC",
+      "name": {
+        "pl": "Grecja",
+        "en": "Greece"
+      },
+      "value": 1.24,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    },
+    {
+      "id": "HUN",
+      "countryCode": "HUN",
+      "name": {
+        "pl": "Węgry",
+        "en": "Hungary"
+      },
+      "value": 1.41,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "IRL",
+      "countryCode": "IRL",
+      "name": {
+        "pl": "Irlandia",
+        "en": "Ireland"
+      },
+      "value": 1.47,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "ITA",
+      "countryCode": "ITA",
+      "name": {
+        "pl": "Włochy",
+        "en": "Italy"
+      },
+      "value": 1.18,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "LVA",
+      "countryCode": "LVA",
+      "name": {
+        "pl": "Łotwa",
+        "en": "Latvia"
+      },
+      "value": 1.24,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    },
+    {
+      "id": "LTU",
+      "countryCode": "LTU",
+      "name": {
+        "pl": "Litwa",
+        "en": "Lithuania"
+      },
+      "value": 1.11,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    },
+    {
+      "id": "LUX",
+      "countryCode": "LUX",
+      "name": {
+        "pl": "Luksemburg",
+        "en": "Luxembourg"
+      },
+      "value": 1.25,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "MLT",
+      "countryCode": "MLT",
+      "name": {
+        "pl": "Malta",
+        "en": "Malta"
+      },
+      "value": 1.01,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "NLD",
+      "countryCode": "NLD",
+      "name": {
+        "pl": "Holandia",
+        "en": "Netherlands"
+      },
+      "value": 1.43,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "POL",
+      "countryCode": "POL",
+      "name": {
+        "pl": "Polska",
+        "en": "Poland"
+      },
+      "value": 1.14,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "PRT",
+      "countryCode": "PRT",
+      "name": {
+        "pl": "Portugalia",
+        "en": "Portugal"
+      },
+      "value": 1.41,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "ROU",
+      "countryCode": "ROU",
+      "name": {
+        "pl": "Rumunia",
+        "en": "Romania"
+      },
+      "value": 1.39,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "SVK",
+      "countryCode": "SVK",
+      "name": {
+        "pl": "Słowacja",
+        "en": "Slovak Republic"
+      },
+      "value": 1.46,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "SVN",
+      "countryCode": "SVN",
+      "name": {
+        "pl": "Słowenia",
+        "en": "Slovenia"
+      },
+      "value": 1.52,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "ESP",
+      "countryCode": "ESP",
+      "name": {
+        "pl": "Hiszpania",
+        "en": "Spain"
+      },
+      "value": 1.1,
+      "year": 2024,
+      "group": "inactive",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Brak czynnego poboru w czasie pokoju; obowiązek może być zawieszony.",
+        "en": "No active peacetime conscription; the legal duty may be suspended."
+      }
+    },
+    {
+      "id": "SWE",
+      "countryCode": "SWE",
+      "name": {
+        "pl": "Szwecja",
+        "en": "Sweden"
+      },
+      "value": 1.43,
+      "year": 2024,
+      "group": "active",
+      "statusYear": 2024,
+      "statusSource": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "fertilitySource": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "statusNote": {
+        "pl": "Pobór w czasie pokoju, także selektywny; nie oznacza służby każdej osoby.",
+        "en": "Peacetime conscription, including selective systems; not everyone serves."
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "wdi",
+      "name": "World Bank · World Development Indicators",
+      "url": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.TFRT.IN?date=2024&format=json&source=2&per_page=1000",
+      "metadataUrl": "https://databank.worldbank.org/metadataglossary/world-development-indicators/series/SP.DYN.TFRT.IN",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "eprs",
+      "name": "European Parliamentary Research Service · Table 1",
+      "url": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+      "publishedAt": "2025-03-19",
+      "evidence": "EU27 classification extracted from the indexed official briefing table; historical 2024 cross-section. Latvia compulsory from January 2024. Croatia not yet reintroduced."
+    },
+    {
+      "id": "latvia",
+      "name": "Latvian Ministry of Defence",
+      "url": "https://www.mod.gov.lv/en/news/saeima-adopts-state-defence-service-law",
+      "evidence": "Compulsory service effective 1 January 2024."
+    }
+  ],
+  "methodology": {
+    "pl": "Przekrój UE-27 za 2024 r. Pobór w czasie pokoju, nie sam obowiązek prawny. Średnia i mediana liczone z krajów, każdy kraj ma równą wagę. Porównanie nie identyfikuje wpływu przyczynowego służby na dzietność. Nie uwzględnia m.in. dochodu, polityki rodzinnej, struktury wieku, migracji ani opóźnień skutków.",
+    "en": "EU27 cross-section for 2024. Active peacetime conscription, not the legal duty alone. Mean and median give equal weight to each country. This comparison does not identify a causal effect on fertility. Income, family policy, age structure, migration and delayed effects are not controlled."
+  }
+}

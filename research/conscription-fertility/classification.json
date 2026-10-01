@@ -1,0 +1,38 @@
+{
+  "referenceYear": 2024,
+  "source": "https://www.europarl.europa.eu/thinktank/en/academic/EPRS_BRI%282025%29769541",
+  "publishedAt": "2025-03-19",
+  "reviewedAt": "2026-10-01",
+  "active": [
+    "AUT",
+    "CYP",
+    "DNK",
+    "EST",
+    "FIN",
+    "GRC",
+    "LTU",
+    "LVA",
+    "SWE"
+  ],
+  "inactive": [
+    "BEL",
+    "BGR",
+    "CZE",
+    "DEU",
+    "ESP",
+    "FRA",
+    "HRV",
+    "HUN",
+    "IRL",
+    "ITA",
+    "LUX",
+    "MLT",
+    "NLD",
+    "POL",
+    "PRT",
+    "ROU",
+    "SVK",
+    "SVN"
+  ],
+  "definition": "Peacetime conscription in operation, including selective systems. Frozen or suspended conscription counts as inactive. No inference for other years."
+}

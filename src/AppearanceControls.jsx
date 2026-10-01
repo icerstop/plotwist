@@ -1,3 +1,4 @@
+import GraphicAppearanceControls from './GraphicAppearanceControls.jsx';
 import {releaseStockLabels} from './release-appearance.js';
 import ReleaseAppearanceControls from './ReleaseAppearanceControls.jsx';
 import {reelCapabilities} from './reel-capabilities.js';
@@ -13,6 +14,7 @@ export function ChartEditor({config}){
  const patch=p=>{const labels=config.releases?.stock&&Object.keys(p).every(key=>key.startsWith('endLabel'));v.design({chart:labels?{...base,release:{...base.release,stockLabels:{...base.release.stockLabels,...p}}}:{...base,...p}});},range=(key,label,min,max,suffix='')=><Range label={label} value={s[key]} min={min} max={max} suffix={suffix} onChange={n=>patch({[key]:n})}/>;
  return <div className="visual-editor chart-editor"><fieldset disabled={!v.ready||v.busy}>
   <p className="visual-hint">Styl dopasowuje się do wybranego sposobu prezentacji danych. Typ wykresu wybierzesz w panelu danych.</p>
+  {config.graphic&&<GraphicAppearanceControls config={config}/>}
   {config.releases&&<ReleaseAppearanceControls config={config}/>}
   {cap.scaleCaption&&<label className="visual-check"><input type="checkbox" checked={s.scaleCaption} onChange={e=>patch({scaleCaption:e.target.checked})}/>Pokaż podpis zakresu i skali</label>}
   <div className="palette-grid" role="group" aria-label="Paleta wykresu">{chartPalettes.map(p=><button type="button" key={p.id} aria-pressed={s.palette===p.id} className={s.palette===p.id?'selected':''} onClick={()=>patch({palette:p.id})}><span aria-hidden="true">{(p.colors.length?(themeOf(config).dark?p.dark:p.colors):themeOf(config).colors).map((c,i)=><i key={i} style={{background:c}}/>)}</span><b>{p.name}</b></button>)}</div>

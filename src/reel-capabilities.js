@@ -8,6 +8,7 @@ export const reelElementDefinitions={
  distribution:{name:'Słupki miesięczne',textRole:'labels',textRoles:['labels']},detail:{name:'Karta ostatniego zdarzenia',textRole:'labels',textRoles:['labels']}
 };
 export function reelCapabilities(config={}){
+ if(config.graphic)return {elements:['title','subtitle','content','metric','source','signature',...(config.visuals?.logo?.type&&config.visuals.logo.type!=='none'?['mark']:[])].map(id=>({id,...reelElementDefinitions[id],...(id==='metric'?{name:'Wniosek / zastrzeżenie'}:{})})),motionElements:[],plot:false,line:false,bars:config.graphic.layout!=='distribution',cards:false,scaleCaption:false,modelLabels:false,legend:false,legendOptions:false,endLabels:false,plotDimensions:false,mode:'comparison'};
  const release=!!config.releases,mode=release?config.releases.mode:config.ai?.mode||config.chart||'line';
  const stock=!!config.releases?.stock;
  const plot=stock||!release&&['line','area','bar','records','scatter'].includes(mode);
