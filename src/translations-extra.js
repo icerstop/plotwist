@@ -41,7 +41,7 @@ Warstwa własnego elementu|Custom element layer
 Nad tekstem i wykresem|Above text and chart
 Przesuń niżej|Move backward
 Przesuń wyżej|Move forward
-Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Boczne uchwyty zmieniają szerokość tekstu bez powiększania liter. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.|Double-click or press Enter to edit text. Drag to move. The circle rotates; the corner scales. Side handles change text width without enlarging the letters. Arrows: 1 px, Shift: 10 px. Delete: remove. Ctrl/Cmd+Z: undo. Esc: deselect.
+Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Boczne uchwyty zmieniają szerokość, a górny i dolny — wysokość. W polach tekstowych boki zmieniają zawijanie bez powiększania liter; wysokość dopasowuje się do tekstu. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.|Double-click or press Enter to edit text. Drag to move. The circle rotates; the corner scales. Side handles change width; top and bottom handles change height. Text boxes reflow without enlarging letters and adapt their height to the text. Arrows: 1 px, Shift: 10 px. Delete: remove. Ctrl/Cmd+Z: undo. Esc: deselect.
 
 Połącz różne wskaźniki|Combine different metrics
 zakres 0–100|0–100 range

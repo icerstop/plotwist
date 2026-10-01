@@ -13,8 +13,8 @@ export function textResizeTranslation(region,nextRect,original,side,w,h,overlay=
  const before=pointAt(m,oldAnchor.x,oldAnchor.y),after=pointAt(m,nextAnchor.x,nextAnchor.y);
  let cx=nextRect.x+nextRect.w/2-r.x-r.w/2,cy=nextRect.y+nextRect.h/2-r.y-r.h/2;
  if(!overlay){
-  const angle=(original.rotation||0)*Math.PI/180,scale=(original.scale||100)/100,c=Math.cos(angle)/scale,s=Math.sin(angle)/scale;
-  const pa=m.a*c-m.c*s,pb=m.b*c-m.d*s,pc=m.a*s+m.c*c,pd=m.b*s+m.d*c;
+  const angle=(original.rotation||0)*Math.PI/180,scale=(original.scale||100)/100,c=Math.cos(angle)/scale,s=Math.sin(angle)/scale,sx=(original.widthScale??100)/100,sy=(original.heightScale??100)/100;
+  const pa=m.a*c/sx-m.c*s/sy,pb=m.b*c/sx-m.d*s/sy,pc=m.a*s/sx+m.c*c/sy,pd=m.b*s/sx+m.d*c/sy;
   after.x+=(pa-m.a)*cx+(pc-m.c)*cy;after.y+=(pb-m.b)*cx+(pd-m.d)*cy;
  }
  return {x:original.x+(before.x-after.x)/w*100,y:original.y+(before.y-after.y)/h*100};

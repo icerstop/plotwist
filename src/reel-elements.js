@@ -6,7 +6,7 @@ import {reelElementDefinitions} from './reel-capabilities.js';
 const frames=new WeakMap();
 const suppressed=new WeakMap();
 export const elementIds=Object.keys(reelElementDefinitions);
-export const identityElement=()=>({x:0,y:0,scale:100,rotation:0});
+export const identityElement=()=>({x:0,y:0,scale:100,rotation:0,widthScale:100,heightScale:100});
 export function resetElements(canvas){frames.set(canvas,[]);}
 export const reelElements=canvas=>frames.get(canvas)||[];
 export const pointAt=(m,x,y)=>({x:m.a*x+m.c*y+m.e,y:m.b*x+m.d*y+m.f});
@@ -32,7 +32,7 @@ export function beginElement(ctx,config,id,rect,extra){
  if(hidden){ctx.globalAlpha=0;ctx.beginPath();ctx.rect(0,0,0,0);ctx.clip();}
  // Store translation as a percentage of the full reel, independent of nested layout scale.
  ctx.setTransform(m.a,m.b,m.c,m.d,m.e+t.x*ctx.canvas.width/100,m.f+t.y*ctx.canvas.height/100);
- ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);ctx.rotate(t.rotation*Math.PI/180);ctx.scale(t.scale/100,t.scale/100);ctx.translate(-rect.x-rect.w/2,-rect.y-rect.h/2);
+ ctx.translate(rect.x+rect.w/2,rect.y+rect.h/2);ctx.rotate(t.rotation*Math.PI/180);ctx.scale(t.scale/100*(t.widthScale??100)/100,t.scale/100*(t.heightScale??100)/100);ctx.translate(-rect.x-rect.w/2,-rect.y-rect.h/2);
  applyElementMotion(ctx,config,id,rect);registerElement(ctx,id,rect,extra);return ()=>{ctx.restore();if(parent==null)suppressed.delete(ctx);else suppressed.set(ctx,parent);endMystery();endRole();};
 }
 export function textRect(ctx,lines,x,y,step,maxWidth=Infinity){

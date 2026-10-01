@@ -5,6 +5,7 @@ import {mediaFrame} from './reel-media.js';
 import {coverRect,stickerMotion} from './media-timeline.js';
 import {themeOf} from './reel-design.js';
 import {drawReelOverlays} from './overlay-render.js';
+import {stickerDimensions} from './reel-resize.js';
 
 export function drawVisualBackground(ctx,w,h,config,time=0){
  const v=config.visuals,b=v?.background;if(!b)return;
@@ -35,7 +36,7 @@ export function drawVisualOverlays(ctx,w,h,config,time=0,layer='front'){
  for(const sticker of config.visuals?.stickers||[]){
   if(!sticker.visible||sticker.layer!==layer)continue;
   const frame=mediaFrame(sticker.assetId,time,sticker.speed);if(!frame)continue;
-  const motion=stickerMotion(sticker.motion,time),width=w*sticker.size/100*motion.scale,height=width*frame.height/frame.width;
+  const motion=stickerMotion(sticker.motion,time),{width,height}=stickerDimensions(sticker,frame,w,motion.scale);
   const safeHeight=h-(config.ai?260:195);
   const endMystery=mysteryRole(ctx,`sticker:${sticker.id}`);
   ctx.save();ctx.beginPath();ctx.rect(0,0,w,safeHeight);ctx.clip();
@@ -43,6 +44,14 @@ export function drawVisualOverlays(ctx,w,h,config,time=0,layer='front'){
   if(sticker.shadow){ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=24;ctx.shadowOffsetY=10;}
   applyElementMotion(ctx,config,`sticker:${sticker.id}`,{x:-width/2,y:-height/2,w:width,h:height});
   registerElement(ctx,`sticker:${sticker.id}`,{x:-width/2,y:-height/2,w:width,h:height},{stickerId:sticker.id,clip:{x:0,y:0,w,h:safeHeight}});
-  ctx.drawImage(frame,-width/2,-height/2,width,height);ctx.restore();endMystery();
+  if(sticker.fit==='stretch')ctx.drawImage(frame,-width/2,-height/2,width,height);
+  else if(sticker.fit==='contain'){
+   const r=coverRect(frame.width,frame.height,width,height,'contain');ctx.drawImage(frame,r.x-width/2,r.y-height/2,r.width,r.height);
+  }else{
+   // Crop the source rectangle, so the shadow follows the frame, not a clipping mask.
+   const ratio=Math.max(width/frame.width,height/frame.height),sw=width/ratio,sh=height/ratio;
+   ctx.drawImage(frame,(frame.width-sw)/2,(frame.height-sh)/2,sw,sh,-width/2,-height/2,width,height);
+  }
+  ctx.restore();endMystery();
  }
 }

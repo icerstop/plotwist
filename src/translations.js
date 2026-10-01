@@ -3,6 +3,19 @@ import wbCountries from './world-bank-countries.json' with {type:'json'};
 import {extraPairs} from './translations-extra.js';
 // Audited, local translations. No paid API and no automatic rewriting of user input.
 const pairs = `
+Zmień szerokość elementu|Resize element width
+Zmień wysokość elementu|Resize element height
+Szerokość elementu (%)|Element width (%)
+Wysokość elementu (%)|Element height (%)
+Wymiary zmieniają proporcje całego elementu, razem z jego zawartością. Narożnik zachowuje ustawione proporcje.|Dimensions change the proportions of the whole element, including its contents. The corner preserves the chosen proportions.
+Szerokość ramki dodatku|Media frame width
+Wysokość ramki dodatku|Media frame height
+Obraz w ramce|Image in frame
+Wypełnij i przytnij|Fill and crop
+Dopasuj w całości|Fit entire image
+Rozciągnij|Stretch
+Przywróć proporcje obrazka|Restore image proportions
+
 Automatyczna wysokość pola tekstowego|Automatic text box height
 Przywróć automatyczne dopasowanie tytułu|Restore automatic title fitting
 Szerokość tekstu · lewy bok|Text width · left side

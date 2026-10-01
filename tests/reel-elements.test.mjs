@@ -13,8 +13,8 @@ test('pointer viewport removes letterboxing in tall and short preview containers
  const r=canvasViewport({left:0,top:0,width:200,height:500},1080,1350);assert.equal(r.width,200);assert.equal(r.height,250);assert.equal(r.top,125);
 });
 test('saved edits preserve independent fonts and reject invalid transforms',()=>{
- const d=normalizeDesign({elements:{title:{x:8,y:-3,rotation:17,scale:85},content:{x:Infinity,rotation:999,scale:-5}},text:{title:{fontId:'georgia'},source:{fontId:'unknown'}}});
- assert.deepEqual(d.elements.title,{x:8,y:-3,rotation:17,scale:85});assert.deepEqual(d.elements.content,{x:0,y:0,rotation:180,scale:25});
+ const d=normalizeDesign({elements:{title:{x:8,y:-3,rotation:17,scale:85,widthScale:100,heightScale:100},content:{x:Infinity,rotation:999,scale:-5}},text:{title:{fontId:'georgia'},source:{fontId:'unknown'}}});
+ assert.deepEqual(d.elements.title,{x:8,y:-3,rotation:17,scale:85,widthScale:100,heightScale:100});assert.deepEqual(d.elements.content,{x:0,y:0,rotation:180,scale:25,widthScale:100,heightScale:100});
  assert.equal(d.text.source.fontId,null);assert.deepEqual(configFontIds({fontId:'arial',visuals:{design:d}}),['arial','georgia']);assert.deepEqual(normalizeDesign(JSON.parse(JSON.stringify(d))),d);
 });
 test('element movement uses full reel pixels under a compact section and restores drawing state',()=>{

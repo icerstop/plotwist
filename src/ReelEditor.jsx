@@ -1,5 +1,6 @@
 import {resizedTextRect,textLines} from './reel-text.js';
 import {draggedTextWidth,textResizeTranslation} from './reel-text-resize.js';
+import {resizeEdge,dimensionScale} from './reel-resize.js';
 import {reelCapabilities,reelElementDefinitions} from './reel-capabilities.js';
 import OverlayControls from './OverlayControls.jsx';
 import {overlayKinds,overlayLimit,overlayName} from './reel-overlays.js';
@@ -87,6 +88,15 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
  }
  function move(e){
   const g=gesture.current;if(!g)return;const p=point(e),o=g.original,w=canvas.current.width,h=canvas.current.height;let patch;
+  if(g.kind.startsWith('resize-')){
+   const edge=g.kind.slice(7),horizontal=edge==='left'||edge==='right',key=horizontal?'widthScale':'heightScale';
+   const field=g.overlay?(horizontal?'width':'height'):key,current=g.overlay?o[field]:dimensionScale(o[field]);
+   const min=g.overlay?(horizontal?5:1):10,max=g.overlay?(horizontal?100:80):300;
+   const resized=resizeEdge(g.region,g.start,p,edge,min/current,max/current),moveHeight=g.sticker?h-(config.ai?260:195):h;
+   patch={[field]:current*resized.ratio,x:o.x+resized.dx/w*100,y:o.y+resized.dy/moveHeight*100};
+   if(g.overlay)v.overlay(g.overlay.id,patch);else if(g.sticker)v.sticker(g.sticker.id,patch);else v.element(g.id,patch);
+   return;
+  }
   if(g.kind==='width-left'||g.kind==='width-right'){
    const side=g.kind.slice(6),box=g.region.textBox;if(!box)return;
    const width=draggedTextWidth(g.region,g.start,p,side,box.baseWidth,g.overlay?o.width:box.percent,g.overlay?5:10,g.overlay?100:200);
@@ -130,7 +140,12 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
   {enabled&&valid&&viewport&&canvas.current&&createPortal(<svg ref={svg} className="reel-edit-overlay" style={{left:viewport.left,top:viewport.top,width:viewport.width,height:viewport.height}} viewBox={`0 0 ${canvas.current.width} ${canvas.current.height}`} tabIndex="0" role="application" aria-label="Edytor elementów rolki" onPointerDown={start} onPointerMove={move} onPointerUp={finish} onPointerCancel={e=>finish(e,true)} onLostPointerCapture={e=>finish(e,true)} onKeyDown={keys} onKeyUp={altKey} onDoubleClick={e=>{const hit=hitElement(regions,point(e));if(hit){selectElement(hit.id);setTextFocus(n=>n+1);}}}>
    {regions.map(r=><polygon key={r.id} className="reel-hit-region" points={r.corners.map(p=>`${p.x},${p.y}`).join(' ')}><title>{translate(label(r),uiLanguage)}</title></polygon>)}
    {alignment.active&&<AlignmentGuides guides={alignment.guides} width={canvas.current.width} height={canvas.current.height} scale={unit} language={uiLanguage}/>}
-   {region&&<g className="reel-selection"><polygon points={corners.map(p=>`${p.x},${p.y}`).join(' ')}/><line x1={top.x} y1={top.y} x2={handle.x} y2={handle.y}/><circle className="reel-rotate-handle" data-handle="rotate" cx={handle.x} cy={handle.y} r={7/unit} onPointerDown={e=>{e.stopPropagation();start(e,'rotate');}}><title>Obróć element</title></circle>{region.textBox&&['left','right'].map((side,i)=>{const a=corners[i===0?0:1],b=corners[i===0?3:2],x=(a.x+b.x)/2,y=(a.y+b.y)/2;return <rect key={side} className="reel-width-handle" data-handle={`width-${side}`} aria-label={translate(side==='left'?'Szerokość tekstu · lewy bok':'Szerokość tekstu · prawy bok',uiLanguage)} x={x-5/unit} y={y-10/unit} width={10/unit} height={20/unit} rx={3/unit} onPointerDown={e=>{e.stopPropagation();start(e,`width-${side}`);}}><title>{translate('Zmień szerokość pola bez zmiany czcionki',uiLanguage)}</title></rect>;})}<rect className="reel-scale-handle" data-handle="scale" x={corners[2].x-6/unit} y={corners[2].y-6/unit} width={12/unit} height={12/unit} onPointerDown={e=>{e.stopPropagation();start(e,'scale');}}><title>Zmień rozmiar elementu</title></rect></g>}
+   {region&&<g className="reel-selection"><polygon points={corners.map(p=>`${p.x},${p.y}`).join(' ')}/><line x1={top.x} y1={top.y} x2={handle.x} y2={handle.y}/><circle className="reel-rotate-handle" data-handle="rotate" cx={handle.x} cy={handle.y} r={7/unit} onPointerDown={e=>{e.stopPropagation();start(e,'rotate');}}><title>Obróć element</title></circle>{(region.textBox||overlay&&['line','arrow'].includes(overlay.kind)?['left','right']:['left','right','top','bottom']).map(edge=>{
+     const indices={left:[0,3],right:[1,2],top:[0,1],bottom:[3,2]}[edge],a=corners[indices[0]],b=corners[indices[1]],x=(a.x+b.x)/2,y=(a.y+b.y)/2,horizontal=edge==='left'||edge==='right';
+     const kind=region.textBox?`width-${edge}`:`resize-${edge}`,name=region.textBox?'Zmień szerokość pola bez zmiany czcionki':horizontal?'Zmień szerokość elementu':'Zmień wysokość elementu';
+     const cursorAngle=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI+90,cursors=['ew-resize','nwse-resize','ns-resize','nesw-resize'],cursor=cursors[((Math.round(cursorAngle/45)%4)+4)%4];
+     return <rect key={edge} className="reel-width-handle" data-handle={kind} aria-label={translate(name,uiLanguage)} style={{cursor}} x={x-(horizontal?5:10)/unit} y={y-(horizontal?10:5)/unit} width={(horizontal?10:20)/unit} height={(horizontal?20:10)/unit} rx={3/unit} onPointerDown={e=>{e.stopPropagation();start(e,kind);}}><title>{translate(name,uiLanguage)}</title></rect>;
+    })}<rect className="reel-scale-handle" data-handle="scale" x={corners[2].x-6/unit} y={corners[2].y-6/unit} width={12/unit} height={12/unit} onPointerDown={e=>{e.stopPropagation();start(e,'scale');}}><title>Zmień rozmiar elementu</title></rect></g>}
   </svg>,canvas.current.parentElement)}
   <section className="reel-edit-controls reel-appearance" aria-label="Wygląd rolki">
    <header className="reel-appearance-heading"><h2>Wygląd rolki</h2><p>Wspólny styl zostaje przy zmianie danych.</p></header>
@@ -156,9 +171,10 @@ export function ReelEditor({canvas,config,enabled,setEnabled,revision,onPause,va
      {(selected==='content'||groupRoles?.length>1)&&<label>Tekst wykresu<select aria-label="Tekst wykresu" value={chartRole} onChange={e=>setChartRole(e.target.value)}><option value="labels">Etykiety i osie</option><option value="values">Wartości liczbowe</option></select></label>}
      {t&&<><FontPicker label="Czcionka elementu" value={t.fontId||''} inheritFontId={config.fontId} onChange={fontId=>{remember();v.textStyle(role,{fontId:fontId||null});}}/><FontWeightPicker label="Grubość czcionki elementu" fontId={t.fontId||config.fontId} value={t.weight} element onChange={weight=>{remember();v.textStyle(role,{weight});}}/><div onFocusCapture={remember} onPointerDownCapture={remember}><Range label="Rozmiar tekstu" value={t.size} min={textRoles.find(r=>r.id===baseRole).min} max={textRoles.find(r=>r.id===baseRole).max} onChange={size=>v.textStyle(role,{size})}/><Color label="Kolor elementu" value={color} onChange={color=>v.textStyle(role,{color})}/></div><button type="button" className="text-btn" onClick={()=>{remember();v.textStyle(role,groupRoles?null:normalizeDesign().text[role]);}}>Przywróć styl tego tekstu</button>{!['labels','values'].includes(baseRole)&&<TextEffects role={role} config={config} beforeChange={remember}/>}<p>100% to rozmiar wyjściowy. Długie teksty dopasowują się do dostępnego miejsca.</p></>}
      <div className="reel-inspector-pair"><label>Skala elementu<input aria-label="Skala elementu" type="number" min={sticker?5:25} max={sticker?100:200} step="1" value={Math.round(transform.scale)} onFocus={remember} onChange={e=>changeTransform({scale:clamp(Number(e.target.value),sticker?5:25,sticker?100:200)})}/></label><label>Obrót elementu<input aria-label="Obrót elementu" type="number" min="-180" max="180" step="1" value={Math.round(transform.rotation)} onFocus={remember} onChange={e=>changeTransform({rotation:clamp(Number(e.target.value),-180,180)})}/></label></div>
+     {!region?.textBox&&<><div className="reel-inspector-pair">{[['widthScale','Szerokość elementu (%)'],['heightScale','Wysokość elementu (%)']].map(([key,name])=><label key={key}>{name}<input aria-label={name} type="number" min="10" max="300" step="1" value={Math.round(dimensionScale(transform[key]))} onFocus={remember} onChange={e=>changeTransform({[key]:dimensionScale(e.target.value)})}/></label>)}</div><p>Wymiary zmieniają proporcje całego elementu, razem z jego zawartością. Narożnik zachowuje ustawione proporcje.</p></>}
      <button type="button" className="text-btn" onClick={()=>{remember();for(const f of copyFields.filter(f=>f.element===selected||selected==='content'&&reelElementDefinitions[f.element]?.textRole)){v.copy(f.key,null);v.hideCopy(f.visibilityKey,false);}if(sticker)v.sticker(sticker.id,{x:83,y:10,size:18,rotation:0});else{v.element(selected,identityElement());if(role)v.textStyle(role,groupRoles?null:normalizeDesign().text[role]);if(selected==='metric'&&config.commonMetric)v.metricLabel(config.commonMetric.key,reelLanguage,'');}}}><RotateCcw size={14}/>Przywróć wybrany element</button>
     </>:sticker?<StickerControls sticker={sticker} index={v.visuals.stickers.indexOf(sticker)} beforeChange={remember}/>:null}
-    <p>Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Boczne uchwyty zmieniają szerokość tekstu bez powiększania liter. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.</p>
+    <p>Kliknij dwukrotnie lub naciśnij Enter, aby edytować tekst. Przeciągnij, aby przesunąć. Kółko obraca, narożnik skaluje. Boczne uchwyty zmieniają szerokość, a górny i dolny — wysokość. W polach tekstowych boki zmieniają zawijanie bez powiększania liter; wysokość dopasowuje się do tekstu. Strzałki: 1 px, Shift: 10 px. Delete: usuń. Ctrl/Cmd+Z: cofnij. Esc: odznacz.</p>
    </fieldset>}
    </div>
   </section>
