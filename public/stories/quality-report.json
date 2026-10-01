@@ -1,9 +1,9 @@
 {
-  "builtAt": "2026-10-01T15:24:52.324674+00:00",
+  "builtAt": "2026-10-01T16:11:52.965562+00:00",
   "topics": 61,
   "series": 8801,
-  "observations": 407231,
-  "missingCells": 169000,
+  "observations": 407254,
+  "missingCells": 168979,
   "duplicateDates": 0,
   "nonFiniteValues": 0,
   "coverage": [
@@ -551,10 +551,10 @@
       "id": "poland-gold",
       "status": "partial",
       "series": 6,
-      "observations": 1392,
+      "observations": 1415,
       "start": "2000-01-31",
-      "end": "2026-07-31",
-      "limitations": "Brak dokładnych pomiarów ilości od 2025-08 do 2026-05 w pobranych źródłach. To luka danych, nie zerowy zasób. Wycena PLN/EUR i udział mają osobną, pełniejszą historię. Stan obejmuje złoto NBP także przechowywane za granicą, nie zasoby geologiczne Polski."
+      "end": "2026-08-31",
+      "limitations": "Rezerwy w tonach: kompletna historia miesięczna 2000-01–2026-08. Brakujące wcześniej miesiące uzupełniono raportowanymi danymi NBP z publikacji PAP, prasy finansowej i raportu bankowego; pochodzenie oraz precyzja są zapisane przy pomiarze. Nie użyto interpolacji ani szacunków z ceny złota. Serie wartościowe nadal mają lukę EBC 2014-01–2014-08. Stan obejmuje złoto NBP także przechowywane za granicą, nie zasoby geologiczne Polski."
     }
   ]
 }

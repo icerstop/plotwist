@@ -1,0 +1,29 @@
+{
+  "reviewedAt": "2026-10-01",
+  "method": "Manually extracted numerical facts from inspected public reports quoting NBP's monthly foreign-currency liquidity statistics. These are secondary reports of observations, not interpolated values or estimates obtained by dividing gold valuation by market prices. Original article prose is not redistributed.",
+  "unit": "million fine troy ounces",
+  "sources": [
+    {"id":"gold-report-bi-20260921","name":"NBP za Business Insider · raport 21.09.2026","shortName":"NBP / Business Insider","url":"https://businessinsider.com.pl/finanse/wartosc-zlota-w-nbp-rosnie-coraz-blizej-celu-prezesa-adama-glapinskiego/q0s3j8k","publishedAt":"2026-09-21","finding":"Stan na koniec sierpnia 2026: 20,833 mln uncji; porównanie rok do roku wskazuje 16,568 mln uncji w sierpniu 2025."},
+    {"id":"gold-report-bankier-20251121","name":"NBP / PAP Biznes za Bankier.pl · 21.11.2025","shortName":"NBP / PAP / Bankier.pl","url":"https://www.bankier.pl/wiadomosc/NBP-zwiekszyl-zasoby-zlota-Bank-centralny-potwierdza-obliczenia-Bankier-pl-9043708.html","publishedAt":"2025-11-21","finding":"Raportowana ilość: wrzesień 16,569 i październik 17,069 mln uncji. Pomijamy zawarty niżej wcześniejszy szacunek redakcyjny 17,0458."},
+    {"id":"gold-report-alior-20251222","name":"NBP za Alior Bank · raport rynkowy 22.12.2025","shortName":"NBP / Alior Bank","url":"https://www.aliorbank.pl/dam/jcr:0d6de301-58da-434b-878c-965023d44c04/20251222-raport-rynkowy.pdf","publishedAt":"2025-12-22","finding":"Strona 1, W kraju: listopad 17,469 mln uncji wobec 17,069 w październiku."},
+    {"id":"gold-report-bankier-20260121","name":"NBP za Bankier.pl · grudzień 2025","shortName":"NBP / Bankier.pl","url":"https://www.bankier.pl/wiadomosc/NBP-w-grudniu-znow-dokupil-zlota-A-to-nie-koniec-9071807.html","publishedAt":"2026-01-21","finding":"Raportowana ilość na koniec grudnia 2025: 17,69 mln uncji."},
+    {"id":"gold-report-money-20260220","name":"NBP za Money.pl · styczeń 2026","shortName":"NBP / Money.pl","url":"https://www.money.pl/gospodarka/nbp-podal-nowe-dane-o-rezerwach-zlota-mozna-mowic-o-zaskoczeniu-7256453351217600a.html","publishedAt":"2026-02-20","finding":"Raportowana ilość na koniec stycznia 2026: 17,69 mln uncji; brak wzrostu względem grudnia."},
+    {"id":"gold-report-bi-20260320","name":"NBP za Business Insider · luty 2026","shortName":"NBP / Business Insider","url":"https://businessinsider.com.pl/gospodarka/narodowy-bank-polski-kupuje-zloto-rezerwy-osiagnely-rekordowy-poziom/5c1g5vn","publishedAt":"2026-03-20","finding":"Raportowana ilość: luty 18,34 mln uncji, styczeń 17,69 mln uncji."},
+    {"id":"gold-report-bankier-20260421","name":"NBP za Bankier.pl · marzec 2026","shortName":"NBP / Bankier.pl","url":"https://www.bankier.pl/wiadomosc/NBP-potwierdzil-doniesienia-Bankier-pl-Polska-ma-juz-ponad-580-ton-zlota-9120414.html","publishedAt":"2026-04-21","finding":"Raportowana ilość na koniec marca: 18,70 mln uncji; wzrost o 0,36 mln wobec lutego. Pomijamy niespójne redakcyjne opisy wzrostu od początku roku."},
+    {"id":"gold-report-pap-20260619","name":"NBP / PAP za Puls Biznesu · maj 2026","shortName":"NBP / PAP / Puls Biznesu","url":"https://www.pb.pl/nbp-kupil-w-maju-kolejne-18-ton-zlota-ma-juz-ponad-600-ton-1263168","publishedAt":"2026-06-19","finding":"Raportowana ilość: maj 19,736 mln uncji, kwiecień 19,151 mln uncji. Przeliczamy uncje; odrzucamy oczywistą literówkę w tekście: 613,9 mln ton."},
+    {"id":"gold-report-bankier-20260921","name":"NBP za Bankier.pl · sierpień 2026","shortName":"NBP / Bankier.pl","url":"https://www.bankier.pl/wiadomosc/NBP-kupowal-zloto-w-sierpniu-2026-Kurs-na-700-ton-utrzymany-9200129.html","publishedAt":"2026-09-21","finding":"Raportowana ilość na koniec sierpnia 2026: 20,833 mln uncji; wzrost o 0,250 mln wobec lipca."}
+  ],
+  "observations": [
+    {"period":"2025-08","value":"16.568","sourceId":"gold-report-bi-20260921","corroborationUrl":"https://wgospodarce.pl/informacje/152457-nbp-w-sierpniu-nie-kupowal-zlota","corroboration":"Depesza PAP z 19.09.2025 podaje niezmieniony stan względem lipca. Dokładna liczba pochodzi z późniejszego porównania rok do roku, nie z automatycznego przeniesienia lipca."},
+    {"period":"2025-09","value":"16.569","sourceId":"gold-report-bankier-20251121"},
+    {"period":"2025-10","value":"17.069","sourceId":"gold-report-bankier-20251121","corroborationUrl":"https://www.aliorbank.pl/dam/jcr%3A80db96ba-428b-4080-bd28-b1774162dfa4/2025.11.24%20Raport%20rynkowy.pdf"},
+    {"period":"2025-11","value":"17.469","sourceId":"gold-report-alior-20251222","corroborationUrl":"https://bossa.pl/sites/b30fx/files/2025-12/document_analyst/20251222_biuletyn_poranny_DMBOS.pdf"},
+    {"period":"2025-12","value":"17.69","sourceId":"gold-report-bankier-20260121"},
+    {"period":"2026-01","value":"17.69","sourceId":"gold-report-money-20260220","corroborationUrl":"https://businessinsider.com.pl/gospodarka/narodowy-bank-polski-kupuje-zloto-rezerwy-osiagnely-rekordowy-poziom/5c1g5vn"},
+    {"period":"2026-02","value":"18.34","sourceId":"gold-report-bi-20260320","corroborationUrl":"https://www.money.pl/finanse/850-mln-zl-mniej-tak-zloto-z-ostatniego-zakupu-nbp-stracilo-na-wartosci-7266987557353792a.html"},
+    {"period":"2026-03","value":"18.70","sourceId":"gold-report-bankier-20260421","corroborationUrl":"https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q1-2026/central-banks"},
+    {"period":"2026-04","value":"19.151","sourceId":"gold-report-pap-20260619"},
+    {"period":"2026-05","value":"19.736","sourceId":"gold-report-pap-20260619","corroborationUrl":"https://www.sejm.gov.pl/sejm10.nsf/biuletyn.xsp?documentId=429F8F49D6123538C1258E22003DE0F9"},
+    {"period":"2026-08","value":"20.833","sourceId":"gold-report-bankier-20260921","corroborationUrl":"https://businessinsider.com.pl/finanse/wartosc-zlota-w-nbp-rosnie-coraz-blizej-celu-prezesa-adama-glapinskiego/q0s3j8k"}
+  ]
+}

@@ -518,12 +518,12 @@ NHGRI, Wetterstrand, tabela z maja 2022: 78 pomiarów od września 2001 do maja 
 
 ### Polska gromadzi złoto
 
-6 serii; 1392 obserwacji; 2000-01-31 → 2026-07-31. Status: partial.
+6 serii; 1415 obserwacji; 2000-01-31 → 2026-08-31. Status: partial.
 
-Brak dokładnych pomiarów ilości od 2025-08 do 2026-05 w pobranych źródłach. To luka danych, nie zerowy zasób. Wycena PLN/EUR i udział mają osobną, pełniejszą historię. Stan obejmuje złoto NBP także przechowywane za granicą, nie zasoby geologiczne Polski.
+Rezerwy w tonach: kompletna historia miesięczna 2000-01–2026-08. Brakujące wcześniej miesiące uzupełniono raportowanymi danymi NBP z publikacji PAP, prasy finansowej i raportu bankowego; pochodzenie oraz precyzja są zapisane przy pomiarze. Nie użyto interpolacji ani szacunków z ceny złota. Serie wartościowe nadal mają lukę EBC 2014-01–2014-08. Stan obejmuje złoto NBP także przechowywane za granicą, nie zasoby geologiczne Polski.
 
-- Ile ton złota zgromadziła Polska? Długi wykres od 2000 r.; luka 2025-08–2026-05 pozostaje widoczna.
+- Ile ton złota zgromadziła Polska? Ciągły miesięczny wykres od 2000 r. do sierpnia 2026.
 - Ilość kontra wartość: tony i mld PLN, w oddzielnych skalach lub jako indeks 100. Wzrost wyceny nie oznacza zakupów.
 - Jaką część rezerw stanowi złoto? Udział procentowy według wartości na koniec miesiąca.
-- Zmiana zasobu miesiąc do miesiąca: słupki dodatnie i ujemne. Brak wyniku, jeśli brakuje jednego z dwóch miesięcy.
+- Zmiana zasobu miesiąc do miesiąca: słupki dodatnie i ujemne. Precyzja różnic zależy od dokładności publikowanych stanów.
 

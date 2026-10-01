@@ -2,6 +2,7 @@
 import calendar
 import csv
 import json
+import hashlib
 import re
 from decimal import Decimal
 from pathlib import Path
@@ -10,7 +11,10 @@ import openpyxl
 
 TONNES_PER_MILLION_OZT = Decimal('31.1034768')
 TOPIC = 'poland-gold'
-GAP = 'Brak dokładnych pomiarów ilości od 2025-08 do 2026-05 w pobranych źródłach. To luka danych, nie zerowy zasób. Wycena PLN/EUR i udział mają osobną, pełniejszą historię. Stan obejmuje złoto NBP także przechowywane za granicą, nie zasoby geologiczne Polski.'
+COVERAGE = 'Rezerwy w tonach: kompletna historia miesięczna 2000-01–2026-08. Brakujące wcześniej miesiące uzupełniono raportowanymi danymi NBP z publikacji PAP, prasy finansowej i raportu bankowego; pochodzenie oraz precyzja są zapisane przy pomiarze. Nie użyto interpolacji ani szacunków z ceny złota. Serie wartościowe nadal mają lukę EBC 2014-01–2014-08. Stan obejmuje złoto NBP także przechowywane za granicą, nie zasoby geologiczne Polski.'
+
+def reported_volume(root):
+    return json.loads((root/'research/gold-reserves/raw/reported-monthly-volume.json').read_text(encoding='utf8'))
 
 def months(first, last):
     y, m = map(int, first.split('-'))
@@ -40,6 +44,16 @@ def read_gold(root):
         year,month=ws['E12'].value.split('M');p=f'{int(year):04}-{int(month):02}'
         v=Decimal(str(ws['E26'].value));volume[p]=(v,sid,{'sourceValue':float(v),'sourceUnit':'million fine troy ounces','sourceCell':'Mon. Auth & Ctr. Gov!E26'})
         evidence.append({'period':p,'sourceId':sid,'ouncesMillions':float(v),'tonnes':float(v*TONNES_PER_MILLION_OZT),'goldUsdMillions':ws['E25'].value,'reservesUsdMillions':ws['E13'].value})
+    reports=reported_volume(root)
+    report_sources={s['id']:s for s in reports['sources']}
+    seen=set()
+    for item in reports['observations']:
+        p=item['period']; assert p not in seen, f'Duplicate reported month: {p}'
+        seen.add(p)
+        value=Decimal(item['value']);sid=item['sourceId'];assert value>0 and sid in report_sources
+        # Direct source files take precedence; never silently overwrite them with press reports.
+        if p in volume:assert abs(volume[p][0]-value)<=Decimal('0.01'), f'Conflicting source: {p}'
+        else:volume[p]=(value,sid,{'sourceValue':float(value),'sourceValueText':item['value'],'sourceUnit':reports['unit'],'sourceDecimals':max(0,-value.as_tuple().exponent),'evidenceType':'secondary-report-of-NBP-observation','publishedAt':report_sources[sid]['publishedAt'],'sourceUrl':report_sources[sid]['url'],'corroborationUrl':item.get('corroborationUrl'),'interpolated':False})
     financial={}
     for row in csv.DictReader((raw/'ecb-reserves.csv').open()):
         assert row['REF_AREA']=='PL' and row['UNIT_MULT']=='6'
@@ -54,15 +68,19 @@ def add_gold_topic(root, topic, series, point, source, topics, sources):
     specs=[('gold-imf-volume','imf-dbnomics-volume.json','MFW / DBnomics · IRFCL · dokładna historia ilości','MFW / DBnomics'),('gold-un-volume','un-gold-poland.html','ONZ UNSD · Gold reserves · Poland','ONZ'),('gold-nbp-june','964irfcl-21-07-2026.xlsx','NBP / GUS SDDS · stan na 2026-06','NBP / GUS'),('gold-nbp-july','gus-nbp-2026-08.xlsx','NBP / GUS SDDS · stan na 2026-07','NBP / GUS'),('gold-ecb-values','ecb-reserves.csv','EBC · RAS · wycena złota i rezerw Polski','EBC')]
     for sid,filename,name,short in specs:
         receipt=json.loads((raw/(filename+'.receipt.json')).read_text())
-        sources[sid]={**receipt,'id':sid,'name':name,'shortName':short,'license':'Original provider terms; source attribution required.','note':GAP if sid=='gold-imf-volume' else 'Stan na koniec miesiąca; data publikacji/pobrania jest osobnym polem.'}
-    topic(TOPIC,'Polska gromadzi złoto',GAP,'partial')
-    t=topics[TOPIC];t.update(titleEn='Poland builds its gold reserves',noteEn='Exact volume observations are missing from Aug 2025 to May 2026 in the downloaded sources. Gaps are not zero holdings. PLN/EUR valuations and shares have separate, more complete coverage. Includes NBP gold held abroad, not geological deposits.',methodologyPath='/stories/POLAND-GOLD.md',reelNote={'pl':'stan na koniec miesiąca · luki w danych','en':'month-end holdings · data gaps'},defaultStart='2000-01-01',variants=['Ile ton złota zgromadziła Polska? Długi wykres od 2000 r.; luka 2025-08–2026-05 pozostaje widoczna.','Ilość kontra wartość: tony i mld PLN, w oddzielnych skalach lub jako indeks 100. Wzrost wyceny nie oznacza zakupów.','Jaką część rezerw stanowi złoto? Udział procentowy według wartości na koniec miesiąca.','Zmiana zasobu miesiąc do miesiąca: słupki dodatnie i ujemne. Brak wyniku, jeśli brakuje jednego z dwóch miesięcy.'])
+        sources[sid]={**receipt,'id':sid,'name':name,'shortName':short,'license':'Original provider terms; source attribution required.','note':'Stan na koniec miesiąca; data publikacji/pobrania jest osobnym polem.'}
+    reports=reported_volume(root)
+    report_bytes=(raw/'reported-monthly-volume.json').read_bytes()
+    for s in reports['sources']:
+        sources[s['id']]={**s,'retrievedAt':reports['reviewedAt'],'reviewedAt':reports['reviewedAt'],'retrievalPrecision':'day','sourceType':'secondary-report','originalProvider':'NBP','extractionFile':'reported-monthly-volume.json','sha256':hashlib.sha256(report_bytes).hexdigest(),'bytes':len(report_bytes),'note':s['finding'],'license':'Extracted numerical facts with attribution; article text is not redistributed.'}
+    topic(TOPIC,'Polska gromadzi złoto',COVERAGE,'partial')
+    t=topics[TOPIC];t.update(titleEn='Poland builds its gold reserves',noteEn='Monthly gold quantities are complete from Jan 2000 through Aug 2026. Former gaps were filled with NBP observations reported by financial publications; source and precision are retained. No interpolation or estimates derived from gold prices. Financial valuations still have an ECB gap in Jan–Aug 2014. Includes NBP gold held abroad, not geological deposits.',methodologyPath='/stories/POLAND-GOLD.md',reelNote={'pl':'stan na koniec miesiąca','en':'month-end holdings'},defaultStart='2000-01-01',variants=['Ile ton złota zgromadziła Polska? Ciągły miesięczny wykres od 2000 r. do sierpnia 2026.','Ilość kontra wartość: tony i mld PLN, w oddzielnych skalach lub jako indeks 100. Wzrost wyceny nie oznacza zakupów.','Jaką część rezerw stanowi złoto? Udział procentowy według wartości na koniec miesiąca.','Zmiana zasobu miesiąc do miesiąca: słupki dodatnie i ujemne. Precyzja różnic zależy od dokładności publikowanych stanów.'])
     def make(key,pl,en,unit,unit_key,notes):
         s=series(TOPIC,key,'Polska · '+pl,unit,unit_key,'monthly',notes,'derived',entity='Poland',metric=en)
         s.update(countryCode='POL',metricLabels={'pl':pl,'en':en},includeEmptyPeriods=True)
         return s
-    holdings=make('tonnes','Rezerwy złota','Gold reserves','tony','tonnes-gold','Miliony uncji czystego złota × 31,1034768 = tony metryczne. Dokładność ograniczona do precyzji źródła. '+GAP)
-    change=make('monthly-change','Zmiana rezerw złota m/m','Monthly change in gold reserves','tony / miesiąc','tonnes-gold-month','Różnica stanów dwóch sąsiednich miesięcy. Nie jest samodzielnym pomiarem zakupów netto; obejmuje również inne zmiany stanu i zaokrąglenia. '+GAP)
+    holdings=make('tonnes','Rezerwy złota','Gold reserves','tony','tonnes-gold','Miliony uncji czystego złota × 31,1034768 = tony metryczne. Dokładność ograniczona do precyzji źródła. '+COVERAGE)
+    change=make('monthly-change','Zmiana rezerw złota m/m','Monthly change in gold reserves','tony / miesiąc','tonnes-gold-month','Różnica stanów dwóch sąsiednich miesięcy. Nie jest samodzielnym pomiarem zakupów netto; obejmuje również inne zmiany stanu i zaokrąglenia. '+COVERAGE)
     periods=list(months(min(volume),max(volume)))
     for i,p in enumerate(periods):
         entry=volume.get(p);sid=entry[1] if entry else 'gold-imf-volume'
@@ -84,6 +102,7 @@ def add_gold_topic(root, topic, series, point, source, topics, sources):
         if gold and total and total[0]>0:point(share,p,float(100*gold[0]/total[0]),'gold-ecb-values','month',formula='100 * gold_PLN / total_reserves_PLN',goldValueMillions=float(gold[0]),totalValueMillions=float(total[0]))
         else:point(share,p,None,'gold-ecb-values','month',missingReason='Needs both same-month valuations')
     t['defaults']=[holdings['id']]
-    audit={'exactVolumeRange':[periods[0],periods[-1]],'missingVolumeMonths':[p for p in periods if p not in volume],'latestNbp':evidence[-1],'nbpChecks':evidence,'rejectedEcbVolume':{'period':'2026-07','millionOunces':21,'reason':'Rounded to whole million ounces; source NBP template gives 20.583. Do not use ECB volume for precise tonnes or monthly changes.'}}
+    last=volume[periods[-1]]
+    audit={'volumeRange':[periods[0],periods[-1]],'missingVolumeMonths':[p for p in periods if p not in volume],'latestDirectNbpForm':evidence[-1],'latestObservation':{'period':periods[-1],'ouncesMillions':float(last[0]),'tonnes':float(last[0]*TONNES_PER_MILLION_OZT),'sourceId':last[1],'evidenceType':last[2].get('evidenceType','direct-source')},'nbpChecks':evidence,'reportedSupplementMonths':[p for p in periods if p in volume and volume[p][2].get('evidenceType')=='secondary-report-of-NBP-observation'],'interpolatedObservations':0,'rejectedEcbVolume':{'period':'2026-07','millionOunces':21,'reason':'Rounded to whole million ounces; source NBP template gives 20.583. Do not use ECB volume for precise tonnes or monthly changes.'}}
     audit['financialCoverage']={key:{'start':min(d),'end':max(d),'observations':len(d),'missingMonths':[p for p in months(min(d),max(d)) if p not in d]} for key,d in financial.items()}
     (root/'research/gold-reserves/quality.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2),encoding='utf8')
