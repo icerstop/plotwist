@@ -1,9 +1,9 @@
 {
-  "builtAt": "2026-09-30T15:43:28.224590+00:00",
-  "topics": 60,
-  "series": 8795,
-  "observations": 405839,
-  "missingCells": 168946,
+  "builtAt": "2026-10-01T15:24:52.324674+00:00",
+  "topics": 61,
+  "series": 8801,
+  "observations": 407231,
+  "missingCells": 169000,
   "duplicateDates": 0,
   "nonFiniteValues": 0,
   "coverage": [
@@ -546,6 +546,15 @@
       "start": "2001-09-30",
       "end": "2022-05-31",
       "limitations": "NHGRI, Wetterstrand, tabela z maja 2022: 78 pomiarów od września 2001 do maja 2022. Nominalne USD, bez korekty inflacji; koszt produkcyjnego sekwencjonowania w ośrodkach programu NHGRI, nie cena konsumenckiego testu DNA ani pełny koszt interpretacji medycznej. Genom: oszacowanie dla 3000 Mb z pokryciem zależnym od technologii. Megabaza: surowa sekwencja. Od stycznia 2008 zmiana technologii na NGS i założeń porównania. Brak dopisanych późniejszych cen. Źródło podaje miesiące, nie ciągłe pomiary dzienne; linie łączą tylko dostępne obserwacje."
+    },
+    {
+      "id": "poland-gold",
+      "status": "partial",
+      "series": 6,
+      "observations": 1392,
+      "start": "2000-01-31",
+      "end": "2026-07-31",
+      "limitations": "Brak dokładnych pomiarów ilości od 2025-08 do 2026-05 w pobranych źródłach. To luka danych, nie zerowy zasób. Wycena PLN/EUR i udział mają osobną, pełniejszą historię. Stan obejmuje złoto NBP także przechowywane za granicą, nie zasoby geologiczne Polski."
     }
   ]
 }

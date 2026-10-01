@@ -1,0 +1,96 @@
+{
+  "exactVolumeRange": [
+    "2000-01",
+    "2026-07"
+  ],
+  "missingVolumeMonths": [
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05"
+  ],
+  "latestNbp": {
+    "period": "2026-07",
+    "sourceId": "gold-nbp-july",
+    "ouncesMillions": 20.583,
+    "tonnes": 640.2028629744,
+    "goldUsdMillions": 83568.63,
+    "reservesUsdMillions": 294948.203
+  },
+  "nbpChecks": [
+    {
+      "period": "2026-06",
+      "sourceId": "gold-nbp-june",
+      "ouncesMillions": 20.333,
+      "tonnes": 632.4269937744,
+      "goldUsdMillions": 81632.762,
+      "reservesUsdMillions": 293502.77
+    },
+    {
+      "period": "2026-07",
+      "sourceId": "gold-nbp-july",
+      "ouncesMillions": 20.583,
+      "tonnes": 640.2028629744,
+      "goldUsdMillions": 83568.63,
+      "reservesUsdMillions": 294948.203
+    }
+  ],
+  "rejectedEcbVolume": {
+    "period": "2026-07",
+    "millionOunces": 21,
+    "reason": "Rounded to whole million ounces; source NBP template gives 20.583. Do not use ECB volume for precise tonnes or monthly changes."
+  },
+  "financialCoverage": {
+    "reserves-pln": {
+      "start": "2013-01",
+      "end": "2026-07",
+      "observations": 155,
+      "missingMonths": [
+        "2014-01",
+        "2014-02",
+        "2014-03",
+        "2014-04",
+        "2014-05",
+        "2014-06",
+        "2014-07",
+        "2014-08"
+      ]
+    },
+    "gold-eur": {
+      "start": "2000-01",
+      "end": "2026-07",
+      "observations": 311,
+      "missingMonths": [
+        "2014-01",
+        "2014-02",
+        "2014-03",
+        "2014-04",
+        "2014-05",
+        "2014-06",
+        "2014-07",
+        "2014-08"
+      ]
+    },
+    "gold-pln": {
+      "start": "2013-01",
+      "end": "2026-07",
+      "observations": 155,
+      "missingMonths": [
+        "2014-01",
+        "2014-02",
+        "2014-03",
+        "2014-04",
+        "2014-05",
+        "2014-06",
+        "2014-07",
+        "2014-08"
+      ]
+    }
+  }
+}

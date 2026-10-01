@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup, XMLParsedAsHTMLWarning
 import warnings
 from build_technology_costs import add_cost_topics
 from build_world_bank import add_world_bank_topics
+from build_gold_reserves import add_gold_topic
 warnings.filterwarnings('ignore',category=XMLParsedAsHTMLWarning)
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -273,6 +274,7 @@ s=series('internet-speed','download-time','Pobranie 1 GB · idealny czas','sekun
 for dt,v in [('2019-11',42.1),('2023-03',69.4)]:point(s,dt,8000/v,sid,'month')
 
 add_cost_topics(RAW, topic, series, point, source, TOPICS, SOURCES)
+add_gold_topic(ROOT, topic, series, point, source, TOPICS, SOURCES)
 
 # Prune entirely empty series, sort chronologically, enforce unique observation dates.
 for sid in list(SERIES):
@@ -333,6 +335,7 @@ for t in TOPICS.values():
  guide+=f"### {t['title']}\n\n{t['seriesCount']} serii; {t['count']} obserwacji; {t['start'] or '—'} → {t['end'] or '—'}. Status: {t['status']}.\n\n{t['note']}\n\n"+'\n'.join('- '+a for a in t['variants'])+'\n\n'
 (OUT/'STORY-GUIDE.md').write_text(guide,encoding='utf8')
 (OUT/'TECHNOLOGY-COSTS.md').write_text((ROOT/'research/stories/technology-costs.md').read_text(encoding='utf8'),encoding='utf8')
+(OUT/'POLAND-GOLD.md').write_text((ROOT/'research/gold-reserves/README.md').read_text(encoding='utf8'),encoding='utf8')
 (OUT/'WORLD-BANK.md').write_text((ROOT/'research/world-bank/README.md').read_text(encoding='utf8'),encoding='utf8')
 with zipfile.ZipFile(OUT/'plotwist-story-datasets.zip','w',compression=zipfile.ZIP_DEFLATED) as z:
  with z.open('all-observations.csv','w',force_zip64=True) as entry:
@@ -344,6 +347,8 @@ with zipfile.ZipFile(OUT/'plotwist-story-datasets.zip','w',compression=zipfile.Z
  for pattern in ['epoch-thought-*','epoch-chip-performance.csv*','nhgri-sequencing-costs.xls*']:
   for p in RAW.glob(pattern):z.write(p,'technology-cost-sources/'+p.name)
  for p in RAW.glob('gdp-per-capita-maddison-project-database.*'):z.write(p,'historical-economy-sources/'+p.name)
+ for p in (ROOT/'research/gold-reserves/raw').iterdir():z.write(p,'gold-reserves-sources/'+p.name)
+ z.write(ROOT/'research/gold-reserves/quality.json','gold-reserves-sources/quality.json')
  z.write(ROOT/'research/world-bank/receipt.json','world-bank-sources/receipt.json')
  z.write(ROOT/'research/stories/extracted-financial-tables.json','evidence/extracted-financial-tables.json')
 print(json.dumps({k:v for k,v in quality.items() if k!='coverage'},ensure_ascii=False))

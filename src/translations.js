@@ -3,6 +3,12 @@ import wbCountries from './world-bank-countries.json' with {type:'json'};
 import {extraPairs} from './translations-extra.js';
 // Audited, local translations. No paid API and no automatic rewriting of user input.
 const pairs = `
+Polska gromadzi złoto|Poland builds its gold reserves
+tony|tonnes
+tony / miesiąc|tonnes / month
+% rezerw|% of reserves
+mld PLN|bn PLN
+mld EUR|bn EUR
 Wspólna długość i położenie osi NVIDIA i premier|Link NVIDIA and release axis width and position
 Wspólna długość osi|Shared axis length
 Odstęp nazw i logo od osi|Name and logo gap from axis
