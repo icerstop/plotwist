@@ -1,3 +1,4 @@
+import {ProjectProvider,ProjectApp} from './Projects.jsx';
 import {LanguageProvider} from './language-context.js';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -7,4 +8,4 @@ import {PresentationProvider} from './Presentation.jsx';
 import './style.css';
 import './market.css';
 import './reel-workspace.css';
-createRoot(document.getElementById('root')).render(<LanguageProvider><PresentationProvider><VisualProvider><App/></VisualProvider></PresentationProvider></LanguageProvider>);
+createRoot(document.getElementById('root')).render(<LanguageProvider><PresentationProvider><VisualProvider><ProjectProvider><ProjectApp component={App}/></ProjectProvider></VisualProvider></PresentationProvider></LanguageProvider>);

@@ -1,3 +1,4 @@
+import {useProjectSeed,useProjectState,useProjectDraft} from './Projects.jsx';
 import PriceCurrencyPicker from './PriceCurrencyPicker.jsx';
 import {FrequencyPicker} from './FrequencyPicker.jsx';
 import MarketStories from './MarketStories.jsx';
@@ -26,19 +27,21 @@ function SeriesColor({color,index,onChange,onReset}){
 }
 
 export default function ComparisonStudio({manifest,fx,fontId,onFontChange,active=true,priceCurrency='native',onPriceCurrencyChange}){
+ const initial=useProjectSeed('comparison');
  const {uiLanguage,reelLanguage}=useLanguages();
  const value=(n,unit)=>`${n.toLocaleString(localeFor(uiLanguage),{maximumFractionDigits:2})} ${translate(unit,uiLanguage)}`;
- const [extras,setExtras]=useState(null),[brands,setBrands]=useState(null),[assets,setAssets]=useState({});
- const [entries,setEntries]=useState(initialEntries),[mode,setMode]=useState('dca'),[scale,setScale]=useState('index');
- const [start,setStart]=useState('2020-01-01'),[end,setEnd]=useState(''),[investment,setInvestment]=useState('5');
- const [investmentFrequency,setInvestmentFrequency]=useState('daily');
- const [chart,setChart]=useState('line');
+ const [extras,setExtras]=useProjectState(initial,'extras',null),[brands,setBrands]=useProjectState(initial,'brands',null),[assets,setAssets]=useProjectState(initial,'assets',{});
+ const [entries,setEntries]=useProjectState(initial,'entries',initialEntries),[mode,setMode]=useProjectState(initial,'mode','dca'),[scale,setScale]=useProjectState(initial,'scale','index');
+ const [start,setStart]=useProjectState(initial,'start','2020-01-01'),[end,setEnd]=useProjectState(initial,'end',''),[investment,setInvestment]=useProjectState(initial,'investment','5');
+ const [investmentFrequency,setInvestmentFrequency]=useProjectState(initial,'investmentFrequency','daily');
+ const [chart,setChart]=useProjectState(initial,'chart','line');
  const {visuals}=useVisualStatus(),theme=themeOf({visuals}).dark?'dark':'light';
- const [showLogos,setShowLogos]=useState(true),[duration,setDuration]=useState(12);
- const [title,setTitle]=useState(''),[addType,setAddType]=useState('asset'),[query,setQuery]=useState('');
+ const [showLogos,setShowLogos]=useProjectState(initial,'showLogos',true),[duration,setDuration]=useProjectState(initial,'duration',12);
+ const [title,setTitle]=useProjectState(initial,'title',''),[addType,setAddType]=useState('asset'),[query,setQuery]=useState('');
  const [assetType,setAssetType]=useState('all'),[region,setRegion]=useState('all');
  const [error,setError]=useState(''),[logoError,setLogoError]=useState(''),[loading,setLoading]=useState(true),[logosReady,setLogosReady]=useState(false),[exporting,setExporting]=useState(false);
- useEffect(()=>{const c=new AbortController();Promise.all([read('/commodities/manifest.json',c.signal),read('/logos/manifest.json',c.signal)]).then(([e,b])=>{setExtras(e);setBrands(b);}).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>c.abort();},[]);
+ useProjectDraft('comparison',{extras,brands,assets,entries,mode,scale,start,end,investment,investmentFrequency,chart,showLogos,duration,title,manifest,fx,priceCurrency},active);
+ useEffect(()=>{if(initial?.extras&&initial?.brands)return;const c=new AbortController();Promise.all([read('/commodities/manifest.json',c.signal),read('/logos/manifest.json',c.signal)]).then(([e,b])=>{setExtras(e);setBrands(b);}).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>c.abort();},[]);
  const catalog=useMemo(()=>[...(manifest?.stocks||[]).map(s=>({...s,kind:'stock'})),...(extras?.assets||[])],[manifest,extras]);
  const symbols=[...new Set(entries.filter(e=>e.kind==='asset').map(e=>e.symbol))].sort().join('|');
  useEffect(()=>{

@@ -1,3 +1,4 @@
+import {useProjectSeed,useProjectState,useProjectDraft} from './Projects.jsx';
 import {releaseStockSeries} from './release-stock.js';
 import {RELEASE_VIEWS} from './ai-release-views.js';
 import {datedEvents} from './event-timing.js';
@@ -10,12 +11,14 @@ import {RELEASE_PUBLISHERS,RELEASE_CATEGORIES,selectReleases,releaseCount,releas
 const defaults={start:'2026-07-01',end:'2026-09-30',publishers:['openai','anthropic'],categories:['general','coding','open-weight'],mode:'pulse',count:'versions',format:'9:16',duration:24,title:'',logos:true,stockEnabled:false,stockBasis:'split'};
 function savedSettings(){try{const s=JSON.parse(localStorage.getItem('plotwist-ai-releases-v1'));if(!s)return defaults;return {...defaults,...s,publishers:RELEASE_PUBLISHERS.map(p=>p.id).filter(p=>s.publishers?.includes(p)),categories:RELEASE_CATEGORIES.filter(c=>s.categories?.includes(c)),mode:RELEASE_VIEWS.some(v=>v.id===s.mode)?s.mode:'pulse',count:s.count==='launches'?'launches':'versions',format:['9:16','4:5','1:1'].includes(s.format)?s.format:'9:16',duration:Math.max(6,Math.min(600,Number(s.duration)||24))};}catch{return defaults;}}
 export default function AIReleaseStudio({fontId='arial'}){
+ const initial=useProjectSeed('releases');
  const {uiLanguage,reelLanguage}=useLanguages(),en=uiLanguage==='en',t=(pl,eng)=>en?eng:pl;
- const [settings,setSettings]=useState(savedSettings),[data,setData]=useState(null),[error,setError]=useState(''),[exporting,setExporting]=useState(false);
- const [stock,setStock]=useState(null),[stockError,setStockError]=useState(''),[stockRetry,setStockRetry]=useState(0);
+ const [settings,setSettings]=useProjectState(initial,'settings',savedSettings),[data,setData]=useProjectState(initial,'data',null),[error,setError]=useState(''),[exporting,setExporting]=useState(false);
+ const [stock,setStock]=useProjectState(initial,'stock',null),[stockError,setStockError]=useState(''),[stockRetry,setStockRetry]=useState(0);
+ useProjectDraft('releases',{settings,data,stock},true);
  const set=(key,value)=>setSettings(s=>({...s,[key]:value}));
  useEffect(()=>{try{localStorage.setItem('plotwist-ai-releases-v1',JSON.stringify(settings));}catch{}},[settings]);
- useEffect(()=>{const c=new AbortController();fetch('/ai/releases.json',{signal:c.signal}).then(r=>{if(!r.ok)throw Error(String(r.status));return r.json();}).then(setData).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>c.abort();},[]);
+ useEffect(()=>{if(initial?.data)return;const c=new AbortController();fetch('/ai/releases.json',{signal:c.signal}).then(r=>{if(!r.ok)throw Error(String(r.status));return r.json();}).then(setData).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>c.abort();},[]);
  useEffect(()=>{if(!settings.stockEnabled||stock)return;const c=new AbortController();setStockError('');fetch('/market/NVDA.json',{signal:c.signal}).then(r=>{if(!r.ok)throw Error(String(r.status));return r.json();}).then(setStock).catch(e=>{if(e.name!=='AbortError')setStockError(e.message);});return()=>c.abort();},[settings.stockEnabled,stock,stockRetry]);
  const stockSeries=useMemo(()=>settings.stockEnabled&&stock?releaseStockSeries(stock,settings.start,settings.end,settings.stockBasis):null,[stock,settings.stockEnabled,settings.start,settings.end,settings.stockBasis]);
  const rows=useMemo(()=>selectReleases(data?.rows||[],settings),[data,settings]);

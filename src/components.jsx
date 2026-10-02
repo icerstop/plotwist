@@ -1,3 +1,4 @@
+import {useProjects,useProjectPreview} from './Projects.jsx';
 import './graphics.css';
 import {staticFrameConfig} from './static-frame.js';
 import {createReleaseAudioPlayer,releaseSoundPlan,unlockReelAudio} from './reel-audio.js';
@@ -32,16 +33,18 @@ export function Modal({title,onClose,children}){
 }
 export function ReelPreview({config:baseConfig,duration,valid,onDurationChange}){
  const {uiLanguage}=useLanguages(),t=(pl,en)=>uiLanguage==='en'?en:pl;
- const [imageMode,setImageMode]=useState(()=>{try{return localStorage.getItem('plotwist-output-mode')==='image';}catch{return false;}}),imageOutput=baseConfig.outputMode==='image'||imageMode;
+ const project=useProjects(),savedOutput=project?.seed?.output;
+ const [imageMode,setImageMode]=useState(()=>{if(savedOutput)return !!savedOutput.imageMode;try{return localStorage.getItem('plotwist-output-mode')==='image';}catch{return false;}}),imageOutput=baseConfig.outputMode==='image'||imageMode;
  const liveConfig=useReelLanguage(usePresentationConfig(useVisualConfig(baseConfig,duration))),config=React.useMemo(()=>imageOutput?staticFrameConfig(liveConfig):liveConfig,[liveConfig,imageOutput]);
  const visualStatus=useVisualStatus(),assetStatus=useReelAssetStatus(config);valid=valid&&visualStatus.ready&&assetStatus.ready;
- const [imageType,setImageType]=useState('image/png'),[imageBusy,setImageBusy]=useState(false),[imageError,setImageError]=useState('');
+ const [imageType,setImageType]=useState(savedOutput?.imageType||'image/png'),[imageBusy,setImageBusy]=useState(false),[imageError,setImageError]=useState('');
  async function saveImage(){setImageBusy(true);setImageError('');try{await preloadReelAssets(config);const output=document.createElement('canvas');drawReel(output,{...config,editorPreview:false},Math.min(progress/.9,1),progress*duration);const blob=await new Promise((resolve,reject)=>output.toBlob(b=>b?resolve(b):reject(Error(t('Nie udało się utworzyć obrazu.','Could not create the image.'))),imageType,.95));downloadBlob(blob,`plotwist-grafika.${imageType==='image/png'?'png':'jpg'}`);}catch(e){setImageError(e.message);}finally{setImageBusy(false);}}
  function chooseOutput(image){setPlaying(false);setImageMode(image);try{localStorage.setItem('plotwist-output-mode',image?'image':'video');}catch{}}
  const [editing,setEditing]=useState(false),[revision,setRevision]=useState(0);
- const ref=useRef(),frame=useRef(),elapsed=useRef(0);const [progress,setProgress]=useState(1),[playing,setPlaying]=useState(false);
+ const ref=useRef(),frame=useRef(),elapsed=useRef(0);const [progress,setProgress]=useState(savedOutput?.progress??1),[playing,setPlaying]=useState(false);
  useEffect(()=>{if(valid){drawReel(ref.current,{...config,_motionCacheKey:config,editorPreview:editing},Math.min(progress/.9,1),progress*duration);if(editing)setRevision(r=>r+1);}},[config,progress,valid,editing]);
- useEffect(()=>{setPlaying(false);if(!editing)setProgress(1);},[config,duration]);
+ useEffect(()=>{setPlaying(false);if(!editing&&!savedOutput)setProgress(1);},[config,duration]);
+ useProjectPreview(liveConfig,{imageMode:imageOutput,imageType,progress},valid);
  const audioPlayer=useRef(null),[audioError,setAudioError]=useState('');audioPlayer.current??=createReleaseAudioPlayer();
  useEffect(()=>{if(!playing)return;let cancelled=false,prev=null,clock=null;const plan=releaseSoundPlan(config,duration);
   const step=now=>{if(cancelled)return;if(clock)elapsed.current=clock()/duration;else if(prev!==null)elapsed.current+=(now-prev)/(duration*1000);prev=now;const p=Math.min(elapsed.current,1);setProgress(p);if(p<1)frame.current=requestAnimationFrame(step);else setPlaying(false);};

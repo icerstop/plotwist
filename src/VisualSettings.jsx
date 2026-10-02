@@ -91,7 +91,16 @@ export function VisualProvider({children}){
   }catch(error){for(const id of decoded)releaseMedia(id);throw error;}
   finally{operation.current=false;setBusy(false);}
  }
- const context={mediaFiles:files,hide,addOverlay,overlay,duplicateOverlay,removeOverlay,orderOverlay,captureTheme:options=>captureTheme({...options,visuals,files}),applyTheme,applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>applyReelFont(v,fontId)),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,copy,hideCopy,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
+ async function applyProject(saved,media){
+  if(operation.current||!ready)throw Error('Poczekaj na wczytanie dodatków.');
+  operation.current=true;setBusy(true);const prepared={},mapping={},decoded=[];
+  try{
+   for(const [id,file] of Object.entries(media)){const fresh=crypto.randomUUID();mapping[id]=fresh;await decodeMedia(file,fresh);decoded.push(fresh);prepared[fresh]=file;}
+   const v={...saved,copy:normalizeCopies(saved.copy),copyHidden:normalizeCopyHidden(saved.copyHidden),hidden:normalizeHidden(saved.hidden),overlays:normalizeOverlays(saved.overlays),design:normalizeDesign(saved.design),fontId:validFont(saved.fontId),background:{...defaultBackground,...saved.background,assetId:mapping[saved.background?.assetId]||null},logo:normalizeLogo({...saved.logo,assetId:mapping[saved.logo?.assetId]||null}),stickers:(saved.stickers||[]).map(s=>({...s,assetId:mapping[s.assetId]}))};
+   setFiles(prepared);setVisuals(v);setPresetUndo(null);setError('');for(const id of Object.keys(files))releaseMedia(id);
+  }catch(e){for(const id of decoded)releaseMedia(id);throw e;}finally{operation.current=false;setBusy(false);}
+ }
+ const context={applyProject,mediaFiles:files,hide,addOverlay,overlay,duplicateOverlay,removeOverlay,orderOverlay,captureTheme:options=>captureTheme({...options,visuals,files}),applyTheme,applyPreset,undoPreset,canUndoPreset:!!presetUndo,font:fontId=>setVisuals(v=>applyReelFont(v,fontId)),logo,removeLogo:()=>{forget(visuals.logo.assetId);logo({type:'none',assetId:null,name:''});},element,textStyle,copy,hideCopy,metricLabel,restoreComposition,visuals,ready,busy,error,storage,background,sticker,remove,upload,importGif,reorder,reset,design,theme,removeBackground:()=>{forget(visuals.background.assetId);background({assetId:null,type:'theme',veil:0,source:null});}};
  return <VisualContext.Provider value={context}>{children}</VisualContext.Provider>;
 }
 export function useVisualConfig(config,duration){const {visuals}=useContext(VisualContext);return useMemo(()=>({...config,_copyScope:copyScope(config),fontId:visuals.fontId||config.fontId,visuals,duration}),[config,visuals,duration]);}

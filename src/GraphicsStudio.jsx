@@ -1,3 +1,4 @@
+import {useProjectSeed,useProjectState,useProjectDraft} from './Projects.jsx';
 import React,{useEffect,useMemo,useState} from 'react';
 import {Download,RotateCcw,Image} from 'lucide-react';
 import {Field,ReelPreview} from './components.jsx';
@@ -7,9 +8,11 @@ import {graphicConfig,graphicCsv,graphicDefaults,graphicGroups,groupLabel,readGr
 import './graphics.css';
 const KEY='plotwist-graphics-v1';
 export default function GraphicsStudio({fontId,onLibrary}){
+ const initial=useProjectSeed('graphics');
  const {uiLanguage,reelLanguage}=useLanguages(),en=uiLanguage==='en',t=(pl,enText)=>en?enText:pl;
- const [dataset,setDataset]=useState(null),[settings,setSettings]=useState(graphicDefaults),[error,setError]=useState(''),[storageError,setStorageError]=useState(''),[retry,setRetry]=useState(0),[search,setSearch]=useState('');
- useEffect(()=>{const abort=new AbortController();setError('');fetch('/graphics/fertility-conscription-world.json',{signal:abort.signal}).then(r=>{if(!r.ok)throw Error(t('Nie udało się wczytać danych.','Could not load data.'));return r.json();}).then(d=>{let draft={layout:'regions'};try{draft=JSON.parse(localStorage.getItem(KEY))||draft;}catch{}if(draft.selected&&!draft.scope)draft.scope="EU";setDataset(d);setSettings(readGraphicSettings(draft,d.rows));}).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>abort.abort();},[retry]);
+ const [dataset,setDataset]=useProjectState(initial,'dataset',null),[settings,setSettings]=useProjectState(initial,'settings',graphicDefaults),[error,setError]=useState(''),[storageError,setStorageError]=useState(''),[retry,setRetry]=useState(0),[search,setSearch]=useState('');
+ useProjectDraft('graphics',{dataset,settings},true);
+ useEffect(()=>{if(initial?.dataset)return;const abort=new AbortController();setError('');fetch('/graphics/fertility-conscription-world.json',{signal:abort.signal}).then(r=>{if(!r.ok)throw Error(t('Nie udało się wczytać danych.','Could not load data.'));return r.json();}).then(d=>{let draft={layout:'regions'};try{draft=JSON.parse(localStorage.getItem(KEY))||draft;}catch{}if(draft.selected&&!draft.scope)draft.scope="EU";setDataset(d);setSettings(readGraphicSettings(draft,d.rows));}).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>abort.abort();},[retry]);
  useEffect(()=>{if(!dataset)return;try{localStorage.setItem(KEY,JSON.stringify(settings));setStorageError('');}catch{setStorageError(t('Nie można zapisać szkicu w przeglądarce. Pobierz projekt.','Browser draft could not be saved. Download your project.'));}},[dataset,settings]);
  const change=patch=>setSettings(s=>({...s,...patch,...(['scope','selected','layout','format','order'].some(k=>k in patch)?{page:0}:{})}));
  const config=useMemo(()=>dataset?{...graphicConfig(dataset,settings,fontId,reelLanguage),onGraphicChange:change}:null,[dataset,settings,fontId,reelLanguage]);

@@ -1,3 +1,4 @@
+import {useProjectSeed,useProjectState,useProjectDraft} from './Projects.jsx';
 import {FrequencyPicker} from './FrequencyPicker.jsx';
 import {frequencyPhrase,periodAmount,scheduleRule} from './recurrence.js';
 import {useLanguages,localeFor} from './language-context.js';
@@ -31,22 +32,25 @@ function MarketModeTabs({mode,onChange}) {
 }
 
 export default function MarketStudio({fontId='arial',onFontChange}) {
+ const marketSeed=useProjectSeed('market'),comparisonSeed=useProjectSeed('comparison');const initial=marketSeed|| (comparisonSeed?{manifest:comparisonSeed.manifest,fx:comparisonSeed.fx,priceCurrency:comparisonSeed.priceCurrency,mode:'compare'}:null);
   const {uiLanguage,reelLanguage}=useLanguages();
   const money=n=>n.toLocaleString(localeFor(uiLanguage),{style:'currency',currency:'PLN',maximumFractionDigits:2});
   const number=n=>n.toLocaleString(localeFor(uiLanguage),{minimumFractionDigits:2,maximumFractionDigits:4});
-  const [manifest, setManifest] = useState(null), [fx, setFx] = useState(null), [stock, setStock] = useState(null);
-  const [symbol, setSymbol] = useState('NVDA'), [region, setRegion] = useState('Wszystkie'), [search, setSearch] = useState('');
-  const [start, setStart] = useState('2020-01-01'), [end, setEnd] = useState('');
-  const [investment, setInvestment] = useState('5'), [expense, setExpense] = useState('3'), [expenseName, setExpenseName] = useState('Coca-Cola');
-  const [investmentFrequency,setInvestmentFrequency]=useState('daily'),[expenseFrequency,setExpenseFrequency]=useState('daily');
-  const [mode, setMode] = useState('compare'), [basis, setBasis] = useState('split');
-  const [priceCurrency,setPriceCurrency]=useState('native');
-  const [title, setTitle] = useState('5 zł dziennie w NVIDIA.'), [customTitle, setCustomTitle] = useState(false);
-  const [chart,setChart]=useState('line');
-  const [duration, setDuration] = useState(12), [theme, setTheme] = useState('dark');
+  const [manifest, setManifest] = useProjectState(initial,'manifest',null), [fx, setFx] = useProjectState(initial,'fx',null), [stock, setStock] = useProjectState(initial,'stock',null);
+  const [symbol, setSymbol] = useProjectState(initial,'symbol','NVDA'), [region, setRegion] = useState('Wszystkie'), [search, setSearch] = useState('');
+  const [start, setStart] = useProjectState(initial,'start','2020-01-01'), [end, setEnd] = useProjectState(initial,'end','');
+  const [investment, setInvestment] = useProjectState(initial,'investment','5'), [expense, setExpense] = useProjectState(initial,'expense','3'), [expenseName, setExpenseName] = useProjectState(initial,'expenseName','Coca-Cola');
+  const [investmentFrequency,setInvestmentFrequency]=useProjectState(initial,'investmentFrequency','daily'),[expenseFrequency,setExpenseFrequency]=useProjectState(initial,'expenseFrequency','daily');
+  const [mode, setMode] = useProjectState(initial,'mode','compare'), [basis, setBasis] = useProjectState(initial,'basis','split');
+  const [priceCurrency,setPriceCurrency]=useProjectState(initial,'priceCurrency','native');
+  const [title, setTitle] = useProjectState(initial,'title','5 zł dziennie w NVIDIA.'), [customTitle, setCustomTitle] = useProjectState(initial,'customTitle',false);
+  const [chart,setChart]=useProjectState(initial,'chart','line');
+  const [duration, setDuration] = useProjectState(initial,'duration',12), [theme, setTheme] = useProjectState(initial,'theme','dark');
   const [loading, setLoading] = useState(true), [error, setError] = useState(''), [exporting, setExporting] = useState(false);
   const [page, setPage] = useState(0);
+ useProjectDraft('market',{manifest,fx,stock,symbol,start,end,investment,expense,expenseName,investmentFrequency,expenseFrequency,mode,basis,priceCurrency,title,customTitle,chart,duration,theme},mode!=='compare');
   useEffect(() => {
+    if(initial?.manifest&&initial?.fx)return;
     const c = new AbortController();
     Promise.all([readJson('/market/manifest.json', c.signal), readJson('/market/fx-pln.json', c.signal)])
       .then(([m, f]) => { setManifest(m); setFx(f); })
@@ -54,6 +58,7 @@ export default function MarketStudio({fontId='arial',onFontChange}) {
     return () => c.abort();
   }, []);
   useEffect(() => {
+    if(initial?.stock&&symbol===initial.symbol){setStock(initial.stock);setLoading(false);return;}
     const c = new AbortController(); setLoading(true); setError(''); setStock(null);
     readJson(`/market/${encodeURIComponent(symbol)}.json`, c.signal)
       .then(s => {

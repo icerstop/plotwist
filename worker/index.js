@@ -1,6 +1,7 @@
 import {normalizeSavedTheme,themeName,themeAssetIds} from '../src/custom-themes.js';
 import {themeStore} from './theme-store.js';
 import {storyCsv} from './story-csv.js';
+import {projectApi} from './project-api.js';
 
 const idPattern=/^[a-zA-Z0-9_-]{1,100}$/;
 const json=(body,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}});
@@ -90,6 +91,7 @@ async function api(request,env,ctx){
 }
 export default {async fetch(request,env,ctx){
  const path=new URL(request.url).pathname;
+ if(path==='/api/projects'||path.startsWith('/api/projects/'))return projectApi(request,env,ctx);
  if(path==='/api/themes'||path.startsWith('/api/themes/')){
   try{return await api(request,env,ctx);}catch(error){if(error instanceof Problem)return json({code:error.code},error.status);console.error('Theme storage request failed',error?.message);return json({code:'unavailable'},503);}
  }

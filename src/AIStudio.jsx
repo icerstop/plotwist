@@ -1,3 +1,4 @@
+import {useProjectSeed,useProjectState,useProjectDraft,useProjects} from './Projects.jsx';
 import {useLanguages,localeFor} from './language-context.js';
 import {translate} from './translations.js';
 import {PresentationPicker} from './Presentation.jsx';
@@ -25,21 +26,23 @@ function TrackingInfo({data,onChoose}){
  </div>;
 }
 export default function AIStudio(props){
- const [section,setSection]=useState('benchmarks');const {uiLanguage}=useLanguages();const en=uiLanguage==='en';
+ const project=useProjects();const [section,setSection]=useState(project?.seed?.kind==='releases'?'releases':'benchmarks');const {uiLanguage}=useLanguages();const en=uiLanguage==='en';
  return <><nav className="ai-section-switch" aria-label={en?'AI studio section':'Sekcja studia AI'}><button className={section==='benchmarks'?'selected':''} aria-pressed={section==='benchmarks'} onClick={()=>setSection('benchmarks')}>{en?'Benchmarks':'Benchmarki'}</button><button className={section==='releases'?'selected':''} aria-pressed={section==='releases'} onClick={()=>setSection('releases')}>{en?'Model releases':'Premiery modeli'}</button></nav>{section==='releases'?<AIReleaseStudio {...props}/>:<AIBenchmarkStudio {...props}/>}</>;
 }
 function AIBenchmarkStudio({fontId='arial',onFontChange}){
+ const initial=useProjectSeed('ai');
  const {uiLanguage,reelLanguage}=useLanguages();const aiValue=value=>formatAiValue(value,uiLanguage,data?.scoreDecimals??1);
- const [titleIsCustom,setTitleIsCustom]=useState(false);
- const [format,setFormat]=useState(()=>{try{const saved=localStorage.getItem('plotwist-ai-format-v1');return ['9:16','4:5','1:1'].includes(saved)?saved:'9:16';}catch{return '9:16';}});
+ const [titleIsCustom,setTitleIsCustom]=useProjectState(initial,'titleIsCustom',false);
+ const [format,setFormat]=useProjectState(initial,'format',()=>{try{const saved=localStorage.getItem('plotwist-ai-format-v1');return ['9:16','4:5','1:1'].includes(saved)?saved:'9:16';}catch{return '9:16';}});
  useEffect(()=>{try{localStorage.setItem('plotwist-ai-format-v1',format);}catch{}},[format]);
- const [groupBy,setGroupBy]=useState('model'),[selectedBrands,setSelectedBrands]=useState([]),[brandMethod,setBrandMethod]=useState('latest'),[brandSearch,setBrandSearch]=useState('');
- const [showBrandLogos,setShowBrandLogos]=useState(true),[showLeaderNames,setShowLeaderNames]=useState(true),[assetsReady,setAssetsReady]=useState(false),[assetError,setAssetError]=useState('');
- const [manifest,setManifest]=useState(null),[data,setData]=useState(null),[id,setId]=useState('eci'),[error,setError]=useState('');
- const [basis,setBasis]=useState('release'),[start,setStart]=useState(''),[end,setEnd]=useState(''),[query,setQuery]=useState(''),[organization,setOrganization]=useState(''),[protocol,setProtocol]=useState('');
- const [mode,setMode]=useState('timeline'),[duration,setDuration]=useState(20),[theme,setTheme]=useState('dark'),[title,setTitle]=useState('Jak szybko rozwija się AI?'),[comparison,setComparison]=useState(''),[page,setPage]=useState(0),[exporting,setExporting]=useState(false);
- useEffect(()=>{const c=new AbortController();json('/ai/manifest.json',c.signal).then(setManifest).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>c.abort();},[]);
- useEffect(()=>{const c=new AbortController();setData(null);setError('');json(`/ai/${id}.json`,c.signal).then(d=>{setData(d);setTitleIsCustom(false);setBasis(d.defaultBasis);setStart('');setEnd('');setQuery('');setOrganization('');setProtocol(id==='gpqa'?'Prompt od 20.02.2026':'');setComparison('');setMode(d.defaultMode||(id==='codeforces2024'?'duel':'timeline'));setTitle(id.startsWith('tracking-')?d.name:id==='eci'?'Jak szybko rozwija się AI?':id.startsWith('iq-')?'Jak modele rozwiązują test „IQ”?':id==='codeforces2024'?'AI na zawodach programistycznych.':`${d.name}. Kolejne modele.`);}).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>c.abort();},[id]);
+ const [groupBy,setGroupBy]=useProjectState(initial,'groupBy','model'),[selectedBrands,setSelectedBrands]=useProjectState(initial,'selectedBrands',[]),[brandMethod,setBrandMethod]=useProjectState(initial,'brandMethod','latest'),[brandSearch,setBrandSearch]=useState('');
+ const [showBrandLogos,setShowBrandLogos]=useProjectState(initial,'showBrandLogos',true),[showLeaderNames,setShowLeaderNames]=useProjectState(initial,'showLeaderNames',true),[assetsReady,setAssetsReady]=useState(false),[assetError,setAssetError]=useState('');
+ const [manifest,setManifest]=useProjectState(initial,'manifest',null),[data,setData]=useProjectState(initial,'data',null),[id,setId]=useProjectState(initial,'id','eci'),[error,setError]=useState('');
+ const [basis,setBasis]=useProjectState(initial,'basis','release'),[start,setStart]=useProjectState(initial,'start',''),[end,setEnd]=useProjectState(initial,'end',''),[query,setQuery]=useProjectState(initial,'query',''),[organization,setOrganization]=useProjectState(initial,'organization',''),[protocol,setProtocol]=useProjectState(initial,'protocol','');
+ const [mode,setMode]=useProjectState(initial,'mode','timeline'),[duration,setDuration]=useProjectState(initial,'duration',20),[theme,setTheme]=useProjectState(initial,'theme','dark'),[title,setTitle]=useProjectState(initial,'title','Jak szybko rozwija się AI?'),[comparison,setComparison]=useProjectState(initial,'comparison',''),[page,setPage]=useState(0),[exporting,setExporting]=useState(false);
+ useProjectDraft('ai',{titleIsCustom,format,groupBy,selectedBrands,brandMethod,showBrandLogos,showLeaderNames,manifest,data,id,basis,start,end,query,organization,protocol,mode,duration,theme,title,comparison},true);
+ useEffect(()=>{if(initial?.manifest)return;const c=new AbortController();json('/ai/manifest.json',c.signal).then(setManifest).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>c.abort();},[]);
+ useEffect(()=>{if(initial?.data&&id===initial.id){setData(initial.data);return;}const c=new AbortController();setData(null);setError('');json(`/ai/${id}.json`,c.signal).then(d=>{setData(d);setTitleIsCustom(false);setBasis(d.defaultBasis);setStart('');setEnd('');setQuery('');setOrganization('');setProtocol(id==='gpqa'?'Prompt od 20.02.2026':'');setComparison('');setMode(d.defaultMode||(id==='codeforces2024'?'duel':'timeline'));setTitle(id.startsWith('tracking-')?d.name:id==='eci'?'Jak szybko rozwija się AI?':id.startsWith('iq-')?'Jak modele rozwiązują test „IQ”?':id==='codeforces2024'?'AI na zawodach programistycznych.':`${d.name}. Kolejne modele.`);}).catch(e=>{if(e.name!=='AbortError')setError(e.message);});return()=>c.abort();},[id]);
  const protocols=useMemo(()=>[...new Set(data?.rows.map(r=>r.protocol)||[])].sort(),[data]);
  const orgs=useMemo(()=>[...new Set(data?.rows.map(r=>r.organization).filter(Boolean)||[])].sort(),[data]);
  const hasObserved=!!data?.rows.some(r=>r.observedAt),hasRelease=!!data?.rows.some(r=>r.releaseDate);

@@ -1,3 +1,4 @@
+import {useProjectSeed,useProjectState,useProjectDraft} from './Projects.jsx';
 import React,{useEffect,useMemo,useRef,useState} from 'react';
 import {ArrowUpRight,Database,Download,FileUp,Plus,Search,Trash2} from 'lucide-react';
 import {ExportModal,Field,ReelPreview} from './components.jsx';
@@ -15,16 +16,18 @@ const countryAliases={Poland:'Polska POL', 'United States':'USA Stany Zjednoczon
 const draftKey='plotwist-story-project-v1';
 const fold=s=>s.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replaceAll('ł','l');
 export default function StoryStudio({initialTopic,initialSelection,fontId,onFontChange}){
+ const savedProject=useProjectSeed('stories'),initial=initialTopic||initialSelection?null:savedProject;
  const {uiLanguage,reelLanguage}=useLanguages(),t=(pl,en)=>uiLanguage==='en'?en:pl;
  const {setAxisScale}=usePresentationSettings();
- const [manifest,setManifest]=useState(null),[settings,setSettings]=useState(storyDefaults),[loaded,setLoaded]=useState({});
- const [initialized,setInitialized]=useState(false),[busy,setBusy]=useState(false),[loadError,setLoadError]=useState(''),[retry,setRetry]=useState(0);
+ const [manifest,setManifest]=useProjectState(initial,'manifest',null),[settings,setSettings]=useProjectState(initial,'settings',storyDefaults),[loaded,setLoaded]=useProjectState(initial,'loaded',{});
+ const [initialized,setInitialized]=useProjectState(initial,'initialized',false),[busy,setBusy]=useState(false),[loadError,setLoadError]=useState(''),[retry,setRetry]=useState(0);
  const [query,setQuery]=useState(''),[compatible,setCompatible]=useState(false),[page,setPage]=useState(0),[tableSeries,setTableSeries]=useState('all');
  const [geography,setGeography]=useState({region:'',group:'',year:''});
  const [exporting,setExporting]=useState(false),[notice,setNotice]=useState(''),[storageError,setStorageError]=useState('');
+ useProjectDraft('stories',{manifest,settings,initialized,loaded:Object.fromEntries(Object.entries(loaded).map(([id,d])=>[id,{...d,series:d.series.filter(r=>settings.selected.some(s=>s.id===r.id))}]))},true);
  const fileRef=useRef(),searchRef=useRef();
  const set=(key,value)=>setSettings(s=>({...s,[key]:value}));
- useEffect(()=>{let active=true;setLoadError('');loadStoryJson('/stories/manifest.json').then(m=>{if(active)setManifest(m);}).catch(e=>{if(active)setLoadError(e.message);});return()=>{active=false;};},[retry]);
+ useEffect(()=>{if(initial?.manifest)return;let active=true;setLoadError('');loadStoryJson('/stories/manifest.json').then(m=>{if(active)setManifest(m);}).catch(e=>{if(active)setLoadError(e.message);});return()=>{active=false;};},[retry]);
  useEffect(()=>{
   if(!manifest||initialized)return;
   const topic=manifest.topics.find(t=>t.id===initialTopic)||manifest.topics.find(t=>t.id==='apple');
@@ -39,11 +42,11 @@ export default function StoryStudio({initialTopic,initialSelection,fontId,onFont
  const needed=useMemo(()=>[...new Set(settings.selected.map(s=>metadata.get(s.id)?.topicId).filter(Boolean))].sort().join('|'),[settings.selected,metadata]);
  useEffect(()=>{
   if(!initialized)return;
-  if(!needed){setBusy(false);setLoadError('');return;}
+  if(!needed||settings.selected.every(s=>loaded[metadata.get(s.id)?.topicId]?.series.some(r=>r.id===s.id))){setBusy(false);setLoadError('');return;}
   let active=true;setBusy(true);setLoadError('');
-  Promise.all(needed.split('|').map(loadStoryTopic)).then(data=>{if(active)setLoaded(old=>({...old,...Object.fromEntries(data.map(d=>[d.topic.id,d]))}));}).catch(e=>{if(active)setLoadError(e.message);}).finally(()=>{if(active)setBusy(false);});
+  Promise.all(needed.split('|').map(loadStoryTopic)).then(data=>{if(active)setLoaded(old=>({...old,...Object.fromEntries(data.map(d=>[d.topic.id,{...d,series:d.series.map(r=>initial?.loaded?.[d.topic.id]?.series.find(s=>s.id===r.id)||r)}]))}));}).catch(e=>{if(active)setLoadError(e.message);}).finally(()=>{if(active)setBusy(false);});
   return()=>{active=false;};
- },[needed,initialized,retry]);
+ },[needed,initialized,retry,settings.selected]);
  const selectedData=useMemo(()=>settings.selected.map(item=>loaded[metadata.get(item.id)?.topicId]?.series.find(s=>s.id===item.id)).filter(Boolean),[settings.selected,loaded,metadata]);
  const complete=selectedData.length===settings.selected.length;
  const range=useMemo(()=>storyRange(selectedData),[selectedData]);
